@@ -1,0 +1,44 @@
+<!-- 分页 -->
+{% if paginator.total_pages > 1 %}
+  <div id="frontPagenater">
+      <span id="firstPage">
+        <a href="/#frontContentBox">
+          <img src="{{site.pagenaterItemPath | prepend:site.url | append:'/firstPageBlack.svg'}}" alt="FirstPage">
+        </a>
+      </span>
+
+      {% if paginator.previous_page != 1 %}
+        <span id="previousPage">
+          <a href="{{ paginator.previous_page_path }}/#frontContentBox">
+            <img src="{{site.pagenaterItemPath | prepend:site.url | append:'/beforePageBlack.svg'}}" alt="">
+          </a>
+        </span>
+      {% else %}
+        <span id="previousPage">
+          <a href="/#frontContentBox">
+            <img src="{{site.pagenaterItemPath | prepend:site.url | append:'/beforePageBlack.svg'}}" alt="">
+          </a>
+        </span>
+      {% endif %}
+
+      <p id="pageNumBox">Page &nbsp; 
+        <span id="pageNum">{{paginator.page}}</span> &nbsp; Of &nbsp; 
+        <span id="pageNum">{{paginator.total_pages}}</span>
+      </p>
+
+      {% if paginator.next_page %}
+      <span id="nextPage">
+        <a href="{{ paginator.next_page_path }}/#frontContentBox">
+          <img src="{{site.pagenaterItemPath | prepend:site.url | append:'/nextPageBlack.svg'}}" alt="">
+        </a>
+      </span>
+      {% endif %}
+      
+      <span id="lastPage">
+        <a href="/page{{paginator.total_pages}}/#frontContentBox">
+          <img src="{{site.pagenaterItemPath | prepend:site.url | append:'/lastPageBlack.svg'}}" alt="">
+        </a>
+      </span>
+  </div>
+{% endif %}
+

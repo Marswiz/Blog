@@ -1,0 +1,80 @@
+---
+layout: blog
+nav: search
+---
+
+<div id="searchBox">
+	<input id="searchInput" type="text" placeholder="Search Tags/Blogs/Time/Author..">
+	<span class="fa fa-search" id="searchBeginBtn"></span>
+</div>
+
+<!-- 不可见的原始BLog内容 -->
+{%- if site.posts.size > 0 -%}
+	    <div>
+	      {%- for post in site.posts -%}
+	        <div id="totalBlogBox">
+	          <a>
+	            <!-- 设定时间格式 -->
+	            {%- assign date_format = site.minima.date_format | default: "%Y.%m.%d" -%}
+
+	            <!-- 日志标题 -->
+	            <h3>
+	              <div>
+	                {{ post.title | escape }}
+	              </div>
+	            </h3>
+
+	            <!-- 日志时间和标签 -->
+	            <div >
+	              <span>{{ post.date | date: date_format }}</span>
+	              {%- for tag in post.tags -%}
+	                <p>{{ tag }}</p>
+	              {%- endfor -%}
+	            </div>
+	            
+	            <!-- 日志概览 -->
+	            <div>
+	              <p>{{ post.content | strip_html}}</p>
+	            </div>
+	          </a>
+	        </div>
+	      {%- endfor -%}
+	    </div>
+{%- endif -%}
+
+<!-- 结果显示区 -->
+<div id="searchResultContentBox">
+	{%- if site.posts.size > 0 -%}
+	    <div id="searchResultList">
+	    <div id="noResultContent"><p>木有找到Der~~</p></div>
+	      {%- for post in site.posts -%}
+	        <div id="searchBlogBox">
+	          <a id="link" href="{{ post.url | relative_url }}">
+	            <!-- 设定时间格式 -->
+	            {%- assign date_format = site.minima.date_format | default: "%Y.%m.%d" -%}
+
+	            <!-- 日志标题 -->
+	            <h3>
+	              <div class="searchPostLink">
+	                {{ post.title | escape }}
+	              </div>
+	            </h3>
+
+	            <!-- 日志时间和标签 -->
+	            <div id="searchPostInfo">
+	              <span class="searchPostDate">{{ post.date | date: date_format }}</span>
+	              {%- for tag in post.tags -%}
+	                <p class="searchPostTags">{{ tag }}</p>
+	              {%- endfor -%}
+	            </div>
+	            
+	            <!-- 日志概览 -->
+	            <div id="searchBlogPreview">
+	              <p>{{ post.content | strip_html | truncate:200 }}</p>
+	            </div>
+	          </a>
+	        </div>
+	      {%- endfor -%}
+	    </div>
+	{%- endif -%}
+</div>

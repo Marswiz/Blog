@@ -1,0 +1,87 @@
+#tagCloud{
+	margin: 11vw 3.4vw 3vw 16.4vw;
+	font-family:'Bodoni BT','Helvetica','宋体',sans-serif;
+	font-size: 1.5em;
+	@include flexBoxRow;
+	flex-wrap: wrap;
+	align-items: center;
+	a {
+		// font-family: Folio Light;
+		@include flexBoxRow;
+		background-color: white;
+		justify-content: center;
+		align-items: center;
+		height: 1.5em;
+		font-size: 0.6em;
+		margin-right: 6pt;
+		margin-top: 6pt;
+		padding: 0 0.2em;
+		border:dashed 1px $marsBlack;
+		border-radius: 0.5em;
+		text-decoration: none;
+		color: $marsBlack;
+	}
+}
+
+#bigTag{
+	@include flexBoxRow;
+	align-items: center;
+	justify-content: center;
+	color: $marsBlue;
+	border:dashed 3px $marsBlue;
+	border-radius: 0.5em;
+	background-color: white;
+	font-size: 1.8em;
+	cursor: pointer;
+}
+
+#tagBlogs{
+	margin: 0 3.4vw 4vw 16.4vw;
+	.tag{
+		font-family: 'Poiret One','阿里巴巴普惠体';
+		font-size: 2em;
+		margin-left: -1.45em;
+		margin-top: 0.5em;
+		&:hover{
+			color: $marsBlue;
+		}
+	}
+	a{
+		width:100%;
+		text-decoration:none;
+		color: $marsBlack;
+		&:hover{
+			color: $marsBlue;
+		}
+		#tagsBlogBox{
+			line-height:1.3em;
+			font-family: 'Memphis','阿里巴巴普惠体';
+			@include flexBoxRow;
+			justify-content: space-between;
+		}
+	}
+}
+
+#toTop{
+	@include flexBoxRow;
+	justify-content:center;
+	align-items:center;
+	text-decoration: none;
+	position:fixed;
+	font-size: 1.5em;
+	width:1.5em;
+	height: 1.5em;
+	right:0;
+	bottom: 0;
+	// background-color: $marsBlack;
+	// border-radius: 0.2em;
+	// border: dashed 1px $marsBlack;
+	color: $marsBlack;
+	opacity: 0.3;
+	&:hover{
+		color: $marsBlue;
+		opacity: 1;
+		transform: rotate(-359deg);
+		transition: transform 1s;
+	}
+}

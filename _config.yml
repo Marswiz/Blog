@@ -1,0 +1,59 @@
+# 基本
+title: MarsWiz
+email: marswiz@yeah.net
+frontPageInfo: "Front Page Slogan"
+description: >- # this means to ignore newlines until "baseurl:"
+  Solid.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: localhost:4000 # the base hostname & protocol for your site, e.g. http://example.com
+
+# 视觉
+logoBlack: "/assets/logo/logoBlack.svg"
+logoWhite: "/assets/logo/logoWhite.svg"
+frontPagePic: "/assets/pics/wolf.png"
+navItemPath: "/assets/nav"
+pagenaterItemPath: "/assets/pagenater"
+postsItemPath: "/assets/posts"
+
+
+# 社交（先添加社交网站名字：[社交网站]）
+socialList: [weibo,github,douban,zhihu,segmentfault]
+# 账号与域名 （再添加社交账号和网站域名，必须为 [社交网站]_username 和 [社交网站]_site 格式。）
+twitter_username: marswiz123
+twitter_site: https://twitter.com/
+twitter_icon: 'fa fa-twitter'
+
+github_username:  marswiz
+github_site: https://github.com/
+github_icon: 'fa fa-github'
+
+douban_username: "139005629"
+douban_site: https://douban.com/people/
+douban_letter: "豆"
+
+weibo_username: 5685573190
+weibo_site: https://weibo.com/
+weibo_icon: 'fa fa-weibo'
+
+zhihu_username: marswiz
+zhihu_site: https://zhihu.com/people/
+zhihu_letter: "知"
+
+segmentfault_username: mars_589c29ead7257
+segmentfault_site: https://segmentfault.com/u/
+segmentfault_letter: "sf"
+
+# 分页
+paginate: 15
+paginate_path: "/page:num"
+
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-paginate
+

@@ -1,0 +1,28 @@
+---
+layout: blog
+nav: tag
+---
+
+<div id="tagCloud">
+
+	{% for tag in site.tags %}
+	<a class="cloudTag" title="{{ tag[0] }}" rel="{{ tag[1].size }}">
+		#{{ tag[0] }}
+	</a>
+	{% endfor %}
+
+</div>
+
+<article id="tagBlogs">
+	{% for tag in site.tags %}
+		<div class="tag" id="{{tag[0]}}"><span class="fa fa-tags"></span> {{ tag[0] }}<br/></div>
+	{% for post in tag[1] %}
+		<a href="{{post.url}}">
+		  <div id="tagsBlogBox">		  
+			  <div>{{ post.title }}</div>
+			  <time  datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+		  </div>
+	    </a>
+	{% endfor %}
+	{% endfor %}
+</article>

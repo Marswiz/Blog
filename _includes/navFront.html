@@ -1,0 +1,23 @@
+<!-- 首页渐变导航栏结构 -->
+
+<nav id="navFront">
+
+	
+	<div id="navBlurFront"></div>
+	<div id="navTransFront">
+		<!-- logo -->
+		<a id="logo" href="{{site.url}}">
+			<img src="{{site.logoWhite | prepend:site.url}}" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+		<div id="navItemsFront">
+			<a href="{{'/blog'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/blogWhite.svg'}}" alt="blog"></a>
+			<a href="{{'/tags'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/tagsWhite.svg'}}" alt="tags"></a>	
+			<a href="{{'/aboutMe'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/aboutMeWhite.svg'}}" alt="aboutMe"></a>
+			<a href="{{'/search'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/searchWhite.svg'}}" alt="search"></a>			
+		</div>
+	</div>
+
+
+
+</nav>

@@ -1,0 +1,123 @@
+#searchBox{
+	@include flexBoxRow;
+	margin: 11vw 3.4vw 3vw 16.4vw;
+	padding: 0 1em;
+	align-items: stretch;
+	width:50%;
+	height: 3em;
+	border: solid 0.2em $marsBlue;
+	border-radius: 1.5em;
+	color: $marsBlack;
+	background-color: white;
+	font-family:'阿里巴巴普惠体';
+
+	#searchInput{
+		border: none;
+		width:100%;		
+		background-color: transparent;
+		font-size: 1.5em;
+		opacity: 0.3;
+		&:focus{
+			outline: none;
+			opacity:1;
+			color: $marsBlack;
+		}
+	}
+
+	span{
+		display: flex;
+		font-size: 1.5em;
+		justify-content: center;
+		align-items: center;
+		opacity: 0.3;
+		&:hover{
+			cursor: pointer;
+			opacity: 1;
+		}
+	}
+}
+
+#totalBlogBox{
+	display:none;
+}
+
+#searchResultContentBox{
+	width: 100%;
+	padding-top: 3vw;
+	padding-left: 16.4vw;
+	padding-right: 3.4vw;
+	padding-bottom:3vw;
+	
+	#noResultContent{
+		@include flexBoxRow;
+		font-family:'阿里巴巴普惠体','微软雅黑',sans-serif;
+		padding-bottom: 5vw;
+		width:100%;
+		height:10vw;
+		align-items:center;
+		display:none;
+		
+		p{
+			width:50%;
+			color: black;
+			font-size: 3em;
+		}
+	}
+
+	#searchResultList {
+		list-style: none;
+		#searchBlogBox{
+			display: none;
+			padding-left: 1.4vw;
+			margin-bottom: 1.5em;
+			border-left: solid 0.1em $marsBlue;
+			#link{
+				text-decoration: none;
+				color: $marsBlack;
+
+				&:hover{
+					color: $marsBlue;
+					.searchPostTags{
+						border: dashed 1px $marsBlue !important;
+					}
+				}
+
+				.searchPostLink{
+					font-family: Clarendon BT;
+					text-decoration: none;
+				}
+
+				#searchPostInfo{
+					@include flexBoxRow;
+					align-items: center;
+					width:100%;
+					margin-top: 0.4em;
+					.searchPostDate{
+						display:inline;
+						text-align:center;
+						line-height: 1em;
+						font-family: Folio Light;
+						font-size: 0.6em;
+						margin-right: 24pt;
+					}
+
+					.searchPostTags{
+						display:inline;
+						font-family: Folio Light;
+						font-size: 0.6em;
+						padding: 0 0.2em;
+						margin-right: 6pt;
+						border:dashed 1px $marsBlack;
+						border-radius: 0.5em;
+					}
+				}
+
+				#searchBlogPreview{
+					font-size: 0.6em;
+					margin-top: 0.5em;
+					font-family: Folio Light;
+				}	
+			}		
+		}
+	}
+}

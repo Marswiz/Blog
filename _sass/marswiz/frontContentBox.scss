@@ -1,0 +1,64 @@
+#frontContentBox{
+	// background-color: orange;
+	width: 100%;
+	min-height: 52.725vw;
+	padding-top: 12.486vw;
+	padding-left: 16.4vw;
+	padding-right: 3.4vw;
+
+	#frontPostList {
+		list-style: none;
+		#blogBox{
+			padding-left: 1.4vw;
+			margin-bottom: 1.5em;
+			border-left: solid 0.1em $marsBlue;
+			#link{
+				text-decoration: none;
+				color: $marsBlack;
+
+				&:hover{
+					color: $marsBlue;
+					.frontPostTags{
+						border: dashed 1px $marsBlue !important;
+					}
+				}
+
+				.frontPostLink{
+					font-family: Clarendon BT;
+					text-decoration: none;
+				}
+
+				#frontPostInfo{
+					@include flexBoxRow;
+					align-items: center;
+					width:100%;
+					margin-top: 0.4em;
+					.frontPostDate{
+						display:inline;
+						text-align:center;
+						line-height: 1em;
+						font-family: Folio Light;
+						font-size: 0.6em;
+						margin-right: 24pt;
+					}
+
+					.frontPostTags{
+						display:inline;
+						font-family: Folio Light;
+						font-size: 0.6em;
+						padding: 0 0.2em;
+						margin-right: 6pt;
+						border:dashed 1px $marsBlack;
+						border-radius: 0.5em;
+					}
+				}
+
+				#blogPreview{
+					font-size: 0.6em;
+					margin-top: 0.5em;
+					font-family: Folio Light;
+				}	
+			}		
+		}
+	}
+}

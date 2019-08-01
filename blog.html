@@ -1,0 +1,25 @@
+---
+layout: blog
+nav: blog
+---
+
+<article id="blogs">
+	{% for post in site.posts %}
+
+		{% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
+		{% if year != y %}
+		{% assign year = y %}
+			<div id="year{{y}}" class="blogYear">
+				<span class="fa fa-calendar"></span> {{ y }}
+			</div>
+		{% endif %}
+
+		<a href="{{post.url}}">
+			<div id="blogBox">
+				<div id="blogTitle">{{post.title}}</div>
+				<div id="blogTime">{{post.date | date:"%Y.%m.%d"}}</div>
+			</div>
+		</a>
+
+	{% endfor %}
+</article>

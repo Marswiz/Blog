@@ -1,0 +1,23 @@
+<!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+	
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="{{site.url}}">
+			<img src="{{site.logoBlack | prepend:site.url}}" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="{{'/blog'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/blogBlack.svg'}}" alt="blog"></a>
+			<a id="tagBtn" href="{{'/tags'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/tagsBlack.svg'}}" alt="tags"></a>	
+			<a id="aboutMeBtn" href="{{'/aboutMe'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/aboutMeBlack.svg'}}" alt="aboutMe"></a>
+			<a id="searchBtn" href="{{'/search'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/searchBlack.svg'}}" alt="search"></a>			
+		</div>
+	</div>
+
+
+
+</nav>

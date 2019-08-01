@@ -1,0 +1,36 @@
+<footer>
+	<div id="footerBox">
+		<div id="socialBox">
+
+			{%- for social in site.socialList -%}
+			{% assign a = {{social | append:"_site"}} %}
+			{% assign b = {{social | append:"_username"}} %}
+			{% assign c = {{social | append:"_icon"}} %}
+			{% assign d = {{social | append:"_letter"}} %}	
+				<a href="{{site.[a]}}{{site.[b]}}" target="_blank">
+					<div id="socialBall">
+						{% if site.[c] %}
+							<p id="socialContent1" class="{{site.[c]}}"></p>
+						{% else if site.[d] %}
+							<p id="socialContent2">{{site.[d]}}</p>
+						{% endif %}
+					</div>
+				</a>
+			{%- endfor -%}
+
+		</div>
+		<div id="webInfo">
+			<p>京ICP备 17067352 号</p>
+			<p>Created by Mars 2019 using Jekyll.</p>
+		</div>
+	</div>
+	<script src="{{'/assets/js/frontShow.js' | prepend:site.url}}"></script>
+	<script src="{{'/assets/js/nav.js' | prepend:site.url}}"></script>	
+	<script src="{{'/assets/js/post.js' | prepend:site.url}}"></script>
+	<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+	<script src="{{'/assets/js/marsTipTool.js' | prepend:site.url}}"></script>
+	<script src="{{'/assets/js/pagnater.js' | prepend:site.url}}"></script>
+	<script src="{{'/assets/js/load.js' | prepend:site.url}}"></script>
+
+
+</footer>

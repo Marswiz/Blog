@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'zh-CN' }}">
+
+  {%- include head.html -%}
+  <style>
+	  #navBlog{
+	  	display: block;
+	  }
+  </style>
+
+  <body>
+
+    {%- include navBlog.html -%}
+
+    <main id="mainBox" aria-label="Content">
+      {{ content }}
+    </main>
+
+    {%- include footerBlog.html -%}
+
+    <!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+  </body> 
+  <script>
+		blogYearFunc();		
+  </script> 
+
+  {%- if page.nav -%}
+	<script>
+		let btnColor = document.querySelector('#navBlog #navTrans #navItems #{{page.nav}}Btn img').src.replace(/Black/,'Blue');
+		document.querySelector('#navBlog #navTrans #navItems #{{page.nav}}Btn img').src = btnColor;
+		document.querySelector('#{{page.nav}}Btn img').removeEventListener('mouseout',blueToBlack,false);
+	</script>
+  {%- endif -%}
+
+  {%- if page.nav == 'tag' -%}
+    <script src="{{'/assets/js/tag.js' | prepend:site.url}}"></script>
+  {%- endif -%}
+
+  {%- if page.nav == 'search' -%}
+    <script src="{{'/assets/js/search.js' | prepend:site.url}}"></script>
+  {%- endif -%}
+
+</html>
+
+
