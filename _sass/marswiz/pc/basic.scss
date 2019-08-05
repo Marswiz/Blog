@@ -19,11 +19,15 @@
 		width: 100%;
 		font-size: $baseFontSize;
 		color: $marsBlack;
-	}
+	}	
+
 
 // main元素基本设置
 	main {
 		@include flexBoxCol;
+		#logoBoxBlog{
+			display: none;
+		}
 	}
 
 

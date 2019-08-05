@@ -1,9 +1,11 @@
-function doSearch(){
+function doSearch(e){
+	if (e.type == 'mousedown' || e.keyCode == 13){
 	let searchText = document.querySelector('#searchBox input').value;
 	let posts = document.querySelectorAll('#searchBlogBox');
 	let totalContentPosts = document.querySelectorAll('#totalBlogBox');
 	let reg = RegExp(searchText,'gi');
-	console.log(reg);
+	console.log(e.type);
+
 	// 清除之前所有搜索结果
 	document.querySelector('#noResultContent').style.display = 'none';
 	for(let i=0 ; i<posts.length; i++){
@@ -25,5 +27,7 @@ function doSearch(){
 		document.querySelector('#noResultContent').style.display = 'flex';
 	}
 }
+}
 
 document.querySelector('#searchBeginBtn').addEventListener('mousedown',doSearch,false); 
+document.querySelector('#searchInput').addEventListener('keydown',doSearch,false); 

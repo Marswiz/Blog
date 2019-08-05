@@ -1,0 +1,46 @@
+/**
+ * 重置基本元素
+ */
+	body, h1, h2, h3, h4, h5, h6,
+	p, blockquote, pre, hr,
+	dl, dd, ol, ul, figure{
+	  margin: 0 ; 
+	  padding: 0 ;
+	}
+
+// 响应式设定
+	*{
+		box-sizing: border-box;	
+	}
+
+// 设置基本字号
+	body {	
+		display: block;
+		width: 100%;
+		font-size: 0.5*$baseFontSize;
+		color: $marsBlack;
+	}	
+
+
+
+// main元素基本设置
+	main {
+		@include flexBoxCol;
+		#logoBoxBlog{
+			display: none;
+			width: 100%;
+			padding-top: 12.486vw;
+			padding-left: 8vw;
+			padding-right: 8vw;
+			@include flexBoxRow;
+			justify-content: flex-end;
+			align-items: flex-start;
+			width: 100%;
+			#logo{
+				max-width: 100%;
+				width: 50vw;
+			}
+		}
+	}
+
+

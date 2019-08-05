@@ -1,5 +1,8 @@
 <!-- 首页日志展示栏 -->
 <div id="frontContentBox">
+  <div id="logoBox">
+    <img id='logo' src="{{site.logoBlack | prepend:site.url}}" alt="MarsWiz">
+  </div>
   {%- if site.posts.size > 0 -%}
     <div id="frontPostList">
       {%- for post in paginator.posts -%}
@@ -15,12 +18,22 @@
               </div>
             </h3>
 
-            <!-- 日志时间和标签 -->
+            <!-- 日志时间和标签--PC端 -->
             <div id="frontPostInfo">
               <span class="frontPostDate">{{ post.date | date: date_format }}</span>
               {%- for tag in post.tags -%}
                 <p class="frontPostTags">{{ tag }}</p>
               {%- endfor -%}
+            </div>
+
+            <!-- 日志时间和标签--移动端 -->
+            <div id="frontPostInfoMobile">
+              <p class="frontPostDateMobile">{{ post.date | date: date_format }}</p>
+              <div id="frontTagBox">
+                {%- for tag in post.tags -%}
+                  <p id="frontPostTagsMobile">{{ tag }}</p>
+                {%- endfor -%}
+              </div>
             </div>
             
             <!-- 日志概览 -->

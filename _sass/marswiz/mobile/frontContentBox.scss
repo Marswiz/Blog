@@ -3,22 +3,39 @@
 	width: 100%;
 	min-height: 52.725vw;
 	padding-top: 12.486vw;
-	padding-left: 16.4vw;
-	padding-right: 3.4vw;
+	padding-left: 8vw;
+	padding-right: 8vw;
+
+	#logoBox{
+		@include flexBoxRow;
+		justify-content: flex-end;
+		align-items: center;
+		width: 100%;
+		#logo{
+		padding-bottom: 12vw;
+		max-width: 100%;
+		width: 50vw;
+		}
+	}
 
 	#frontPostList {
 		list-style: none;
 		#blogBox{
-			padding-left: 1.4vw;
+			padding-left: 3.4vw;
 			margin-bottom: 1.5em;
 			border-left: solid 0.1em $marsBlue;
+
+			#frontPostInfo{
+				display: none;
+			}
+
 			#link{
 				text-decoration: none;
 				color: $marsBlack;
 
 				&:hover{
 					color: $marsBlue;
-					.frontPostTags{
+					.frontPostTags,#frontPostTagsMobile{
 						border: dashed 1px $marsBlue !important;
 					}
 				}
@@ -28,35 +45,44 @@
 					text-decoration: none;
 				}
 
-				#frontPostInfo{
-					@include flexBoxRow;
-					align-items: center;
-					width:100%;
-					margin-top: 0.4em;
-					.frontPostDate{
-						display:inline;
+				#frontPostInfoMobile{
+					@include flexBoxCol;
+					// flex-wrap: wrap;
+					align-items: flex-start;
+					width: 100%;
+					margin-top: 0.2em;
+					.frontPostDateMobile{
+						display: block;
 						text-align:center;
 						line-height: 1em;
 						font-family: Folio Light;
 						font-size: 0.6em;
-						margin-right: 24pt;
 					}
 
-					.frontPostTags{
+					#frontTagBox{
+						@include flexBoxRow;
+						flex-wrap: wrap;
+						margin-top: 0.2em;
+					}
+
+					#frontPostTagsMobile {
 						display:inline;
 						font-family: Folio Light;
 						font-size: 0.6em;
 						padding: 0 0.2em;
-						margin-right: 6pt;
+						margin-right: 3pt;
+						margin-top: 0.2em;
 						border:dashed 1px $marsBlack;
 						border-radius: 0.5em;
-					}
+					}					
 				}
 
 				#blogPreview{
+					word-wrap: break-word;
 					font-size: 0.6em;
-					margin-top: 0.5em;
+					margin-top: 0.2em;
 					font-family: Folio Light;
+					text-align: justify;
 				}	
 			}		
 		}

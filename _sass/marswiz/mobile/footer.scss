@@ -1,0 +1,50 @@
+#footerBox{
+	@include flexBoxCol;
+	width:100%;
+	justify-content: center;
+	align-items: center;
+	padding-right: 5vw;
+	padding-left: 5vw;
+	#socialBox{
+		@include flexBoxRow;
+		a{
+			text-decoration: none;
+			#socialBall{
+				width: 1.5em;
+				height: 1.5em;
+				border-radius: 50%;
+				background-color: $marsRice;
+				margin-right: 0.3em;
+				&:hover{
+					background-color: $marsBlue;
+				}
+				#socialContent2 {
+					@include flexBoxRow;
+					color: white;
+					justify-content: center;
+					align-items: center;
+					width: 100%;
+					height: 100%;
+					text-decoration: none;
+					font-family: '阿里巴巴普惠体','微软雅黑',sans-serif;;
+				}
+				#socialContent1{
+					@include flexBoxRow;
+					color: white;
+					justify-content: center;
+					align-items: center;
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+	}
+
+	#webInfo{
+		margin: 1em 0;
+		line-height:1.5em;
+		text-align: center;
+		font-family:'TodaySB','Folio Light','Helvetica','阿里巴巴普惠体','微软雅黑',sans-serif;
+		font-size: 0.52em;
+	}
+}

@@ -2,18 +2,21 @@
 <html lang="{{ page.lang | default: site.lang | default: 'zh-CN' }}">
 
   {%- include head.html -%}
-  <style>
-	  #navBlog{
-	  	display: block;
-	  }
-  </style>
 
   <body>
 
     {%- include navBlog.html -%}
+    {%- include navMobile.html -%}
 
     <main id="mainBox" aria-label="Content">
+
+      <!-- 移动端页面标题 -->
+  <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="{{site.logoBlack | prepend:site.url}}" alt="MarsWiz">
+    </a> -->
+<!--  -->
       {{ content }}
+
     </main>
 
     {%- include footerBlog.html -%}
@@ -23,14 +26,22 @@
 
   </body> 
   <script>
-		blogYearFunc();		
+		blogYearFunc();
+    if (window.innerWidth >= 769){
+      document.querySelector('#navBlog').style.display = 'block';
+    }		
   </script> 
 
   {%- if page.nav -%}
 	<script>
-		let btnColor = document.querySelector('#navBlog #navTrans #navItems #{{page.nav}}Btn img').src.replace(/Black/,'Blue');
-		document.querySelector('#navBlog #navTrans #navItems #{{page.nav}}Btn img').src = btnColor;
-		document.querySelector('#{{page.nav}}Btn img').removeEventListener('mouseout',blueToBlack,false);
+    if (window.innerWidth > 768){
+  		let btnColor = document.querySelector('#navBlog #navTrans #navItems #{{page.nav}}Btn img').src.replace(/Black/,'Blue');
+  		document.querySelector('#navBlog #navTrans #navItems #{{page.nav}}Btn img').src = btnColor;
+  		document.querySelector('#{{page.nav}}Btn img').removeEventListener('mouseout',blueToBlack,false);
+    } else {
+      let btnColor = document.querySelector('#navMobile #navTrans #navItems #{{page.nav}}Btn img').src.replace(/Black/,'Blue');
+      document.querySelector('#navMobile #navTrans #navItems #{{page.nav}}Btn img').src = btnColor;
+    }
 	</script>
   {%- endif -%}
 

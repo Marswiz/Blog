@@ -12,6 +12,7 @@
 //字体字号
 	$fontPath:'localhost:4000/assets/fonts/' ;
 	$baseFontSize:  24pt !default;
+
 	@font-face{
 		font-family: 'Didot';
 		src: url('https://marswiz.com/assets/fonts/Didot.ttf') format('truetype');
@@ -67,16 +68,44 @@
 	  }
 	}
 
+	@mixin media-query-over($device) {
+	  @media screen and (min-width: $device) {
+	    @content;
+	  }
+	}
+
 //导入
-	@import 'marswiz/basic';
-	@import 'marswiz/navFront';
-	@import 'marswiz/navBlog';
-	@import 'marswiz/frontShow';
-	@import 'marswiz/frontContentBox';
-	@import 'marswiz/frontPagenater';
-	@import 'marswiz/footer';
-	@import 'marswiz/post';
-	@import 'marswiz/blog';
-	@import 'marswiz/tags';
-	@import 'marswiz/aboutMe';
-	@import 'marswiz/search';
+// 响应式：PC端
+	@media screen and (min-width: 769px) {
+		@import 'marswiz/pc/basic';
+		@import 'marswiz/pc/navFront';
+		@import 'marswiz/pc/navBlog';
+		@import 'marswiz/pc/frontShow';
+		@import 'marswiz/pc/frontContentBox';
+		@import 'marswiz/pc/frontPagenater';
+		@import 'marswiz/pc/footer';
+		@import 'marswiz/pc/post';
+		@import 'marswiz/pc/blog';
+		@import 'marswiz/pc/tags';
+		@import 'marswiz/pc/aboutMe';
+		@import 'marswiz/pc/search';
+		@import 'marswiz/pc/navMobile';
+	}
+
+// 响应式：移动端
+	@media screen and (max-width: 768px) {
+		@import 'marswiz/mobile/basic';
+		@import 'marswiz/mobile/navFront';
+		@import 'marswiz/mobile/navBlog';		
+		@import 'marswiz/mobile/frontShow';
+
+		@import 'marswiz/mobile/frontContentBox';
+		@import 'marswiz/mobile/frontPagenater';
+		@import 'marswiz/mobile/footer';
+		@import 'marswiz/mobile/post';
+		@import 'marswiz/mobile/blog';
+		@import 'marswiz/mobile/tags';
+		@import 'marswiz/mobile/aboutMe';
+		@import 'marswiz/mobile/search';
+		@import 'marswiz/mobile/navMobile';
+	}

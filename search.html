@@ -2,6 +2,10 @@
 layout: blog
 nav: search
 ---
+<a id="logoBoxBlog" href="/">
+  <img id='logo' src="{{site.logoBlack | prepend:site.url}}" alt="MarsWiz">
+</a>
+
 
 <div id="searchBox">
 	<input id="searchInput" type="text" placeholder="Search Tags/Blogs/Time/Author..">
@@ -60,12 +64,22 @@ nav: search
 	              </div>
 	            </h3>
 
-	            <!-- 日志时间和标签 -->
+	            <!-- 日志时间和标签-PC端 -->
 	            <div id="searchPostInfo">
 	              <span class="searchPostDate">{{ post.date | date: date_format }}</span>
 	              {%- for tag in post.tags -%}
 	                <p class="searchPostTags">{{ tag }}</p>
 	              {%- endfor -%}
+	            </div>
+
+                <!-- 日志时间和标签--移动端 -->
+	            <div id="searchPostInfoMobile">
+	              <p class="searchPostDateMobile">{{ post.date | date: date_format }}</p>
+	              <div id="searchTagBox">
+	                {%- for tag in post.tags -%}
+	                  <p id="searchPostTagsMobile">{{ tag }}</p>
+	                {%- endfor -%}
+	              </div>
 	            </div>
 	            
 	            <!-- 日志概览 -->

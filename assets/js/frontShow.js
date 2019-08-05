@@ -44,7 +44,7 @@
 				console.log('rolled~');
 				console.log(getWheelDelta(e))
 ;				// 监听鼠标滚轮向下滚动
-				if(getWheelDelta(e) == -120){
+				if(getWheelDelta(e) == -120 && window.innerWidth >= 768){
 				// 跳转到frontContentBox
 					e.preventDefault();			
 					window.scrollTo(0,document.querySelector('#frontShow').clientHeight);

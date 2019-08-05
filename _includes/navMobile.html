@@ -1,14 +1,13 @@
-<!-- 日志页导航栏结构 -->
+<!-- 日志页移动端导航栏结构 -->
 
-<nav id="navBlog">
-
-	
+<nav id="navMobile">
 	<div id="navBlur"></div>
 	<div id="navTrans">
 		<!-- logo -->
 		<a id="logo" href="/">
-			<img src="{{site.logoBlack | prepend:site.url}}" alt="MarsWiz">
+			<img id='logo' src="{{site.logoBlack | prepend:site.url}}" alt="MarsWiz">
 		</a>
+
 		<!-- 导航按钮 -->
 		<div id="navItems">
 			<a id="blogBtn" href="{{'/blog'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/blogBlack.svg'}}" alt="blog"></a>
@@ -17,13 +16,7 @@
 			<a id="searchBtn" href="{{'/search'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/searchBlack.svg'}}" alt="search"></a>			
 		</div>
 
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
 
-		<!-- 移动端按钮 -->
-		<div id="navItemsBtnMobile">
-			<span class="fa fa-bars"></span>			
-		</div>
 	</div>
-
-
-
 </nav>
