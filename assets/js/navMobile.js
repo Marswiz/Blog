@@ -37,8 +37,8 @@ function navMoveFunc(e){
 }
 
 if (window.innerWidth <= 768){
-	window.addEventListener('touchstart',getStartPoint,false);
+	document.body.addEventListener('touchstart',getStartPoint,false);
 	// window.addEventListener('touchmove',navMobileFunc,false);
-	window.addEventListener('touchend',getEndPoint,false);
-	window.addEventListener('touchend',navMoveFunc,false);
+	document.body.addEventListener('touchend',getEndPoint,false);
+	document.body.addEventListener('touchend',navMoveFunc,false);
 }
