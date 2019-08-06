@@ -1,10 +1,11 @@
 let touchstartPosX,touchendPosX = -100;
 
 function navMobileFunc(e){
-	if (window.innerWidth <= 768){
+
+	if (window.innerWidth <= 768 && e.changedTouches.length == 1){
 		if (e.type == 'touchstart'){
 			touchstartPosX = e.changedTouches[0].clientX; 
-		} else if (e.type == 'touchend'){
+		} else if (e.type == 'touchend' && e.changedTouches.length == 1){
 			touchendPosX = e.changedTouches[0].clientX;
 		}
 
