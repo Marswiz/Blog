@@ -1,12 +1,14 @@
 let touchstartPosX,touchendPosX = -100;
 
 function navMobileFunc(e){
-
-	if (window.innerWidth <= 768 && e.changedTouches.length == 1){
-		if (e.type == 'touchstart'){
-			touchstartPosX = e.changedTouches[0].clientX; 
+	console.log(e);
+	if (window.innerWidth <= 768){
+		if (e.type == 'touchstart' && e.touches.length == 1){
+			touchstartPosX = e.touches[0].clientX;
+			console.log(touchstartPosX); 
 		} else if (e.type == 'touchend' && e.changedTouches.length == 1){
 			touchendPosX = e.changedTouches[0].clientX;
+			console.log(touchendPosX);
 		}
 
 		if ((touchendPosX-touchstartPosX) >= 0.2*window.innerWidth){
