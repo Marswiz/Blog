@@ -1,35 +1,42 @@
-let touchstartPosX,touchendPosX = 100000;
+let touchstartPosX = 0;
+let touchendPosX = 0;
 
-function navMobileFunc(e){
-	console.log(e);
-	if (window.innerWidth <= 768){
-		if (e.type == 'touchstart' && e.touches.length == 1){
+function getStartPoint(e){
+		if (e.touches.length == 1){
 			touchstartPosX = e.touches[0].clientX;
-			console.log(touchstartPosX); 
-		} else if (e.type == 'touchend' && e.changedTouches.length == 1){
+			// console.log('start point'+ touchstartPosX);
+		}
+}
+
+function getEndPoint(e){
+		if(e.changedTouches.length == 1){
 			touchendPosX = e.changedTouches[0].clientX;
-			console.log(touchendPosX);
+			// console.log('end point' + touchendPosX);
 		}
+}
 
-		if ((touchendPosX-touchstartPosX) >= 0.2*window.innerWidth){
-			let a = document.querySelectorAll('#navMobile,#navMobile #navBlur,#navMobile #navTrans');
-			for (let i=0; i<a.length; i++){
-				a[i].style.animation = 'navMove 0.5s ease-in forwards';
-			}
+function navMoveFunc(e){	
+	if ((touchendPosX-touchstartPosX) >= 0.2*window.innerWidth){
+		let a = document.querySelectorAll('#navMobile,#navMobile #navBlur,#navMobile #navTrans');
+		for (let i=0; i<a.length; i++){
+			a[i].style.animation = 'navMove 0.5s ease-in forwards';
 		}
-
-		if ((touchendPosX-touchstartPosX) <= -0.2*window.innerWidth && touchendPosX > 0){
-			let a = document.querySelectorAll('#navMobile,#navMobile #navBlur,#navMobile #navTrans');
-			for (let i=0; i<a.length; i++){
-				a[i].style.animation = 'navMoveBack 0.5s ease-in forwards';
-			}
+		// console.log('Go'); 
+	} else if ((touchendPosX-touchstartPosX) <= -0.2*window.innerWidth && touchendPosX > 0){
+		let a = document.querySelectorAll('#navMobile,#navMobile #navBlur,#navMobile #navTrans');
+		for (let i=0; i<a.length; i++){
+			a[i].style.animation = 'navMoveBack 0.5s ease-in forwards';
 		}
-		
-		touchstartPosX,touchendPosX = -100;		
+		// console.log('Back'); 
 	}
+	touchstartPosX = 0;
+	touchendPosX = 0;
+	// console.log('Reset to Null'); 
 }
 
 if (window.innerWidth <= 768){
-	window.addEventListener('touchstart',navMobileFunc,false);
-	window.addEventListener('touchend',navMobileFunc,false);
+	window.addEventListener('touchstart',getStartPoint,false);
+	// window.addEventListener('touchmove',navMobileFunc,false);
+	window.addEventListener('touchend',getEndPoint,false);
+	window.addEventListener('touchend',navMoveFunc,false);
 }
