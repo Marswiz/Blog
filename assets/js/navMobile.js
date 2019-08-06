@@ -31,10 +31,10 @@ function getStartPoint(e){
 		document.body.addEventListener('touchend',navMoveFunc,false);
 }
 
-function gestureDetected(e){
-	return document.body.removeEventListener('touchend',navMoveFunc,false);
+function gestureDetected(e){	
 	console.log(e);
 	console.log('手势检测到啦！');
+	return document.body.removeEventListener('touchend',navMoveFunc,false);
 }
 
 function getEndPoint(e){
