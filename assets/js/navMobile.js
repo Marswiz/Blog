@@ -1,4 +1,4 @@
-let touchstartPosX,touchendPosX = -100;
+let touchstartPosX,touchendPosX = 100000;
 
 function navMobileFunc(e){
 	console.log(e);
