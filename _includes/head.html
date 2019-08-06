@@ -13,5 +13,12 @@
 	<link rel="shortcut icon" href = "{{ "/assets/pics/logo_cat.jpg" | prepend: site.baseurl }}">
 	<link rel="bookmark" href = "{{ "/assets/pics/logo_cat.jpg" | prepend: site.baseurl }}">
 	<link rel="apple-touch-icon" href = "{{ "/assets/pics/logo_cat.jpg" | prepend: site.baseurl }}">
+
+  <script src="{{'/assets/js/vconsole.min.js'| prepend:site.url}}"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
     
 </head>
