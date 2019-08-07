@@ -1,0 +1,24 @@
+#frontPagenater {
+	@include flexBoxRow;
+	justify-content: flex-end;
+	margin-top: 1.5em;
+	margin-bottom: 3em;
+	padding-right: 3.4vw;
+	#firstPage,#previousPage,#nextPage,#lastPage{
+		img{
+			margin-left: 1em;
+			width: 1em;
+			height: auto;
+			max-width: 100%;
+		}		
+	}
+	#pageNumBox{
+		margin-left:2.5em;
+		margin-right: 1.5em;
+		font-family: TodaySB-CapExtLig;
+		font-weight: bold;
+		#pageNum{
+			color: $marsBlue;
+		}
+	}		
+}

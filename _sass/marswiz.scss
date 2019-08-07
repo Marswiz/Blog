@@ -43,7 +43,7 @@
 	}
 
 //日志图片大小(单位vw)
-	$postImgWidth: 30;		
+	$postImgWidth: 30;
 	
 //媒体参数
 	$moblieWidth: 600px;
@@ -79,7 +79,7 @@
 
 //导入
 // 响应式：PC端
-	@media screen and (min-width: 769px) {
+	@media screen and (min-width: 1601px) {
 		@import 'marswiz/pc/basic';
 		@import 'marswiz/pc/navFront';
 		@import 'marswiz/pc/navBlog';
@@ -93,6 +93,23 @@
 		@import 'marswiz/pc/aboutMe';
 		@import 'marswiz/pc/search';
 		@import 'marswiz/pc/navMobile';
+	}
+
+// 响应式：Laptop
+	@media screen and (min-width: 769px) and (max-width: 1600px){
+		@import 'marswiz/laptop/basic';
+		@import 'marswiz/laptop/navFront';
+		@import 'marswiz/laptop/navBlog';
+		@import 'marswiz/laptop/frontShow';
+		@import 'marswiz/laptop/frontContentBox';
+		@import 'marswiz/laptop/frontPagenater';
+		@import 'marswiz/laptop/footer';
+		@import 'marswiz/laptop/post';
+		@import 'marswiz/laptop/blog';
+		@import 'marswiz/laptop/tags';
+		@import 'marswiz/laptop/aboutMe';
+		@import 'marswiz/laptop/search';
+		@import 'marswiz/laptop/navMobile';
 	}
 
 // 响应式：移动端

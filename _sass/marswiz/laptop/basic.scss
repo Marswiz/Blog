@@ -1,0 +1,33 @@
+/**
+ * 重置基本元素
+ */
+	body, h1, h2, h3, h4, h5, h6,
+	p, blockquote, pre, hr,
+	dl, dd, ol, ul, figure{
+	  margin: 0 ; 
+	  padding: 0 ;
+	}
+
+// 响应式设定
+	*{
+		box-sizing: border-box;	
+	}
+
+// 设置基本字号
+	body {	
+		display: block;
+		width: 100%;
+		font-size: 0.65*$baseFontSize;
+		color: $marsBlack;
+	}	
+
+
+// main元素基本设置
+	main {
+		@include flexBoxCol;
+		#logoBoxBlog{
+			display: none;
+		}
+	}
+
+

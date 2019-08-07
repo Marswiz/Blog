@@ -1,0 +1,173 @@
+#postBox {
+	// 默认文字颜色
+	color: black;
+	line-height: 1.5em;
+	margin-top: 5.5vw;
+	padding-left: 16.4vw;
+	padding-right: 3.4vw; 
+	@include flexBoxCol;
+	#postHeader{
+		@include flexBoxCol;
+		align-items: flex-end;
+		align-self: flex-end;
+		margin-top: 2.95vw;
+		#postTitle{
+			line-height: 1em;
+			font-family: 'Bodoni MT','宋体';
+			font-size: 2.33em;
+			width: 70vw;
+			text-align:right;
+		}
+		#postInfo{
+			text-align: right;
+			margin: 2.24vw 0;
+			font-family: Poiret One;
+		}
+	}
+
+	#postContent{
+		font-family: 'Folio Light','Helvetica','阿里巴巴普惠体','微软雅黑',sans-serif;
+		text-align: justify;
+		h1,h2,h3,h4,h5,h6{
+			margin-top: 1.5em;
+		}
+
+		li{
+			margin-left: 1em;
+		}
+		table{
+			margin-top: 0.5em;
+		}
+		thead{
+			background-color: $marsBlack;
+			color: white;
+			opacity: 0.8;
+		}
+		tbody{
+			color: $marsBlack;
+			background-color: $marsRice;
+			opacity: 0.8;
+		}
+
+		p {
+			margin-top: 1em;
+			text-indent: 2em;
+			&:first-child{
+				margin-top:0;
+			}
+			.fa {
+				text-indent: 0;
+			}
+			img {
+				// display: inline;
+				max-width: 100%;
+				// margin: 0 0.5*(80.2-$postImgWidth)+vw;
+				// width: ($postImgWidth)+vw;
+				// height: auto;
+			}
+		}
+
+		p.eng {
+			&:first-child{
+				text-indent: 0em;
+			}
+			text-indent: 1em;
+		}
+
+		p.noIndent {
+			text-indent: 0em;
+		}
+
+		p.allIndent {
+			padding-left: 2em;
+			text-indent: 0em;
+		}
+
+		a {
+			text-decoration: none;
+			color: $marsBlack;
+			&:hover{
+				color:$marsBlue;
+			}
+		}
+		blockquote {
+			margin: 1em 0em;
+			padding: 1em 1em 1em 1em;
+			font-size: 0.8em;
+			width:100%;
+			border-left:solid $marsBlue 5px;
+			font-style: italic;
+			background-color: lighten($marsRice, 6.18%);
+			blockquote {
+				margin: 0;
+				padding: 0;
+				border: none;
+				text-align: right;
+				font-size: 0.8em;
+				font-style: normal;
+			}
+			p {
+				margin-top:0;
+			}
+		}
+		code {
+			text-align: left;
+			font-family: 'Folio Light','微软雅黑',sans-serif;
+			color: $marsBlue;
+			margin:0 0.2em;
+			&.solo {
+				display: block;
+				text-align: left;
+				font-family: 'Folio Light','微软雅黑',sans-serif;
+				color: $marsBlue;
+			}
+			&.tooltip-mars{
+				font-weight: normal;
+			}
+		}
+		pre {
+			font-size: 0.8em;
+			text-align: left;
+			margin:1em 0;
+			padding:0.5em 0 0.5em 1em;
+			background-color: lighten($marsRice, 6.18%);
+		}
+		pre code{		
+			border: none;
+		}
+		table{
+			text-align: center;
+			thead {
+				font-weight: bold;
+			}
+		}
+		.checkbox {
+			font-size:1em;
+		}
+	}
+	#tagsBox{
+		margin: 2.24vw 0;
+		font-family: Bodoni MT;
+		font-weight: bold;
+		#tags{
+			text-decoration: none;
+			margin:0 0.5em;
+			color: $marsBlue;			
+		}
+	}
+}
+
+#postPager{
+	@include flexBoxRow;
+	padding-right: 3.4vw;
+	padding-top: 2.24vw;
+	justify-content: flex-end;
+	span {
+		margin-left: 2em;		
+		img {
+			height: 1em;
+			max-width: 100%;
+			width: auto;
+		}
+	}
+}

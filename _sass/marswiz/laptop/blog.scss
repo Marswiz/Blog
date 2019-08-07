@@ -1,0 +1,31 @@
+#blogs{
+
+	width: 79.5vw;
+	min-height: 52.725vw;
+	margin: 11vw 3.4vw 4vw 16.4vw;
+
+	.blogYear{
+		cursor: pointer;
+		font-family: Poiret One;
+		font-size: 2em;
+		margin-left: -1.28em;
+		margin-top: 0.5em;
+		&:hover{
+			color: $marsBlue;
+		}
+	}
+	a{
+		width:100%;
+		text-decoration:none;
+		color: $marsBlack;
+		&:hover{
+			color: $marsBlue;
+		}
+		#blogBox{
+			line-height:1.3em;
+			font-family: 'Memphis','阿里巴巴普惠体';
+			@include flexBoxRow;
+			justify-content: space-between;
+		}
+	}
+}
