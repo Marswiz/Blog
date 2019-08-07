@@ -8,4 +8,4 @@ author: Mars
 pIdentifier: 中文缩进
 ---
 
-![jQuery DOM操作](/assets/pics/blogPics/jQuery DOM操作.svg 'jQuery DOM操作.svg')
+[jQuery DOM操作](/assets/pics/blogPics/jQuery DOM操作.svg)

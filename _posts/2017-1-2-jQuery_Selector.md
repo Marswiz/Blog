@@ -8,4 +8,4 @@ author: Mars
 pIdentifier: 中文缩进
 ---
 
-![jQuery Selector.svg](/assets/pics/blogPics/jQuery Selector.svg 'jQuery Selector.svg')
+[jQuery Selector.svg](/assets/pics/blogPics/jQuery Selector.svg)

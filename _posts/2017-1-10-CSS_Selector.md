@@ -8,4 +8,4 @@ author: Mars
 pIdentifier: 中文缩进
 ---
 
-![CSS选择器](/assets/pics/blogPics/CSS选择器.svg 'CSS选择器.svg')
+[CSS选择器](/assets/pics/blogPics/CSS选择器.svg)
