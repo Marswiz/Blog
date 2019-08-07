@@ -19,6 +19,15 @@ function postsFunc(){
 		for (let i=0;i<para.length;i++) {
 			para[i].classList.add('eng');
 		}
+		let blockquotePara = document.querySelectorAll('#postBox blockquote p');
+		for (let i=0;i<blockquotePara.length;i++) {
+			blockquotePara[i].classList.add('noIndent');
+		}
+	} else if(pIndentifier == '中文缩进'){
+		let blockquotePara = document.querySelectorAll('#postBox blockquote p');
+		for (let i=0;i<blockquotePara.length;i++) {
+			blockquotePara[i].classList.add('noIndent');
+		}
 	} else if (pIndentifier == '无缩进'){
 		for (let i=0;i<para.length;i++) {
 			para[i].classList.add('noIndent');
@@ -26,6 +35,11 @@ function postsFunc(){
 	} else if (pIndentifier == '全缩进'){
 		for (let i=0;i<para.length;i++) {
 			para[i].classList.add('allIndent');
+		}
+		let blockquotePara = document.querySelectorAll('#postBox blockquote p');
+		for (let i=0;i<blockquotePara.length;i++) {
+			blockquotePara[i].classList.remove('allIndent');
+			blockquotePara[i].classList.add('noIndent');
 		}
 	}
 
@@ -35,13 +49,29 @@ function postsFunc(){
 		a[i].addEventListener('mouseover',blackToBlue,false);
 		a[i].addEventListener('mouseout',blueToBlack,false);
 	}
-}
+
+
+// 图片居中
+	function picMid(){}
+	let pics = document.querySelectorAll('#postBox img');
+	for(let i=0;i<pics.length;i++){
+		let a = pics[i].parentNode.offsetWidth;
+		let b = pics[i].offsetWidth;		
+			pics[i].style.marginLeft = 0.45*(a-b)+'px';
+	}
 
 // 点击关键词跳转
 	function postTagNav(e){
 		location.href = document.querySelector('#baseURLIdentifier').innerHTML + '/tags/#' + e.target.innerHTML;
 	}
 	let postTagBtn = document.querySelectorAll('#tagsBox #tags span');
-	for(let i=0;i<postTagBtn.length;i++){
-		postTagBtn[i].addEventListener('mousedown',postTagNav,false);
+	if (window.innerWidth > 768){
+		for(let i=0;i<postTagBtn.length;i++){
+			postTagBtn[i].addEventListener('mousedown',postTagNav,false);
+		}
+	} else {
+		for(let i=0;i<postTagBtn.length;i++){
+			postTagBtn[i].addEventListener('touchend',postTagNav,false);
+		}
 	}
+}

@@ -31,6 +31,8 @@ function tagBig(e){
     }
 
     let tag = document.querySelectorAll('.cloudTag');
-    for(let i=0; i<tag.length; i++){
-      tag[i].addEventListener('mouseenter',tagBig,false);
+    if (window.innerWidth > 768){
+      for(let i=0; i<tag.length; i++){
+        tag[i].addEventListener('mouseenter',tagBig,false);
+      }
     }

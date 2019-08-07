@@ -40,7 +40,10 @@
 	@font-face{
 		font-family: 'Folio Light';
 		src: url('https://marswiz.com/assets/fonts/Folio-Light.otf') format('opentype');
-	}	
+	}
+
+//日志图片大小(单位vw)
+	$postImgWidth: 30;		
 	
 //媒体参数
 	$moblieWidth: 600px;

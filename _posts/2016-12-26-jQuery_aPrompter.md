@@ -4,9 +4,8 @@ title: jQuery 快速title提示器
 date: 2016-12-26
 categories: blog
 tags: [BLOG,jQuery,Codes,Web,FrontEnd]
-description: 一个行动胜过百句空洞的言语
-header-img: "img/ice.jpg"
-titlecolor: white
+author: Mars
+pIdentifier: 中文缩进
 ---
  
     // By MarsYao 20161225

@@ -4,10 +4,8 @@ title: Bootstrap 响应式导航类
 date: 2017-1-23
 categories: blog
 tags: [BLOG,Bootstrap,FrontEnd]
-description: take it easy.
-header-img: "img/high.jpg"
-titlecolor: black
-tagcolor: black
+author: Mars
+pIdentifier: 中文缩进
 ---
 >Bootstrap 响应式导航条由两部分组成，最外层是<code><nav></code>元素，类名为:<code>.nav .nav-default</code><code><nav></code>标签后，两个部分class分别是<code>.navbar-header</code>和<code>.navbar-collapse .collapse</code> <br>
 

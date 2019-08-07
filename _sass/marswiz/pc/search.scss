@@ -87,6 +87,10 @@
 					text-decoration: none;
 				}
 
+				#searchPostInfoMobile{
+					display: none;
+				}
+
 				#searchPostInfo{
 					@include flexBoxRow;
 					align-items: center;
