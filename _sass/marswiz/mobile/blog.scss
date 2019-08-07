@@ -10,6 +10,9 @@
 		font-size: 2em;
 		margin-left: -1.28em;
 		margin-top: 0.5em;
+		&:hover{
+			
+		}
 		&:active{
 			color: $marsBlue;
 		}
@@ -19,7 +22,7 @@
 		text-decoration:none;
 		color: $marsBlack;
 		&:hover{
-			
+
 		}
 		&:active{
 			color: $marsBlue;

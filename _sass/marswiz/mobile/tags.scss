@@ -43,6 +43,9 @@
 		margin-left: -1.45em;
 		margin-top: 0.5em;
 		&:hover{
+
+		}
+		&:active{
 			color: $marsBlue;
 		}
 	}
@@ -51,6 +54,9 @@
 		text-decoration:none;
 		color: $marsBlack;
 		&:hover{
+
+		}
+		&:active{
 			color: $marsBlue;
 		}
 		#tagsBlogBox{
@@ -78,7 +84,7 @@
 	// border: dashed 1px $marsBlack;
 	color: $marsBlack;
 	opacity: 0.3;
-	&:hover{
+	&:active{
 		color: $marsBlue;
 		opacity: 1;
 		transform: rotate(-359deg);
