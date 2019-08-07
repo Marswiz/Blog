@@ -32,8 +32,10 @@
 			#link{
 				text-decoration: none;
 				color: $marsBlack;
-
 				&:hover{
+					
+				}
+				&:active{
 					color: $marsBlue;
 					.frontPostTags,#frontPostTagsMobile{
 						border: dashed 1px $marsBlue !important;
