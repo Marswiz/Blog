@@ -2,7 +2,7 @@ let touchstartPosX = 0;
 let touchendPosX = 0;
 
 function navMoveFunc(e){	
-	if ((touchendPosX-touchstartPosX) >= 0.2*window.innerWidth){
+	if ((touchendPosX-touchstartPosX) >= 0.2*window.innerWidth && touchstartPosX >= 0.1*window.innerWidth){
 		let a = document.querySelectorAll('#navMobile,#navMobile #navBlur,#navMobile #navTrans');
 		for (let i=0; i<a.length; i++){
 			a[i].style.animation = 'navMove 0.5s ease-in forwards';
