@@ -21,8 +21,10 @@
 				color: $marsBlack;
 
 				&:hover{
+					transition: color 0.1s;
 					color: $marsBlue;
 					.frontPostTags{
+						transition: border 0.1s;
 						border: dashed 1px $marsBlue !important;
 					}
 				}

@@ -4,7 +4,9 @@
 	min-height: 52.725vw;
 	margin: 11vw 3.4vw 4vw 16.4vw;
 
+
 	.blogYear{
+		transition: color 0.2s;
 		cursor: pointer;
 		font-family: Poiret One;
 		font-size: 2em;
@@ -18,6 +20,7 @@
 		width:100%;
 		text-decoration:none;
 		color: $marsBlack;
+		transition: color 0.1s;
 		&:hover{
 			color: $marsBlue;
 		}

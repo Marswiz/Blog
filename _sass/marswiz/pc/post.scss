@@ -37,17 +37,28 @@
 		}
 		table{
 			margin-top: 0.5em;
+			thead{
+				background-color: $marsBlack;
+				color: white;
+				opacity: 0.8;
+				tr{
+					&:hover {
+						background-color: $marsBlack;
+					}
+				}
+			}
+			tbody{
+				color: $marsBlack;
+				background-color: $marsRice;
+				opacity: 0.8;
+			}
+			tr {
+				&:hover {
+					background-color: darken($marsRice,10%);
+				}
+			}
 		}
-		thead{
-			background-color: $marsBlack;
-			color: white;
-			opacity: 0.8;
-		}
-		tbody{
-			color: $marsBlack;
-			background-color: $marsRice;
-			opacity: 0.8;
-		}
+
 
 		p {
 			margin-top: 1em;
