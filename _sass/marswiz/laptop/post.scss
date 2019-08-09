@@ -171,3 +171,31 @@
 		}
 	}
 }
+
+#beian{
+	display: block;
+}
+
+.leancloud-visitors{
+	margin-top: 5vw;
+	margin-left: 16.4vw;
+	margin-right: 3.4vw; 
+	font-size: 0.6em;
+}
+
+
+#vcomments{
+	margin-top: 1vw;
+	margin-left: 16.4vw;
+	margin-right: 3.4vw; 
+	font-size: 0.66em;
+	color: $marsBlack;
+	.vinput:focus{
+		border-bottom-color: $marsBlue;
+		// border-bottom-width: 2px;
+	}
+	#veditor{
+		font-family: 'Folio Light','Helvetica','阿里巴巴普惠体','微软雅黑',sans-serif;
+		font-style: oblique;
+	}
+}

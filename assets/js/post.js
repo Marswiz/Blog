@@ -52,9 +52,18 @@ function postsFunc(){
 
 
 // 图片居中
-	function picMid(){}
 	let pics = document.querySelectorAll('#postBox img');
 	for(let i=0;i<pics.length;i++){
+		
+		// 取消img的缩进
+		pics[i].parentNode.style.textIndent = '0';
+
+		// 单击图片转大图		
+		pics[i].onclick = function(){
+			location.href = pics[i].src;
+		}
+
+		// 设定居中margin
 		let a = pics[i].parentNode.offsetWidth;
 		let b = pics[i].offsetWidth;		
 			pics[i].style.marginLeft = 0.45*(a-b)+'px';

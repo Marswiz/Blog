@@ -20,8 +20,11 @@
 
 		</div>
 		<div id="webInfo">
-			<p>京ICP备 17067352 号</p>
-			<p>Created by Mars 2019 using Jekyll.</p>
+			<p>
+				<span id="beian">京ICP备 17067352 号</span>
+				<span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+				<span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+			</p>
 		</div>
 	</div>
 	<script src="{{'/assets/js/nav.js' | prepend:site.url}}"></script>	
@@ -33,4 +36,20 @@
 	<script>
 		window.addEventListener('load',postsFunc,false);
 	</script>
+	
+	<!-- Valine 评论 -->
+	<script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro'
+
+        })
+    </script>
+
 </footer>
