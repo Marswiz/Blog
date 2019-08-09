@@ -11,4 +11,4 @@ pIdentifier: 无缩进
 >>————2017.2.9 Mars 北航三馆314教研室
 
 
-[JavaScript 引用类型](/assets/pics/blogPics/JavaScript 引用类型.svg)
+![JavaScript 引用类型](/assets/pics/blogPics/JavaScript 引用类型.svg '/JavaScript 引用类型.svg')

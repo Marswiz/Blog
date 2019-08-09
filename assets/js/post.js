@@ -59,9 +59,9 @@ function postsFunc(){
 		pics[i].parentNode.style.textIndent = '0';
 
 		// 单击图片转大图		
-		pics[i].onclick = function(){
-			location.href = pics[i].src;
-		}
+		// pics[i].onclick = function(){
+		// 	location.href = pics[i].src;
+		// }
 
 		// 设定居中margin
 		let a = pics[i].parentNode.offsetWidth;
