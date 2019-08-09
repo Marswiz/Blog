@@ -50,3 +50,12 @@ if (window.innerWidth <= 768){
 	document.body.addEventListener('touchend',getEndPoint,false);
 	document.body.addEventListener('gesturestart',gestureDetected,false);
 }
+
+
+// 调试
+console.log('原始width:'+window.innerWidth);
+function showVisual(){
+	console.log('scale is ' + visualViewport.scale);
+	console.log('width is ' + visualViewport.width);
+}
+document.body.addEventListener('touchend',showVisual,false);
