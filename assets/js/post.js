@@ -25,8 +25,20 @@ function postsFunc(){
 		}
 	} else if(pIndentifier == '中文缩进'){
 		let blockquotePara = document.querySelectorAll('#postBox blockquote p');
+		let p = document.querySelectorAll('#postBox p');
 		for (let i=0;i<blockquotePara.length;i++) {
 			blockquotePara[i].classList.add('noIndent');
+		}
+
+		// 移动端Code显示优化 ：取消缩进，左对齐
+		if(window.innerWidth <= 768){
+			for(let i=0;i<p.length;i++){
+				if(p[i].childNodes.length == 1 && p[i].childNodes[0].tagName == 'CODE'){
+					p[i].style.textIndent = '0';
+					p[i].style.textAlign = 'left';
+					p[i].style.wordWrap = 'break-word';
+				}
+			}
 		}
 	} else if (pIndentifier == '无缩进'){
 		for (let i=0;i<para.length;i++) {

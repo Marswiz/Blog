@@ -1,6 +1,7 @@
 #postBox {
 	// 默认文字颜色
 	color: black;
+	width: 100%;
 	line-height: 1.5em;
 	margin-top: 10vw;
 	padding-left: 5vw;
@@ -29,6 +30,7 @@
 	#postContent{
 		font-family: 'Folio Light','Helvetica','阿里巴巴普惠体','微软雅黑',sans-serif;
 		text-align: justify;
+		width: 100%;
 		h1,h2,h3,h4,h5,h6{
 			margin-top: 1.5em;
 		}
@@ -39,6 +41,8 @@
 
 		table{
 			margin-top: 0.5em;
+			width: 100%;
+			max-width: 100%;
 		}
 		thead{
 			background-color: $marsBlack;
@@ -54,6 +58,7 @@
 		p {
 			margin-top: 1em;
 			text-indent: 2em;
+			word-wrap: break-word;
 			&:first-child{
 				margin-top:0;
 			}
@@ -62,6 +67,10 @@
 			}
 			img {
 				max-width: 100%;
+			}
+			code {
+				text-indent: 0;
+				text-align: left;
 			}
 		}
 
@@ -133,7 +142,8 @@
 			padding:0.5em 0 0.5em 1em;
 			background-color: lighten($marsRice, 6.18%);
 		}
-		pre code{		
+		pre code{
+			text-align: left;		
 			border: none;
 			word-wrap: break-word;
 		}
