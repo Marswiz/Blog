@@ -11,21 +11,6 @@
 // <无需修改>
 	let stepCount = [];
 
-// 检测浏览器是否支持Passive Event Listener:
-// Chrome 56+ 版本会默认把绑定在window、body、document等上的scroll mousewheel touchmove等默认设置为passive event listener以提高性能
-// passive event listener中不能调用 preventDefault,  会被忽略并报错;
-	let passiveSupported = false;
-
-	try {
-	  let options = Object.defineProperty({}, "passive", {
-	    get: function() {
-	      passiveSupported = true;
-	    }
-	  });
-
-	  window.addEventListener("test", null, options);
-	} catch(err) {}
-
 // 兼容FireFox,统一wheelDelta值
 	 let getWheelDelta = function(event) {
 	    return event.wheelDelta || (-event.detail * 40);

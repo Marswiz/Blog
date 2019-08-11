@@ -21,9 +21,9 @@ function navMoveFunc(e){
 }
 
 function getStartPoint(e){
+		// e.preventDefault();
 		if (e.touches.length == 1){
 			touchstartPosX = e.touches[0].clientX;
-			console.log(e);
 			console.log('start point'+ touchstartPosX);
 		}
 
@@ -40,15 +40,19 @@ function gestureDetected(e){
 function getEndPoint(e){
 		if(e.changedTouches.length == 1){
 			touchendPosX = e.changedTouches[0].clientX;
-			console.log(e);
 			console.log('end point' + touchendPosX);
 		}
 }
 
 if (window.innerWidth <= 768){
-	document.body.addEventListener('touchstart',getStartPoint,false);
-	document.body.addEventListener('touchend',getEndPoint,false);
+	document.body.addEventListener('touchstart',getStartPoint,passiveSupported ? { passive: false } : false);
+	document.body.addEventListener('touchend',getEndPoint,passiveSupported ? { passive: false } : false);
 	document.body.addEventListener('gesturestart',gestureDetected,false);
+	// document.addEventListener('touchmove',function(e){
+	// 	if(Math.abs(e.changedTouches[0].clientX - touchstartPosX) >= 0.2*window.innerWidth ){
+	// 		console.log(e);		
+	// 	}
+	// },passiveSupported ? { passive: false } : false);
 }
 
 
