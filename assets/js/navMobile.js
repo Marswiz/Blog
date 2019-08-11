@@ -2,13 +2,13 @@ let touchstartPosX = 0;
 let touchendPosX = 0;
 
 function navMoveFunc(e){	
-	if ((touchendPosX-touchstartPosX) >= 0.2*window.innerWidth && touchstartPosX >= 0.1*window.innerWidth && window.visualViewport.scale == 1){
+	if ((touchendPosX-touchstartPosX) >= 0.2*window.innerWidth && touchstartPosX >= 0.1*window.innerWidth && (window.visualViewport == undefined || window.visualViewport.scale == 1)){
 		let a = document.querySelectorAll('#navMobile,#navMobile #navBlur,#navMobile #navTrans');
 		for (let i=0; i<a.length; i++){
 			a[i].style.animation = 'navMove 0.5s ease-in forwards';
 		}
 		console.log('Go'); 
-	} else if ((touchendPosX-touchstartPosX) <= -0.2*window.innerWidth && window.visualViewport.scale == 1){
+	} else if ((touchendPosX-touchstartPosX) <= -0.2*window.innerWidth && (window.visualViewport == undefined || window.visualViewport.scale == 1)){
 		let a = document.querySelectorAll('#navMobile,#navMobile #navBlur,#navMobile #navTrans');
 		for (let i=0; i<a.length; i++){
 			a[i].style.animation = 'navMoveBack 0.5s ease-in forwards';
@@ -50,9 +50,9 @@ if (window.innerWidth <= 768){
 
 
 // 调试
-console.log('原始width:'+window.innerWidth);
-function showVisual(){
-	console.log('scale is ' + visualViewport.scale);
-	console.log('width is ' + visualViewport.width);
-}
-document.body.addEventListener('touchend',showVisual,false);
+// console.log('原始width:'+window.innerWidth);
+// function showVisual(){
+// 	console.log('scale is ' + visualViewport.scale);
+// 	console.log('width is ' + visualViewport.width);
+// }
+// document.body.addEventListener('touchend',showVisual,false);
