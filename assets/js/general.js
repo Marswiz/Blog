@@ -14,8 +14,8 @@
 	} catch(err) {}
 
 
-// 阻止浏览器自带后退，防止夸克浏览器、安卓自带浏览器的右滑手势操作。
-	history.pushState(null, null, document.URL);
-	window.addEventListener('popstate', function () {
-		history.pushState(null, null, document.URL);
-	});
+// // 阻止浏览器自带后退，防止夸克浏览器、安卓自带浏览器的右滑手势操作。
+// 	history.pushState(null, null, document.URL);
+// 	window.addEventListener('popstate', function () {
+// 		history.pushState(null, null, document.URL);
+// 	});

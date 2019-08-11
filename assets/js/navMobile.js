@@ -21,7 +21,6 @@ function navMoveFunc(e){
 }
 
 function getStartPoint(e){
-		// e.preventDefault();
 		if (e.touches.length == 1){
 			touchstartPosX = e.touches[0].clientX;
 			console.log('start point'+ touchstartPosX);
@@ -32,7 +31,6 @@ function getStartPoint(e){
 }
 
 function gestureDetected(e){	
-	console.log(e);
 	console.log('手势检测到啦！');
 	return document.body.removeEventListener('touchend',navMoveFunc,false);
 }
@@ -48,11 +46,6 @@ if (window.innerWidth <= 768){
 	document.body.addEventListener('touchstart',getStartPoint,passiveSupported ? { passive: false } : false);
 	document.body.addEventListener('touchend',getEndPoint,passiveSupported ? { passive: false } : false);
 	document.body.addEventListener('gesturestart',gestureDetected,false);
-	// document.addEventListener('touchmove',function(e){
-	// 	if(Math.abs(e.changedTouches[0].clientX - touchstartPosX) >= 0.2*window.innerWidth ){
-	// 		console.log(e);		
-	// 	}
-	// },passiveSupported ? { passive: false } : false);
 }
 
 
