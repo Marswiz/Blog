@@ -30,4 +30,25 @@
 		}
 	}
 
+	#toTop{
+		@include flexBoxRow;
+		justify-content:center;
+		align-items:center;
+		text-decoration: none;
+		position:fixed;
+		font-size: 1.5em;
+		width:1.5em;
+		height: 1.5em;
+		right:0;
+		bottom: 0;
+		color: $marsBlack;
+		opacity: 0.3;
+		&:hover{
+			color: $marsBlue;
+			opacity: 1;
+			transform: rotate(-359deg);
+			transition: transform 1s;
+		}
+	}
+
 

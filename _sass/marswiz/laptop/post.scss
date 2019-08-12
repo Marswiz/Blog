@@ -37,11 +37,21 @@
 		}
 		table{
 			margin-top: 0.5em;
+			tr{
+				&:hover {
+					background-color:darken($marsRice,10%);
+				}
+			}
 		}
 		thead{
 			background-color: $marsBlack;
 			color: white;
 			opacity: 0.8;
+			tr{
+				&:hover {
+					background-color: $marsBlack;
+				}
+			}
 		}
 		tbody{
 			color: $marsBlack;

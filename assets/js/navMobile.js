@@ -1,14 +1,17 @@
 let touchstartPosX = 0;
 let touchendPosX = 0;
 
+// 获取设备初始宽度
+let deviceInitialWidth = window.innerWidth;
+
 function navMoveFunc(e){	
-	if ((touchendPosX-touchstartPosX) >= 0.2*window.innerWidth && touchstartPosX >= 0.1*window.innerWidth && (window.visualViewport == undefined || window.visualViewport.scale == 1)){
+	if ((touchendPosX-touchstartPosX) >= 0.2*window.innerWidth && touchstartPosX >= 0.1*window.innerWidth && (window.innerWidth == deviceInitialWidth)){
 		let a = document.querySelectorAll('#navMobile,#navMobile #navBlur,#navMobile #navTrans');
 		for (let i=0; i<a.length; i++){
 			a[i].style.animation = 'navMove 0.5s ease-in forwards';
 		}
 		console.log('Go'); 
-	} else if ((touchendPosX-touchstartPosX) <= -0.2*window.innerWidth && (window.visualViewport == undefined || window.visualViewport.scale == 1)){
+	} else if ((touchendPosX-touchstartPosX) <= -0.2*window.innerWidth && (window.innerWidth == deviceInitialWidth)){
 		let a = document.querySelectorAll('#navMobile,#navMobile #navBlur,#navMobile #navTrans');
 		for (let i=0; i<a.length; i++){
 			a[i].style.animation = 'navMoveBack 0.5s ease-in forwards';
