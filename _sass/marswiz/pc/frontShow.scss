@@ -19,16 +19,18 @@
 			padding-top: 6.243vw;
 			width: 100vw;
 			height: 52.725vw;
+
 			
 			#frontPageInfo{
 				padding-left: 16.4vw;
 				padding-top:  8.2vw;
 				padding-right: 30vw;
-				font-size: 3em;
-				color: black;
-				opacity: 0.95;
+				font-size: 3.5em;
+				color: white;
+				opacity: 0.7;
+				// text-shadow: 0 0 12px white;
 				// background-color: gray;
-				height: 70%;
+				height: 55%;
 				@font-face {
 					font-family: 'Didot';
 					src: url([$fontPath,'Didot.ttf']) format('ttf');
@@ -42,19 +44,22 @@
 				height: 30%;
 				#tagBox{
 					width: 16.4vw;
+					margin-left: 16.4vw;
 					// background-color: tomato;
 					a {
 						display: block;
 						font-size: 0.7em;
 						font-family: TodaySB-CapExtLig;
-						text-align: right;
+						text-align: left;
 						text-decoration: none;
-						color: black;
+						color: white;
+						opacity: 0.7;
+						font-weight: bold;
 						margin: 0.5em 0;
 
 						&:hover{
 							// color: $marsBlue;
-							text-shadow: 1px 1px 3px white;
+							text-shadow: 1px 1px 5px white;
 						}
 					}
 				}

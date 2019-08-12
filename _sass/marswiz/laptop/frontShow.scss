@@ -25,10 +25,10 @@
 				padding-top:  8.2vw;
 				padding-right: 30vw;
 				font-size: 3em;
-				color: black;
-				opacity: 0.95;
+				color: white;
+				opacity: 0.7;
 				// background-color: gray;
-				height: 70%;
+				height: 55%;
 				@font-face {
 					font-family: 'Didot';
 					src: url([$fontPath,'Didot.ttf']) format('ttf');
@@ -42,19 +42,20 @@
 				height: 30%;
 				#tagBox{
 					width: 16.4vw;
+					margin-left: 16.4vw;
 					// background-color: tomato;
 					a {
 						display: block;
 						font-size: 0.7em;
 						font-family: TodaySB-CapExtLig;
-						text-align: right;
+						text-align: left;
 						text-decoration: none;
-						color: black;
+						color: white;
 						margin: 0.5em 0;
 
 						&:hover{
 							// color: $marsBlue;
-							text-shadow: 1px 1px 3px white;
+							text-shadow: 1px 1px 5px white;
 						}
 					}
 				}
