@@ -34,8 +34,8 @@
 					e.preventDefault();			
 					window.scrollTo(0,document.querySelector('#frontShow').clientHeight);
 				// 变换导航栏显示
-					document.querySelector('#navFront').style.display = 'none';
-					document.querySelector('#navBlog').style.display = 'block';
+					$('#navFront').hide();
+					$('#navBlog').show();
 					console.log('frontShow.js 变白');
 					return window.removeEventListener(wheelEvent(),topScroll,passiveSupported ? { passive: false } : false);			
 				}
@@ -66,8 +66,12 @@
 		} else if (window.scrollY > 10 && window.scrollY < document.querySelector('#frontShow').clientHeight-3){			
 			window.scrollTo(0,0);
 			// 变换导航栏显示			
-			document.querySelector('#navBlog').style.display = 'none';
-			document.querySelector('#navFront').style.display = 'block';
+			$('#navBlog').hide();
+			$('#navFront').show(2000);
+			$('#frontPageInfo').hide();
+			$('#tagBox').hide();
+			$('#frontPageInfo').slideDown(1500);
+			$('#tagBox').slideDown(500);
 			console.log('frontShow.js 变黑');
 			console.log('归位到页首~');
 		} else if(window.scrollY == document.querySelector('#frontShow').clientHeight){			

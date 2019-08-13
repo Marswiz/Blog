@@ -14,17 +14,19 @@ function navFunc(){
 		// 在日志页刷新后防止导航栏切换回渐变
 		if (document.querySelector('#frontShow')){
 			if(window.scrollY >= document.querySelector('#frontShow').clientHeight-2){
-				document.querySelector('#navBlog').style.display = 'block';
-				document.querySelector('#navFront').style.display = 'none';
+				$('#navBlog').show();
+				$('#navFront').hide();				
 				console.log('nav.js 变白');
 			} else {
-				document.querySelector('#navBlog').style.display = 'none';
-				document.querySelector('#navFront').style.display = 'block';
+				$('#navBlog').hide();
+				$('#navFront').show(2000);
+				$('#frontPageInfo').slideDown(1500);
+				$('#tagBox').slideDown(500);				
 				console.log('nav.js 变黑');
 			}
 		} else {
-				document.querySelector('#navBlog').style.display = 'block';
-				document.querySelector('#navFront').style.display = 'none';
+				$('#navBlog').show();
+				$('#navFront').hide();
 				console.log('nav.js 变白');
 		}
 	}
