@@ -84,7 +84,7 @@ function changeDayNight(){
 
 function loadDayNight(){
 	if (window.innerWidth <= 768){
-		if(window.localStorage.marswizBlogDayNight == 'Day'){
+		if(window.localStorage.marswizBlogDayNight == 'Day' || !window.localStorage.marswizBlogDayNight){
 			$('body,.cloudTag,blockquote,#searchBox').css({
 				'backgroundColor':''
 			});
