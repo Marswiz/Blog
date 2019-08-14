@@ -1,7 +1,15 @@
+#aboutMeTitle{
+	margin: 11vw 3.4vw 3vw 16.4vw;
+	font-family: 'Bodoni MT';
+	font-size: 2em;
+	color: black;
+}
+
 #aboutMeBox{
 	@include flexBoxRow;
-	margin: 11vw 3.4vw 3vw 16.4vw;
+	margin: 0 3.4vw 3vw 16.4vw;
 	color: black;
 	line-height: 1.5em;
 	font-family: 'Folio Light','Helvetica','阿里巴巴普惠体','微软雅黑',sans-serif;
 }
+
