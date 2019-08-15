@@ -86,7 +86,7 @@ function loadDayNight(){
 			$('body,.cloudTag,blockquote,#searchBox').css({
 				'backgroundColor':''
 			});
-			$('#blogBox #link,#blogs a,.blogYear,.tag,.cloudTag,#tagBlogs a,#aboutMeBox,#aboutMeTitle,#searchBox span').css({
+			$('#blogBox #link,#blogs a,.blogYear,.tag,.cloudTag,#tagBlogs a,#aboutMeBox,#aboutMeTitle,#searchBox span,#searchResultList div,#noResultContent p').css({
 				'color':''
 			});
 			$('p#frontPostTagsMobile,.cloudTag').css({
@@ -117,7 +117,7 @@ function loadDayNight(){
 			$('body,.cloudTag,blockquote,#searchBox').css({
 				'backgroundColor':'#506060'
 			});
-			$('#blogBox #link,#blogs a,.blogYear,.tag,.cloudTag,#tagBlogs a,#aboutMeBox,#aboutMeTitle,#searchBox span').css({
+			$('#blogBox #link,#blogs a,.blogYear,.tag,.cloudTag,#tagBlogs a,#aboutMeBox,#aboutMeTitle,#searchBox span,#searchResultList div,#noResultContent p').css({
 				'color':'white'
 			});
 			$('p#frontPostTagsMobile,.cloudTag').css({
