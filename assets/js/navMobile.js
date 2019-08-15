@@ -71,10 +71,8 @@ function changeDayNight(){
 	if (window.localStorage){
 		if( !window.localStorage.marswizBlogDayNight || window.localStorage.marswizBlogDayNight == 'Day'){
 			window.localStorage.setItem('marswizBlogDayNight','Night');	
-			console.log(window.localStorage.marswizBlogDayNight);
 		} else {
 			window.localStorage.setItem('marswizBlogDayNight','Day');
-			console.log(window.localStorage.marswizBlogDayNight);
 		}		
 	} else {
 		alert("Your Browser Doesn't Support Web Storage. The Function Cannot Be Used.");

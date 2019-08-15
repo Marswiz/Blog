@@ -38,7 +38,7 @@
 		window.addEventListener('load',postsFunc,false);
         if (window.innerWidth <= 768){
 				window.addEventListener('load',loadDayNight,false);
-				window.addEventListener('touchstart',loadDayNight,false);
+				$(document).one('touchstart',loadDayNight);
 		} 		
 	</script>
 	
