@@ -33,7 +33,11 @@
 		}
 
 		li{
-			margin-left: 1em;
+			margin-left: 2.8em;
+		}
+
+		ul{
+			margin-top: 0.5em;
 		}
 		table{
 			margin-top: 0.5em;
@@ -136,6 +140,7 @@
 			}
 		}
 		pre {
+			overflow-x: scroll;
 			font-size: 0.8em;
 			text-align: left;
 			margin:1em 0;

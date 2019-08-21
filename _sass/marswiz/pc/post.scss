@@ -33,7 +33,11 @@
 		}
 
 		li{
-			margin-left: 1em;
+			margin-left: 2.8em;
+		}
+
+		ul{
+			margin-top: 0.5em;
 		}
 		
 		table{
@@ -63,7 +67,7 @@
 
 		p {
 			margin-top: 1em;
-			text-indent: 2em;
+			text-indent: 2em;			
 			&:first-child{
 				margin-top:0;
 			}
@@ -127,6 +131,7 @@
 			font-family: 'Folio Light','微软雅黑',sans-serif;
 			color: $marsBlue;
 			margin:0 0.2em;
+			overflow: scroll;
 			&.solo {
 				display: block;
 				text-align: left;
@@ -138,6 +143,7 @@
 			}
 		}
 		pre {
+			overflow-x: scroll;
 			font-size: 0.8em;
 			text-align: left;
 			margin:1em 0;

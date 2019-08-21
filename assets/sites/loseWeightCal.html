@@ -63,10 +63,10 @@
 				<span>卡路里系数：</span><input id="calNum" class="slides" type="range" min="14" max="16" step="0.1" value="14"><span id="res"></span>
 			</div>
 			<div style="align-self: flex-start; margin-left: 40px;">
-				<span>总卡路里：</span><span id="totalCal"></span><span> Cal</span>
+				<span>总卡路里：</span><span id="totalCal"></span><span> kCal</span>
 			</div>
 			<div style="align-self: flex-start; margin-left: 40px;">
-				<span>卡路里缺口：</span><input type="range" id="calLose" value="500" min="500" max="600" step="10"><span id="calLoseRes"></span <span> Cal</span>
+				<span>卡路里缺口：</span><input type="range" id="calLose" value="500" min="500" max="600" step="10"><span id="calLoseRes"></span <span> kCal</span>
 			</div>
 			<button id="cal">Calculate!</button>
 			<div id="results" style="margin-top: 30px;border: 1px solid gray;width: 80%;border-radius: 5px;padding:5px;">
@@ -81,7 +81,7 @@
 <script>
 	let weight = document.querySelector('#weight').value*2.2046226;
 	let totalCal = weight * document.querySelector('#calNum').value - document.querySelector('#calLose').value;
-	let protein = weight * 0.9;
+	let protein = weight * 0.8;
 	let fat = weight * 0.35;
 	let sugar = (totalCal - protein*4 - fat*9)/4;
 
@@ -94,7 +94,7 @@
 	document.querySelector('#cal').addEventListener('click',function(){
 		weight = document.querySelector('#weight').value*2.2046226;
 		totalCal = weight * document.querySelector('#calNum').value - document.querySelector('#calLose').value;
-		protein = weight * 0.9;
+		protein = weight * 0.8;
 		fat = weight * 0.35;
 		sugar = (totalCal - protein*4 - fat*9)/4;
 		document.querySelector('#proteinRes').innerHTML = protein.toFixed(2);

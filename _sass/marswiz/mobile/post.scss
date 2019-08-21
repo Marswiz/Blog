@@ -121,7 +121,6 @@
 			text-align: left;
 			font-family: 'Folio Light','微软雅黑',sans-serif;
 			color: $marsBlue;
-			word-wrap: break-word;
 			margin:0 0.2em;
 			&.solo {
 				word-wrap: break-word;
@@ -135,6 +134,8 @@
 			}
 		}
 		pre {
+			width: 100%;
+			overflow-x: scroll;
 			word-wrap: break-word;
 			font-size: 0.8em;
 			text-align: left;
@@ -143,6 +144,7 @@
 			background-color: lighten($marsRice, 6.18%);
 		}
 		pre code{
+			width: 50vw;
 			text-align: left;		
 			border: none;
 			word-wrap: break-word;

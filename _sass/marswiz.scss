@@ -93,6 +93,7 @@
 		@import 'marswiz/pc/aboutMe';
 		@import 'marswiz/pc/search';
 		@import 'marswiz/pc/navMobile';
+		@import 'marswiz/pc/rouge';
 	}
 
 // 响应式：Laptop
@@ -110,6 +111,7 @@
 		@import 'marswiz/laptop/aboutMe';
 		@import 'marswiz/laptop/search';
 		@import 'marswiz/laptop/navMobile';
+		@import 'marswiz/laptop/rouge';
 	}
 
 // 响应式：移动端
@@ -128,4 +130,5 @@
 		@import 'marswiz/mobile/aboutMe';
 		@import 'marswiz/mobile/search';
 		@import 'marswiz/mobile/navMobile';
+		@import 'marswiz/mobile/rouge';
 	}
