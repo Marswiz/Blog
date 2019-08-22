@@ -36,7 +36,14 @@
 			margin-left: 2.8em;
 		}
 
-		ul{
+		sup {
+			font-size: 0.5em;
+			font-weight: bolder;
+			color: gray;
+			margin-left: 0.5em;
+		}
+
+		ul,ol{
 			margin-top: 0.5em;
 		}
 		table{

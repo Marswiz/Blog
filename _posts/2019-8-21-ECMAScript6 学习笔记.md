@@ -222,3 +222,58 @@ String.fromCodePoint(0x78, 0x1f680, 0x79) === 'x\uD83D\uDE80y'
 
 ### 4.7 matchAll()
 `matchAll()`方法返回一个正则表达式在当前字符串的所有匹配。
+## 5. 函数的扩展
+### 5.1 允许为函数赋默认值
+~~~js
+function log(x, y = 'World') {
+  console.log(x, y);
+}
+
+log('Hello') // Hello World
+log('Hello', 'China') // Hello China
+log('Hello', '') // Hello
+~~~
+函数具有一个`length`属性，返回函数`第一个赋予了默认值的参数前，未赋予默认值参数`的个数（不包括`rest 参数`）。
+~~~js
+(function abc(r,t,s,x){}).length // 4
+(function abc(r,t,s,x = 1){}).length // 3
+(function abc(r,t,s = 1,x){}).length // 2
+~~~
+函数参数的默认值拥有一个单独的作用域，等到函数初始化完毕，这个作用域消失。如果作用域内存在同名变量，则优先使用参数作用域变量进行赋值。
+
+~~~js
+var x = 1;
+function f(x, y = x) {
+  console.log(y);
+}
+f(2) // 2
+
+~~~
+函数内部作用域内的变量`不能`影响参数的初始化赋值，如果参数作用域内没有用于赋值的同名变量，则会向`上级作用域`寻找。
+~~~js
+let x = 1;
+function f(y = x) {
+  let x = 2;
+  console.log(y);
+}
+f() // 1
+~~~
+
+### 5.2 rest 参数
+形如`...[变量名]`被称作`rest 参数`，表示函数多余的参数。其中`[变量名]`为一个数组，保存了多余的参数。
+`rest 参数`只能是最后一个参数，否则报错。
+~~~js
+function add(...values) {
+  let sum = 0;
+  for (var val of values) {
+    sum += val;
+  }
+  return sum;
+}
+add(2, 5, 3) // 10
+~~~
+### 5.3 函数体内严格模式的使用注意事项
+当函数存在`解构赋值`、`参数默认值`、`扩展运算符`时，不能在函数体内显式声明严格模式，否则报错。
+### 5.4 name 属性
+函数的`name`属性返回函数的`函数名`，函数表达式声明的匿名函数也能返回`函数名`，匿名函数返回空字符串`''`。
+### 5.5 箭头函数
