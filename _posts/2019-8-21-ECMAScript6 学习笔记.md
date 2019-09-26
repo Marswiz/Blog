@@ -8,6 +8,7 @@ author: Mars
 pIdentifier: 中文缩进
 ---
 > 学习内容：[《ECMAScript 6 入门》 —— 阮一峰](http://es6.ruanyifeng.com/)
+<br>Ps:仅用于个人学习笔记使用，大量内容和实例可能直接复制原文。
 
 ## 1. 块级作用域、let 与 const 声明变量
 ### 1.1 let 命令
@@ -277,3 +278,175 @@ add(2, 5, 3) // 10
 ### 5.4 name 属性
 函数的`name`属性返回函数的`函数名`，函数表达式声明的匿名函数也能返回`函数名`，匿名函数返回空字符串`''`。
 ### 5.5 箭头函数
+箭头("=>")可用于定义函数。
+~~~js
+var f = v => v;
+
+// 等同于
+var f = function (v) {
+  return v;
+};
+
+var f = () => 5;
+// 等同于
+var f = function () { return 5 };
+
+var sum = (num1, num2) => num1 + num2;
+// 等同于
+var sum = function(num1, num2) {
+  return num1 + num2;
+};
+~~~
+如果返回是一个对象，则返回对象外必须用圆括号括起来。
+~~~js
+// 报错
+let getTempItem = id => { id: id, name: "Temp" };
+
+// 不报错
+let getTempItem = id => ({ id: id, name: "Temp" });
+~~~
+可以结合变量的解构赋值一起使用，例如：
+~~~js
+const full = ({ first, last }) => first + ' ' + last;
+
+// 等同于
+function full(person) {
+  return person.first + ' ' + person.last;
+}
+~~~
+**箭头函数内部`this`的指向是固定的，就指向定义时候的那个对象。**
+
+实际上箭头函数没有自己的`this`，它的`this`来源于外部`this`的引用。
+函数内部同样没有`arguments`，它也为外部`arguments`的引用。
+~~~js
+function Timer() {
+  this.s1 = 0; //line1
+  this.s2 = 0;
+  // 箭头函数
+  setInterval(() => this.s1++, 1000);
+  // 普通函数
+  setInterval(function () {
+    this.s2++;
+  }, 1000);
+}
+var timer = new Timer();
+setTimeout(() => console.log('s1: ', timer.s1), 3100);
+setTimeout(() => console.log('s2: ', timer.s2), 3100);
+// s1: 3 箭头函数内的this.s1就指向Timer实例定义时的s1(line1).
+// s2: 0 没有箭头函数，则this.s2在Timer实例被创建后指向外部，而不是实例内部的s2.
+~~~
+不应该使用箭头函数的三种场合：
+1. 定义对象的方法时；
+2. 需要动态使用`this`时；
+3. 函数体很复杂，有很多行时。
+
+## 6. 函数尾调用的优化
+[尾调用的优化](http://es6.ruanyifeng.com/#docs/function#%E5%B0%BE%E8%B0%83%E7%94%A8%E4%BC%98%E5%8C%96)
+
+## 7. Symbol
+### 7.1 Symbol特性
+`Symbol`是一种新的原始数据类型，表示一种独一无二的值。（目前JavaScript中的七种数据类型：`null、undefined、Number、String、Boolean、Object、Symbol`）
+
+`Symbol`值通过`Symbol函数`生成。（注意：Symbol函数前`不能使用new命令`，否则会报错。）
+~~~js
+let s = Symbol();
+
+typeof s
+// "symbol"
+~~~
+`Symbol`可用于对象属性名，可完全保证不与任何其他属性名冲突。
+
+`Symbol函数`可以接受一个字符串作为参数，表示对`Symbol实例`的描述，主要是为了在控制台显示，或者转为字符串时，比较容易区分。
+~~~js
+let s1 = Symbol('foo');
+let s2 = Symbol('bar');
+
+s1 // Symbol(foo)
+s2 // Symbol(bar)
+
+s1.toString() // "Symbol(foo)"
+s2.toString() // "Symbol(bar)"
+~~~
+
+两个独立生成的`Symbol`彼此是不相等的，即使是相同参数生成的`Symbol`值也是一样。
+~~~js
+// 没有参数的情况
+let s1 = Symbol();
+let s2 = Symbol();
+
+s1 === s2 // false
+
+// 有参数的情况
+let s1 = Symbol('foo');
+let s2 = Symbol('foo');
+
+s1 === s2 // false
+~~~
+`Symbol值`不能与其他类型的值进行运算，会报错。但是Symbol 值可以显式转为字符串,也可以转换为Boolean值。
+~~~js
+let sym = Symbol('My symbol');
+
+"your symbol is " + sym
+// TypeError: can't convert symbol to string
+`your symbol is ${sym}`
+// TypeError: can't convert symbol to string
+
+String(sym) // 'Symbol(My symbol)'
+sym.toString() // 'Symbol(My symbol)'
+
+let sym = Symbol();
+Boolean(sym) // true
+!sym  // false
+
+if (sym) {
+  // ...
+}
+
+Number(sym) // TypeError
+sym + 2 // TypeError
+~~~
+读取`Symbol`的描述值：`Symbol.description`
+~~~js
+const sym = Symbol('foo');
+sym.description // "foo"
+~~~
+### 7.2 作为对象属性名的Symbol
+将Symbol用于对象属性名的几种方式：
+~~~js
+let mySymbol = Symbol();
+
+// 第一种写法
+let a = {};
+a[mySymbol] = 'Hello!';
+
+// 第二种写法
+let a = {
+  [mySymbol]: 'Hello!'
+};
+
+// 第三种写法
+let a = {};
+Object.defineProperty(a, mySymbol, { value: 'Hello!' });
+
+// 以上写法都得到同样结果
+a[mySymbol] // "Hello!"
+~~~
+将Symbol用于对象属性名的几个注意事项：
+1. Symbol 值作为对象属性名时，不能用点运算符，因为这样会将点后面的Symbol名误认作字符串。
+2. 在对象的内部，使用 Symbol 值定义属性时，Symbol 值必须放在方括号之中。
+3. Symbol 作为属性名，该属性不会出现在`for...in、for...of`循环中，也不会被`Object.keys()、Object.getOwnPropertyNames()、JSON.stringify()`返回。
+
+### 7.3 Symbol.for()
+`Symbol.for()`方法接受一个字符串作为参数，然后搜索有没有以该参数作为名称的Symbol值。如果有，就返回这个Symbol值，否则就新建并返回一个以该字符串为名称的Symbol值。
+~~~js
+Symbol.for("bar") === Symbol.for("bar")
+// true
+Symbol("bar") === Symbol("bar")
+// false
+~~~
+### 7.4 内置的Symbol值
+除了定义自己使用的 Symbol 值以外，ES6 还提供了 11 个内置的 Symbol 值，指向语言内部使用的方法。具体见：[ES6提供的11个内置的Symbol值](http://es6.ruanyifeng.com/#docs/symbol#%E5%86%85%E7%BD%AE%E7%9A%84-Symbol-%E5%80%BC)
+
+## 8. Set和Map数据结构
+### 8.1 Set数据结构
+ES6 提供了新的数据结构`Set`。它类似于数组，但是成员的值都是唯一的，没有重复的值。
