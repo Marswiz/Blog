@@ -132,3 +132,10 @@
 		@import 'marswiz/mobile/navMobile';
 		@import 'marswiz/mobile/rouge';
 	}
+
+// 备案连接颜色
+
+#beian{
+	text-decoration: none;
+	color: $marsBlack;
+}
