@@ -1,8 +1,8 @@
 # 基本
 title: MarsWiz
 email: marswiz@yeah.net
-frontPageInfo1: "Hi,"
-frontPageInfo2: "星空与海。"
+frontPageInfo1: "失之东隅，"
+frontPageInfo2: "收之桑榆。"
 description: >- # his means to ignore newlines until "baseurl:"
   Solid.
 baseurl: "" # the subpath of your site, e.g. /blog
