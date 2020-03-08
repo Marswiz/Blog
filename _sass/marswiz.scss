@@ -17,10 +17,13 @@
 		font-family: 'Didot';
 		src: url('https://marswiz.com/assets/fonts/Didot.ttf') format('truetype');
 	}
-	@font-face{
-		font-family: '阿里巴巴普惠体';
-		src: url('https://marswiz.com/assets/fonts/Alibaba-PuHuiTi-Regular.ttf') format('truetype');
-	}
+
+	// 中文字体在线导入太慢。删除。  【 2020.3.8 】
+
+	// @font-face{
+	// 	font-family: '阿里巴巴普惠体';
+	// 	src: url('https://marswiz.com/assets/fonts/Alibaba-PuHuiTi-Regular.ttf') format('truetype');
+	// }
 	@font-face{
 		font-family: 'Clarendon BT';
 		src: url('https://marswiz.com/assets/fonts/Clarendon_BT.ttf') format('truetype');
