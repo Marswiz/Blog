@@ -34,7 +34,7 @@
 				}
 				&:hover{
 					transition:all 0.2s;
-					filter: drop-shadow(0 0 5px white) drop-shadow(0 0 10px white) drop-shadow(0 0 15px white) blur(1%);
+					filter: drop-shadow(0 0 5px white) drop-shadow(0 0 10px white) drop-shadow(0 0 15px white) blur(.08em);
 				}
 			}
 
@@ -51,7 +51,7 @@
 					align-self: flex-end;
 					&:hover{
 						transition:all 0.2s;
-						filter: drop-shadow(0 0 1px white) drop-shadow(0 0 5px white) drop-shadow(0 0 10px white) blur(0.75%);
+						filter: drop-shadow(0 0 1px white) drop-shadow(0 0 5px white) drop-shadow(0 0 10px white) blur(.04em);
 					}
 				}
 				img {

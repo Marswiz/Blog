@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="55252c63-61b9-4e46-b52d-78f5c6cdcc6f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/mobile/blog.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/mobile/blog.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/mobile/tags.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/mobile/tags.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/navFront.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/navFront.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/navFront.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/navFront.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +41,7 @@
       <workItem from="1615295967909" duration="6312000" />
       <workItem from="1615303069494" duration="304000" />
       <workItem from="1615303985783" duration="151000" />
-      <workItem from="1615304587886" duration="232000" />
+      <workItem from="1615304587886" duration="970000" />
     </task>
     <servers />
   </component>
