@@ -1,7 +1,18 @@
 // 导航栏基本设置
+    .navShown {
+		transition: opacity 1.4s;
+		opacity: 1;
+	}
+
+	.navHidden {
+		opacity: 0;
+	}
+
+
+
 	#navFront {
 
-		display: none;
+		//display: none;
 
 		#navBlurFront{
 			width: 100%;
@@ -9,18 +20,6 @@
 			position: fixed;
 			top: 0px;
 			left: 0px;
-			// background-color: gray;
-			// opacity: 0.4; 
-
-			 //background: linear-gradient(
-			 //	rgba(70,70,70,0.8) 0%,
-			 //	rgba(70,70,70,0.4) 75%,
-			 //	rgba(70,70,70,0) 100%);
-
-			// background: linear-gradient(
-			// 	rgba(150,150,150,0.8) 0%,
-			// 	rgba(150,150,150,0.4) 75%,
-			// 	rgba(150,150,150,0) 100%);
 		}
 	
 		#navTransFront{

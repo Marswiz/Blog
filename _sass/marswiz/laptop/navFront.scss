@@ -1,7 +1,14 @@
 // 导航栏基本设置
-	#navFront {
+.navShown {
+	transition: opacity 1.4s;
+	opacity: 1;
+}
 
-		display: none;
+.navHidden {
+	opacity: 0;
+}
+
+#navFront {
 
 		#navBlurFront{
 			width: 100%;
