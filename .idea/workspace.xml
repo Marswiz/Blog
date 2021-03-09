@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="55252c63-61b9-4e46-b52d-78f5c6cdcc6f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/frontShow.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/frontShow.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/mobile/post.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/mobile/post.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/post.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/post.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +35,7 @@
       <workItem from="1615169936809" duration="2311000" />
       <workItem from="1615273309694" duration="9773000" />
       <workItem from="1615283461673" duration="9000" />
+      <workItem from="1615283833860" duration="599000" />
     </task>
     <servers />
   </component>

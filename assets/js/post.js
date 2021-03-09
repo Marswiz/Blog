@@ -10,7 +10,9 @@ function postsFunc(){
 	let hElements = document.querySelectorAll('#postContent h1,#postContent h2,#postContent h3,#postContent h4,#postContent h5,#postContent h6');
 	for (let hElement of hElements){
 		let anchor = `<span class="link hidden">#</span>`;
-		hElement.innerHTML = anchor + hElement.innerHTML;
+		if (window.innerWidth > 768){
+		    hElement.innerHTML = anchor + hElement.innerHTML;
+		}
 
 		// 锚点在鼠标悬停在标题上时显示
 		hElement.addEventListener('mouseover',(e)=>{

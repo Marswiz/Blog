@@ -40,8 +40,6 @@
 		h1,h2,h3,h4,h5,h6{
 			margin-top: 1.2em;
 			cursor: pointer;
-			position: relative;
-			left: -1ch;
 			transition: all 0.2s;
 			&:hover {
 				color: $marsBlue;
@@ -49,8 +47,6 @@
 			}
 			// 所有标题后面的link
 			.link {
-				position: relative;
-				left: -1ch;
 				color: $marsBlue;
 				text-shadow: 1px 1px 0 white, 2px 2px 0 $marsRice;
 				transition: all 0.25s;
