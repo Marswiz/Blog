@@ -6,6 +6,23 @@ function postsFunc(){
 		link[i].innerHTML = link[i].innerHTML.replace(/^/g,'&nbsp;<i class="fa fa-hand-pointer-o"></i>&nbsp;');
 	}
 
+// 给h1-h6前面加上#锚点
+	let hElements = document.querySelectorAll('#postContent h1,#postContent h2,#postContent h3,#postContent h4,#postContent h5,#postContent h6');
+	for (let hElement of hElements){
+		let anchor = `<span class="link hidden">#</span>`;
+		hElement.innerHTML = anchor + hElement.innerHTML;
+
+		// 锚点在鼠标悬停在标题上时显示
+		hElement.addEventListener('mouseover',(e)=>{
+			hElement.firstElementChild.classList.remove('hidden');
+		});
+
+		hElement.addEventListener('mouseout',(e)=>{
+			hElement.firstElementChild.classList.add('hidden');
+		});
+
+	}
+
 // 为所有tooltip-mars加前缀
 	let tooltip = document.querySelectorAll('.tooltip-mars');
 	for (let i=0;i<tooltip.length;i++) {

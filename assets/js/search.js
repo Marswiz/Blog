@@ -1,5 +1,5 @@
 function doSearch(e){
-	if (e.type == 'mousedown' || e.keyCode == 13){
+	if (e.type == 'mousedown' || e.keyCode === 13){
 	let searchText = document.querySelector('#searchBox input').value;
 	let posts = document.querySelectorAll('#searchBlogBox');
 	let totalContentPosts = document.querySelectorAll('#totalBlogBox');

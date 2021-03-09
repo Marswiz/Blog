@@ -25,11 +25,11 @@
 	}
 
 // 跳转函数
-	function topScroll(e){	
+	function topScroll(e){
 				console.log('rolled~');
 				console.log(getWheelDelta(e))
 ;				// 监听鼠标滚轮向下滚动
-				if((getWheelDelta(e) == -120 || getWheelDelta(e) == -150) && window.innerWidth >= 768){
+				if((getWheelDelta(e) == -120 || getWheelDelta(e) == -150 || getWheelDelta(e) == -210) && window.innerWidth >= 768){
 				// 跳转到frontContentBox
 					e.preventDefault();			
 					window.scrollTo(0,document.querySelector('#frontShow').clientHeight);
@@ -45,9 +45,9 @@
 	function scrollStop(e){
 		e.preventDefault();
 		console.log('stopped~');
-		if ((getWheelDelta(e) == -120 || getWheelDelta(e) == -150) && stepCount.length < stopSteps){
+		if ((getWheelDelta(e) == -120 || getWheelDelta(e) == -150  || getWheelDelta(e) == -210) && stepCount.length < stopSteps){
 			stepCount.push('1');
-		} else if (getWheelDelta(e) == 120 || getWheelDelta(e) == 150){
+		} else if (getWheelDelta(e) == 120 || getWheelDelta(e) == 150  || getWheelDelta(e) == -210){
 			stepCount = [];
 			return window.removeEventListener(wheelEvent(),scrollStop,passiveSupported ? { passive: false } : false);	
 		} else if (stepCount.length == stopSteps){
