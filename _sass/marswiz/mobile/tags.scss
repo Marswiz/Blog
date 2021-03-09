@@ -60,12 +60,13 @@
 			color: $marsBlue;
 		}
 		#tagsBlogBox{
-			line-height:1.3em;
-			font-family: 'Memphis','阿里巴巴普惠体';
 			display: grid;
 			grid-template-columns: 2.5fr 1fr;
 			gap: 5px;
-			align-content: center;
+			align-items: center;
+			margin: 5px 0;
+			line-height:1.3em;
+			font-family: 'Memphis','阿里巴巴普惠体';
 			time {
 				text-align: right;
 			}
