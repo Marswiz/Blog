@@ -62,8 +62,13 @@
 		#tagsBlogBox{
 			line-height:1.3em;
 			font-family: 'Memphis','阿里巴巴普惠体';
-			@include flexBoxRow;
-			justify-content: space-between;
+			display: grid;
+			grid-template-columns: 2.5fr 1fr;
+			gap: 5px;
+			align-content: center;
+			time {
+				text-align: right;
+			}
 		}
 	}
 }
