@@ -6,21 +6,13 @@
 		color: $marsBlack;
 		overflow: hidden;
 		z-index: -1;
-		
-		//img {
-		//	position: absolute;
-		//	z-index: -1;
-		//	width: 100vw;
-		//	height: 100vh;
-		//}
 
 		#frontBox{
 			@include flexBoxCol;
-			// border: solid black 1px;
 			padding-top: 6.243vw;
 			width: 100vw;
 			height: 52.725vw;
-			
+
 			#frontPageInfo{
 				display: none;
 				padding-left: 16.4vw;
@@ -29,13 +21,10 @@
 				font-size: 3em;
 				color: white;
 				opacity: 0.7;
+				// text-shadow: 0 0 12px white;
 				// background-color: gray;
 				height: 55%;
-				@font-face {
-					font-family: 'Didot';
-					src: url([$fontPath,'Didot.ttf']) format('ttf');
-				}
-				font-family: Didot,Garamond,'宋体','阿里巴巴普惠体',sans-serif;
+				font-family: 'Didot','Garamond','Helvetica','华光报宋_CNKI','宋体','阿里巴巴普惠体',sans-serif;
 			}
 
 			#frontTags{

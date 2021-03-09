@@ -3,8 +3,18 @@
   <component name="ChangeListManager">
     <list default="true" id="55252c63-61b9-4e46-b52d-78f5c6cdcc6f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/mobile/post.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/mobile/post.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/post.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/post.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/_config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_includes/frontShow.html" beforeDir="false" afterPath="$PROJECT_DIR$/_includes/frontShow.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/frontShow.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/frontShow.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/navFront.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/navFront.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/tags.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/tags.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/mobile/blog.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/mobile/blog.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/frontShow.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/frontShow.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/navFront.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/navFront.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/post.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/post.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/tags.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/tags.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/tag.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/tag.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +32,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -36,10 +47,18 @@
       <workItem from="1615273309694" duration="9773000" />
       <workItem from="1615283461673" duration="9000" />
       <workItem from="1615283833860" duration="599000" />
+      <workItem from="1615295957873" duration="4000" />
+      <workItem from="1615295967909" duration="6312000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="943" y="325" width="672" height="678" key="search.everywhere.popup" timestamp="1615299830116">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="943" y="325" width="672" height="678" key="search.everywhere.popup/0.0.2560.1440@0.0.2560.1440" timestamp="1615299830116" />
   </component>
 </project>

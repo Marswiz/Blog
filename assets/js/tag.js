@@ -1,38 +1,19 @@
-function tagBig(e){
-      if (document.querySelector('#bigTag')){
-        tagBigRemove();
-      }
-      let inner = e.target.innerHTML;
-      let top1 = e.target.offsetTop;
-      let left1 = e.target.offsetLeft;
-      let bigTag = document.createElement('div');
-      bigTag.id = 'bigTag';
-      bigTag.innerHTML = inner;
-      bigTag.style.position = 'absolute';
-      bigTag.style.width = e.target.offsetWidth*3+'px';
-      bigTag.style.height = e.target.offsetHeight*3+'px';
-      bigTag.style.left = left1-0.5*e.target.offsetWidth+'px';
-      bigTag.style.top = top1-0.5*e.target.offsetHeight+'px';
-      document.querySelector('#tagCloud').appendChild(bigTag);      
-      document.querySelector('#bigTag').addEventListener('mouseout',tagBigRemove,false);
-      document.querySelector('#bigTag').addEventListener('mousedown',tagScrollDelta,false);
-    }
+function tagScrollDelta(e){
+    location.href = e.target.textContent;
+    window.scrollBy(0,-document.querySelector('#navBlur').offsetHeight*1.2);
+}
 
-    function tagScrollDelta(e){
-      location.href = e.target.innerHTML;
-      window.scrollBy(0,-document.querySelector('#navBlur').offsetHeight*1.2);
-    }
+// 给所有Tagcloud中的标签添加点击事件
+let tags = document.querySelectorAll('#tagCloud a');
+for (let i of tags){
+    i.addEventListener('mousedown',tagScrollDelta,false);
+}
 
-    function tagBigRemove(e){
-      let a = document.querySelectorAll('#bigTag');
-      for(let i=0;i<a.length;i++){
-        a[i].remove();
-      }
-    }
-
-    let tag = document.querySelectorAll('.cloudTag');
-    if (window.innerWidth > 768){
-      for(let i=0; i<tag.length; i++){
-        tag[i].addEventListener('mouseenter',tagBig,false);
-      }
-    }
+// 给所有tag添加点击事件
+let downTags = document.querySelectorAll('.tag');
+for (let i of downTags){
+    i.addEventListener('mousedown', (e)=>{
+        location.href = `#${e.target.textContent.slice(1)}`;
+        window.scrollBy(0,-document.querySelector('#navBlur').offsetHeight*1.2);
+    });
+}

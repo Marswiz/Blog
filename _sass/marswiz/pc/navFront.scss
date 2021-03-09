@@ -12,10 +12,10 @@
 			// background-color: gray;
 			// opacity: 0.4; 
 
-			// background: linear-gradient(
-			// 	rgba(70,70,70,0.8) 0%,
-			// 	rgba(70,70,70,0.4) 75%,
-			// 	rgba(70,70,70,0) 100%);
+			 //background: linear-gradient(
+			 //	rgba(70,70,70,0.8) 0%,
+			 //	rgba(70,70,70,0.4) 75%,
+			 //	rgba(70,70,70,0) 100%);
 
 			// background: linear-gradient(
 			// 	rgba(150,150,150,0.8) 0%,
@@ -45,8 +45,8 @@
 					height: auto;
 				}
 				&:hover{
-					transition:filter 0.1s;
-					filter: blur(3px);
+					transition:all 0.2s;
+					filter: drop-shadow(0 0 5px white) drop-shadow(0 0 10px white) drop-shadow(0 0 15px white) blur(1%);
 				}
 			}
 
@@ -62,8 +62,8 @@
 					margin-left: 4%;
 					align-self: flex-end;
 					&:hover{
-						transition:filter 0.1s;
-						filter: blur(2px);
+						transition:all 0.2s;
+						filter: drop-shadow(0 0 1px white) drop-shadow(0 0 5px white) drop-shadow(0 0 10px white) blur(0.75%);
 					}
 				}
 				img {

@@ -10,9 +10,6 @@
 		font-size: 2em;
 		margin-left: -1.28em;
 		margin-top: 0.5em;
-		&:hover{
-			
-		}
 		&:active{
 			color: $marsBlue;
 		}
@@ -21,17 +18,18 @@
 		width:100%;
 		text-decoration:none;
 		color: $marsBlack;
-		&:hover{
-
-		}
 		&:active{
 			color: $marsBlue;
 		}
 		#blogBox{
-			line-height:1.3em;
+			line-height: 1.3em;
 			font-family: 'Memphis','阿里巴巴普惠体';
-			@include flexBoxRow;
-			justify-content: space-between;
+			display: grid;
+			grid-template-columns: 2.5fr 1fr;
+			align-content: center;
+			#blogTime {
+				text-align: right;
+			}
 		}
 	}
 }

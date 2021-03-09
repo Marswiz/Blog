@@ -2,19 +2,13 @@
 	#frontShow{
 		position: relative;
 		width: 100%;
-		height: auto;
+		height: 100vh;
 		color: $marsBlack;
-
-		img {
-			position: absolute;
-			z-index: -1;
-			max-width: 100%;
-			height: auto;
-		}
+		overflow: hidden;
+		z-index: -1;
 
 		#frontBox{
 			@include flexBoxCol;
-			// border: solid black 1px;
 			padding-top: 6.243vw;
 			width: 100vw;
 			height: 52.725vw;
@@ -24,25 +18,16 @@
 				padding-left: 16.4vw;
 				padding-top:  8.2vw;
 				padding-right: 30vw;
-				font-size: 3.5em;
+				font-size: 3em;
 				color: white;
 				opacity: 0.7;
 				// text-shadow: 0 0 12px white;
 				// background-color: gray;
 				height: 55%;
-				@font-face {
-					font-family: 'Didot';
-					src: url([$fontPath,'Didot.ttf']) format('ttf');
-				}
-				font-family: Didot,Garamond,'宋体','阿里巴巴普惠体',sans-serif;
-
-				// #frontPageInfo2 {
-				// 	text-indent: 2em;
-				// }
+				font-family: 'Didot','Garamond','Helvetica','华光报宋_CNKI','宋体','阿里巴巴普惠体',sans-serif;
 			}
 
 			#frontTags{
-				// background-color: orange;
 				@include flexBoxRow;
 				height: 30%;
 				#tagBox{
