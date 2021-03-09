@@ -3,17 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="55252c63-61b9-4e46-b52d-78f5c6cdcc6f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_includes/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/_includes/footer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_includes/footerBlog.html" beforeDir="false" afterPath="$PROJECT_DIR$/_includes/footerBlog.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_includes/navBlog.html" beforeDir="false" afterPath="$PROJECT_DIR$/_includes/navBlog.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_includes/navFront.html" beforeDir="false" afterPath="$PROJECT_DIR$/_includes/navFront.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_layouts/default.html" beforeDir="false" afterPath="$PROJECT_DIR$/_layouts/default.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/navBlog.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/navBlog.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/navFront.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/navFront.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/navBlog.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/navBlog.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/navFront.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/navFront.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/frontShow.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/frontShow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/nav.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/nav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2021-3-9-现代JS学习笔记.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2021-3-9-现代JS学习笔记-严格模式与稀松模式.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/post.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/post.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/post.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/post.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +16,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1pSICJtgRJNsMmpy9qDW7r0Xal3" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -31,12 +26,13 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/_includes" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/_posts" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\marsw\Desktop\newBlog\Blog\_posts" />
       <recent name="C:\Users\marsw\Desktop\newBlog\Blog\_includes" />
     </key>
   </component>
@@ -58,7 +54,8 @@
       <workItem from="1615303985783" duration="151000" />
       <workItem from="1615304587886" duration="970000" />
       <workItem from="1615305875731" duration="4661000" />
-      <workItem from="1615310561461" duration="207000" />
+      <workItem from="1615310561461" duration="264000" />
+      <workItem from="1615312665265" duration="1402000" />
     </task>
     <servers />
   </component>

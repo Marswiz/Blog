@@ -28,7 +28,7 @@
 	#postContent{
 		display: flex;
 		flex-direction: column;
-		align-items: flex-start;
+		align-items: stretch;
 		font-family: 'Folio Light','Helvetica','阿里巴巴普惠体','微软雅黑','STZhongsong',sans-serif;
 		text-align: left;
 		h2{
@@ -39,6 +39,7 @@
 		}
 		h1,h2,h3,h4,h5,h6{
 			cursor: pointer;
+			align-self: flex-start;
 			position: relative;
 			margin-top: 1.2em;
 			left: -1ch;
