@@ -1,6 +1,5 @@
 @charset "utf-8";
 
-
 // 定义配色
 	$marsBlue:  #6cd1ef !default;
 	$marsBlack: #506060 !default;
@@ -144,4 +143,9 @@
 #beian{
 	text-decoration: none;
 	color: $marsBlack;
+}
+
+// 隐藏滚动条
+::-webkit-scrollbar {
+	display: none;
 }
