@@ -9,28 +9,16 @@ function blueToBlack(e){
 	e.target.src = a;
 }
 
-// function navFunc(){
-// 	if (window.innerWidth >= 768){
-// 		// 在日志页刷新后防止导航栏切换回渐变
-// 		if (document.querySelector('#frontShow')){
-// 			if(window.scrollY >= document.querySelector('#frontShow').clientHeight-2){
-// 				$('#navBlog').show();
-// 				$('#navFront').hide();
-// 				console.log('nav.js 变白');
-// 			} else {
-// 				$('#navBlog').hide();
-// 				$('#navFront').show(2000);
-// 				$('#frontPageInfo').slideDown(1500);
-// 				$('#tagBox').slideDown(500);
-// 				console.log('nav.js 变黑');
-// 			}
-// 		} else {
-// 				$('#navBlog').show();
-// 				$('#navFront').hide();
-// 				console.log('nav.js 变白');
-// 		}
-// 	}
-// }
+// logo变色
+function blackToWhite(e){
+	let a = e.target.src.replace(/Black/,'White');
+	e.target.src = a;
+}
+
+function whiteToBlack(e){
+	let a = e.target.src.replace(/White/,'Black');
+	e.target.src = a;
+}
 
 // nav toggle func
 function navToWhite(){
@@ -77,3 +65,7 @@ function navFunc(){
 	document.querySelector('#tagBtn img').addEventListener('mouseout',blueToBlack,false);
 	document.querySelector('#aboutMeBtn img').addEventListener('mouseout',blueToBlack,false);
 	document.querySelector('#searchBtn img').addEventListener('mouseout',blueToBlack,false);
+
+// logo改变颜色
+	document.querySelector('#logo #blogLogo').addEventListener('mouseover',blackToWhite,false);
+	document.querySelector('#logo #blogLogo').addEventListener('mouseout',whiteToBlack,false);

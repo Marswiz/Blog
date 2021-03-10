@@ -49,9 +49,10 @@
 					height: 3.193vw;
 					margin-bottom: 1vw;
 					&:hover{
-						$color: lighten($marsGray, 0%);
-						transition:filter 0.2s;
-						filter:  drop-shadow(0 0 1px $color) drop-shadow(0 0 5px $color) drop-shadow(0 0 10px $color) blur(.08em);
+						$color: silver;
+						$colorWhite: rgba(255,255,255,0.7);
+						transition:all 0.2s;
+						filter: drop-shadow(0 0 1px $colorWhite) drop-shadow(0 0 1px $colorWhite) drop-shadow(0 0 2px $colorWhite) drop-shadow(0 0 5px $colorWhite) drop-shadow(0 0 2px $color) drop-shadow(0 0 5px $color) drop-shadow(0 0 10px $color) blur(.04em);
 					}
 				}
 
