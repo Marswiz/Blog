@@ -34,9 +34,11 @@
 		h2{
 			font-size: 1.4em;
 		}
+
 		h3 {
 			font-size: 1.2em;
 		}
+
 		h1,h2,h3,h4,h5,h6{
 			align-self: flex-start;
 			cursor: pointer;
@@ -48,6 +50,7 @@
 				color: $marsBlue;
 				text-shadow: 1px 1px 0 white, 2px 2px 0 $marsRice;
 			}
+
 			// 所有标题后面的link
 			.link {
 				position: relative;
