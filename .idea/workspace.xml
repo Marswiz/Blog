@@ -19,16 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55252c63-61b9-4e46-b52d-78f5c6cdcc6f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_includes/navBlog.html" beforeDir="false" afterPath="$PROJECT_DIR$/_includes/navBlog.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_includes/navBlogHidden.html" beforeDir="false" afterPath="$PROJECT_DIR$/_includes/navBlogHidden.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/navBlog.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/navBlog.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/navFront.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/navFront.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/navBlog.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/navBlog.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/navFront.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/navFront.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/nav.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/nav.js" afterDir="false" />
-    </list>
+    <list default="true" id="55252c63-61b9-4e46-b52d-78f5c6cdcc6f" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,7 +73,7 @@
       <workItem from="1615341378976" duration="3661000" />
       <workItem from="1615345064274" duration="385000" />
       <workItem from="1615346554533" duration="2257000" />
-      <workItem from="1615357142536" duration="3616000" />
+      <workItem from="1615357142536" duration="3658000" />
     </task>
     <servers />
   </component>
