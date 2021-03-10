@@ -62,7 +62,7 @@
 		}
 
 		li{
-			margin-left: 2.8em;
+			margin: 1em 0 1em 2.8em;
 		}
 
 		ul,ol{
@@ -145,11 +145,10 @@
 
 		blockquote {
 			margin: 1em 0em;
-			padding: 1em 1em 1em 1em;
+			padding: 1em 1em 1em 0em;
 			font-size: 0.8em;
 			width:100%;
 			border-left:solid $marsBlue 5px;
-			font-style: italic;
 			background-color: lighten($marsRice, 6.18%);
 			blockquote {
 				margin: 0;

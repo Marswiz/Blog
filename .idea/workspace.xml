@@ -22,6 +22,10 @@
     <list default="true" id="55252c63-61b9-4e46-b52d-78f5c6cdcc6f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_sass/marswiz.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/frontShow.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/frontShow.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/post.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/post.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/frontShow.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/frontShow.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/post.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/post.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +81,10 @@
       <workItem from="1615345064274" duration="385000" />
       <workItem from="1615346554533" duration="2257000" />
       <workItem from="1615357142536" duration="3658000" />
-      <workItem from="1615363862995" duration="423000" />
+      <workItem from="1615363862995" duration="471000" />
+      <workItem from="1615364713561" duration="52000" />
+      <workItem from="1615364962800" duration="671000" />
+      <workItem from="1615365769911" duration="2678000" />
     </task>
     <servers />
   </component>
