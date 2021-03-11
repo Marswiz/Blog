@@ -21,11 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="55252c63-61b9-4e46-b52d-78f5c6cdcc6f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/frontShow.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/frontShow.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/post.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/post.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/frontShow.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/frontShow.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/post.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/post.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +79,8 @@
       <workItem from="1615363862995" duration="471000" />
       <workItem from="1615364713561" duration="52000" />
       <workItem from="1615364962800" duration="671000" />
-      <workItem from="1615365769911" duration="2678000" />
+      <workItem from="1615365769911" duration="3045000" />
+      <workItem from="1615428713984" duration="5219000" />
     </task>
     <servers />
   </component>
@@ -104,10 +100,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="539" y="206" width="672" height="431" key="search.everywhere.popup" timestamp="1615363868114">
+    <state x="539" y="206" width="672" height="431" key="search.everywhere.popup" timestamp="1615433819321">
       <screen x="0" y="0" width="1463" height="914" />
     </state>
-    <state x="539" y="206" width="672" height="431" key="search.everywhere.popup/0.0.1463.914@0.0.1463.914" timestamp="1615363868114" />
+    <state x="539" y="206" width="672" height="431" key="search.everywhere.popup/0.0.1463.914@0.0.1463.914" timestamp="1615433819321" />
     <state x="943" y="325" width="672" height="678" key="search.everywhere.popup/0.0.2560.1440@0.0.2560.1440" timestamp="1615303072920" />
   </component>
 </project>
