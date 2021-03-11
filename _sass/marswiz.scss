@@ -7,6 +7,10 @@
 	$marsRice:  #EDEBDC !default;
 	$marsGray:  #bdb7b1 !default;
 
+// 选择部分颜色
+	body ::selection {
+		background-color: transparentize(#00bb88, 0.8);
+	}
 
 //字体字号
 	$fontPath:'localhost:4000/assets/fonts/' ;
