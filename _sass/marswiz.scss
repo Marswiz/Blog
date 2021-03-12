@@ -12,6 +12,16 @@
 		background-color: transparentize(#00bb88, 0.8);
 	}
 
+	body{
+		$bgColor: transparentize($marsGray, 0.8);
+		$gridWidth: 14px;
+		$lineWeight: 1px;
+		$deg: 0deg;
+
+		background: linear-gradient($deg ,transparent 0 , transparent $gridWidth/2+1-$lineWeight, $bgColor 0, $bgColor $gridWidth/2+1px, transparent 0, transparent $gridWidth) left top/#{$gridWidth} $gridWidth repeat,
+		            linear-gradient($deg+90deg ,transparent 0 , transparent $gridWidth/2+1-$lineWeight, $bgColor 0, $bgColor $gridWidth/2+1px, transparent 0, transparent $gridWidth) left top/#{$gridWidth} $gridWidth repeat;
+	}
+
 //字体字号
 	$fontPath:'localhost:4000/assets/fonts/' ;
 	$baseFontSize:  24pt !default;
