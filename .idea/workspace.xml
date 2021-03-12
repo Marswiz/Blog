@@ -21,7 +21,12 @@
   <component name="ChangeListManager">
     <list default="true" id="55252c63-61b9-4e46-b52d-78f5c6cdcc6f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/frontContentBox.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/frontContentBox.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/search.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/search.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/mobile/frontContentBox.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/mobile/frontContentBox.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/mobile/search.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/mobile/search.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/frontContentBox.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/frontContentBox.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/search.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/search.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

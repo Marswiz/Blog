@@ -70,7 +70,8 @@
 			display: none;
 			padding-left: 1.4vw;
 			margin-bottom: 1.5em;
-			border-left: solid 0.1em $marsBlue;
+			border-left: solid 0.4em transparentize($marsBlue, 0.5);
+			border-radius: 4px 0 0 4px;
 			#link{
 				text-decoration: none;
 				color: $marsBlack;
