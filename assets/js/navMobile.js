@@ -1,26 +1,21 @@
 let touchstartPosX = 0;
 let touchendPosX = 0;
 
-// 获取设备初始宽度
-let deviceInitialWidth = window.innerWidth;
-
 function navMoveFunc(e){	
-	if ((touchendPosX-touchstartPosX) >= 0.2*window.innerWidth && touchstartPosX >= 0.1*window.innerWidth && (window.innerWidth == deviceInitialWidth)){
+	if ((touchendPosX-touchstartPosX) >= 0.2*window.innerWidth && touchstartPosX >= 0.1*window.innerWidth){
 		let a = document.querySelectorAll('#navMobile,#navMobile #navBlur,#navMobile #navTrans');
 		for (let i=0; i<a.length; i++){
 			a[i].style.animation = 'navMove 0.5s ease-in forwards';
 		}
-		console.log('Go'); 
-	} else if ((touchendPosX-touchstartPosX) <= -0.2*window.innerWidth && (window.innerWidth == deviceInitialWidth)){
+	} else if ((touchendPosX-touchstartPosX) <= -0.2*window.innerWidth){
 		let a = document.querySelectorAll('#navMobile,#navMobile #navBlur,#navMobile #navTrans');
 		for (let i=0; i<a.length; i++){
 			a[i].style.animation = 'navMoveBack 0.5s ease-in forwards';
 		}
-		console.log('Back'); 
 	}
 	touchstartPosX = 0;
 	touchendPosX = 0;
-	console.log('Reset to Null'); 
+	console.log('nav Move!');
 }
 
 function getStartPoint(e){
@@ -33,8 +28,7 @@ function getStartPoint(e){
 		window.addEventListener('touchend',navMoveFunc,false);
 }
 
-function gestureDetected(e){	
-	console.log('手势检测到啦！');
+function gestureDetected(e){
 	return window.removeEventListener('touchend',navMoveFunc,false);
 }
 

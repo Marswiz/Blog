@@ -3,7 +3,7 @@ layout: post
 title: jQuery DOM操作汇总
 date: 2016-12-26
 categories: blog
-tags: [BLOG,jQuery,DOM,Web,FrontEnd]
+tags: [jQuery,DOM]
 author: Mars
 pIdentifier: 中文缩进
 ---

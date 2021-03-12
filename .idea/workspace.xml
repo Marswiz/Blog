@@ -21,12 +21,47 @@
   <component name="ChangeListManager">
     <list default="true" id="55252c63-61b9-4e46-b52d-78f5c6cdcc6f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/_config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_layouts/blog.html" beforeDir="false" afterPath="$PROJECT_DIR$/_layouts/blog.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2016-11-22-Rules-of-social-communication.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2016-11-22-Rules-of-social-communication.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2016-12-26-jQuery_DOM操作.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2016-12-26-jQuery_DOM操作.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2016-12-26-jQuery_aPrompter.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2016-12-26-jQuery_aPrompter.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2016-12-30-DNFPK.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2016-12-30-DNFPK.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-1-10-CSS_Selector.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-1-10-CSS_Selector.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-1-14-Mars_Windows系统优化流程.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-1-14-Mars_Windows系统优化流程.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-1-2-jQuery_Selector.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-1-2-jQuery_Selector.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-1-2-jQuery_事件和动画.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-1-2-jQuery_事件和动画.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-1-21-Emmet 快捷键.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-1-21-Emmet 快捷键.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-1-21-Git_SSH配置.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-1-21-Git_SSH配置.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-1-22-CSS3_Translate属性效果展示.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-1-22-CSS3_Translate属性效果展示.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-1-23-Bootstrap 响应式导航类.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-1-23-Bootstrap 响应式导航类.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-1-23-meta标签该定义点啥.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-1-23-meta标签该定义点啥.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-2-1-AJAX请求流程.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-2-1-AJAX请求流程.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-2-1-前端面试题.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-2-12-JavaScript 面向对象编程.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-2-12-JavaScript 面向对象编程.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-2-13-FrontEnd 学习清单.md" beforeDir="false" afterPath="$PROJECT_DIR$/hiddenPosts/2017-2-13-FrontEnd 学习清单.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-2-18-JavaScript 递归与闭包.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-2-18-JavaScript 递归与闭包.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-2-20-JavaScript BOM.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-2-20-JavaScript BOM.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-2-21-JavaScript 能力检测与怪癖检测.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-2-21-JavaScript 能力检测与怪癖检测.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-2-26-JavaScript DOM.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-2-26-JavaScript DOM.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-2-5-JavaScript 函数.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-2-5-JavaScript 函数.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-2-8-JavaScript变量作用域和内存问题学习笔记.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-2-8-JavaScript变量作用域和内存问题学习笔记.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-2-9-JavaScript 引用类型学习笔记.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-2-9-JavaScript 引用类型学习笔记.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-5-11-2017前端学习清单.md" beforeDir="false" afterPath="$PROJECT_DIR$/hiddenPosts/2017-5-11-2017前端学习清单.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2017-7-10-Mars网络优化和DNF优化.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2017-7-10-Mars网络优化和DNF优化.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2018-03-21-微信APP声音床.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2018-03-21-微信APP声音床.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2019-8-19-减肥摄入计算器.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2019-8-19-减肥摄入计算器.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2019-8-21-ECMAScript6 学习笔记.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2019-8-21-ECMAScript6 学习笔记.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2019-8-22-减脂笔记.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2019-8-22-减脂笔记.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2020-3-8-《逻辑学导论_Irving_M_Copi》笔记合集.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2020-3-8-《逻辑学导论_Irving_M_Copi》笔记合集.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_posts/2020-4-14-Vue.js 学习笔记.md" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2020-4-14-Vue.js 学习笔记.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_sass/marswiz.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/frontContentBox.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/frontContentBox.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_sass/marswiz/laptop/search.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/laptop/search.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/mobile/frontContentBox.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/mobile/frontContentBox.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_sass/marswiz/mobile/search.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/mobile/search.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/frontContentBox.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/frontContentBox.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_sass/marswiz/pc/search.scss" beforeDir="false" afterPath="$PROJECT_DIR$/_sass/marswiz/pc/search.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/load.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/load.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/navMobile.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/navMobile.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,14 +82,17 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/_posts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/hiddenPosts" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\marsw\Desktop\newBlog\Blog\hiddenPosts" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Mars_Data_Laptop\B_Blog\Blog\_posts" />
       <recent name="C:\Users\marsw\Desktop\newBlog\Blog\_posts" />
+      <recent name="D:\Mars_Data_Laptop\B_Blog\Blog\_posts" />
       <recent name="C:\Users\marsw\Desktop\newBlog\Blog\_includes" />
     </key>
   </component>
@@ -88,6 +126,7 @@
       <workItem from="1615365769911" duration="3045000" />
       <workItem from="1615428713984" duration="11484000" />
       <workItem from="1615534312488" duration="4575000" />
+      <workItem from="1615575344668" duration="7524000" />
     </task>
     <servers />
   </component>
@@ -107,10 +146,14 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="539" y="206" width="672" height="431" key="search.everywhere.popup" timestamp="1615433819321">
-      <screen x="0" y="0" width="1463" height="914" />
+    <state x="1060" y="461" key="FileChooserDialogImpl" timestamp="1615577065103">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="1060" y="461" key="FileChooserDialogImpl/0.0.2560.1440@0.0.2560.1440" timestamp="1615577065103" />
+    <state x="943" y="325" width="672" height="678" key="search.everywhere.popup" timestamp="1615577132556">
+      <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="539" y="206" width="672" height="431" key="search.everywhere.popup/0.0.1463.914@0.0.1463.914" timestamp="1615433819321" />
-    <state x="943" y="325" width="672" height="678" key="search.everywhere.popup/0.0.2560.1440@0.0.2560.1440" timestamp="1615303072920" />
+    <state x="943" y="325" width="672" height="678" key="search.everywhere.popup/0.0.2560.1440@0.0.2560.1440" timestamp="1615577132556" />
   </component>
 </project>

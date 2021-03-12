@@ -3,7 +3,7 @@ layout: post
 title: JavaScript 递归与闭包
 date: 2017-2-18
 categories: blog
-tags: [BLOG,JavaScript,FrontEnd]
+tags: [JavaScript]
 author: Mars
 pIdentifier: 无缩进
 ---

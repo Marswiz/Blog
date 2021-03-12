@@ -15,8 +15,11 @@
 		#blogBox{
 			padding-left: 1.4vw;
 			margin-bottom: 1.5em;
-			border-left: solid 0.4em transparentize($marsBlue, 0.5);
+			border-left: solid 0.4em transparentize(#00bb77, 0.8);
 			border-radius: 4px 0 0 4px;
+			&:hover {
+				border-left: solid 0.4em transparentize(#ff8c00, 0.8);
+			}
 			#link{
 				text-decoration: none;
 				color: $marsBlack;

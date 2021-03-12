@@ -3,7 +3,7 @@ layout: post
 title: JavaScript DOM
 date: 2017-2-26
 categories: blog
-tags: [BLOG,JavaScript,DOM,FrontEnd]
+tags: [JavaScript,DOM]
 author: Mars
 pIdentifier: 无缩进
 ---

@@ -3,7 +3,7 @@ layout: post
 title: JavaScript 引用类型学习笔记
 date: 2017-2-9
 categories: blog
-tags: [BLOG,JavaScript,FrontEnd]
+tags: [JavaScript]
 author: Mars
 pIdentifier: 无缩进
 ---

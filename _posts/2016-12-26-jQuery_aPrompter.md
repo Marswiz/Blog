@@ -3,7 +3,7 @@ layout: post
 title: jQuery 快速title提示器
 date: 2016-12-26
 categories: blog
-tags: [BLOG,jQuery,Codes,Web,FrontEnd]
+tags: [jQuery]
 author: Mars
 pIdentifier: 中文缩进
 ---

@@ -3,7 +3,7 @@ layout: post
 title: JavaScript 能力检测与怪癖检测
 date: 2017-2-21
 categories: blog
-tags: [BLOG,JavaScript,FrontEnd]
+tags: [JavaScript]
 author: Mars
 pIdentifier: 无缩进
 ---

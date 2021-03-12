@@ -3,7 +3,7 @@ layout: post
 title: JavaScript 面向对象编程
 date: 2017-2-11
 categories: blog
-tags: [BLOG,JavaScript,FrontEnd]
+tags: [JavaScript]
 author: Mars
 pIdentifier: 无缩进
 ---

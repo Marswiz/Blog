@@ -3,7 +3,7 @@ layout: post
 title: JavaScript BOM
 date: 2017-2-20
 categories: blog
-tags: [BLOG,JavaScript,FrontEnd,BOM]
+tags: [JavaScript,BOM]
 author: Mars
 pIdentifier: 全缩进
 ---

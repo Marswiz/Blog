@@ -3,7 +3,7 @@ layout: post
 title: ECMAScript6 学习笔记
 date: 2019-8-21
 categories: blog
-tags: [BLOG,JavaScript,FrontEnd,Web]
+tags: [JavaScript]
 author: Mars
 pIdentifier: 中文缩进
 ---
