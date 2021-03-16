@@ -3,7 +3,7 @@ layout: post
 title: CSS 选择器总览
 date: 2017-1-10
 categories: blog
-tags: [BLOG,CSS,Web,FrontEnd]
+tags: [CSS]
 author: Mars
 pIdentifier: 中文缩进
 ---

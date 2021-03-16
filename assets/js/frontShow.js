@@ -4,13 +4,29 @@
 // 功能：FrontShow时下滑滚轮可直接跳转到日志概览区；
 // 从日志概览区上滑滚轮可直接到页首FrontShow区，避免处于两部分之间的尴尬区域。
 
+// 判断移动设备
+function isMobile(){
+	if( navigator.userAgent.match(/Android/i)
+		|| navigator.userAgent.match(/webOS/i)
+		|| navigator.userAgent.match(/iPhone/i)
+		|| navigator.userAgent.match(/iPad/i)
+		|| navigator.userAgent.match(/iPod/i)
+		|| navigator.userAgent.match(/BlackBerry/i)
+		|| navigator.userAgent.match(/Windows Phone/i)
+	)return true;
+	return false;
+}
+
 // 兼容FireFox,统一wheelDelta值
 	 let getWheelDelta = function(event) {
 	    return event.wheelDelta || (-event.detail * 40);
 	 }
 // 兼容FireFox，改变滚轮事件名称
 	let wheelEvent = function(){
-		if (typeof window.onmousewheel == 'object'){
+		if (isMobile()){
+			return 'touchmove';
+		}
+		else if (typeof window.onmousewheel == 'object'){
 			return 'mousewheel';
 		} else {
 			return 'DOMMouseScroll';
@@ -19,9 +35,8 @@
 
 // 跳转函数
 	function topScroll(e){
-				console.log(getWheelDelta(e))
-;				// 监听鼠标滚轮向下滚动
-				if((getWheelDelta(e) == -120 || getWheelDelta(e) == -150 || getWheelDelta(e) == -210) && window.innerWidth >= 768){
+				// 监听鼠标滚轮向下滚动
+				if(((getWheelDelta(e) == -120 || getWheelDelta(e) == -150 || getWheelDelta(e) == -210) || isMobile()) && window.innerWidth >= 768){
 				// 跳转到frontContentBox
 					e.preventDefault();			
 					window.scrollTo(0,document.querySelector('#frontShow').offsetHeight);

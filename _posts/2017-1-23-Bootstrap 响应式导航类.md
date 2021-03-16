@@ -3,7 +3,7 @@ layout: post
 title: Bootstrap 响应式导航类
 date: 2017-1-23
 categories: blog
-tags: [BLOG,Bootstrap,FrontEnd]
+tags: [Bootstrap]
 author: Mars
 pIdentifier: 中文缩进
 ---

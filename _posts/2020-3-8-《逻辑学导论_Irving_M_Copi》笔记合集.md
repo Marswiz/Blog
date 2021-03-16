@@ -3,7 +3,7 @@ layout: post
 title: 《逻辑学导论_Irving_M_Copi》笔记合集
 date: 2020-03-08
 categories: blog
-tags: [Reading,Notes,PDF]
+tags: [Reading Notes]
 author: Mars
 pIdentifier: 无缩进
 ---

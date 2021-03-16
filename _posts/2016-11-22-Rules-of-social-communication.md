@@ -3,7 +3,7 @@ layout: post
 title: 人际交往的几项基本原则与技巧
 date: 2016-11-22
 categories: blog
-tags: [BLOG,Growth,Science]
+tags: [Growth]
 author: Mars
 pIdentifier: 中文缩进
 ---

@@ -4,7 +4,7 @@ title: Mars Windows系统优化流程
 author: Mars
 date: 2017-1-14
 categories: blog
-tags: [BLOG,PC]
+tags: [Windows]
 author: Mars
 pIdentifier: 中文缩进
 ---

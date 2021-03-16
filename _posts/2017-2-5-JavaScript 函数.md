@@ -3,7 +3,7 @@ layout: post
 title: 理解 JavaScript 函数参数
 date: 2017-2-5
 categories: blog
-tags: [BLOG,JavaScript,FrontEnd]
+tags: [JavaScript]
 author: Mars
 pIdentifier: 中文缩进
 ---

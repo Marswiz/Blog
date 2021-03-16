@@ -23,8 +23,6 @@
 		#blogBox{
 			padding-left: 3.4vw;
 			margin-bottom: 1.5em;
-			border-left: solid 0.1em $marsBlue;
-
 			#frontPostInfo{
 				display: none;
 			}
@@ -87,6 +85,15 @@
 					text-align: justify;
 				}	
 			}		
+		}
+
+		#blogBox:nth-child(odd) {
+			border-left: solid 0.7em transparentize(gray, 0.7);
+			border-radius: 6px 0 0 6px;
+		}
+		#blogBox:nth-child(even) {
+			border-left: solid 0.7em transparentize(#00bb88, 0.8);
+			border-radius: 6px 0 0 6px;
 		}
 	}
 }

@@ -3,7 +3,7 @@ layout: post
 title: JavaScript 变量、作用域、和内存问题学习笔记
 date: 2017-2-8
 categories: blog
-tags: [BLOG,JavaScript,FrontEnd]
+tags: [JavaScript]
 author: Mars
 pIdentifier: 中文缩进
 ---
