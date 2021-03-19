@@ -20,8 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="990ea33c-82b1-436f-886d-a12e942627ce" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2021-3-9-现代JS学习笔记.md" beforeDir="false" afterPath="$PROJECT_DIR$/2021-3-9-现代JS学习笔记-严格模式与稀松模式.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +59,7 @@
       <option name="presentableId" value="Default" />
       <updated>1615311208278</updated>
       <workItem from="1615311209400" duration="1446000" />
+      <workItem from="1616175070793" duration="411000" />
     </task>
     <servers />
   </component>
@@ -76,6 +76,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1083" y="633" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1615311761992">
