@@ -11,7 +11,7 @@ url: ""
 # 视觉
 logoBlack: "/assets/logo/logoBlack.svg"
 logoWhite: "/assets/logo/logoWhite.svg"
-frontPagePic: "/assets/pics/stars.png"
+frontPagePic: "/assets/pics/stars.jpg"
 navItemPath: "/assets/nav"
 pagenaterItemPath: "/assets/pagenater"
 postsItemPath: "/assets/posts"
