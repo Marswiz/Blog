@@ -3,7 +3,7 @@ layout: post
 title: 腾讯云开发cloudBase部署上线serverless应用程序基本操作
 date: 2021-4-1
 categories: blog
-tags: [cloudBase，Serverless]
+tags: [cloudBase,Serverless]
 author: Mars
 pIdentifier: 中文缩进
 ---
@@ -12,9 +12,9 @@ pIdentifier: 中文缩进
 
 # 基本环境安装
 
-全局安装腾讯云开发命令行工具：cloudbase-cli：
+全局安装腾讯云开发命令行工具：cloudbase-cli
 
-```shell script
+```
 npm install -g @cloudbase/cli
 ```
 
@@ -22,7 +22,7 @@ npm install -g @cloudbase/cli
 
 初始化环境：
 
-```shell script
+```
 cloudbase init --without-template
 ```
 
@@ -32,6 +32,6 @@ cloudbase init --without-template
 
 进入项目所在根目录，运行下面的命令一键部署app：
 
-```shell script
+```
 cloudbase framework:deploy
 ```
