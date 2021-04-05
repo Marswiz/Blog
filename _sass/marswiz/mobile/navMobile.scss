@@ -52,6 +52,22 @@
 	height: 100%;
 	z-index: 10;
 
+	&::before {
+		$width: 40px;
+		z-index: 9;
+		content: '';
+		text-align: center;
+		color: white;
+		align-self: flex-end;
+		display: block;
+		position: relative;
+		border: 20px solid transparent;
+		border-left: 20px solid black;
+		opacity: .5;
+		top: -20px;
+		left: $width;
+	}
+
 	#navBlur{
 		position: fixed;
 		top: 0;
