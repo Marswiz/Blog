@@ -53,7 +53,7 @@
 	z-index: 10;
 
 	&::before {
-		$width: 40px;
+		$width: 20px;
 		z-index: 9;
 		content: '';
 		text-align: center;
@@ -61,10 +61,10 @@
 		align-self: flex-end;
 		display: block;
 		position: relative;
-		border: 20px solid transparent;
-		border-left: 20px solid black;
+		border: 10px solid transparent;
+		border-left: 10px solid black;
 		opacity: .5;
-		top: -20px;
+		top: -10px;
 		left: $width;
 	}
 
