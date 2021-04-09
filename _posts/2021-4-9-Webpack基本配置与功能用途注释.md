@@ -10,6 +10,38 @@ pIdentifier: 中文缩进
 
 > Webpack基本功能配置
 
+# 生产环境基本配置
+## loader
+
+### CSS、SCSS资源
+
+- MiniCssExtractPlugin.loader: 将css文件单独输出，然后html-webpack-plugin自动引入到输出html。
+- css-loader: 载入CSS代码；
+- postcss-loader： 对CSS进行兼容性处理，根据package.json里的browserlist约定，自动添加CSS前缀；
+- sass-loader：载入识别SASS、SCSS代码；
+
+### 图片资源
+
+Webpack 4之前：
+
+url-loader （依赖file-loader）: 识别除了html文档里直接引用的url资源，按设定的限制大小，自动选择打包成base64形式还是独立文件形式。
+
+> Webpack5 已经不建议使用。
+>
+> 应该使用新特性：asset modules
+
+### html内媒体资源
+
+html-loader： 
+
+### 其他资源(如字体)
+
+file-loader
+
+## 插件
+
+
+
 ```js
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -106,10 +138,17 @@ module.exports = {
       fix: true,
     }),
   ],
+   
+  // webpack-dev-server 配置，打包后根文件目录和端口号。
   devServer: {
     contentBase: path.resolve(__dirname, './dist'),
     port: 3000,
+    // 完成后打开页面
+    open: true,
+    // 开启压缩
+    compress: true, 
+    // 开启HMR功能
+    hot: true,
   },
 };
-
 ```
