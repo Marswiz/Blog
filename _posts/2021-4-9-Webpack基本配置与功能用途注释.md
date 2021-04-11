@@ -8,7 +8,7 @@ author: Mars
 pIdentifier: 中文缩进
 ---
 
-> Webpack基本功能配置
+> Webpack基本功能配置: 虽然只有搞新项目一年半载才会用到一回，还是保存一份参考一下。
 
 ```js
 const path = require('path');
