@@ -17,7 +17,7 @@
 				display: none;
 				padding-left: 16.4vw;
 				padding-top:  12.2vw;
-				padding-right: 30vw;
+				//padding-right: 30vw;
 				font-size: 3em;
 				color: white;
 				opacity: 0.7;
@@ -50,6 +50,66 @@
 							text-shadow: 1px 1px 5px white;
 						}
 					}
+				}
+			}
+			// 向下滚动箭头提示
+
+			@keyframes down {
+				0% {
+					transform: translate(0);
+				}
+				20% {
+					transform: translateY(15px);
+				}
+				40% {
+					transform: translate(0);
+				}
+			}
+			@-webkit-keyframes down {
+				0% {
+					transform: translate(0);
+				}
+				20% {
+					transform: translateY(15px);
+				}
+				40% {
+					transform: translate(0);
+				}
+			}
+			.container {
+				$downLogoColor: rgba(255,255,255,0.5);
+				$color: rgba(255,255,255,0.7);
+				width: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				.field {
+					display: flex;
+					align-items: center;
+					justify-content: space-around;
+					width: 300px;
+					filter: drop-shadow(0 0 1px $color) drop-shadow(0 0 2px $color) drop-shadow(0 0 2px $color) drop-shadow(0 0 5px $color) drop-shadow(0 0 10px $color) drop-shadow(0 0 15px lightyellow) blur(.04em);
+				}
+
+				.scroll {
+					width: 60px;
+					height: 60px;
+					border: 2px solid $downLogoColor;
+					border-radius: 50%;
+					position: relative;
+					animation: down 1.5s infinite;
+					-webkit-animation: down 1.5s infinite;
+				}
+				.scroll::before {
+					content: '';
+					position: absolute;
+					top: 15px;
+					left: 18px;
+					width: 18px;
+					height: 18px;
+					border-left: 2px solid $downLogoColor;
+					border-bottom: 2px solid $downLogoColor;
+					transform: rotate(-45deg);
 				}
 			}
 		}
