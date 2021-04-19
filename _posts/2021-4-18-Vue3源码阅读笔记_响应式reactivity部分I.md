@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Vue3源码阅读笔记——响应式reactivity部分I: effect/track/trigger
+title: Vue3源码阅读笔记——响应式reactivity部分I:effect/track/trigger
 date: 2021-4-18
 categories: blog
 tags: [Vue]

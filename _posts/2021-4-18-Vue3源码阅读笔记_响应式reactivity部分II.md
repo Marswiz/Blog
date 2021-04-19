@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Vue3源码阅读笔记——响应式reactivity部分II: reactive,ref等
+title: Vue3源码阅读笔记——响应式reactivity部分II:reactive,ref等
 date: 2021-4-19
 categories: blog
 tags: [Vue]
