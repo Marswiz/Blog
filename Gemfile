@@ -32,6 +32,6 @@ gem "jekyll-seo-tag", "~> 2.1"
 
 gem "jekyll-paginate", "~> 1.1"
 
-gem "kramdown", ">= 2.3.0"
+gem "kramdown", ">= 2.3.1"
 
 gem "kramdown-parser-gfm"
