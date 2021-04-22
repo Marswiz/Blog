@@ -124,8 +124,6 @@ export interface AppContext {
 
 # 应用实例app的：createApp方法源码
 
-
-
 ```typescript
 export function createAppAPI<HostElement>(
   render: RootRenderFunction,
@@ -142,7 +140,10 @@ export function createAppAPI<HostElement>(
 
     let isMounted = false
 
+    // 这里创建了app实例对象：
     const app: App = (context.app = {
+
+    // 内部属性定义
       _uid: uid++,
       _component: rootComponent as ConcreteComponent,
       _props: rootProps,
@@ -151,6 +152,7 @@ export function createAppAPI<HostElement>(
 
       version,
 
+      // 实例对象的config配置属性，是一对getter/setter，不允许通过app实例对象修改内部配置app.config。
       get config() {
         return context.config
       },
