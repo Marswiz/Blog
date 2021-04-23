@@ -38,12 +38,21 @@ pIdentifier: 中文缩进
  * 
  */
 
+// 对不同的响应式对象，分别在内部声明了不同的weakMap用来储存。
+export const reactiveMap = new WeakMap<Target, any>()
+export const shallowReactiveMap = new WeakMap<Target, any>()
+export const readonlyMap = new WeakMap<Target, any>()
+export const shallowReadonlyMap = new WeakMap<Target, any>()
+
+
 export function reactive<T extends object>(target: T): UnwrapNestedRefs<T>
 export function reactive(target: object) {
   // if trying to observe a readonly proxy, return the readonly version.
   if (target && (target as Target)[ReactiveFlags.IS_READONLY]) {
     return target
   }
+
+// 这里返回了创建的响应式对象。
   return createReactiveObject(
     target,
     false,
@@ -53,6 +62,21 @@ export function reactive(target: object) {
   )
 }
 
+// 这里传入的target是Target类型：
+// 它的定义：也可以是原始object，但可选具有以下四个内部属性：__v_skip，__v_isReactive，__v_isReadonly，__v_raw。
+export const enum ReactiveFlags {
+  SKIP = '__v_skip',
+  IS_REACTIVE = '__v_isReactive',
+  IS_READONLY = '__v_isReadonly',
+  RAW = '__v_raw'
+}
+export interface Target {
+  [ReactiveFlags.SKIP]?: boolean
+  [ReactiveFlags.IS_REACTIVE]?: boolean
+  [ReactiveFlags.IS_READONLY]?: boolean
+  [ReactiveFlags.RAW]?: any
+}
+
 function createReactiveObject(
   target: Target,
   isReadonly: boolean,
@@ -60,6 +84,7 @@ function createReactiveObject(
   collectionHandlers: ProxyHandler<any>,
   proxyMap: WeakMap<Target, any>
 ) {
+// 非对象的原始值不能用reactive()转化
   if (!isObject(target)) {
     if (__DEV__) {
       console.warn(`value cannot be made reactive: ${String(target)}`)
@@ -74,12 +99,19 @@ function createReactiveObject(
   ) {
     return target
   }
-  // target already has corresponding Proxy
+
+  // 已经注册过的target proxy，直接获取并返回。
   const existingProxy = proxyMap.get(target)
   if (existingProxy) {
     return existingProxy
   }
-  // only a whitelist of value types can be observed.
+
+  // 根据不同的target类型，创建设置不同的proxy handler，返回对应proxy。
+  // 
+  // target类型有三种：COMMON/COLLECTION/INVALID
+  // COMMON: object和array
+  // COLLECTION: map,set,weakmap,weakset
+  // 其他都是INVALID.
   const targetType = getTargetType(target)
   if (targetType === TargetType.INVALID) {
     return target
