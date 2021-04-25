@@ -2,7 +2,7 @@
 
 <nav id="navBlog">
 
-	
+
 	<div id="navBlur"></div>
 	<div id="navTrans">
 		<!-- logo -->
@@ -10,16 +10,24 @@
 			<img id="blogLogo" src="{{site.logoBlack | prepend:site.url}}" alt="MarsWiz">
 		</a>
 		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="{{'/blog'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/blogBlack.svg'}}" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="{{'/tags'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/tagsBlack.svg'}}" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="{{'/aboutMe'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/aboutMeBlack.svg'}}" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="{{'/search'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/searchBlack.svg'}}" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
 		<div id="navItems">
-			<a id="blogBtn" href="{{'/blog'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/blogBlack.svg'}}" alt="blog"></a>
-			<a id="tagBtn" href="{{'/tags'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/tagsBlack.svg'}}" alt="tags"></a>	
-			<a id="aboutMeBtn" href="{{'/aboutMe'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/aboutMeBlack.svg'}}" alt="aboutMe"></a>
-			<a id="searchBtn" href="{{'/search'| prepend:site.url}}"><img src="{{site.navItemPath | prepend:site.url | append:'/searchBlack.svg'}}" alt="search"></a>
+			<a id="blogBtn" href="{{'/blog'| prepend:site.url}}"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="{{'/tags'| prepend:site.url}}"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="{{'/aboutMe'| prepend:site.url}}"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="{{'/search'| prepend:site.url}}"><div id="searchBtnSprite"></div></a>
+			<a href="{{'/projects'| prepend:site.url}}" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
 		</div>
 
 		<!-- 移动端按钮 -->
 		<div id="navItemsBtnMobile">
-			<span class="fa fa-bars"></span>			
+			<span class="fa fa-bars"></span>
 		</div>
 	</div>
 
