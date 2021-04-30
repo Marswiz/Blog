@@ -16,7 +16,7 @@ pIdentifier: 中文缩进
 > 
 > packages/runtime-core/src/h.ts
 
-# Vue组件进行完成模板解析渲染的几种方式
+# Vue组件实现模板解析渲染的几种方式
 
 1. 单文件组件(SFC)中，Vue组件可以使用<template>定义渲染模板；
 2. 任何组件都可以通过配置中tempalte property传入模板字符串定义渲染模板；
@@ -36,10 +36,12 @@ export interface VNode<
   /**
    * @internal
    */
+// 判断是否是VNode的内部标志：__v_isVNode
   __v_isVNode: true
   /**
    * @internal
    */
+// VNode设置为永远不是响应式的
   [ReactiveFlags.SKIP]: true
 
 // VNode 的类型:

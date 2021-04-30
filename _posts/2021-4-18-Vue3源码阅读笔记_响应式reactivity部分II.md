@@ -68,9 +68,16 @@ export function reactive(target: object) {
 // 这里传入的target是Target类型：
 // 它的定义：也可以是原始object，但可选具有以下四个内部属性：__v_skip，__v_isReactive，__v_isReadonly，__v_raw。
 export const enum ReactiveFlags {
+  // SKIP为ture,代表这个对象永远不会成为reactive对象
   SKIP = '__v_skip',
+
+  // IS_REACTIVE为true，代表为reactive对象
   IS_REACTIVE = '__v_isReactive',
+
+  // IS_READONLY为true，代表这是只读reactive对象
   IS_READONLY = '__v_isReadonly',
+
+  // RAW中记录了reactive proxy对象代理的原始值
   RAW = '__v_raw'
 }
 export interface Target {
@@ -111,8 +118,9 @@ function createReactiveObject(
 
   // 根据不同的target类型，创建设置不同的proxy handler，返回对应proxy。
   // 这些handler内部，定义了对target各种操作的拦截器，在各个调用时机执行trace或trigger方法，用来实现target的响应式。
-  // 
-  // target类型有三种：COMMON/COLLECTION/INVALID
+  // target就是传入用来创建响应式的原始变量。
+  //
+  // Vue定义的target类型有三种：COMMON/COLLECTION/INVALID
   // COMMON: object和array
   // COLLECTION: map,set,weakmap,weakset
   // 其他都是INVALID：直接返回原target。
@@ -127,6 +135,7 @@ function createReactiveObject(
     target,
     targetType === TargetType.COLLECTION ? collectionHandlers : baseHandlers
   )
+  // 在对应的map记录新生成的proxy。 然后返回proxy
   proxyMap.set(target, proxy)
   return proxy
 }
@@ -134,7 +143,6 @@ function createReactiveObject(
 # 2. 用于创建响应式对象proxy的拦截器：baseHandlers和collectionHandlers
 
 ```typescript
-
 // 普通reactive()函数的proxy handler
 // 只捕获五种操作：Get，set，deleteProperty,has和ownkeys
 export const mutableHandlers: ProxyHandler<object> = {
@@ -159,6 +167,9 @@ function createGetter(isReadonly = false, shallow = false) {
     } else if (key === ReactiveFlags.IS_READONLY) {
       return isReadonly
     } else if (
+  // Marswiz: receiver是捕获器中，传入的调用这个捕获器的原始对象。
+  // 这里的含义是：只有从各个Map中注册过的proxy get这个raw值（也就是通过createReactive、createReadonly这类工厂函数创建的proxy）.
+  // 才返回原始target，其他proxy对象即使有ReactiveFlags.RAW属性，也用这个get捕获器，也不会返回target,因为vue不认这个对象，它不是从Vue内部创建的。
       key === ReactiveFlags.RAW &&
       receiver ===
         (isReadonly
@@ -173,7 +184,7 @@ function createGetter(isReadonly = false, shallow = false) {
       return target
     }
 
-    // 如果target是数组对象的特殊限制
+    // ！！注意：如果target是数组对象，有特殊规则限制！
     const targetIsArray = isArray(target)
     // 对于数组的target，如果get的key是arrayInstrumentations中注册的，则执行arrayInstrumentations内对应的方法。
     // arrayInstrumentations主要拦截数组的三种操作: 'includes', 'indexOf', 'lastIndexOf'
@@ -224,6 +235,34 @@ function createGetter(isReadonly = false, shallow = false) {
 
     // 其他默认情况，都直接返回res目标值。
     return res
+  }
+}
+```
+readonly proxy的拦截器：
+
+```js
+// Marswiz: 只读对象的proxy捕获器
+// 只拦截get/set/deleteProperty三个操作。
+export const readonlyHandlers: ProxyHandler<object> = {
+  get: readonlyGet,
+  // 可以看到，这里Set和deleteProperty都不进行任何操作，且开发环境会报错。
+  set(target, key) {
+    if (__DEV__) {
+      console.warn(
+        `Set operation on key "${String(key)}" failed: target is readonly.`,
+        target
+      )
+    }
+    return true
+  },
+  deleteProperty(target, key) {
+    if (__DEV__) {
+      console.warn(
+        `Delete operation on key "${String(key)}" failed: target is readonly.`,
+        target
+      )
+    }
+    return true
   }
 }
 ```
