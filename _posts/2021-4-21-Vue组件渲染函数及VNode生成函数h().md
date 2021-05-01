@@ -24,10 +24,16 @@ pIdentifier: 中文缩进
 
 # VNode的TS类型定义源码
 
+VNode中常见的重要属性如下：
+
+- type： VNode的类型。（代表类型的字符串，VNode对象，Component对象，Text类型Symbol,Static类型Symbol,Comment类型Symbol,Fragment类型Symbol等）
+- props: VNode本身的属性。官方这里可选定义了：key,ref，和VNode的一些生命周期钩子：onVnodeBeforeMount，onVnodeMounted，onVnodeBeforeUpdate，onVnodeUpdated，onVnodeBeforeUnmount，onVnodeUnmounted等。Props可以在h()函数的第二个参数传入。
+- children: 子VNode；
+- key: VNode的唯一标志符；
+- el: VNode在DOM中挂载的元素对象
+
 ```typescript
-
 // packages/runtime-core/src/vnode.ts
-
 export interface VNode<
   HostNode = RendererNode,
   HostElement = RendererElement,
@@ -108,7 +114,7 @@ export interface VNode<
 
 ```typescript
 // 这里定义了一系列h()函数的重载形式，用来让用户更容易使用。
-// h()函数用来生成VNode，用户用来在组件中手动编写render()函数。
+// h()函数用来生成VNode，用户用来在组件中手动编写render()函数方法，用来代替template。
 
 // ！！————————从这里开始都是重载编写部分——————————————！！
 // 传入字符串类型，生成DOM元素
