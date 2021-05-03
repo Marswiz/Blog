@@ -11,8 +11,7 @@ pIdentifier: 中文缩进
 > 涉及到框架核心问题，必须搞定！
 >
 
-
-# 虚拟DOM是啥？好在哪？
+# 一、虚拟DOM是啥？好在哪？
 
 古早时代，程序员都是通过DOM API直接操作DOM，修改页面结构的。比如document.querySelector获取DOM元素，然后修改innerHTML等。
 
@@ -20,10 +19,10 @@ pIdentifier: 中文缩进
 
 用虚拟DOM可以用JS提前进行新老虚拟DOM树的比较，然后只在真实DOM上一次渲染更新差异的部分，节约了性能。
 
-# 虚拟DOM、diff算法与真实DOM的基本交互原理
+# 二、虚拟DOM、diff算法与真实DOM的基本交互原理
 
 ![虚拟DOM](/assets/posts/virtual_dom.svg)
 
-# diff算法的源码实现
+# 三、diff算法的源码实现
 
 
