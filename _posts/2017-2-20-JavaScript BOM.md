@@ -32,7 +32,7 @@ pIdentifier: 全缩进
 `window.open("url","_target");`
 
 返回新打开标签页的指针。可以这样跟踪新标签页：<br>
-`var newTag = window.open("www.marswiz.com","_blank");`
+`let newTag = window.open("www.marswiz.com","_blank");`
 
 关闭新标签页：<br>
 `newTag.close();`

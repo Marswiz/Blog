@@ -34,7 +34,7 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js', s
 
 Promise含义是“承诺”，顾名思义，一个Promise对象是一个承诺，它承诺了在一段时间后会给出某种解决方案：抛出一个结果或抛出错误。
 
-Promise对象的存在是为了解决异步编程中的，为了获得异步结果需要的长时间监听或轮询所造成的不必要浪费。Promise在“生产者”和“消费者”之间达成契约，作为中间商，当生产者一旦产出结果，立即通报给消费者。
+Promise对象的存在是为了解决异步编程中的回调地狱问题。Promise在“生产者”和“消费者”之间达成契约，作为中间商，当生产者一旦产出结果，立即通报给消费者。
 
 Promise()是JavaScript内置构造函数。语法如下：
 
