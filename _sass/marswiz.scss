@@ -20,6 +20,7 @@
 		$lineWeight: 1px;
 		$deg: 0deg;
 
+		scroll-behavior: smooth;
 		background: linear-gradient($deg ,transparent 0 , transparent $gridWidth/2+1-$lineWeight, $bgColor 0, $bgColor $gridWidth/2+1px, transparent 0, transparent $gridWidth) left top/#{$gridWidth} $gridWidth repeat,
 		            linear-gradient($deg+90deg ,transparent 0 , transparent $gridWidth/2+1-$lineWeight, $bgColor 0, $bgColor $gridWidth/2+1px, transparent 0, transparent $gridWidth) left top/#{$gridWidth} $gridWidth repeat;
 	}
@@ -44,11 +45,11 @@
 	@font-face{
 		font-family: 'Poiret One';
 		src: url('https://marswiz.com/assets/fonts/PoiretOne-Regular.ttf') format('truetype');
-	}	
+	}
 	@font-face{
 		font-family: 'Memphis';
 		src: url('https://marswiz.com/assets/fonts/Memphis.otf') format('opentype');
-	}	
+	}
 	@font-face{
 		font-family: 'Folio Light';
 		src: url('https://marswiz.com/assets/fonts/Folio-Light.otf') format('opentype');
@@ -56,7 +57,7 @@
 
 //日志图片大小(单位vw)
 	$postImgWidth: 30;
-	
+
 //媒体参数
 	$moblieWidth: 600px;
 
@@ -139,7 +140,7 @@
 	@media screen and (max-width: 768px) {
 		@import 'marswiz/mobile/basic';
 		@import 'marswiz/mobile/navFront';
-		@import 'marswiz/mobile/navBlog';		
+		@import 'marswiz/mobile/navBlog';
 		@import 'marswiz/mobile/frontShow';
 		@import 'marswiz/mobile/frontContentBox';
 		@import 'marswiz/mobile/frontPagenater';

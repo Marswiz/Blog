@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 现代JS学习笔记：Module模块化
-date: 2021-3-9
+title: JS模块化
+date: 2021-8-1
 categories: blog
 tags: [JavaScript]
 author: Mars
@@ -10,9 +10,11 @@ pIdentifier: 中文缩进
 
 > 学习内容：[《现代JavaScript教程》](https://zh.javascript.info/)
 
-# 15	模块化Module
+# 1. 为什么要模块化Module
 
-整个的长代码不易维护和重用，我们希望将一个单独的功能分离出来，使用时按需加载。这个分离的实现某个单一功能的代码就是模块。
+- 关注点分离：一个的长代码不易维护和重用，我们希望将一个单独的功能分离出来（单一职责），使用时按需加载。这个分离的实现某个单一功能的代码就是模块。
+- 避免全局污染：
+- 
 
 一个模块可以包含用于特定目的的类或函数库。
 
