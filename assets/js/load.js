@@ -9,7 +9,6 @@ window.addEventListener('load',pagnaterFunc,false);
 window.addEventListener('resize',(e)=>{
 	// 手机横转竖的操作
 	// and 把PC的导航栏去掉
-	console.log('resized!');
 	if (window.innerWidth <= 768){
 		window.addEventListener('touchstart',getStartPoint,passiveSupported ? { passive: false } : false);
 		window.addEventListener('touchend',getEndPoint,passiveSupported ? { passive: false } : false);

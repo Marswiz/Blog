@@ -40,17 +40,14 @@ function navFunc(){
 		if (document.querySelector('#frontShow')){
 			if(window.scrollY >= document.querySelector('#frontShow').clientHeight-2){
 				navToWhite();
-				console.log('nav.js 变白');
 			} else {
 				navToBlack();
 				$('#frontPageInfo').slideDown(1500);
 				$('#tagBox').slideDown(500);
-				console.log('nav.js 变黑');
 			}
 		} else {
 			document.querySelector('#navBlog').classList.remove('navHidden');
 			document.querySelector('#navBlog').classList.add('navShown');
-			console.log('nav.js 变白');
 		}
 	}
 }
