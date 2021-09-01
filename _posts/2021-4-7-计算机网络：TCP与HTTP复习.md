@@ -1,14 +1,16 @@
 ---
 layout: post
-title: 计算机网络：TCP与HTTP复习
-date: 2021-4-7
+title: 计算机网络：TCP与HTTP协议
+date: 2021-8-23
 categories: blog
-tags: [Network,TCP,HTTP]
+tags: [Network,TCP,HTTP,HTTPs]
 author: Mars
 pIdentifier: 中文缩进
 ---
 
-> 计算机网络笔记复习：TCP和HTTP，面试容易考。
+> 计算机网络笔记复习：TCP和HTTP部分
+> 
+> []()
 
 # 1. TCP协议及其特点
 
@@ -22,8 +24,6 @@ TCP协议的特点：
 4. 全双工：双方可以随时互相发送数据。
 
 > 同一个IP可以有多个TCP连接，同一个端口号也可以出现在多个TCP连接中。
-
-
 
 ## 1.1 TCP报文
 
