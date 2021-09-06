@@ -26,7 +26,7 @@ pIdentifier: 中文缩进
 
 VNode中常见的重要属性如下：
 
-- type： VNode的类型。（代表类型的字符串，VNode对象，Component对象，Text类型Symbol,Static类型Symbol,Comment类型Symbol,Fragment类型Symbol等）
+- type： VNode的类型。（代表类型的字符串，**VNode对象**，**Component对象**，**Text类型**Symbol，**Static类型**Symbol，**Comment类型**Symbol，**Fragment类型**Symbol等）
 - props: VNode本身的属性。官方这里可选定义了：key,ref，和VNode的一些生命周期钩子：onVnodeBeforeMount，onVnodeMounted，onVnodeBeforeUpdate，onVnodeUpdated，onVnodeBeforeUnmount，onVnodeUnmounted等。Props可以在h()函数的第二个参数传入。
 - children: 子VNode；
 - key: VNode的唯一标志符；
