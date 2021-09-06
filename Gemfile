@@ -35,3 +35,5 @@ gem "jekyll-paginate", "~> 1.1"
 gem "kramdown", ">= 2.3.1"
 
 gem "kramdown-parser-gfm"
+
+gem "addressable", ">= 2.8.0"
