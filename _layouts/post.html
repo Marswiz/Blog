@@ -35,7 +35,7 @@ layout: blog
   Keywords:
 	  {%- if page.tags -%}
 		  {% for tag in page.tags %}
-			  <a id="tags" href=""><span>{{tag}}</span></a>
+			  <a id="tags" href="{{ tag }}"><span>{{tag}}</span></a>
 		  {% endfor %}
 	  {%- endif -%}
   </div>
