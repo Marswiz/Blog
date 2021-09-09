@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="{{ page.lang | default: site.lang | default: 'zh-CN' }}">
 
-  {%- include head.html -%}
+{%- include head.html -%}
 
-  <body>
+<body>
 
     {%- include navBlog.html -%}
     {%- include navMobile.html -%}
 
     <main id="mainBox" aria-label="Content">
 
-      <!-- 移动端页面标题 -->
-  <!--   <a id="logoBoxBlog" href="/">
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
       <img id='logo' src="{{site.logoBlack | prepend:site.url}}" alt="MarsWiz">
     </a> -->
-<!--  -->
-      {{ content }}
+        <!--  -->
+        {{ content }}
 
     </main>
 
@@ -24,49 +24,35 @@
     <!-- 回到页首按钮 -->
     <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
 
-  </body> 
-  <script>
-		blogYearFunc();
-    if (window.innerWidth >= 769){
-      document.querySelector('#navBlog').style.display = 'block';
-    }
-
-    window.addEventListener('resize',(e)=>{
-      // 手机横转竖的操作
-      // and 把PC的导航栏去掉
-      console.log('resized!');
-      if (window.innerWidth <= 768){
-        window.addEventListener('touchstart',getStartPoint,passiveSupported ? { passive: false } : false);
-        window.addEventListener('touchend',getEndPoint,passiveSupported ? { passive: false } : false);
-        window.addEventListener('gesturestart',gestureDetected,false);
-        document.querySelector('#navBlog').style.display = 'none';
-      } else {
+</body>
+<script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
         document.querySelector('#navBlog').style.display = 'block';
-      }
-    });
-  </script> 
-
-  {%- if page.nav -%}
-	<script>
-    if (window.innerWidth > 768){
-  		let btnColor = document.querySelector('#navBlog #navTrans #navItems #{{page.nav}}Btn img').src.replace(/Black/,'Blue');
-  		document.querySelector('#navBlog #navTrans #navItems #{{page.nav}}Btn img').src = btnColor;
-  		document.querySelector('#{{page.nav}}Btn img').removeEventListener('mouseout',blueToBlack,false);
-    } else {
-      let btnColor = document.querySelector('#navMobile #navTrans #navItems #{{page.nav}}Btn img').src.replace(/Black/,'Blue');
-      document.querySelector('#navMobile #navTrans #navItems #{{page.nav}}Btn img').src = btnColor;
     }
-	</script>
-  {%- endif -%}
 
-  {%- if page.nav == 'tag' -%}
-    <script src="{{'/assets/js/tag.js' | prepend:site.url}}"></script>
-  {%- endif -%}
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script>
 
-  {%- if page.nav == 'search' -%}
-    <script src="{{'/assets/js/search.js' | prepend:site.url}}"></script>
-  {%- endif -%}
+{%- if page.nav -%}
+<script>
+    if (window.innerWidth > 768) {
+        let btnColor = document.querySelector('#navBlog #navTrans #navItems #{{page.nav}}Btn img').src.replace(/Black/, 'Blue');
+        document.querySelector('#navBlog #navTrans #navItems #{{page.nav}}Btn img').src = btnColor;
+        document.querySelector('#{{page.nav}}Btn img').removeEventListener('mouseout', blueToBlack, false);
+    } else {
+        let btnColor = document.querySelector('#navMobile #navTrans #navItems #{{page.nav}}Btn img').src.replace(/Black/, 'Blue');
+        document.querySelector('#navMobile #navTrans #navItems #{{page.nav}}Btn img').src = btnColor;
+    }
+</script>
+{%- endif -%}
+
+{%- if page.nav == 'tag' -%}
+<script src="{{'/assets/js/tag.js' | prepend:site.url}}"></script>
+{%- endif -%}
+
+{%- if page.nav == 'search' -%}
+<script src="{{'/assets/js/search.js' | prepend:site.url}}"></script>
+{%- endif -%}
 
 </html>
-
-

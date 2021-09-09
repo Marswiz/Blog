@@ -1,15 +1,20 @@
 ---
 layout: post
 title: Vue3中的虚拟DOM和Diff算法
-date: 2021-4-29
+date: 2021-9-1
 categories: blog
 tags: [Vue]
 author: Mars
 pIdentifier: 中文缩进
 ---
 
-> 涉及到框架核心问题，必须搞定！
->
+> [一、虚拟DOM是什么？基本实现流程是？](#一虚拟dom是什么基本实现流程是)
+> 
+> [二、为什么需要虚拟DOM而不是直接操作DOM？](#二为什么需要虚拟dom而不是直接操作dom)
+> 
+> [三、虚拟DOM与diff算法的简易实现](#三虚拟dom与diff算法的简易实现)
+> 
+> [四、Vue3中真实的diff算法](#四vue3中真实的diff算法)
 
 # 一、虚拟DOM是什么？基本实现流程是？
 
@@ -220,3 +225,7 @@ function createApp(Component, container) {
 // calling this should actually mount the component.
 createApp(Component, document.getElementById('app'))
 ```
+
+# 四、Vue3中真实的diff算法
+
+[Vue3中的diff算法](/blog/2021/09/06/Vue3中的diff算法)

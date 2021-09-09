@@ -69,6 +69,9 @@
 
 		ul,ol{
 			margin-top: 0.5em;
+			img {
+				max-width: 100%;
+			}
 		}
 
 		table{
@@ -151,7 +154,7 @@
 		}
 		code {
 			text-align: left;
-			font-family: 'Folio Light','微软雅黑',sans-serif;
+			font-family: 'Courier New','Courier','Consolas','Terminal','Monospace',serif;
 			color: $marsBlue;
 			margin:0 0.2em;
 			&.solo {
