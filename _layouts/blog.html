@@ -25,27 +25,14 @@
     <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
 
 </body>
-<script>
+<!-- <script>
     blogYearFunc();
     if (window.innerWidth >= 769) {
         document.querySelector('#navBlog').style.display = 'block';
     }
 
     window.addEventListener('resize', debounce(resize, 0.5));
-</script>
-
-{%- if page.nav -%}
-<script>
-    if (window.innerWidth > 768) {
-        let btnColor = document.querySelector('#navBlog #navTrans #navItems #{{page.nav}}Btn img').src.replace(/Black/, 'Blue');
-        document.querySelector('#navBlog #navTrans #navItems #{{page.nav}}Btn img').src = btnColor;
-        document.querySelector('#{{page.nav}}Btn img').removeEventListener('mouseout', blueToBlack, false);
-    } else {
-        let btnColor = document.querySelector('#navMobile #navTrans #navItems #{{page.nav}}Btn img').src.replace(/Black/, 'Blue');
-        document.querySelector('#navMobile #navTrans #navItems #{{page.nav}}Btn img').src = btnColor;
-    }
-</script>
-{%- endif -%}
+</script> -->
 
 {%- if page.nav == 'tag' -%}
 <script src="{{'/assets/js/tag.js' | prepend:site.url}}"></script>

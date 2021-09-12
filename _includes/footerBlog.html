@@ -1,51 +1,45 @@
 <footer>
-	<div id="footerBox">
-		<div id="socialBox">
+    <div id="footerBox">
+        <div id="socialBox">
 
-			{%- for social in site.socialList -%}
-			{% assign a = {{social | append:"_site"}} %}
-			{% assign b = {{social | append:"_username"}} %}
-			{% assign c = {{social | append:"_icon"}} %}
-			{% assign d = {{social | append:"_letter"}} %}	
-				<a href="{{site.[a]}}{{site.[b]}}" target="_blank">
-					<div id="socialBall">
-						{% if site.[c] %}
-							<p id="socialContent1" class="{{site.[c]}}"></p>
-						{% else if site.[d] %}
-							<p id="socialContent2">{{site.[d]}}</p>
-						{% endif %}
-					</div>
-				</a>
-			{%- endfor -%}
+            {%- for social in site.socialList -%}
+            {% assign a = {{social | append:"_site"}} %}
+            {% assign b = {{social | append:"_username"}} %}
+            {% assign c = {{social | append:"_icon"}} %}
+            {% assign d = {{social | append:"_letter"}} %}
+            <a href="{{site.[a]}}{{site.[b]}}" target="_blank">
+                <div id="socialBall">
+                    {% if site.[c] %}
+                    <p id="socialContent1" class="{{site.[c]}}"></p>
+                    {% else if site.[d] %}
+                    <p id="socialContent2">{{site.[d]}}</p>
+                    {% endif %}
+                </div>
+            </a>
+            {%- endfor -%}
 
-		</div>
-		<div id="webInfo">
-			<p>
-				<span id="beian">京ICP备 17067352 号</span>
-				<span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
-				<span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
-			</p>
-		</div>
-	</div>
+        </div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
 
-	<script src="{{'/assets/js/general.js' | prepend:site.url}}"></script>	
-	<script src="{{'/assets/js/nav.js' | prepend:site.url}}"></script>	
-	<script src="{{'/assets/js/post.js' | prepend:site.url}}"></script>
-	<script src="{{'/assets/js/jquery.min.js' | prepend:site.url}}"></script>
-	<script src="{{'/assets/js/marsTipTool.js' | prepend:site.url}}"></script>
-	<script src="{{'/assets/js/blogYear.js' | prepend:site.url}}"></script>
-	<script src="{{'/assets/js/navMobile.js' | prepend:site.url}}"></script>
-	<script src="{{'/assets/js/load.js' | prepend:site.url}}"></script>
-	<script>
-		window.addEventListener('load',postsFunc,false);
-        if (window.innerWidth <= 768){
-				window.addEventListener('load',loadDayNight,false);
-				$(document).one('touchstart',loadDayNight);
-		} 		
-	</script>
-	
-	<!-- Valine 评论 -->
-	<script>
+    <script src="{{'/assets/js/dist/main.js' | prepend:site.url}}" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script>
+    <script>
         new Valine({
             el: '#vcomments',
             appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',

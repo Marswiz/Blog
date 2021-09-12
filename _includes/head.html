@@ -6,6 +6,12 @@
   <meta name="keywords" content="Marswiz,blog,Mars">
   <meta name="author" content="Marswiz">
   {%- seo -%}
+  <link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
   <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
   {%- feed_meta -%}
   <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -16,8 +22,11 @@
 	<link rel="apple-touch-icon" href = "{{ "/assets/pics/logo_cat.jpg" | prepend: site.baseurl }}">
 
   <!--  jquery  -->
-  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
 
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
   <!-- Vconsole -->
 <!--   <script src="{{'/assets/js/vconsole.min.js'| prepend:site.url}}"></script>
   <script>
@@ -26,10 +35,8 @@
     console.log('Hello world');
   </script>
    -->
-  <!-- Valine 评论 -->
-  <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script>
   <!-- Hammer.js 移动手势操作库 -->
-  <script src="{{'/assets/js/hammer.js' | prepend:site.url}}"></script>
+  <script src="{{'/assets/js/hammer.js' | prepend:site.url}}" defer></script>
 
 
 </head>
