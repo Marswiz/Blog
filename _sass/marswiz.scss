@@ -29,31 +29,31 @@
 	$fontPath:'localhost:4000/assets/fonts/' ;
 	$baseFontSize:  24pt !default;
 
-	// @font-face{
-	// 	font-family: 'Didot';
-	// 	src: url('../assets/fonts/Didot.woff2') format('woff2');
-	// }
+	@font-face{
+		font-family: 'Didot';
+		src: url('../assets/fonts/Didot.woff2') format('woff2');
+	}
 
-	// @font-face{
-	// 	font-family: 'Clarendon BT';
-	// 	src: url('../assets/fonts/Clarendon_BT.woff2') format('woff2');
-	// }
-	// @font-face{
-	// 	font-family: 'TodaySB-CapExtLig';
-	// 	src: url('../assets/fonts/TodaySB-CapExtLig.woff2') format('woff2');
-	// }
-	// @font-face{
-	// 	font-family: 'Poiret One';
-	// 	src: url('../assets/fonts/PoiretOne-Regular.woff2') format('woff2');
-	// }
-	// @font-face{
-	// 	font-family: 'Memphis';
-	// 	src: url('../assets/fonts/Memphis.woff2') format('woff2');
-	// }
-	// @font-face{
-	// 	font-family: 'Folio Light';
-	// 	src: url('../assets/fonts/Folio-Light.woff2') format('woff2');
-	// }
+	@font-face{
+		font-family: 'Clarendon BT';
+		src: url('../assets/fonts/Clarendon_BT.woff2') format('woff2');
+	}
+	@font-face{
+		font-family: 'TodaySB-CapExtLig';
+		src: url('../assets/fonts/TodaySB-CapExtLig.woff2') format('woff2');
+	}
+	@font-face{
+		font-family: 'Poiret One';
+		src: url('../assets/fonts/PoiretOne-Regular.woff2') format('woff2');
+	}
+	@font-face{
+		font-family: 'Memphis';
+		src: url('../assets/fonts/Memphis.woff2') format('woff2');
+	}
+	@font-face{
+		font-family: 'Folio Light';
+		src: url('../assets/fonts/Folio-Light.woff2') format('woff2');
+	}
 
 //日志图片大小(单位vw)
 	$postImgWidth: 30;
