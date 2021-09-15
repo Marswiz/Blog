@@ -1,3 +1,9 @@
+window.addEventListener('load', () => {
+    let links = document.querySelectorAll('a');
+    for (let l of links) {
+        l.target = "_blank";
+    }
+});
 // -> general.js
 // 检测浏览器是否支持Passive Event Listener:
 // Chrome 56+ 版本会默认把绑定在window、body、document等上的scroll mousewheel touchmove等默认设置为passive event listener以提高性能
