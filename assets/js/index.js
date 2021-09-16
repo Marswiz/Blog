@@ -3,6 +3,10 @@ window.addEventListener('load', () => {
     for (let l of links) {
         l.target = "_blank";
     }
+    let titles = document.querySelectorAll('ol a');
+    for (let l of titles) {
+        l.target = "";
+    }
 });
 // -> general.js
 // 检测浏览器是否支持Passive Event Listener:
