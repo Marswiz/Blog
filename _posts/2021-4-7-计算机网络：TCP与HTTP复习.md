@@ -225,7 +225,7 @@ HTTP协议是**无状态的(Stateless)**。也就是说，每次向服务器发�
 
 发布于1996年。
 
-- 默认不支持长链接：每次HTTP通信完成，断开TCP连接；
+- 默认不支持TCP长链接：每次HTTP通信完成，断开TCP连接；
 - 缓存使用`If-Modified-Since`和`Expires`判断；
 
 ### 2.2.2 HTTP/1.1 改进点

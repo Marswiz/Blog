@@ -1,7 +1,7 @@
 window.addEventListener('load', () => {
     let links = document.querySelectorAll('a');
     for (let l of links) {
-        if(l.href && l.href.indexOf('marswiz') === -1){
+        if(l.href && l.href.indexOf('marswiz') === -1 && l.href.indexOf('localhost') === -1){
             l.target = "_blank";
         }
     }
