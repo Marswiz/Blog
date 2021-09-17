@@ -1,11 +1,9 @@
 window.addEventListener('load', () => {
     let links = document.querySelectorAll('a');
     for (let l of links) {
-        l.target = "_blank";
-    }
-    let titles = document.querySelectorAll('ol a');
-    for (let l of titles) {
-        l.target = "";
+        if(l.href && l.href.indexOf('marswiz') === -1){
+            l.target = "_blank";
+        }
     }
 });
 // -> general.js
