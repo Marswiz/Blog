@@ -14,8 +14,6 @@ pIdentifier: 中文缩进
 
 `<script setup>`语法糖引入的动机，是**简化冗余代码，让SFC书写更简洁。**
 
-
-
 # 1. 书写形式
 
 ```js
@@ -23,6 +21,7 @@ pIdentifier: 中文缩进
   // codes..
 </script>
 ```
+
 # 2. `<script setup>`基本用法
 - 内部声明的变量和引入的变量都在`<template>`中立即可用
 - 内部的变量，可以直接用作组件标签名（转为kebab-case或保留原形式都可以）；
