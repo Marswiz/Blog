@@ -115,23 +115,44 @@ window.URL.createObjectURL(file)
 
 # 3. 媒体元素API
 
-
+<!-- // todo -->
 
 # 4. 拖放API
 
+元素被拖动时，依次触发：
+
+- dragstart
+- drag
+- dragend
+
+元素拖动到一个有效目标上时，依次触发：
+
+- dragenter;
+- dragover;
+- dragleave / drop；
+
+**让一个元素变成可放置区域的方法：** 通过`e.preventDefault()`阻止它的`dragenter`和`dragover`默认事件。（之后光标由阻止变为可放置）
 
 
 # 5. Page Visibility API
 
+提供页面是否被用户可见的信息。（比如页面被最小化等）
 
+- **document.visibilityState**：
+  - visible: 页面可见（标签被打开，或者通过预览形式）；
+  - hidden: 页面用户不可见。
+- **visibilityChange事件：** 当页面可见性变化时触发；
 
 # 6. Performance API
 
+接口暴露在`window.performance`对象上。
 
+- **performance.now()**: 返回一个更精确的时间戳（微秒精度）。每次页面打开或工作者线程创建，`performance.now()`从0开始计时。
+- **performance.getEntries()** 返回performance性能时间线，内含度量性能的多个对象。
 
 # 7. Web组件 API 
 
-
+见web组件blog。
 
 
 
