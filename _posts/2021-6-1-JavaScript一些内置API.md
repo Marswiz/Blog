@@ -133,7 +133,6 @@ window.URL.createObjectURL(file)
 
 **让一个元素变成可放置区域的方法：** 通过`e.preventDefault()`阻止它的`dragenter`和`dragover`默认事件。（之后光标由阻止变为可放置）
 
-
 # 5. Page Visibility API
 
 提供页面是否被用户可见的信息。（比如页面被最小化等）
