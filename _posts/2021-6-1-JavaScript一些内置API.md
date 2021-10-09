@@ -10,7 +10,7 @@ pIdentifier: 中文缩进
 
 > JavaScript一些内置API： 
 >
-> 跨文档通信API、FIle API、媒体元素API、拖放API、Page Visibility API、Performance API、Web组件 API 
+> 跨文档通信API、FIle API、媒体元素API、拖放API、Page Visibility API、Performance API、Web组件 API 、Observer API
 
 # 1. 跨文档通信API
 
@@ -153,7 +153,13 @@ window.URL.createObjectURL(file)
 
 见web组件blog。
 
+# 8. Observer API
 
+ Observer API系列，一共有 4 个：
 
+- **Intersection Observer API**：观察可见性
+- **Resize Observer API**：观察大小变化
+- **Mutation Observer API**：提供了监视 DOM 树的变化的能力
+- **Performance Observer API**：用于观察性能
 
 
