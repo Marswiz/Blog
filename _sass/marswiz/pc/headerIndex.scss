@@ -1,0 +1,55 @@
+.headerIndexInnerContainer {
+    --indent: 1em;
+    --hoverColor: skyblue;
+    font-size: .7em;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    position: sticky;
+    top: 5.5vw;
+    bottom: 0;
+    border-left: 2px solid gray;
+    padding: 20px;
+}
+
+.headerIndexContainer a {
+    display: block;
+    text-decoration: none;
+    color: gray;
+}
+
+.headerIndexContainer a:hover {
+    color: var(--hoverColor);
+}
+
+.headerIndexContainer .headerIndexTag {
+    color: #ff8c00;
+}
+
+.headerIndexContainer a:hover .headerIndexTag{
+    color: var(--hoverColor);
+}
+
+.headerIndexContainer .headerIndex_level_1 {
+    padding-left: calc(var(--indent) * 0);
+}
+
+.headerIndexContainer .headerIndex_level_2 {
+    padding-left: calc(var(--indent) * 1);
+}
+
+.headerIndexContainer .headerIndex_level_3 {
+    padding-left: calc(var(--indent) * 2);
+}
+
+.headerIndexContainer .headerIndex_level_4 {
+    padding-left: calc(var(--indent) * 3);
+}
+
+.headerIndexContainer .headerIndex_level_5 {
+    padding-left: calc(var(--indent) * 4);
+}
+
+.headerIndexContainer .headerIndex_level_6 {
+    padding-left: calc(var(--indent) * 5);
+}

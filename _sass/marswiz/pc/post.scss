@@ -1,269 +1,330 @@
 #postBox {
-	// 默认文字颜色
-	color: black;
-	line-height: 1.5em;
-	margin-top: 5.5vw;
-	padding-left: 16.4vw;
-	padding-right: 3.4vw; 
-	@include flexBoxCol;
-	#postHeader{
-		@include flexBoxCol;
-		align-items: flex-end;
-		align-self: flex-end;
-		margin-top: 2.95vw;
-		#postTitle{
-			line-height: 1em;
-			font-family: 'Bodoni MT','宋体';
-			font-size: 2.33em;
-			width: 70vw;
-			text-align:right;
-		}
-		#postInfo{
-			text-align: right;
-			margin: 2.24vw 0;
-			font-family: Poiret One;
-		}
-	}
+  // 默认文字颜色
+  color: black;
+  line-height: 1.5em;
+  margin-top: 5.5vw;
+  padding-left: 3.4vw;
+  padding-right: 3.4vw;
+  width: 100%;
+  @include flexBoxCol;
 
-	#postContent{
-		display: flex;
-		flex-direction: column;
-		align-items: stretch;
-		font-family: 'Folio Light','Helvetica','阿里巴巴普惠体','微软雅黑','STZhongsong',sans-serif;
-		text-align: left;
-		h2{
-			font-size: 1.4em;
-		}
-		h3 {
-			font-size: 1.2em;
-		}
-		h1,h2,h3,h4,h5,h6{
-			cursor: pointer;
-			align-self: flex-start;
-			position: relative;
-			margin-top: 1.2em;
-			left: -1ch;
-			transition: all 0.2s;
-			&:hover {
-				color: $marsBlue;
-				text-shadow: 1px 1px 0 white, 2px 2px 0 $marsRice;
-			}
-			// 所有标题后面的link
-			.link {
-				position: relative;
-				left: -1ch;
-				color: $marsBlue;
-				text-shadow: 1px 1px 0 white, 2px 2px 0 $marsRice;
-				transition: all 0.25s;
-			}
-			.hidden {
-				opacity: 0;
-			}
-		}
+  #postHeader {
+    @include flexBoxCol;
+    align-items: flex-end;
+    align-self: flex-end;
+    margin-top: 2.95vw;
 
-		li{
-			margin: 1em 0 1em 2.8em;
-		}
+    #postTitle {
+      line-height: 1em;
+      font-family: 'Bodoni MT', '宋体';
+      font-size: 2.33em;
+      width: 70vw;
+      text-align: right;
+    }
 
-		ul,ol{
-			margin-top: 0.5em;
-		}
-		
-		table{
-			margin-top: 0.5em;
-			thead{
-				background-color: $marsBlack;
-				color: white;
-				opacity: 0.8;
-				tr{
-					&:hover {
-						background-color: $marsBlack;
-					}
-				}
-			}
-			tbody{
-				color: $marsBlack;
-				background-color: $marsRice;
-				opacity: 0.8;
-			}
-			tr {
-				&:hover {
-					background-color: darken($marsRice,10%);
-				}
-			}
-		}
+    #postInfo {
+      text-align: right;
+      margin: 2.24vw 0;
+      font-family: Poiret One;
+    }
+  }
+
+  #postContentBox {
+    display: flex;
+    flex: none;
+
+    #headerIndex {
+      flex: 0 0 20%;
+      position: relative;
+      align-self: stretch;
+    }
+
+    #postContent {
+      display: flex;
+      flex: 0 1 80%;
+      width: 0;
+      flex-direction: column;
+      align-items: stretch;
+      font-family: 'Folio Light', 'Helvetica', '阿里巴巴普惠体', '微软雅黑', 'STZhongsong', sans-serif;
+      text-align: left;
+
+      h2 {
+        font-size: 1.4em;
+      }
+
+      h3 {
+        font-size: 1.2em;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        cursor: pointer;
+        align-self: flex-start;
+        position: relative;
+        margin-top: 1.2em;
+        left: -1ch;
+        transition: all 0.2s;
+
+        &:hover {
+          color: $marsBlue;
+          text-shadow: 1px 1px 0 white, 2px 2px 0 $marsRice;
+        }
+
+        // 所有标题后面的link
+        .link {
+          position: relative;
+          left: -1ch;
+          color: $marsBlue;
+          text-shadow: 1px 1px 0 white, 2px 2px 0 $marsRice;
+          transition: all 0.25s;
+        }
+
+        .hidden {
+          opacity: 0;
+        }
+      }
+
+      li {
+        margin: 1em 0 1em 2.8em;
+      }
+
+      ul,
+      ol {
+        margin-top: 0.5em;
+      }
+
+      table {
+        margin-top: 0.5em;
+
+        thead {
+          background-color: $marsBlack;
+          color: white;
+          opacity: 0.8;
+
+          tr {
+            &:hover {
+              background-color: $marsBlack;
+            }
+          }
+        }
+
+        tbody {
+          color: $marsBlack;
+          background-color: $marsRice;
+          opacity: 0.8;
+        }
+
+        tr {
+          &:hover {
+            background-color: darken($marsRice, 10%);
+          }
+        }
+      }
 
 
-		p {
-			margin-top: 1em;
-			text-indent: 2em;			
-			&:first-child{
-				margin-top:0;
-			}
-			.fa {
-				text-indent: 0;
-			}
-			img {
-				// display: inline;
-				max-width: 100%;
-				// margin: 0 0.5*(80.2-$postImgWidth)+vw;
-				// width: ($postImgWidth)+vw;
-				// height: auto;
-			}
-		}
+      p {
+        margin-top: 1em;
+        text-indent: 2em;
 
-		p.eng {
-			&:first-child{
-				text-indent: 0em;
-			}
-			text-indent: 1em;
-		}
+        &:first-child {
+          margin-top: 0;
+        }
 
-		p.noIndent {
-			text-indent: 0em;
-		}
+        .fa {
+          text-indent: 0;
+        }
 
-		p.allIndent {
-			padding-left: 2em;
-			text-indent: 0em;
-		}
+        img {
+          // display: inline;
+          max-width: 100%;
+          // margin: 0 0.5*(80.2-$postImgWidth)+vw;
+          // width: ($postImgWidth)+vw;
+          // height: auto;
+        }
+      }
 
-		a {
-			text-decoration: none;
-			color: $marsBlack;
-			&:hover{
-				color:$marsBlue;
-			}
-		}
+      p.eng {
+        &:first-child {
+          text-indent: 0em;
+        }
 
-		sup {
-			font-size: 0.5em;
-			font-weight: bolder;
-			color: gray;
-			margin-left: 0.5em;
-		}
+        text-indent: 1em;
+      }
 
-		blockquote {
-			margin: 1em 0em;
-			padding: 1em 1em 1em 0em;
-			font-size: 0.8em;
-			width:100%;
-			border-left:solid $marsBlue 5px;
-			background-color: lighten($marsRice, 6.18%);
-			blockquote {
-				margin: 0;
-				padding: 0;
-				border: none;
-				text-align: right;
-				font-size: 0.8em;
-				font-style: normal;
-			}
-			p {
-				margin-top:0;
-				margin-left: 2.5em;
-			}
-			li {
-				margin: 0 0 0 4.8em;
-			}
-			h1,h2,h3,h4,h5,h6{
-				margin-top: 0;
-				font-style: normal;
-			}
+      p.noIndent {
+        text-indent: 0em;
+      }
 
-		}
-		code {
-			text-align: left;
-			font-family: 'Courier New','Courier','Consolas','Terminal','Monospace',serif;
-			color: $marsBlue;
-			font-weight: bolder;
-			margin:0 0.2em;
-			overflow: scroll;
-			&.solo {
-				display: block;
-				text-align: left;
-				font-family: 'Folio Light','微软雅黑',sans-serif;
-				color: $marsBlue;
-			}
-			&.tooltip-mars{
-				font-weight: normal;
-			}
-		}
-		pre {
-			overflow-x: scroll;
-			font-size: 0.8em;
-			line-height: 1.4em;
-			font-weight: bolder;
-			text-align: left;
-			margin:1em 0;
-			padding:0.5em 0 0.5em 1em;
-			background-color: lighten($marsRice, 6.18%);
-		}
-		pre code{		
-			border: none;
-		}
+      p.allIndent {
+        padding-left: 2em;
+        text-indent: 0em;
+      }
 
-		table{
-			text-align: center;
-			thead {
-				font-weight: bold;
-			}
-		}
-		.checkbox {
-			font-size:1em;
-		}
-	}
-	#tagsBox{
-		margin: 2.24vw 0;
-		font-family: Bodoni MT;
-		font-weight: bold;
-		#tags{
-			text-decoration: none;
-			margin:0 0.5em;
-			color: $marsBlue;			
-		}
-	}
+      a {
+        text-decoration: none;
+        color: $marsBlack;
+
+        &:hover {
+          color: $marsBlue;
+        }
+      }
+
+      sup {
+        font-size: 0.5em;
+        font-weight: bolder;
+        color: gray;
+        margin-left: 0.5em;
+      }
+
+      blockquote {
+        margin: 1em 0em;
+        padding: 1em 1em 1em 0em;
+        font-size: 0.8em;
+        width: 100%;
+        border-left: solid $marsBlue 5px;
+        background-color: lighten($marsRice, 6.18%);
+
+        blockquote {
+          margin: 0;
+          padding: 0;
+          border: none;
+          text-align: right;
+          font-size: 0.8em;
+          font-style: normal;
+        }
+
+        p {
+          margin-top: 0;
+          margin-left: 2.5em;
+        }
+
+        li {
+          margin: 0 0 0 4.8em;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          margin-top: 0;
+          font-style: normal;
+        }
+
+      }
+
+      code {
+        text-align: left;
+        font-family: 'Courier New', 'Courier', 'Consolas', 'Terminal', 'Monospace', serif;
+        color: $marsBlue;
+        font-weight: bolder;
+        margin: 0 0.2em;
+        overflow: scroll;
+
+        &.solo {
+          display: block;
+          text-align: left;
+          font-family: 'Folio Light', '微软雅黑', sans-serif;
+          color: $marsBlue;
+        }
+
+        &.tooltip-mars {
+          font-weight: normal;
+        }
+      }
+
+      pre {
+        overflow-x: scroll;
+        font-size: 0.8em;
+        line-height: 1.4em;
+        font-weight: bolder;
+        text-align: left;
+        margin: 1em 0;
+        padding: 0.5em 0 0.5em 1em;
+        background-color: lighten($marsRice, 6.18%);
+      }
+
+      pre code {
+        border: none;
+      }
+
+      table {
+        text-align: center;
+
+        thead {
+          font-weight: bold;
+        }
+      }
+
+      .checkbox {
+        font-size: 1em;
+      }
+    }
+  }
+
+  #tagsBox {
+    margin: 2.24vw 0;
+    margin-left: 16.4vw;
+    font-family: Bodoni MT;
+    font-weight: bold;
+
+    #tags {
+      text-decoration: none;
+      margin: 0 0.5em;
+      color: $marsBlue;
+    }
+  }
 }
 
-#postPager{
-	@include flexBoxRow;
-	padding-right: 3.4vw;
-	padding-top: 2.24vw;
-	justify-content: flex-end;
-	span {
-		margin-left: 2em;		
-		img {
-			height: 1em;
-			max-width: 100%;
-			width: auto;
-		}
-	}
+#postPager {
+  @include flexBoxRow;
+  padding-right: 3.4vw;
+  padding-top: 2.24vw;
+  justify-content: flex-end;
+
+  span {
+    margin-left: 2em;
+
+    img {
+      height: 1em;
+      max-width: 100%;
+      width: auto;
+    }
+  }
 }
 
-#beian{
-	display: block;
-}
-
-
-.leancloud-visitors{
-	margin-top: 5vw;
-	margin-left: 16.4vw;
-	margin-right: 3.4vw; 
-	font-size: 0.66em;
+#beian {
+  display: block;
 }
 
 
-#vcomments{
-	margin-top: 1vw;
-	margin-left: 16.4vw;
-	margin-right: 3.4vw; 
-	font-size: 0.66em;
-	color: $marsBlack;
-	.vinput:focus{
-		border-bottom-color: $marsBlue;
-		border-bottom-width: 2px;
-	}
-	#veditor{
-		font-family: 'Folio Light','Helvetica','阿里巴巴普惠体','微软雅黑',sans-serif;
-		font-style: oblique;
+.leancloud-visitors {
+  margin-top: 5vw;
+  margin-left: 16.4vw;
+  margin-right: 3.4vw;
+  font-size: 0.66em;
 }
+
+
+#vcomments {
+  margin-top: 1vw;
+  margin-left: 16.4vw;
+  margin-right: 3.4vw;
+  font-size: 0.66em;
+  color: $marsBlack;
+
+  .vinput:focus {
+    border-bottom-color: $marsBlue;
+    border-bottom-width: 2px;
+  }
+
+  #veditor {
+    font-family: 'Folio Light', 'Helvetica', '阿里巴巴普惠体', '微软雅黑', sans-serif;
+    font-style: oblique;
+  }
 }

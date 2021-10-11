@@ -5,73 +5,75 @@ layout: blog
 <span id="baseURLIdentifier" style="display: none;">{{ site.url }}</span>
 <article id="postBox">
 
-<!-- 标题和日期 -->
-  <header id="postHeader">
-    <h1 id="postTitle">{{ page.title | escape }}</h1>
-    <p id="postInfo">
-		Posted by
-	    {%- if page.author -%}
-	      <span id="postAuthor"> {{page.author}} </span>
-	    {%- else -%}
-	      <span id="postAuthor"> {{site.title}} </span>
-	    {%- endif -%}
-		at
-	    <time id="postTime">
-	      {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-	      {{ page.date | date: date_format }}
-	    </time>      
-    </p>
-  </header>
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">{{ page.title | escape }}</h1>
+        <p id="postInfo">
+            Posted by
+            {%- if page.author -%}
+            <span id="postAuthor"> {{page.author}} </span>
+            {%- else -%}
+            <span id="postAuthor"> {{site.title}} </span>
+            {%- endif -%}
+            at
+            <time id="postTime">
+                {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+                {{ page.date | date: date_format }}
+            </time>
+        </p>
+    </header>
 
-<!-- 内容主体 -->
-  <div id="postContent">
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
 
-    {{ content }}
+        <!-- 内容主体 -->
+        <div id="postContent">
+            {{ content }}
+        </div>
+    </div>
 
-  </div>
-
-<!-- 关键词 -->
-  <div id="tagsBox">
-  Keywords:
-	  {%- if page.tags -%}
-		  {% for tag in page.tags %}
-			  <a id="tags" href="{{ tag }}"><span>{{tag}}</span></a>
-		  {% endfor %}
-	  {%- endif -%}
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      {%- if page.tags -%}
+      {% for tag in page.tags %}
+      <a id="tags" href="{{ tag }}"><span>{{tag}}</span></a>
+      {% endfor %}
+      {%- endif -%}
   </div>
 
 </article>
 
 <!-- 上一篇与下一篇按钮 -->
-  <div id="postPager">
-      {% if page.previous.url %}
-        <span id="previousPost">
-          <a href="{{ page.previous.url }}"  title="{{page.previous.title}}">
+<div id="postPager">
+    {% if page.previous.url %}
+    <span id="previousPost">
+        <a href="{{ page.previous.url }}" title="{{page.previous.title}}">
             <img src="{{site.postsItemPath | prepend:site.url | append:'/beforeBlack.svg'}}" alt="previousPost">
-          </a>
-        </span>
-      {% endif %}
-      
-<!-- 文章位置功能 （未实现）-->
-<!-- 
+        </a>
+    </span>
+    {% endif %}
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
       <p id="postNumBox">Blog &nbsp; 
         <span id="postNum">{{paginator.total_pages}}</span> &nbsp; Of &nbsp; 
         <span id="postNum">{{paginator.total_pages}}</span>
       </p> -->
 
-      {% if page.next.url %}
-      <span id="nextPost">
-        <a href="{{ page.next.url }}"  title="{{page.next.title}}">
-          <img src="{{site.postsItemPath | prepend:site.url | append:'/nextBlack.svg'}}" alt="nextPost">
+    {% if page.next.url %}
+    <span id="nextPost">
+        <a href="{{ page.next.url }}" title="{{page.next.title}}">
+            <img src="{{site.postsItemPath | prepend:site.url | append:'/nextBlack.svg'}}" alt="nextPost">
         </a>
-      </span>
-      {% endif %}
-  </div>
-  <!-- Valine 浏览量统计 -->
-    <span id="{{ page.url }}" class="leancloud-visitors" data-flag-title="Your Article Title">
-        <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span> 
     </span>
+    {% endif %}
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="{{ page.url }}" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
 
-  <!-- Valine 评论框 -->
-  <div id="vcomments"></div>
-
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>

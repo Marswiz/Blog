@@ -10,7 +10,7 @@ pIdentifier: 中文缩进
 
 > Vuex-Router: 路由管理工具
 
-# 路由链接、路由出口
+# 1. 路由链接、路由出口
 
 这是两个vue-router内置组件：
 
