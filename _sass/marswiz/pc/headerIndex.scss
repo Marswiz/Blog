@@ -3,7 +3,8 @@
     --hoverColor: skyblue;
     font-size: .7em;
     display: flex;
-    width: 100%;
+    max-height: 80vh;
+    overflow-y: scroll;
     flex-direction: column;
     position: sticky;
     top: 5.5vw;

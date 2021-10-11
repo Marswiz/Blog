@@ -164,11 +164,16 @@
 	color: $marsBlack;
 }
 
-// 隐藏滚动条
-// chrome
 ::-webkit-scrollbar {
 	display: none;
 }
 
-// headerIndex: 日志导航
-
+// 滚动条
+// chrome
+// ::-webkit-scrollbar {
+// 	width: 4px;
+// 	background-color: #ddd;	
+// }
+// ::-webkit-scrollbar-thumb {
+// 	background-color: gray;
+// }
