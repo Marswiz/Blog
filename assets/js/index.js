@@ -1,7 +1,7 @@
 window.addEventListener('load', () => {
     let links = document.querySelectorAll('a');
     for (let l of links) {
-        if(l.href && l.href.indexOf('marswiz') === -1 && l.href.indexOf('localhost') === -1){
+        if (l.href && l.href.indexOf('marswiz') === -1 && l.href.indexOf('localhost') === -1) {
             l.target = "_blank";
         }
     }
@@ -537,3 +537,50 @@ window.addEventListener('keydown', e => {
     let bannedKeys = ['s', 'p'];
     if (e.ctrlKey && bannedKeys.indexOf(e.key) !== -1) e.preventDefault();
 });
+
+// headerIndex.js 日志导航 -- 2021.10.11
+(() => {
+    "use strict";
+    new class {
+        constructor(e = "body", t = "#headerIndexContainer") {
+            this.isStr(t) && (t = document.querySelector(t)), this.isStr(e) && (e = document.querySelector(e)), this.container = t, t.classList.add("headerIndexContainer"), this.base = e, this.frag = document.createDocumentFragment(), this.headers = [], this.tags = [0, 0, 0, 0, 0, 0], this.refreshHeaders()
+        }
+        isStr(e) {
+            return "string" == typeof e
+        }
+        getHeaders(e = document, t = 1) {
+            return this.isStr(e) && (e = document.querySelector(e)), e.querySelectorAll(`h${t}`)
+        }
+        refreshHeaders() {
+            let e = this.base.querySelectorAll("h1,h2,h3,h4,h5,h6");
+            this.headers.length = 0;
+            for (let t of e) this.headers.push({
+                id: t.id,
+                content: t.innerText,
+                level: +t.tagName.slice(1)
+            });
+            this.refreshContainerElement()
+        }
+        refreshContainerElement() {
+            let e = document.createElement("div");
+            e.classList.add("headerIndexInnerContainer");
+            let t = document.createDocumentFragment();
+            for (let e of this.headers) this.addIndexLinkElement(e, t);
+            this.frag = t, e.appendChild(t), this.container.innerHTML = "", this.container.appendChild(e)
+        }
+        addIndexLinkElement(e, t = this.frag) {
+            let {
+                level: n,
+                content: r,
+                id: s
+            } = e, a = document.createElement("a");
+            a.classList.add(`headerIndex_level_${n}`), this.tags[n - 1] += 1;
+            for (let e = n; e < this.tags.length; e++) this.tags[e] = 0;
+            let d = this.tags.slice(0, n).join("."),
+                i = document.createElement("span");
+            i.innerText = `${d}  `, i.classList.add("headerIndexTag");
+            let h = document.createElement("span");
+            r = r.replace(/(\d+\.)+\d?\s?/, ""), r = r.replace(/\S+、\s/, ""), h.innerText = r, a.appendChild(i), a.appendChild(h), a.href = `#${s}`, t.appendChild(a)
+        }
+    }("#postContent", "#headerIndex")
+})();
