@@ -8,8 +8,6 @@ author: Mars
 pIdentifier: 中文缩进
 ---
 
-> 渲染函数和h()是最本质的组件渲染方式，应该掌握。
-> 
 > 源文件目录：
 >
 > packages/runtime-core/src/vnode.ts

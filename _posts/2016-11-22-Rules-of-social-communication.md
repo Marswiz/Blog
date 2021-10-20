@@ -1,9 +1,9 @@
 ---
 layout: post
-title: 人际交往的几项基本原则与技巧
+title: 人际交往小原则
 date: 2016-11-22
 categories: blog
-tags: [Growth]
+tags: [Personal]
 author: Mars
 pIdentifier: 中文缩进
 ---

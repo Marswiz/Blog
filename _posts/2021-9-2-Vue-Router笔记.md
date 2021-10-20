@@ -10,7 +10,7 @@ pIdentifier: 中文缩进
 
 > Vuex-Router: 路由管理工具
 
-# 1. 路由链接、路由出口
+# 路由链接、路由出口
 
 这是两个vue-router内置组件：
 
@@ -62,7 +62,45 @@ app.mount('#app')
 路由配置中：
 
 - path可以定义部分动态字段，通过`:dymPara`形式定义；
-- 当匹配到路由后，在路由的params属性中可以获取到匹配到的`dymPara`实际字段。
+- 当匹配到路由后，在路由对象route的params属性中可以获取到匹配到的`dymPara`实际字段。
+
+## 为动态路由匹配设定规则
+### 正则表达式
+
+可以在路由动态字段后面加上一对圆括号，里面设定一个匹配的正则表达式。
+
+```js
+// route配置
+// id的匹配对象是：一个或多个数字。
+// 不满足则无法匹配到这个路由。
+{
+  path: `/user-:id(\\d+)`;
+}
+```
+
+### 匹配多个动态部分
+
+在动态字段结尾，使用`*`(零个或多个)或`+`（一个或多个）操作符，表示动态字段支持重复。
+
+```js
+const routes = [
+  // /:chapters ->  匹配 /one, /one/two, /one/two/three, 等
+  { path: '/:chapters+' },
+  // /:chapters -> 匹配 /, /one, /one/two, /one/two/three, 等
+  { path: '/:chapters*' },
+]
+```
+
+### 可选动态部分
+
+在动态字段结尾，添加`?`操作符，表示动态部分可选。
+
+```js
+// 匹配 /user-mars 或 /user-
+{
+  path: `/user-:id?`;
+}
+```
 
 # 嵌套路由
 
@@ -86,19 +124,6 @@ app.mount('#app')
 }
 ```
 
-# 命名视图
-
-同一个路由，匹配的组件内可以定义**多个`<router-view>`出口**，通过`name`属性命名。
-
-路由通过配置项中的`components`选项，对每个`<router-view>`出口显示哪一组件进行定义。
-
-# 将路由的匹配参数route.params设置为组件的props
-
-配置路由的`props`选项为true，即可将路由匹配的参数route.params直接设置为组件的`props`，而不是在组件内通过`this.$route.params`获取参数。
-
-这样可以解耦组件和路由，组件可以被应用到其他地方，而非与路由参数强绑定（必须要this.$route.params和组件内的使用方式一致才能正确显示组件）。
-
-[将 props 传递给路由组件](https://next.router.vuejs.org/zh/guide/essentials/passing-props.html)
 
 # 为路由命名
 
@@ -123,6 +148,28 @@ const routes = [
 // 或
 router.push({ name: 'user', params: { username: 'erina' } })
 ```
+
+# 命名视图
+
+同一个路由，匹配的组件内可以定义**多个`<router-view>`出口**，通过`name`属性命名。
+
+路由通过配置项中的`components`选项，对每个`<router-view>`出口显示哪一组件进行定义。
+
+# 用router上的方法跳转路由
+
+基本和`window.history`一样：
+
+- `router.push(<route>)`: 添加新记录，并跳转到新路由;
+- `router.replace(<route>)`: 覆盖当前记录，并跳转到新路由;
+- `router.go(<num>)`: 向前、向后（负数）跳转num个路由;
+
+# 将路由的匹配参数route.params设置为组件的props
+
+配置路由的`props`选项为true，即可将路由匹配的参数route.params直接设置为组件的`props`，而不是在组件内通过`this.$route.params`获取参数。
+
+这样可以解耦组件和路由，组件可以被应用到其他地方，而非与路由参数强绑定（必须要this.$route.params和组件内的使用方式一致才能正确显示组件）。
+
+[将 props 传递给路由组件](https://next.router.vuejs.org/zh/guide/essentials/passing-props.html)
 
 # 重定向
 
@@ -204,14 +251,14 @@ const router = createRouter({
 
 **全部路由，理论上都应该使用动态引入组件的懒加载模式。**
 
-# 导航守卫（导航过程中的钩子）
+# ★ 导航守卫（导航过程中的钩子）
 
 所有的导航守卫，都可以接受两个参数`(to, from)`，beforeEach和beforeRouteEnter可以接受第三个参数next。
 
 ## 1. 全局守卫
 
 - **router.beforeEach**： 每次导航被触发，在所有钩子最前面调用；
-- **router.beforeResolve**：每次导航被触发，在导航被确认之前调用；
+- **router.beforeResolve**：每次导航被触发，在**异步组件被解析后，导航被确认之前**调用；
 - **router.afterEach**：每次导航被触发，在所有钩子最后面调用；
 
 ## 2. 路由专属守卫
@@ -253,7 +300,7 @@ const router = createRouter({
 
 **导航完成后获取数据**和**导航完成前获取数据**都是可以的。
 
-> **导航完成之后获取**：先完成导航，然后在接下来的组件生命周期钩子中获取数据。在数据获取期间显示“加载中”之类的指示。
+> **导航完成之后获取**：先完成导航，然后在接下来的组件生命周期钩子中获取数据（比如`beforeCreate`或`created`）。在数据获取期间显示“加载中”之类的指示。
 >  
 > **导航完成之前获取**：导航完成前，在`beforeRouteEnter`钩子中获取数据，在数据获取成功后执行导航。
 
@@ -278,5 +325,3 @@ const router = createRouter({
   },
 })
 ```
-
-# 

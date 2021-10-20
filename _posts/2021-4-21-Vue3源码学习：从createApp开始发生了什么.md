@@ -10,7 +10,7 @@ pIdentifier: 中文缩进
 
 > Vue3源码学习： runtime-core
 >
-> 从createApp开始，探索应用实例的创建过程。
+> 从createApp开始，应用实例的创建过程。
 >
 > 源码目录：packages/runtime-core/src/apiCreateApp.ts
 
