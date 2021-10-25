@@ -23,6 +23,8 @@ pIdentifier: 中文缩进
 - 匹配`<template>`元素后，访问`.content`属性可以取得内部`DocumentFragment`的引用；
 - 在`DocumentFragment`引用上，使用查询方法，可以匹配内部的DOM元素；
 - 获取的`DocumentFragment`可以动态挂载到活动DOM元素中。
+  
+> **注意：** `documentFragment`里面的DOM树**只能被挂载一次**，再次挂载为空。
 
 # 二、Shadow DOM
 ## 2.1 什么是Shadow DOM
