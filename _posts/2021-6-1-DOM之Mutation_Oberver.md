@@ -1,6 +1,6 @@
 ---
 layout: post
-title: DOM之Mutation_Oberver
+title: Observer APIs
 date: 2021-6-1
 categories: blog
 tags: [JavaScript]
@@ -8,7 +8,9 @@ author: Mars
 pIdentifier: 中文缩进
 ---
 
-> DOM中新增的的Mutation Observer
+> 观察器API：
+> 
+> Mutation Intersection Observer、Mutation Observer、Mutation Observer
 >
 
 # 1. MutationObeserver是做什么的
