@@ -43,5 +43,9 @@ class MyClass {
 
 1. 通过 class 创建的函数具有特殊的内部属性标记 [[FunctionKind]]:"classConstructor"；
 2. 类转换为字符串，一般都以class开头；
-3. 类方法不可枚举。 类定义将 "prototype" 中的所有方法的 enumerable 标志设置为 false；
-4. 类总是使用 use strict。 在类构造中的所有代码都将自动进入严格模式。
+```js
+class A {}
+A.toString(); // 'class A {}'
+```
+3. 类中定义的方法默认不可枚举。 类定义将在 "prototype" 中的所有方法的 enumerable 标志设置为 false；
+4. **类总是使用 use strict。** 在类构造中的所有代码都将自动进入严格模式。

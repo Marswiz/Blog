@@ -225,4 +225,4 @@ await关键字用在async修饰的函数体内的promise对象前，它的含义
 
 ## 13.10.3	async/await中的Error处理
 
-如果await后面的promise对象被reject了，那么这一行相当于抛出了这个Error。和throw error是一样的。
+如果await后面的promise对象被reject了，那么这一行**相当于抛出了这个Error**。和throw error是一样的。

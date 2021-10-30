@@ -41,7 +41,7 @@ output.publicPath的定义对资源请求**非常重要**，它代表了资源�
 这些资源在webpack打包后的基础路径，都是这个publicPath路径。比如：
 
 如果设置output.publicPath为'./',则webpack前：
-- html文档中<img src='assets/img/cat.png'>：请求的实际路径是`./assets/img/cat.png`;
+- html文档中`<img src='assets/img/cat.png'>`：请求的实际路径是`./assets/img/cat.png`;
 
 > 使用webpack-dev-server配合html-webpack-plugin的时候，自动引入的文件会加上publicPath前缀
 

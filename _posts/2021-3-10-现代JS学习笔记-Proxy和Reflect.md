@@ -69,18 +69,6 @@ new Proxy(target, handler)创建的时候，第二个参数捕获器handler是�
 - target —— 是目标对象，该对象被作为第一个参数传递给 new Proxy;
 - property —— 目标属性名;
 - receiver —— 与Getter访问器属性有关，暂时不考虑。
-let numbers = [0, 1, 2];
-numbers = new Proxy(numbers, {
-  get(target, prop) {
-    if (prop in target) {
-      return target[prop];
-    } else {
-      return 0; // 默认值
-    }
-  }
-});
-alert( numbers[1] ); // 1
-alert( numbers[123] ); // 0（没有这个数组项）
 
 ####	 set捕获器
 
@@ -144,9 +132,9 @@ Proxy虽然可以把外部的操作透明地传给内部，但是毕竟代理后
 
 ####	 使用”内部插槽”的对象无法使用
 
-有些特殊类型对象的数据，使用“内部插槽”的形式保存，并使用内部方法修改（比如Map.set()），并不通过常规**[[get]]/[[set]]**这类内建方法，因此代理后无法实现捕获和修改等操作。
+**有些特殊类型对象的数据，使用“内部插槽”的形式保存，并使用内部方法修改（比如Map.set()），并不通过常规**[[get]]/[[set]]**这类内建方法，因此代理后无法实现捕获和修改等操作。**
 
-这类对象类型包括：Map/Set/Date/Promise/class的#开头私有属性。
+这类对象类型包括：**Map/Set/Date/Promise/class的#开头私有属性**。
 
 这些对象需要通过以下方式，将原本的内部方法绑定到自身后返回使用：
 
@@ -170,7 +158,7 @@ Reflect对象是ES6新加入的一个内置对象，它的目的如下：
 
 - 将原来Object中本来属于语言内部的一些方法，转移到Reflect对象上，未来的新的语言内部方法都只部署在Reflect对象上；
 - 修改如defineProperty的某些Object方法的返回结果，使更合理；
-- 把原来的delete obj， key in obj这类命令式操作，都转化为函数操作Reflect.deleteProperty()、Reflect.has()；
+- 把原来的delete obj， key in obj这类命令式操作，都转化为**函数操作**Reflect.deleteProperty()、Reflect.has()；
 - ★Reflect对象的方法与Proxy对象的方法一一对应，只要是Proxy对象的方法，就能在Reflect对象上找到对应的方法。这就让Proxy对象可以方便地调用对应的Reflect方法，完成默认行为，作为修改行为的基础。
 
 也就是说，不管Proxy怎么修改默认行为，你总可以在Reflect上获取原始的默认行为。

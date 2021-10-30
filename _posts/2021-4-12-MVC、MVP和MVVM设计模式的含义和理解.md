@@ -16,9 +16,9 @@ MVC、MVP、MVVM都是软件架构，或称为设计模式。
 
 MVC的含义是： Model-View-Controller （模型-视图-控制器）模式。其中各项含义是：
 
-- Model: 储存的数据；
-- View： 用户界面；
-- Controller： 业务逻辑、方法；
+- **Model**: 储存的数据；
+- **View**： 用户界面；
+- **Controller**： 业务逻辑、方法；
 
 用户可以直接与View层（用户界面）交互，也可以与Controller层（调用业务逻辑方法）进行交互。
 
@@ -36,6 +36,6 @@ MVP模型中因为中间的Presenter部分因为要控制所有的View与Model�
 
 将MVP模式中间层Presenter改为视图模型ViewModel，就成为了MVVM模型（Model-ViewModel-View）。
 
-MVVM模型中最大的特点是，中间的ViewModel为Model和View两层之间形成了双向绑定。
+MVVM模型中最大的特点是，中间的ViewModel为Model和View两层之间形成了**双向绑定**。
 
-因此可以通过数据驱动视图更新，也可以通过View修改绑定的Model。
+因此可以**通过数据驱动视图更新，也可以通过View修改绑定的Model**。
