@@ -91,9 +91,11 @@ promise.then(
 
 如果只对promise运行成功之后的结果感兴趣，可以不传入第二个参数，只传入第一个函数参数。
 
-只要promise是settled状态，调用其.then函数就会立即执行。
+只要promise是settled状态，调用其.then函数就会立即执行传入的回调函数。
 
-then函数可以调用多次，相当于多次处理一个promise产生的结果。
+then函数可以在一个promise上调用多次，相当于多次处理同一个promise产生的结果。
+
+> `then()`方法传入的如果不是函数，传入的参数会被忽略，变成默认函数`val => val` （透传，参数传递给下一个.then）。
 
 ## 13.5.2	catch()
 

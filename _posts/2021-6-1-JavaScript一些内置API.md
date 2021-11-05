@@ -117,7 +117,7 @@ window.URL.createObjectURL(file)
 
 <!-- // todo -->
 
-# 4. 拖放API
+# 4. H5原生拖放API
 
 元素被拖动时，依次触发：
 
