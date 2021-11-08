@@ -18,7 +18,7 @@ postsItemPath: "/assets/posts"
 
 
 # 社交（先添加社交网站名字：[社交网站]）
-socialList: [mail,weixin,weibo,github,douban,zhihu,segmentfault]
+socialList: [mail,weixin,github,segmentfault]
 # 账号与域名 （再添加社交账号和网站域名，必须为 [社交网站]_username 和 [社交网站]_site 格式。）
 mail_username: ''
 mail_site: 'mailto:mars_yao@yeah.net'
@@ -28,34 +28,21 @@ weixin_username: aboutMe
 weixin_site: https://marswiz.com/
 weixin_icon: "fa fa-weixin"
 
-twitter_username: marswiz123
-twitter_site: https://twitter.com/
-twitter_icon: 'fa fa-twitter'
-
 github_username:  marswiz
 github_site: https://github.com/
 github_icon: 'fa fa-github'
-
-douban_username: "139005629"
-douban_site: https://douban.com/people/
-douban_letter: "豆"
-
-weibo_username: 5685573190
-weibo_site: https://weibo.com/
-weibo_icon: 'fa fa-weibo'
 
 zhihu_username: marswiz
 zhihu_site: https://zhihu.com/people/
 zhihu_letter: "知"
 
-segmentfault_username: mars_589c29ead7257
-segmentfault_site: https://segmentfault.com/u/
-segmentfault_letter: "sf"
+segmentfault_username: 131597123717319
+segmentfault_site: https://juejin.cn/user/
+segmentfault_letter: "掘"
 
 # 分页
-paginate: 15
+paginate: 20
 paginate_path: "/page:num"
-
 
 # Build settings
 markdown: kramdown
