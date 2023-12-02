@@ -20,9 +20,15 @@
             font-weight: bold;
         }
         .result {
-            color: tomato;
+            color: #00a323;
             font-size: 2em;
         }
+       #warn {
+            font-size: 2em;
+            margin-top: 1em;
+            color: red;
+            background-color: rgb(255, 227, 227);
+       } 
     </style>
 </head>
 
@@ -33,6 +39,7 @@
         <div class="item">克重(g)：<input type="number" id="weight" value="3"></div>
     </div>
     <div id="res">该绿松石密度为<span class="result" id="rho">???</span>，质地级别为<span class="result" id="rating"> ??? </span>，瓷度为<span class="result" id="cidu"> ??? </span>。</div>
+    <div id="warn"></div>
 </body>
 <script>
     let dia = document.querySelector('#dia');
@@ -51,6 +58,8 @@
         document.querySelector('#rating').innerHTML = rating;
         document.querySelector('#cidu').innerHTML = cidu;
         document.querySelector('#rho').innerHTML = res.toFixed(2);
+        if (res > 2.95 || res < 2.35) document.querySelector('#warn').innerHTML = '该绿松石密度异常！请谨慎辨别是否为假货。';
+        else document.querySelector('#warn').innerHTML = '';
     }
 
     all.forEach(i => {
