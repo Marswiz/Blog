@@ -88,11 +88,11 @@
 		}
 
 		#blogBox:nth-child(odd) {
-			border-left: solid 0.7em transparentize(gray, 0.7);
+			border-left: solid 0.7em transparentize($marsBlue, 0.6);
 			border-radius: 6px 0 0 6px;
 		}
 		#blogBox:nth-child(even) {
-			border-left: solid 0.7em transparentize(#00bb88, 0.8);
+			border-left: solid 0.7em transparentize($marsBlue, 0.6);
 			border-radius: 6px 0 0 6px;
 		}
 	}
