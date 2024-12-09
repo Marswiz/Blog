@@ -48,7 +48,7 @@
 					height: 3.193vw;
 					margin-bottom: 1vw;
 					&:hover{
-						$color: silver;
+						$color: rgba(0,31,53,0.9);
 						$colorWhite: rgba(255,255,255,0.7);
 						transition:all 0.2s;
 						filter: drop-shadow(0 0 1px $colorWhite) drop-shadow(0 0 1px $colorWhite) drop-shadow(0 0 2px $colorWhite) drop-shadow(0 0 5px $colorWhite) drop-shadow(0 0 2px $color) drop-shadow(0 0 5px $color) drop-shadow(0 0 10px $color) blur(.04em);
