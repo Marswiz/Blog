@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>HTTPs协议 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="HTTPs协议" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="HTTPS协议内容、TLS握手过程 HTTP协议的缺点 HTTPs协议 2.1 加密方式：对称与非对称加密 2.2 HTTPs的加密方式 2.3 数字证书: 公钥的真实性问题 2.4 HTTPs的通信过程 2.5 HTTPs的缺点? 为什么不一直使用 2.6 HTTPs的会话复用" />
+<meta property="og:description" content="HTTPS协议内容、TLS握手过程 HTTP协议的缺点 HTTPs协议 2.1 加密方式：对称与非对称加密 2.2 HTTPs的加密方式 2.3 数字证书: 公钥的真实性问题 2.4 HTTPs的通信过程 2.5 HTTPs的缺点? 为什么不一直使用 2.6 HTTPs的会话复用" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/05/02/HTTPs%E5%8D%8F%E8%AE%AE/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/05/02/HTTPs%E5%8D%8F%E8%AE%AE/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-05-02T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"HTTPS协议内容、TLS握手过程 HTTP协议的缺点 HTTPs协议 2.1 加密方式：对称与非对称加密 2.2 HTTPs的加密方式 2.3 数字证书: 公钥的真实性问题 2.4 HTTPs的通信过程 2.5 HTTPs的缺点? 为什么不一直使用 2.6 HTTPs的会话复用","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/05/02/HTTPs%E5%8D%8F%E8%AE%AE/","headline":"HTTPs协议","dateModified":"2021-05-02T00:00:00+08:00","datePublished":"2021-05-02T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/05/02/HTTPs%E5%8D%8F%E8%AE%AE/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">HTTPs协议</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">May 2, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>HTTPS协议内容、TLS握手过程</p>
+
+  <ol>
+    <li>
+      <p><a href="#1-http协议的缺点">HTTP协议的缺点</a></p>
+    </li>
+    <li>
+      <p><a href="#2-https协议">HTTPs协议</a></p>
+      <ul>
+        <li><a href="#21-加密方式对称与非对称加密">2.1 加密方式：对称与非对称加密</a></li>
+        <li><a href="#22-https的加密方式">2.2 HTTPs的加密方式</a></li>
+        <li><a href="#23-数字证书公钥的真实性问题">2.3 数字证书: 公钥的真实性问题</a></li>
+        <li><a href="#24-https的通信过程">2.4 HTTPs的通信过程</a></li>
+        <li><a href="#25-https的缺点为什么不一直使用">2.5 HTTPs的缺点? 为什么不一直使用</a></li>
+        <li><a href="#26-https的会话复用">2.6 HTTPs的会话复用</a></li>
+      </ul>
+    </li>
+  </ol>
+</blockquote>
+
+<h1 id="一https协议">一、HTTPs协议</h1>
+<h2 id="1-http协议的缺点">1. HTTP协议的缺点</h2>
+
+<ol>
+  <li>通信不加密，使用明文传输；</li>
+  <li>不验证通信双方的身份，有可能遭遇伪装；</li>
+  <li>无法验证报文的完整性，可能遭到篡改。</li>
+</ol>
+
+<h2 id="2-https协议">2. HTTPs协议</h2>
+
+<p>HTTPs协议在HTTP协议基础上，在运输层(TCP)与应用层(HTTP)之间，添加一层安全层，使用SSL/TLS协议对http报文进行加密处理，实现双方安全通信。</p>
+
+<p>所以HTTPs也叫HTTP-over-ssl/tls。</p>
+
+<p><strong>HTTPs = HTTP + 加密 + 身份认证 + 完整性保护</strong></p>
+
+<h3 id="21-加密方式对称与非对称加密">2.1 加密方式：对称与非对称加密</h3>
+
+<p>现代加密方式中，算法是公开的，而解密需要的密钥是保密的。</p>
+
+<p><strong>对称加密：</strong>客户端与服务器都使用同一个密钥进行加密、解密。（双方共同依赖密钥的相互通信是个问题，也就是密钥本身该如何加密传输）</p>
+
+<p><strong>非对称加密</strong>：密钥分为公钥和私钥，公钥是公开的密钥，私钥是保密的密钥。一段用公钥加密的密文只能用私钥解密，而用私钥加密的密文只能用公钥解密。（解决了对称加密密钥无法相互传输的问题，一方用公钥加密，另一方接收后用本地私钥解密即可，无需传递私钥。缺点是效率较低）</p>
+
+<h3 id="22-https的加密方式">2.2 HTTPs的加密方式</h3>
+
+<p><strong>混合加密：</strong> 先使用非对称加密传递密钥，然后利用对称加密传输信息。</p>
+
+<p>HTTPs中使用的TLS协议，一共涉及三种加密（算法）技术：① 用于传递会话对称密钥的非对称加密算法(DH算法、RSA算法等)；② 用于会话的对称加密算法（DES、3DES、AES）； ③ 用于校验数据完整性的摘要算法（MD5、SHA1、SHA256等）。</p>
+
+<h3 id="23-数字证书公钥的真实性问题">2.3 数字证书：公钥的真实性问题</h3>
+
+<p>通信对象的公钥如何确认其真实性，而不是中间者伪造？</p>
+
+<p>解决方式是：<strong>选取值得信任的第三方认证机构，对公钥进行认证，并提供数字签名用于校验公钥的真实性。</strong> 内部机制如下：</p>
+
+<ol>
+  <li>服务器方向第三方认证机构CA（Certificate Authority）（比如VeriSign威立信）提交认证申请，并提供公钥；</li>
+  <li>VeriSign对服务器方进行审查，确认真实性后发放证书，其中包含公钥和VeriSign使用自己内部私钥生成的数字签名；
+    <blockquote>
+      <p><strong>数字签名是怎么生成的？</strong></p>
+
+      <ol>
+        <li>CA对服务器方进行审查后，生成一份证书明文数据initData，包括服务器公钥、Hash算法、证书过期时间、持有者信息等。</li>
+        <li>使用Hash算法对initData进行Hash处理，得到一份数据摘要initAbstract；</li>
+        <li>使用CA私钥对initAbstract进行加密，得到数字签名Sign；</li>
+        <li>组合证书明文数据initData和数字签名Sign，形成证书。</li>
+      </ol>
+    </blockquote>
+  </li>
+  <li>服务器将这个证书发送给客户端；</li>
+  <li>VeriSign的公钥（和其他一些常见认证机构的公钥）已经内置在客户端浏览器中，客户端可以利用这个公钥，对证书的数字签名进行解密，确认服务器公开密钥的真实性（身份确认）；
+    <blockquote>
+      <p><strong>如何确认证书内容没有遭到篡改？</strong></p>
+
+      <ol>
+        <li>客户端使用Hash算法对证书明文数据initData进行Hash化处理，得到数据摘要abstract；</li>
+        <li>客户端使用浏览器内置CA公钥，对数字签名进行解密，得到原始数据摘要initAbstract；</li>
+        <li>按理说，这两份摘要（initAbstract和abstract）应该是相同的，如果不同则证明中间有人修改过证书，证书不值得信任。（中间人不可能通过同时修改数字签名达到二者一致，因为中间人没有CA私钥）</li>
+      </ol>
+    </blockquote>
+  </li>
+  <li>客户端此时就可以信任地使用服务器公钥加密报文，进行信息传递了。</li>
+</ol>
+
+<h3 id="24-https的通信过程">2.4 HTTPs的通信过程</h3>
+
+<p>HTTPs先进行TCP握手，然后进行TLS握手，然后进行加密的HTTP通信。</p>
+
+<p>TLS通信整体分为三个步骤：</p>
+
+<p><b>
+① 验证服务器端身份，获取服务器端公钥;
+② 双方协商生成对话密钥;
+③ 使用对话密钥进行对称加密通信。</b></p>
+
+<p>其中前两步是TLS握手阶段，这个阶段的所有报文都是明文。<strong>TLS1.2握手的流程如下：</strong></p>
+
+<blockquote>
+  <p>TLS1.3的握手有少许差别，但是原理是一样的。</p>
+</blockquote>
+
+<ol>
+  <li>客户端发出ClientHello请求，内容包含：<strong>一个客户端生成的随机数rand1</strong>、支持的TLS协议版本、支持的加密算法、支持的压缩方法；</li>
+  <li>服务器端回应ServerHello报文，内容包含：<strong>一个服务器端生成的随机数rand2</strong>、确认的TLS协议版本、加密算法和压缩方法;</li>
+  <li>服务端发送<strong>服务器证书（公钥和第三方机构数字签名）</strong>；</li>
+  <li>客户端收到服务器证书后，对签名进行验证确认服务器身份，如果身份可疑，发出警告提示并由用户确定是否继续通信；</li>
+  <li>客户端确认服务器身份OK后，取出服务器公钥，然后生成一个<strong>随机数pre-master key</strong>，并使用服务器公钥对<strong>rand1、rand2和pre-master key三者的组合数</strong>进行加密，生成双方<strong>对话密钥</strong>；</li>
+  <li>客户端向服务器发送报文，内容包含：<strong>生成的对话密钥</strong>、编码改变通知、客户端握手结束通知；</li>
+  <li>第一次使用对话密钥的加密通信：客户端发送前面已发送全部内容的一个Hash值，用来供服务器校验（通信数据完整性）；</li>
+  <li>服务器收到后，用私钥解密出对话密 钥，向客户端发送确认报文：session ticket（如果支持），编码改变通知、服务器握手结束通知；</li>
+  <li>服务器发送前面全部内容的Hash值，用来供客户端校验（通信数据完整性）；</li>
+  <li>从此之后，双方使用同一个对话密钥，加密报文内容，进行常规的Http加密通信。</li>
+</ol>
+
+<blockquote>
+  <p>Ping douban.com 握手抓包WireShark</p>
+</blockquote>
+
+<p><img src="/assets/posts/30.png" alt="Https握手抓包" /></p>
+
+<h2 id="25-https的缺点为什么不一直使用">2.5 HTTPs的缺点？为什么不一直使用？</h2>
+
+<ul>
+  <li>HTTPs的加解密过程繁琐，消耗了两端CPU和内存资源，速度更慢（相比于HTTP慢2~100倍），一般只用在敏感数据的传输上；</li>
+  <li>HTTPs通信中需要用到数字签名证书，服务器端必须向权威机构购买，是一笔额外的开销。</li>
+</ul>
+
+<h2 id="26-https的会话复用">2.6 Https的会话复用</h2>
+
+<ul>
+  <li>Https的非对称加密握手过程，耗时长，计算量大，非常消耗双方资源；</li>
+  <li>会话复用的实现，解决了这个问题；</li>
+  <li>Https会话复用的两种机制:
+    <ol>
+      <li>session ID： 服务器存储主要会话信息；
+        <ul>
+          <li>session ID由客户端发起，在client hello报文中发送；</li>
+          <li>服务端根据session ID进行匹配，找到之前的某次会话信息，如果成功匹配会在server hello报文中携带这个session id；</li>
+          <li>双方绕过了密钥协商过程，直接复用之前的会话密钥；</li>
+        </ul>
+      </li>
+      <li>session ticket：客户端存储主要会话信息。
+        <ul>
+          <li>session ticket由服务端生成，它只有用服务端自己的私钥才能解密；</li>
+          <li>session ticket在双方第一次加密握手结束之后，发送给客户端，由客户端保存；</li>
+          <li>客户端下次再和服务端进行连接的时候，client hello报文携带这个session ticket，服务端可以对它进行解密，拿出里面的会话密钥直接复用，双方因此绕过了复杂的加密流程。</li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+  <li>在session ID机制和session ticket机制同时存在的情况下，<strong>session ticket生效，优先级更高</strong>；</li>
+  <li>session ID模式和session ticket模式的区别是：
+    <ul>
+      <li>session ID:
+        <ul>
+          <li>session ID由客户端生成，服务端需要保存id和对应会话状态的一个字典，增大了服务端压力；</li>
+          <li>session ID在服务器集群中使用，因为两次访问可能对应不同的响应服务器，因此sesision ID复用率下降，需要用公共储存介质来实现复用；</li>
+        </ul>
+      </li>
+      <li>session ticket：
+        <ul>
+          <li>session ticket由服务端用自己的密钥ticket-key生成，里面携带了会话的密钥等信息，且只有服务端才能解密；</li>
+          <li>session ticket由客户端保存，服务端不用保存，减小了服务端压力；</li>
+          <li>对于服务器集群，所有服务器都必须使用同一个密钥ticket-key，时间久了会不安全，一般需要定时轮换；</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Network"><span>Network</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/04/29/Vuex%E5%9F%BA%E6%93%8D%E4%B8%8E%E5%8E%9F%E7%90%86/" title="Vuex基操与原理">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/05/02/%E5%89%8D%E7%AB%AF%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" title="前端异步请求相关问题">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/05/02/HTTPs%E5%8D%8F%E8%AE%AE/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

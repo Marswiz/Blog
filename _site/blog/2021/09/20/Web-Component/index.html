@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Web组件： Web Component | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Web组件： Web Component" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Web组件相关API： HTML模板) Shadow DOM 自定义组件" />
+<meta property="og:description" content="Web组件相关API： HTML模板) Shadow DOM 自定义组件" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/09/20/Web-Component/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/09/20/Web-Component/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-09-20T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"Web组件相关API： HTML模板) Shadow DOM 自定义组件","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/09/20/Web-Component/","headline":"Web组件： Web Component","dateModified":"2021-09-20T00:00:00+08:00","datePublished":"2021-09-20T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/09/20/Web-Component/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">Web组件： Web Component</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Sep 20, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p><strong>Web组件相关API：</strong></p>
+
+  <ol>
+    <li><a href="#">HTML模板)</a></li>
+    <li><a href="#">Shadow DOM</a></li>
+    <li><a href="#">自定义组件</a></li>
+  </ol>
+</blockquote>
+
+<h1 id="一html模板">一、HTML模板</h1>
+
+<p>使用<code>&lt;template&gt;</code>标签包裹一系列DOM元素，叫做HTML模板。它有以下特性：</p>
+
+<ul>
+  <li>默认不会被浏览器渲染，内部内容包裹在一个<code>DocumentFragment</code>节点内；</li>
+  <li>内部内容不属于活动文档，因此<code>document.querySelector()</code>等方法，不会匹配到<code>&lt;template&gt;</code>内部元素（<code>&lt;template&gt;</code>本身可以被匹配）；</li>
+  <li>匹配<code>&lt;template&gt;</code>元素后，访问<code>.content</code>属性可以取得内部<code>DocumentFragment</code>的引用；</li>
+  <li>在<code>DocumentFragment</code>引用上，使用查询方法，可以匹配内部的DOM元素；</li>
+  <li>获取的<code>DocumentFragment</code>可以动态挂载到活动DOM元素中。</li>
+</ul>
+
+<blockquote>
+  <p><strong>注意：</strong> <code>documentFragment</code>里面的DOM树<strong>只能被挂载一次</strong>，再次挂载为空。</p>
+</blockquote>
+
+<h1 id="二shadow-dom">二、Shadow DOM</h1>
+<h2 id="21-什么是shadow-dom">2.1 什么是Shadow DOM</h2>
+
+<p>将一个完整的DOM树，作为节点添加到父DOM树。</p>
+
+<blockquote>
+  <p>与HTML模板的区别：</p>
+
+  <p>Shadow DOM会实际渲染到页面上，而HTML模板不会。</p>
+</blockquote>
+
+<h2 id="22-shadow-dom的特点">2.2 Shadow DOM的特点</h2>
+
+<ul>
+  <li>完全隔离了子DOM树，内部DOM节点无法从外部选择获取，内部使用的CSS也限制在子DOM树中，不会干扰全局；</li>
+  <li>可以使用插<code>&lt;slot&gt;</code>，将宿主元素原本的内容插入到shadow DOM。</li>
+</ul>
+
+<h2 id="23-shadow-dom的使用方式">2.3 Shadow DOM的使用方式</h2>
+
+<ul>
+  <li>使用<code>attachShadow(&lt;initObj&gt;)</code>方法创建并添加Shadow DOM到<strong>有效HTML元素（宿主节点）</strong>（只有部分HTML元素能添加Shadow DOM）；</li>
+  <li>传入的initObj，叫做shadowRootInit对象，必须包含一个<code>mode</code>属性，取值为”open”或”closed”，表示ShadowDOM是否可以通过<code>shadowRoot</code>属性在HTML元素上获得（绝大多数情况都应该设为’open’）；</li>
+  <li><code>attachShadow()</code>方法执行后，会立即替换原DOM元素内容。如果shadowDOM中有<code>&lt;slot&gt;</code>默认插槽，原DOM元素内容会作为content被添加到插槽中；</li>
+  <li>也可以用具名插槽<code>&lt;slot name="N1"&gt;</code>，承接宿主元素对应的带有<code>slot="N1"</code>的内容；</li>
+  <li><code>attachShadow()</code>方法返回shadowDOM的根元素（叫做”影子根”），默认情况下shadowDOM内容为空；</li>
+</ul>
+
+<h2 id="24-浏览器默认添加的shadow-dom">2.4 浏览器默认添加的Shadow DOM</h2>
+
+<p>浏览器会在<code>&lt;video&gt;</code>、<code>&lt;input&gt;</code>等元素内部自动添加Shadow DOM，来显示诸如video控制按钮等某些内置元素。</p>
+
+<h1 id="三自定义元素">三、自定义元素</h1>
+
+<h2 id="31-定义自定义元素">3.1 定义自定义元素</h2>
+<p><code>customElements.define()</code>方法可以声明创建自定义元素。</p>
+
+<p><code>customElements.define()</code>方法使用方式如下：</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">x-foo</span><span class="dl">'</span><span class="p">,</span> <span class="nx">FooElement</span><span class="p">,</span> <span class="p">{</span><span class="na">extends</span><span class="p">:</span> <span class="dl">'</span><span class="s1">div</span><span class="dl">'</span><span class="p">});</span>
+<span class="c1">// (tag, class, extends)</span>
+</code></pre></div></div>
+
+<h2 id="32-自定义元素如何封装组件">3.2 自定义元素如何封装组件</h2>
+
+<p>自定义元素通过内部挂载Shadow DOM封装组件。</p>
+
+<p>ShadowDOM内容可以用<code>&lt;template&gt;</code>模板记载。</p>
+
+<blockquote>
+  <p>代码见红宝书P660。</p>
+</blockquote>
+
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Web"><span>Web</span></a>
+      
+      <a id="tags" href="Web Component"><span>Web Component</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/09/12/Vue3%E7%BB%84%E4%BB%B6-script-setup-%E8%AF%AD%E6%B3%95%E7%B3%96/" title="Vue3组件：script setup 语法糖">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/09/20/Web-%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3-API/" title="Web物理设备接口API">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/09/20/Web-Component/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

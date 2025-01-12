@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>HTTP缓存策略：强缓存与协商缓存 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="HTTP缓存策略：强缓存与协商缓存" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="HTTP缓存： 强缓存与协商缓存" />
+<meta property="og:description" content="HTTP缓存： 强缓存与协商缓存" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/05/05/HTTP%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5-%E5%BC%BA%E7%BC%93%E5%AD%98%E4%B8%8E%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/05/05/HTTP%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5-%E5%BC%BA%E7%BC%93%E5%AD%98%E4%B8%8E%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-05-05T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"HTTP缓存： 强缓存与协商缓存","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/05/05/HTTP%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5-%E5%BC%BA%E7%BC%93%E5%AD%98%E4%B8%8E%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98/","headline":"HTTP缓存策略：强缓存与协商缓存","dateModified":"2021-05-05T00:00:00+08:00","datePublished":"2021-05-05T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/05/05/HTTP%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5-%E5%BC%BA%E7%BC%93%E5%AD%98%E4%B8%8E%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">HTTP缓存策略：强缓存与协商缓存</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">May 5, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>HTTP缓存： 强缓存与协商缓存</p>
+</blockquote>
+
+<h1 id="一http缓存">一、HTTP缓存</h1>
+
+<p>HTTP缓存针对HTTP响应报文，一般只对GET和HEAD方法响应报文有效。（POST响应在罕见特殊配置下也可以缓存，具体见<a href="https://developer.mozilla.org/en-US/docs/Glossary/cacheable">MDN</a>）</p>
+
+<p>HTTP缓存可以存在于浏览器本地，也可以存在于代理服务器。</p>
+
+<h2 id="1-缓存相关的首部行">1. 缓存相关的首部行</h2>
+
+<h3 id="11-强缓存">1.1 强缓存</h3>
+
+<p>优先级从高到低：</p>
+
+<p><code>Pragma -&gt; Cache-Control -&gt; Expires</code></p>
+
+<p>Pragma和Expires都是HTTP1.0的首部。</p>
+
+<p><strong>Pragma</strong>设置为no-cache(唯一有效值)，则意味着每次请求都<strong>无法执行强缓存，只能进行协商缓存</strong>。</p>
+
+<p><strong>Expires</strong>设置的是一个GMT格式的绝对日期，意味着不超过这个时间节点，都会触发强缓存。(浏览器会把它和客户端系统时间比对，如果服务器和本地有时间差，缓存判断容易产生误差。)</p>
+
+<blockquote>
+  <p>Expires: Thu, 01 Dec 1994 16:00:00 GMT （必须是GMT格式）</p>
+</blockquote>
+
+<p><strong>Cache-Control</strong>可以设置如下参数，一次可以设置多个，中间用逗号隔开：</p>
+
+<ul>
+  <li>客户端请求中的Cache-Control：
+    <ul>
+      <li><strong>no-cache</strong>: 与Pragma一样，每次请求都无法执行强缓存，只能进行协商缓存，但是比Pragma优先级要低；</li>
+      <li><strong>no-store</strong>: 不进行缓存。强缓存和协商缓存都不会触发；</li>
+      <li><strong>max-age</strong>: 设置缓存相对过期时长（单位是秒），相对于请求的时间；</li>
+      <li><strong>max-stale</strong>: 表示客户端愿意接受一个过期的响应，最大过期时长不能超过max-stale设置的值（秒）；</li>
+      <li><strong>min-fresh</strong>: 表示客户端希望获取一个能在指定的秒数内保持其最新状态的响应。</li>
+    </ul>
+  </li>
+  <li>服务器响应中的Cache-Control：
+    <ul>
+      <li><strong>public</strong>：表示响应可以被任何对象缓存，包括客户端和中间代理服务器等；</li>
+      <li><strong>private</strong>： 表示响应只能被单个用户缓存，不能被中间代理服务器缓存；</li>
+      <li><strong>no-cache</strong>: 与Pragma一样，每次请求都无法执行强缓存，只能进行协商缓存，但是比Pragma优先级要低；</li>
+      <li><strong>no-store</strong>: 不进行缓存。强缓存和协商缓存都不会触发；</li>
+      <li><strong>max-age</strong>: 设置缓存相对过期时长（单位是秒），相对于请求的时间；</li>
+      <li><strong>must-revalidate</strong>：一旦资源过期（比如已经超过max-age），在成功向原始服务器验证之前，缓存不能用该资源响应后续请求；</li>
+      <li><strong>immutable</strong>: 资源不会发生变化。告诉浏览器不要发送协商缓存验证请求头（<code>比如If-modified-since</code>），即使用户手动刷新页面。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="12-协商缓存">1.2 协商缓存</h3>
+
+<ul>
+  <li>客户端请求：
+    <ul>
+      <li><strong>If-Modified-Since:</strong> 如果响应头中有<code>Last-Modified</code>，则协商缓存请求头中携带这个字段，值为Last-Modified的值，表示询问服务器资源在这个时间节点之前是否修改过；</li>
+      <li><strong>If-None-Match：</strong> 如果响应头中有<code>ETag</code>，则协商缓存请求头中携带这个字段，表示询问服务器资源的ETag是否有变化；</li>
+    </ul>
+  </li>
+  <li>服务端响应：
+    <ul>
+      <li><strong>Last-Modified：</strong> 资源上次更新的时间；</li>
+      <li><strong>ETag：</strong> 资源通过摘要算法计算的Tag值，资源一旦有任何修改，这个值会变化。</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="2-强缓存与协商缓存触发策略">2. 强缓存与协商缓存触发策略</h2>
+
+<h3 id="21-强缓存">2.1. 强缓存</h3>
+
+<p>浏览器执行请求时，如果发现本地有之前请求的缓存，先查看请求缓存中的首部行，判断是否命中强缓存：</p>
+
+<ol>
+  <li>如果Cache-Control（优先）存在且设置了max-age值，则计算此次请求的age值ageValue，并与max-age进行比较。如果ageValue&gt;max-age则强缓存触发失败，反之则触发强缓存。</li>
+</ol>
+
+<blockquote>
+  <p><a href="https://blog.csdn.net/sxh951026/article/details/77934463">HTTP中缓存的使用期计算（Age Calculation）</a></p>
+
+  <p>HTTP1.1协议要求，当一个响应报文是从缓存里获取的时候，HTTP/1.1协议要求在响应报文中必须添加一个Age首部行。它的值表示的是，从这个响应报文在源服务器中产生或者过期验证的那一刻起，到现在为止所经过时间的一个估计值（从名字上其实就看的出来，它表示的是缓存的年龄）。经常和max-age一起来验证缓存是否过期，即如果这个字段的值比max-age的值还大，那这份缓存就已经过期了。</p>
+
+  <p>这个ageValue值的计算，是缓存到达本地时带有的age值initAge，加上这次请求时间点为止，缓存在本地经过的时长agePassed。</p>
+
+  <p>age = initAge + agePassed</p>
+</blockquote>
+
+<ol>
+  <li>如果Cache-Control不存在，但设置了Expires，判断请求的Date是否超过Expires设置的时间，未过期则直接命中强缓存。</li>
+</ol>
+
+<blockquote>
+  <p>Expires： 是GMT格式字符串（绝对值），意味着何时过期，它来自于服务器时间。浏览器在请求进行比较的时候，使用的是系统时间，系统时间可以修改所以相对不可靠。</p>
+</blockquote>
+
+<p>这时，直接从缓存中读取响应（包含响应头），不与服务器通信。（状态码200）</p>
+
+<h3 id="22-协商缓存">2.2 协商缓存</h3>
+
+<p>如果发现 Cache-Control 或 Expires 二者之一有过期，则发送请求到服务器：</p>
+
+<blockquote>
+  <p>如果缓存首部存在<strong>Etag</strong>，则发送带<strong>If-None-Match</strong>的请求；（优先级更高）</p>
+
+  <p>如果缓存首部存在<strong>Last-Modified</strong>，则发送带<strong>If-Modified-Since</strong>的请求。</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>ETag 与 Last-Modified 的区别？</strong></p>
+
+  <p>ETag是服务器根据资源内容，自动生成的唯一的ID。它更能体现资源是否已修改。</p>
+
+  <p><strong>Last-Modified主要是有以下三点问题：</strong></p>
+
+  <p>① 最短修改时间只能精确到秒；</p>
+
+  <p>② 有些文件在服务器周期性保存，内容并未修改，这时造成本地缓存的浪费；</p>
+
+  <p>③ 某些服务器系统不能得到精确的修改时间。</p>
+</blockquote>
+
+<p>由服务器根据这两个字段判断，缓存是否还可以使用。</p>
+
+<p>如果可以，则意味着协商缓存命中，服务器返回新的响应header信息，但是不带有响应主体。（意味着服务器仍可从缓存中读取响应）（校验码304）</p>
+
+<p>如果校验失败，服务器返回带响应主体的响应报文。（校验码200）</p>
+
+<h3 id="23-用户行为对缓存的影响">2.3 用户行为对缓存的影响</h3>
+
+<p>按<code>F5</code>会忽略强缓存，保留协商缓存。</p>
+
+<p>按<code>Ctrl+F5</code>会忽视全部缓存。</p>
+
+<h3 id="24-如何保证每次资源更新浏览器都会及时更新防止从缓存读取">2.4 如何保证每次资源更新浏览器都会及时更新，防止从缓存读取？</h3>
+
+<ul>
+  <li>设置<code>Cache-Control</code>为<code>no-store</code>；</li>
+  <li>为每一个更新的资源，配置一个独有的资源名。常用的是在资源后面加上query ID后缀。</li>
+</ul>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Network"><span>Network</span></a>
+      
+      <a id="tags" href="HTTP"><span>HTTP</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/05/04/%E5%88%B7%E9%A2%98%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF-%E6%80%BB%E7%BB%93%E8%AE%B0%E5%BD%95/" title="刷题过程中的错误：总结记录">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/05/08/%E7%BB%86%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9%E5%90%88%E9%9B%86/" title="细碎知识点合集">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/05/05/HTTP%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5-%E5%BC%BA%E7%BC%93%E5%AD%98%E4%B8%8E%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

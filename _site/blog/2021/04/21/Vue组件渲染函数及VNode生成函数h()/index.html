@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Vue组件渲染函数及VNode生成函数h()、createVNode() | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Vue组件渲染函数及VNode生成函数h()、createVNode()" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="源文件目录： packages/runtime-core/src/vnode.ts packages/runtime-core/src/h.ts" />
+<meta property="og:description" content="源文件目录： packages/runtime-core/src/vnode.ts packages/runtime-core/src/h.ts" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/04/21/Vue%E7%BB%84%E4%BB%B6%E6%B8%B2%E6%9F%93%E5%87%BD%E6%95%B0%E5%8F%8AVNode%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0h()/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/04/21/Vue%E7%BB%84%E4%BB%B6%E6%B8%B2%E6%9F%93%E5%87%BD%E6%95%B0%E5%8F%8AVNode%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0h()/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-04-21T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"源文件目录： packages/runtime-core/src/vnode.ts packages/runtime-core/src/h.ts","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/04/21/Vue%E7%BB%84%E4%BB%B6%E6%B8%B2%E6%9F%93%E5%87%BD%E6%95%B0%E5%8F%8AVNode%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0h()/","headline":"Vue组件渲染函数及VNode生成函数h()、createVNode()","dateModified":"2021-04-21T00:00:00+08:00","datePublished":"2021-04-21T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/04/21/Vue%E7%BB%84%E4%BB%B6%E6%B8%B2%E6%9F%93%E5%87%BD%E6%95%B0%E5%8F%8AVNode%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0h()/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">Vue组件渲染函数及VNode生成函数h()、createVNode()</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Apr 21, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>源文件目录：</p>
+
+  <p>packages/runtime-core/src/vnode.ts</p>
+
+  <p>packages/runtime-core/src/h.ts</p>
+</blockquote>
+
+<h1 id="vue组件实现模板解析渲染的几种方式">Vue组件实现模板解析渲染的几种方式</h1>
+
+<ol>
+  <li>单文件组件(SFC)中，Vue组件可以使用<template>定义渲染模板；</template></li>
+  <li>任何组件都可以通过配置中tempalte property传入模板字符串定义渲染模板；</li>
+  <li>定义render()方法，作为组件的渲染函数进行纯JS渲染。</li>
+</ol>
+
+<h1 id="vnode的ts类型定义源码">VNode的TS类型定义源码</h1>
+
+<p>VNode中常见的重要属性如下：</p>
+
+<ul>
+  <li>type： VNode的类型。（代表类型的字符串，<strong>VNode对象</strong>，<strong>Component对象</strong>，<strong>Text类型</strong>Symbol，<strong>Static类型</strong>Symbol，<strong>Comment类型</strong>Symbol，<strong>Fragment类型</strong>Symbol等）</li>
+  <li>props: VNode本身的属性。官方这里可选定义了：key,ref，和VNode的一些生命周期钩子：onVnodeBeforeMount，onVnodeMounted，onVnodeBeforeUpdate，onVnodeUpdated，onVnodeBeforeUnmount，onVnodeUnmounted等。Props可以在h()函数的第二个参数传入。</li>
+  <li>children: 子VNode；</li>
+  <li>key: VNode的唯一标志符；</li>
+  <li>el: VNode在DOM中挂载的元素对象</li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// packages/runtime-core/src/vnode.ts</span>
+<span class="k">export</span> <span class="kr">interface</span> <span class="nx">VNode</span><span class="o">&lt;</span>
+  <span class="nx">HostNode</span> <span class="o">=</span> <span class="nx">RendererNode</span><span class="p">,</span>
+  <span class="nx">HostElement</span> <span class="o">=</span> <span class="nx">RendererElement</span><span class="p">,</span>
+  <span class="nx">ExtraProps</span> <span class="o">=</span> <span class="p">{</span> <span class="p">[</span><span class="na">key</span><span class="p">:</span> <span class="nx">string</span><span class="p">]:</span> <span class="nx">any</span> <span class="p">}</span>
+<span class="o">&gt;</span> <span class="p">{</span>
+  <span class="cm">/**
+   * @internal
+   */</span>
+<span class="c1">// 判断是否是VNode的内部标志：__v_isVNode</span>
+  <span class="na">__v_isVNode</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="cm">/**
+   * @internal
+   */</span>
+<span class="c1">// VNode设置为永远不是响应式的</span>
+  <span class="p">[</span><span class="nx">ReactiveFlags</span><span class="p">.</span><span class="nx">SKIP</span><span class="p">]:</span> <span class="kc">true</span>
+
+<span class="c1">// VNode 的类型:</span>
+
+<span class="c1">// export type VNodeTypes =</span>
+<span class="c1">// | string</span>
+<span class="c1">// | VNode</span>
+<span class="c1">// | Component</span>
+<span class="c1">// | typeof Text</span>
+<span class="c1">// | typeof Static</span>
+<span class="c1">// | typeof Comment</span>
+<span class="c1">// | typeof Fragment  (Fragment是Vue3引入的新节点类型，用来包裹多个根元素组件，让用户可以不用强制创建单一根元素组件。)</span>
+<span class="c1">// | typeof TeleportImpl</span>
+<span class="c1">// | typeof SuspenseImpl</span>
+
+  <span class="na">type</span><span class="p">:</span> <span class="nx">VNodeTypes</span>
+  <span class="na">props</span><span class="p">:</span> <span class="p">(</span><span class="nx">VNodeProps</span> <span class="o">&amp;</span> <span class="nx">ExtraProps</span><span class="p">)</span> <span class="o">|</span> <span class="kc">null</span>
+  <span class="na">key</span><span class="p">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">number</span> <span class="o">|</span> <span class="kc">null</span>
+  <span class="na">ref</span><span class="p">:</span> <span class="nx">VNodeNormalizedRef</span> <span class="o">|</span> <span class="kc">null</span>
+
+  <span class="cm">/**
+   * SFC only. This is assigned on vnode creation using currentScopeId
+   * which is set alongside currentRenderingInstance.
+   */</span>
+  <span class="na">scopeId</span><span class="p">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="kc">null</span>
+
+  <span class="cm">/**
+   * SFC only. This is assigned to:
+   * - Slot fragment vnodes with :slotted SFC styles.
+   * - Component vnodes (during patchsuspense`  ydration) so that its root node can
+   *   inherit the component's slotScopeIds
+   */</span>
+  <span class="na">slotScopeIds</span><span class="p">:</span> <span class="nx">string</span><span class="p">[]</span> <span class="o">|</span> <span class="kc">null</span>
+  <span class="na">children</span><span class="p">:</span> <span class="nx">VNodeNormalizedChildren</span>
+  <span class="na">component</span><span class="p">:</span> <span class="nx">ComponentInternalInstance</span> <span class="o">|</span> <span class="kc">null</span>
+  <span class="na">dirs</span><span class="p">:</span> <span class="nx">DirectiveBinding</span><span class="p">[]</span> <span class="o">|</span> <span class="kc">null</span>
+  <span class="na">transition</span><span class="p">:</span> <span class="nx">TransitionHooks</span><span class="o">&lt;</span><span class="nx">HostElement</span><span class="o">&gt;</span> <span class="o">|</span> <span class="kc">null</span>
+
+  <span class="c1">// DOM</span>
+  <span class="na">el</span><span class="p">:</span> <span class="nx">HostNode</span> <span class="o">|</span> <span class="kc">null</span>
+  <span class="na">anchor</span><span class="p">:</span> <span class="nx">HostNode</span> <span class="o">|</span> <span class="kc">null</span> <span class="c1">// fragment anchor</span>
+  <span class="na">target</span><span class="p">:</span> <span class="nx">HostElement</span> <span class="o">|</span> <span class="kc">null</span> <span class="c1">// teleport target</span>
+  <span class="na">targetAnchor</span><span class="p">:</span> <span class="nx">HostNode</span> <span class="o">|</span> <span class="kc">null</span> <span class="c1">// teleport target anchor</span>
+  <span class="na">staticCount</span><span class="p">:</span> <span class="nx">number</span> <span class="c1">// number of elements contained in a static vnode</span>
+
+  <span class="c1">// suspense</span>
+  <span class="na">suspense</span><span class="p">:</span> <span class="nx">SuspenseBoundary</span> <span class="o">|</span> <span class="kc">null</span>
+  <span class="na">ssContent</span><span class="p">:</span> <span class="nx">VNode</span> <span class="o">|</span> <span class="kc">null</span>
+  <span class="na">ssFallback</span><span class="p">:</span> <span class="nx">VNode</span> <span class="o">|</span> <span class="kc">null</span>
+
+  <span class="c1">// optimization only</span>
+  <span class="na">shapeFlag</span><span class="p">:</span> <span class="nx">number</span>
+  <span class="na">patchFlag</span><span class="p">:</span> <span class="nx">number</span>
+  <span class="na">dynamicProps</span><span class="p">:</span> <span class="nx">string</span><span class="p">[]</span> <span class="o">|</span> <span class="kc">null</span>
+  <span class="na">dynamicChildren</span><span class="p">:</span> <span class="nx">VNode</span><span class="p">[]</span> <span class="o">|</span> <span class="kc">null</span>
+
+  <span class="c1">// application root node only</span>
+  <span class="na">appContext</span><span class="p">:</span> <span class="nx">AppContext</span> <span class="o">|</span> <span class="kc">null</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h1 id="h函数">h()函数</h1>
+
+<p>从源码上看，h()函数主要是对不同的传参形式进行了重载。在内部，还是调用createNode()函数。</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 这里定义了一系列h()函数的重载形式，用来让用户更容易使用。</span>
+<span class="c1">// h()函数用来生成VNode，用户用来在组件中手动编写render()函数方法，用来代替template。</span>
+
+<span class="c1">// ！！————————从这里开始都是重载编写部分——————————————！！</span>
+<span class="c1">// 传入字符串类型，生成DOM元素</span>
+<span class="c1">// 可以传入两个参数，也可以传入三个参数。对应下面第一个和第二个重载形式。</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="p">(</span><span class="nx">type</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">children</span><span class="p">?:</span> <span class="nx">RawChildren</span><span class="p">):</span> <span class="nx">VNode</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="p">(</span>
+  <span class="nx">type</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>
+  <span class="nx">props</span><span class="p">?:</span> <span class="nx">RawProps</span> <span class="o">|</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nx">children</span><span class="p">?:</span> <span class="nx">RawChildren</span> <span class="o">|</span> <span class="nx">RawSlots</span>
+<span class="p">):</span> <span class="nx">VNode</span>
+
+<span class="c1">// 传入文本类型符号或注释类型符号，生成对应VNode：</span>
+<span class="c1">// export const Text = Symbol(__DEV__ ? 'Text' : undefined)</span>
+<span class="c1">// export const Comment = Symbol(__DEV__ ? 'Comment' : undefined)</span>
+<span class="c1">// export const Static = Symbol(__DEV__ ? 'Static' : undefined)</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="p">(</span>
+  <span class="nx">type</span><span class="p">:</span> <span class="k">typeof</span> <span class="nx">Text</span> <span class="o">|</span> <span class="k">typeof</span> <span class="nx">Comment</span><span class="p">,</span>
+  <span class="nx">children</span><span class="p">?:</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">number</span> <span class="o">|</span> <span class="nx">boolean</span>
+<span class="p">):</span> <span class="nx">VNode</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="p">(</span>
+  <span class="nx">type</span><span class="p">:</span> <span class="k">typeof</span> <span class="nx">Text</span> <span class="o">|</span> <span class="k">typeof</span> <span class="nx">Comment</span><span class="p">,</span>
+  <span class="nx">props</span><span class="p">?:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nx">children</span><span class="p">?:</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">number</span> <span class="o">|</span> <span class="nx">boolean</span>
+<span class="p">):</span> <span class="nx">VNode</span>
+
+<span class="c1">// 下面是特殊类型节点的生成，不重点了解。</span>
+<span class="c1">// 生成fragment类型VNode</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="p">(</span><span class="nx">type</span><span class="p">:</span> <span class="k">typeof</span> <span class="nx">Fragment</span><span class="p">,</span> <span class="nx">children</span><span class="p">?:</span> <span class="nx">VNodeArrayChildren</span><span class="p">):</span> <span class="nx">VNode</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="p">(</span>
+  <span class="nx">type</span><span class="p">:</span> <span class="k">typeof</span> <span class="nx">Fragment</span><span class="p">,</span>
+  <span class="nx">props</span><span class="p">?:</span> <span class="nx">RawProps</span> <span class="o">|</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nx">children</span><span class="p">?:</span> <span class="nx">VNodeArrayChildren</span>
+<span class="p">):</span> <span class="nx">VNode</span>
+
+<span class="c1">// teleport (target prop is required)</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="p">(</span>
+  <span class="nx">type</span><span class="p">:</span> <span class="k">typeof</span> <span class="nx">Teleport</span><span class="p">,</span>
+  <span class="nx">props</span><span class="p">:</span> <span class="nx">RawProps</span> <span class="o">&amp;</span> <span class="nx">TeleportProps</span><span class="p">,</span>
+  <span class="nx">children</span><span class="p">:</span> <span class="nx">RawChildren</span>
+<span class="p">):</span> <span class="nx">VNode</span>
+
+<span class="c1">// suspense 组件类型节点</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="p">(</span><span class="nx">type</span><span class="p">:</span> <span class="k">typeof</span> <span class="nx">Suspense</span><span class="p">,</span> <span class="nx">children</span><span class="p">?:</span> <span class="nx">RawChildren</span><span class="p">):</span> <span class="nx">VNode</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="p">(</span>
+  <span class="nx">type</span><span class="p">:</span> <span class="k">typeof</span> <span class="nx">Suspense</span><span class="p">,</span>
+  <span class="nx">props</span><span class="p">?:</span> <span class="p">(</span><span class="nx">RawProps</span> <span class="o">&amp;</span> <span class="nx">SuspenseProps</span><span class="p">)</span> <span class="o">|</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nx">children</span><span class="p">?:</span> <span class="nx">RawChildren</span> <span class="o">|</span> <span class="nx">RawSlots</span>
+<span class="p">):</span> <span class="nx">VNode</span>
+
+<span class="c1">// functional component</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="o">&lt;</span><span class="nx">P</span><span class="p">,</span> <span class="nx">E</span> <span class="kd">extends</span> <span class="nx">EmitsOptions</span> <span class="o">=</span> <span class="p">{}</span><span class="o">&gt;</span><span class="p">(</span>
+  <span class="nx">type</span><span class="p">:</span> <span class="nx">FunctionalComponent</span><span class="o">&lt;</span><span class="nx">P</span><span class="p">,</span> <span class="nx">E</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="nx">props</span><span class="p">?:</span> <span class="p">(</span><span class="nx">RawProps</span> <span class="o">&amp;</span> <span class="nx">P</span><span class="p">)</span> <span class="o">|</span> <span class="p">({}</span> <span class="kd">extends</span> <span class="nx">P</span> <span class="p">?</span> <span class="kc">null</span> <span class="p">:</span> <span class="nx">never</span><span class="p">),</span>
+  <span class="nx">children</span><span class="p">?:</span> <span class="nx">RawChildren</span> <span class="o">|</span> <span class="nx">RawSlots</span>
+<span class="p">):</span> <span class="nx">VNode</span>
+
+<span class="c1">// catch-all for generic component types</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="p">(</span><span class="nx">type</span><span class="p">:</span> <span class="nx">Component</span><span class="p">,</span> <span class="nx">children</span><span class="p">?:</span> <span class="nx">RawChildren</span><span class="p">):</span> <span class="nx">VNode</span>
+
+<span class="c1">// concrete component</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="o">&lt;</span><span class="nx">P</span><span class="o">&gt;</span><span class="p">(</span>
+  <span class="nx">type</span><span class="p">:</span> <span class="nx">ConcreteComponent</span> <span class="o">|</span> <span class="nx">string</span><span class="p">,</span>
+  <span class="nx">children</span><span class="p">?:</span> <span class="nx">RawChildren</span>
+<span class="p">):</span> <span class="nx">VNode</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="o">&lt;</span><span class="nx">P</span><span class="o">&gt;</span><span class="p">(</span>
+  <span class="nx">type</span><span class="p">:</span> <span class="nx">ConcreteComponent</span><span class="o">&lt;</span><span class="nx">P</span><span class="o">&gt;</span> <span class="o">|</span> <span class="nx">string</span><span class="p">,</span>
+  <span class="nx">props</span><span class="p">?:</span> <span class="p">(</span><span class="nx">RawProps</span> <span class="o">&amp;</span> <span class="nx">P</span><span class="p">)</span> <span class="o">|</span> <span class="p">({}</span> <span class="kd">extends</span> <span class="nx">P</span> <span class="p">?</span> <span class="kc">null</span> <span class="p">:</span> <span class="nx">never</span><span class="p">),</span>
+  <span class="nx">children</span><span class="p">?:</span> <span class="nx">RawChildren</span>
+<span class="p">):</span> <span class="nx">VNode</span>
+
+<span class="c1">// 没有属性props的组件</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="p">(</span>
+  <span class="nx">type</span><span class="p">:</span> <span class="nx">Component</span><span class="p">,</span>
+  <span class="nx">props</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nx">children</span><span class="p">?:</span> <span class="nx">RawChildren</span> <span class="o">|</span> <span class="nx">RawSlots</span>
+<span class="p">):</span> <span class="nx">VNode</span>
+
+<span class="c1">// exclude `defineComponent` constructors</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="o">&lt;</span><span class="nx">P</span><span class="o">&gt;</span><span class="p">(</span>
+  <span class="nx">type</span><span class="p">:</span> <span class="nx">ComponentOptions</span><span class="o">&lt;</span><span class="nx">P</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="nx">props</span><span class="p">?:</span> <span class="p">(</span><span class="nx">RawProps</span> <span class="o">&amp;</span> <span class="nx">P</span><span class="p">)</span> <span class="o">|</span> <span class="p">({}</span> <span class="kd">extends</span> <span class="nx">P</span> <span class="p">?</span> <span class="kc">null</span> <span class="p">:</span> <span class="nx">never</span><span class="p">),</span>
+  <span class="nx">children</span><span class="p">?:</span> <span class="nx">RawChildren</span> <span class="o">|</span> <span class="nx">RawSlots</span>
+<span class="p">):</span> <span class="nx">VNode</span>
+
+<span class="c1">// fake constructor type returned by `defineComponent` or class component</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="p">(</span><span class="nx">type</span><span class="p">:</span> <span class="nx">Constructor</span><span class="p">,</span> <span class="nx">children</span><span class="p">?:</span> <span class="nx">RawChildren</span><span class="p">):</span> <span class="nx">VNode</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="o">&lt;</span><span class="nx">P</span><span class="o">&gt;</span><span class="p">(</span>
+  <span class="nx">type</span><span class="p">:</span> <span class="nx">Constructor</span><span class="o">&lt;</span><span class="nx">P</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="nx">props</span><span class="p">?:</span> <span class="p">(</span><span class="nx">RawProps</span> <span class="o">&amp;</span> <span class="nx">P</span><span class="p">)</span> <span class="o">|</span> <span class="p">({}</span> <span class="kd">extends</span> <span class="nx">P</span> <span class="p">?</span> <span class="kc">null</span> <span class="p">:</span> <span class="nx">never</span><span class="p">),</span>
+  <span class="nx">children</span><span class="p">?:</span> <span class="nx">RawChildren</span> <span class="o">|</span> <span class="nx">RawSlots</span>
+<span class="p">):</span> <span class="nx">VNode</span>
+
+<span class="c1">// fake constructor type returned by `defineComponent`</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="p">(</span><span class="nx">type</span><span class="p">:</span> <span class="nx">DefineComponent</span><span class="p">,</span> <span class="nx">children</span><span class="p">?:</span> <span class="nx">RawChildren</span><span class="p">):</span> <span class="nx">VNode</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="o">&lt;</span><span class="nx">P</span><span class="o">&gt;</span><span class="p">(</span>
+  <span class="nx">type</span><span class="p">:</span> <span class="nx">DefineComponent</span><span class="o">&lt;</span><span class="nx">P</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="nx">props</span><span class="p">?:</span> <span class="p">(</span><span class="nx">RawProps</span> <span class="o">&amp;</span> <span class="nx">P</span><span class="p">)</span> <span class="o">|</span> <span class="p">({}</span> <span class="kd">extends</span> <span class="nx">P</span> <span class="p">?</span> <span class="kc">null</span> <span class="p">:</span> <span class="nx">never</span><span class="p">),</span>
+  <span class="nx">children</span><span class="p">?:</span> <span class="nx">RawChildren</span> <span class="o">|</span> <span class="nx">RawSlots</span>
+<span class="p">):</span> <span class="nx">VNode</span>
+<span class="c1">// ！！————————重载编写部分结束——————————————！！</span>
+
+<span class="c1">// 这里是h()函数的具体实现：可以看到就是根据不同的形式调用createVNode()</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">h</span><span class="p">(</span><span class="nx">type</span><span class="p">:</span> <span class="nx">any</span><span class="p">,</span> <span class="nx">propsOrChildren</span><span class="p">?:</span> <span class="nx">any</span><span class="p">,</span> <span class="nx">children</span><span class="p">?:</span> <span class="nx">any</span><span class="p">):</span> <span class="nx">VNode</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">l</span> <span class="o">===</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">propsOrChildren</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">propsOrChildren</span><span class="p">))</span> <span class="p">{</span>
+      <span class="c1">// single vnode without props</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">isVNode</span><span class="p">(</span><span class="nx">propsOrChildren</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">createVNode</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="p">[</span><span class="nx">propsOrChildren</span><span class="p">])</span>
+      <span class="p">}</span>
+      <span class="c1">// props without children</span>
+      <span class="k">return</span> <span class="nx">createVNode</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span> <span class="nx">propsOrChildren</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="c1">// omit props</span>
+      <span class="k">return</span> <span class="nx">createVNode</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">propsOrChildren</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">l</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">children</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">l</span> <span class="o">===</span> <span class="mi">3</span> <span class="o">&amp;&amp;</span> <span class="nx">isVNode</span><span class="p">(</span><span class="nx">children</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nx">children</span> <span class="o">=</span> <span class="p">[</span><span class="nx">children</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">createVNode</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span> <span class="nx">propsOrChildren</span><span class="p">,</span> <span class="nx">children</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="createvnode函数-h函数调用的原始函数">createVNode函数: h()函数调用的原始函数</h1>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 根据是否是开发环境选择不同的方法，核心都是_createVNode函数。</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">createVNode</span> <span class="o">=</span> <span class="p">(</span><span class="nx">__DEV__</span>
+  <span class="p">?</span> <span class="nx">createVNodeWithArgsTransform</span>
+  <span class="p">:</span> <span class="nx">_createVNode</span><span class="p">)</span> <span class="k">as</span> <span class="k">typeof</span> <span class="nx">_createVNode</span>
+
+<span class="kd">function</span> <span class="nx">_createVNode</span><span class="p">(</span>
+  <span class="nx">type</span><span class="p">:</span> <span class="nx">VNodeTypes</span> <span class="o">|</span> <span class="nx">ClassComponent</span> <span class="o">|</span> <span class="k">typeof</span> <span class="nx">NULL_DYNAMIC_COMPONENT</span><span class="p">,</span>
+  <span class="nx">props</span><span class="p">:</span> <span class="p">(</span><span class="nx">Data</span> <span class="o">&amp;</span> <span class="nx">VNodeProps</span><span class="p">)</span> <span class="o">|</span> <span class="kc">null</span> <span class="o">=</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nx">children</span><span class="p">:</span> <span class="nx">unknown</span> <span class="o">=</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nx">patchFlag</span><span class="p">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nx">dynamicProps</span><span class="p">:</span> <span class="nx">string</span><span class="p">[]</span> <span class="o">|</span> <span class="kc">null</span> <span class="o">=</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="nx">isBlockNode</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="p">):</span> <span class="nx">VNode</span> <span class="p">{</span>
+
+<span class="c1">// 判断传入的type是否合法（为falsy），不合法报错。 </span>
+<span class="c1">// 这时type会被设定为注释类型。</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">type</span> <span class="o">||</span> <span class="nx">type</span> <span class="o">===</span> <span class="nx">NULL_DYNAMIC_COMPONENT</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">__DEV__</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">warn</span><span class="p">(</span><span class="s2">`Invalid vnode type when creating vnode: </span><span class="p">${</span><span class="nx">type</span><span class="p">}</span><span class="s2">.`</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">type</span> <span class="o">=</span> <span class="nx">Comment</span>
+  <span class="p">}</span>
+
+<span class="c1">// 判断传入的类型如果本身是VNode,就复制一个新的VNode返回。</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">isVNode</span><span class="p">(</span><span class="nx">type</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// createVNode receiving an existing vnode. This happens in cases like</span>
+    <span class="c1">// &lt;component :is="vnode"/&gt; （动态组件！）</span>
+    <span class="c1">// #2078 make sure to merge refs during the clone instead of overwriting it</span>
+    <span class="kd">const</span> <span class="nx">cloned</span> <span class="o">=</span> <span class="nx">cloneVNode</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span> <span class="nx">props</span><span class="p">,</span> <span class="kc">true</span> <span class="cm">/* mergeRef: true */</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">children</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">normalizeChildren</span><span class="p">(</span><span class="nx">cloned</span><span class="p">,</span> <span class="nx">children</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">cloned</span>
+  <span class="p">}</span>
+
+  <span class="c1">// class component normalization.</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">isClassComponent</span><span class="p">(</span><span class="nx">type</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">type</span> <span class="o">=</span> <span class="nx">type</span><span class="p">.</span><span class="nx">__vccOpts</span>
+  <span class="p">}</span>
+
+  <span class="c1">// class &amp; style normalization.</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// for reactive or proxy objects, we need to clone it to enable mutation.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">isProxy</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="o">||</span> <span class="nx">InternalObjectKey</span> <span class="k">in</span> <span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">props</span> <span class="o">=</span> <span class="nx">extend</span><span class="p">({},</span> <span class="nx">props</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="kd">let</span> <span class="p">{</span> <span class="na">class</span><span class="p">:</span> <span class="nx">klass</span><span class="p">,</span> <span class="nx">style</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">props</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">klass</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">isString</span><span class="p">(</span><span class="nx">klass</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nx">props</span><span class="p">.</span><span class="kd">class</span> <span class="o">=</span> <span class="nx">normalizeClass</span><span class="p">(</span><span class="nx">klass</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">style</span><span class="p">))</span> <span class="p">{</span>
+      <span class="c1">// reactive state objects need to be cloned since they are likely to be</span>
+      <span class="c1">// mutated</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">isProxy</span><span class="p">(</span><span class="nx">style</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">style</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">style</span> <span class="o">=</span> <span class="nx">extend</span><span class="p">({},</span> <span class="nx">style</span><span class="p">)</span>
+      <span class="p">}</span>
+      <span class="nx">props</span><span class="p">.</span><span class="nx">style</span> <span class="o">=</span> <span class="nx">normalizeStyle</span><span class="p">(</span><span class="nx">style</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// encode the vnode type information into a bitmap</span>
+  <span class="kd">const</span> <span class="nx">shapeFlag</span> <span class="o">=</span> <span class="nx">isString</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span>
+    <span class="p">?</span> <span class="nx">ShapeFlags</span><span class="p">.</span><span class="nx">ELEMENT</span>
+    <span class="p">:</span> <span class="nx">__FEATURE_SUSPENSE__</span> <span class="o">&amp;&amp;</span> <span class="nx">isSuspense</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span>
+      <span class="p">?</span> <span class="nx">ShapeFlags</span><span class="p">.</span><span class="nx">SUSPENSE</span>
+      <span class="p">:</span> <span class="nx">isTeleport</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span>
+        <span class="p">?</span> <span class="nx">ShapeFlags</span><span class="p">.</span><span class="nx">TELEPORT</span>
+        <span class="p">:</span> <span class="nx">isObject</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span>
+          <span class="p">?</span> <span class="nx">ShapeFlags</span><span class="p">.</span><span class="nx">STATEFUL_COMPONENT</span>
+          <span class="p">:</span> <span class="nx">isFunction</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span>
+            <span class="p">?</span> <span class="nx">ShapeFlags</span><span class="p">.</span><span class="nx">FUNCTIONAL_COMPONENT</span>
+            <span class="p">:</span> <span class="mi">0</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">__DEV__</span> <span class="o">&amp;&amp;</span> <span class="nx">shapeFlag</span> <span class="o">&amp;</span> <span class="nx">ShapeFlags</span><span class="p">.</span><span class="nx">STATEFUL_COMPONENT</span> <span class="o">&amp;&amp;</span> <span class="nx">isProxy</span><span class="p">(</span><span class="nx">type</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">type</span> <span class="o">=</span> <span class="nx">toRaw</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span>
+    <span class="nx">warn</span><span class="p">(</span>
+      <span class="s2">`Vue received a Component which was made a reactive object. This can `</span> <span class="o">+</span>
+        <span class="s2">`lead to unnecessary performance overhead, and should be avoided by `</span> <span class="o">+</span>
+        <span class="s2">`marking the component with \`markRaw\` or using \`shallowRef\` `</span> <span class="o">+</span>
+        <span class="s2">`instead of \`ref\`.`</span><span class="p">,</span>
+      <span class="s2">`\nComponent that was made reactive: `</span><span class="p">,</span>
+      <span class="nx">type</span>
+    <span class="p">)</span>
+  <span class="p">}</span>
+
+<span class="c1">// VNode的初始值定义。包含VNode的所有属性参数。</span>
+  <span class="kd">const</span> <span class="nx">vnode</span><span class="p">:</span> <span class="nx">VNode</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">__v_isVNode</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="p">[</span><span class="nx">ReactiveFlags</span><span class="p">.</span><span class="nx">SKIP</span><span class="p">]:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nx">type</span><span class="p">,</span>
+    <span class="nx">props</span><span class="p">,</span>
+    <span class="na">key</span><span class="p">:</span> <span class="nx">props</span> <span class="o">&amp;&amp;</span> <span class="nx">normalizeKey</span><span class="p">(</span><span class="nx">props</span><span class="p">),</span>
+    <span class="na">ref</span><span class="p">:</span> <span class="nx">props</span> <span class="o">&amp;&amp;</span> <span class="nx">normalizeRef</span><span class="p">(</span><span class="nx">props</span><span class="p">),</span>
+    <span class="na">scopeId</span><span class="p">:</span> <span class="nx">currentScopeId</span><span class="p">,</span>
+    <span class="na">slotScopeIds</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="na">children</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="na">component</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="na">suspense</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="na">ssContent</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="na">ssFallback</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="na">dirs</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="na">transition</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="na">el</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="na">anchor</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="na">target</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="na">targetAnchor</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="na">staticCount</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nx">shapeFlag</span><span class="p">,</span>
+    <span class="nx">patchFlag</span><span class="p">,</span>
+    <span class="nx">dynamicProps</span><span class="p">,</span>
+    <span class="na">dynamicChildren</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="na">appContext</span><span class="p">:</span> <span class="kc">null</span>
+  <span class="p">}</span>
+
+  <span class="c1">// validate key</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">__DEV__</span> <span class="o">&amp;&amp;</span> <span class="nx">vnode</span><span class="p">.</span><span class="nx">key</span> <span class="o">!==</span> <span class="nx">vnode</span><span class="p">.</span><span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">warn</span><span class="p">(</span><span class="s2">`VNode created with invalid key (NaN). VNode type:`</span><span class="p">,</span> <span class="nx">vnode</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="nx">normalizeChildren</span><span class="p">(</span><span class="nx">vnode</span><span class="p">,</span> <span class="nx">children</span><span class="p">)</span>
+
+  <span class="c1">// normalize suspense children</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">__FEATURE_SUSPENSE__</span> <span class="o">&amp;&amp;</span> <span class="nx">shapeFlag</span> <span class="o">&amp;</span> <span class="nx">ShapeFlags</span><span class="p">.</span><span class="nx">SUSPENSE</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="p">{</span> <span class="nx">content</span><span class="p">,</span> <span class="nx">fallback</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">normalizeSuspenseChildren</span><span class="p">(</span><span class="nx">vnode</span><span class="p">)</span>
+    <span class="nx">vnode</span><span class="p">.</span><span class="nx">ssContent</span> <span class="o">=</span> <span class="nx">content</span>
+    <span class="nx">vnode</span><span class="p">.</span><span class="nx">ssFallback</span> <span class="o">=</span> <span class="nx">fallback</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span>
+    <span class="nx">shouldTrack</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span>
+    <span class="c1">// avoid a block node from tracking itself</span>
+    <span class="o">!</span><span class="nx">isBlockNode</span> <span class="o">&amp;&amp;</span>
+    <span class="c1">// has current parent block</span>
+    <span class="nx">currentBlock</span> <span class="o">&amp;&amp;</span>
+    <span class="c1">// presence of a patch flag indicates this node needs patching on updates.</span>
+    <span class="c1">// component nodes also should always be patched, because even if the</span>
+    <span class="c1">// component doesn't need to update, it needs to persist the instance on to</span>
+    <span class="c1">// the next vnode so that it can be properly unmounted later.</span>
+    <span class="p">(</span><span class="nx">patchFlag</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">shapeFlag</span> <span class="o">&amp;</span> <span class="nx">ShapeFlags</span><span class="p">.</span><span class="nx">COMPONENT</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+    <span class="c1">// the EVENTS flag is only for hydration and if it is the only flag, the</span>
+    <span class="c1">// vnode should not be considered dynamic due to handler caching.</span>
+    <span class="nx">patchFlag</span> <span class="o">!==</span> <span class="nx">PatchFlags</span><span class="p">.</span><span class="nx">HYDRATE_EVENTS</span>
+  <span class="p">)</span> <span class="p">{</span>
+    <span class="nx">currentBlock</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">vnode</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="nx">vnode</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Vue"><span>Vue</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/04/21/Vue3%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0-%E4%BB%8EcreateApp%E5%BC%80%E5%A7%8B%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88/" title="Vue3源码学习：从createApp开始发生了什么">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/04/25/RESTful%E5%8F%8ARESTful-API/" title="RESTful规范及RESTful API设计">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/04/21/Vue%E7%BB%84%E4%BB%B6%E6%B8%B2%E6%9F%93%E5%87%BD%E6%95%B0%E5%8F%8AVNode%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0h()/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>JS执行环境、作用域链和this指向 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="JS执行环境、作用域链和this指向" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="作用域(Scope)、闭包(Closure)、作用域链和上下文(Context) JS函数词法环境和作用域问题，还有var和let的区别问题。" />
+<meta property="og:description" content="作用域(Scope)、闭包(Closure)、作用域链和上下文(Context) JS函数词法环境和作用域问题，还有var和let的区别问题。" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/11/08/JS%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E4%B8%8E%E4%BD%9C%E7%94%A8%E5%9F%9F-this%E6%8C%87%E5%90%91/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/11/08/JS%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E4%B8%8E%E4%BD%9C%E7%94%A8%E5%9F%9F-this%E6%8C%87%E5%90%91/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-11-08T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"作用域(Scope)、闭包(Closure)、作用域链和上下文(Context) JS函数词法环境和作用域问题，还有var和let的区别问题。","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/11/08/JS%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E4%B8%8E%E4%BD%9C%E7%94%A8%E5%9F%9F-this%E6%8C%87%E5%90%91/","headline":"JS执行环境、作用域链和this指向","dateModified":"2021-11-08T00:00:00+08:00","datePublished":"2021-11-08T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/11/08/JS%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E4%B8%8E%E4%BD%9C%E7%94%A8%E5%9F%9F-this%E6%8C%87%E5%90%91/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">JS执行环境、作用域链和this指向</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Nov 8, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>作用域(Scope)、闭包(Closure)、作用域链和上下文(Context)
+JS函数词法环境和作用域问题，还有var和let的区别问题。</p>
+</blockquote>
+
+<h1 id="一执行环境execution-context">一、执行环境(Execution Context)</h1>
+
+<p>执行环境，也叫执行上下文，是JavaScript在运行时，用于控制程序执行流程的一种手段。</p>
+
+<p>执行环境记录了当前执行流条件下，可访问的<strong>变量空间、访问顺序（作用域链）</strong>和<strong>上下文（this指向）</strong>。</p>
+
+<p>只有以下三种情况会<strong>创建新的执行环境</strong>：</p>
+
+<ul>
+  <li><strong>全局执行环境：</strong> 程序开始运行时，创建全局执行环境Global；</li>
+  <li><strong>函数执行环境（局部执行环境）：</strong> 函数开始被执行时，会创建自己的执行环境，也叫本地执行环境；</li>
+  <li>使用<code>eval()</code>函数，也会创建自己的执行环境。（比较少用，不建议使用）</li>
+</ul>
+
+<p>每个执行环境中，都存在一个<strong>变量对象VO（或活动对象AO）</strong>，它的内部属性包含三部分：</p>
+
+<ul>
+  <li>当前执行环境内部的各变量<code>(local variables：形参、内部声明变量等)</code>；</li>
+  <li>当前执行环境的<strong>this属性指向</strong>；</li>
+  <li>当前执行环境的<strong>作用域链</strong><code>（栈结构数据，全局作用域在最底层0位置）</code>；</li>
+</ul>
+
+<p>因此，<strong>在当前执行环境下声明、修改变量，实际上是在修改当前执行环境下VO对象的属性值，或通过作用域链找到的闭包或全局执行环境对象内的属性值。</strong></p>
+
+<blockquote>
+  <p><strong>执行环境的VO对象中，记录了当前环境的作用域链：</strong></p>
+
+  <ul>
+    <li>在某一JS执行环境的VO对象上，存有当前环境的作用域链属性。任何执行环境下，作用域链的最底端是全局变量对象window（global）；</li>
+    <li>如果在当前环境执行过程中，遇见函数声明，会对声明的函数func内部进行<strong>词法分析（静态分析）</strong>，分析其内部是否引用了当前环境变量对象VO的属性，或当前环境下作用域链上可访问的某个对象的属性：
+      <ul>
+        <li>如果没有引用任何外部变量：当前函数的<code>[[Scopes]]</code>属性上只有一个全局变量对象Global，位于栈最底部0位置；</li>
+        <li>如果引用了一个或多个外部变量：则按照当前环境作用域链的先后顺序（最前方是当前执行环境变量对象），以作用域链节点为单位，分别打包成闭包Closure，按作用域链先后顺序压入当前声明函数的<code>[[Scopes]]</code>属性中；</li>
+      </ul>
+    </li>
+    <li>当func被在某个执行环境执行时，会为他创建新的函数执行环境，压入执行环境栈：
+      <ul>
+        <li>取出存放在func内部的<code>[[Scopes]]</code>属性值（栈结构，全局变量对象在最下方0位置），作为当前func函数执行环境的VO对象的作用域链，func内部声明、赋值的属性都在当前环境的VO对象上添加、修改；</li>
+        <li>当前执行环境下，如查找某一变量var1，先在当前VO对象属性中查找，如果找不到，沿着作用域链（栈）从上到下的顺序一致查找到全局变量对象，如果找不到，则报错找不到变量。</li>
+      </ul>
+    </li>
+  </ul>
+</blockquote>
+
+<p>JS引擎会把内存分为<strong>栈内存</strong>和<strong>堆内存</strong>。其中：</p>
+
+<ul>
+  <li><strong>栈内存</strong>：包含<strong>全局作用域</strong>和<strong>函数执行环境栈</strong>。</li>
+  <li><strong>堆内存</strong>：存放引用类型数据本体。栈内存中如果有变量引用了堆内存中的引用类型数据（比如对象），在栈内存中实际上是保存了这个对象的内存地址。</li>
+</ul>
+
+<p>执行环境在内存中以栈的形式存储（执行环境栈）：</p>
+
+<p><strong>JS执行流每进入一个函数，就创建一个新的执行环境，将其压入函数执行环境栈顶部。函数执行完毕，再将执行环境弹出，恢复上层执行环境继续执行。</strong></p>
+
+<blockquote>
+  <p><strong>创建执行环境栈AO的实际操作步骤：</strong></p>
+
+  <ol>
+    <li>
+      <p>创建AO对象；</p>
+    </li>
+    <li>
+      <p>寻找<strong>形参</strong>和函数体内声明的变量名，设置为AO键名，键值为<code>undefined</code>；</p>
+    </li>
+    <li>
+      <p>传入<strong>实参</strong>值，替换掉AO中形参的键值<code>undefined</code>；</p>
+    </li>
+    <li>
+      <p>寻找函数体内直接声明的函数<code>function A(){}...</code>，设置函数名为AO键名，值为对应声明的函数体。</p>
+    </li>
+  </ol>
+</blockquote>
+
+<p><img src="/assets/posts/28.png" alt="执行环境栈" /></p>
+
+<h1 id="二作用域-scope作用域链闭包">二、<strong>作用域 Scope、作用域链、闭包</strong></h1>
+
+<p>作用域是针对<strong>变量访问</strong>这一操作而言的，它是一个<strong>变量集合</strong>。</p>
+
+<p>如果一个作用域在当前执行环境的作用域链上，那么该作用域中的变量都可以在当前执行环境，沿着作用域链被访问（前提是不与作用域链上方的其他作用域中变量重名）。</p>
+
+<p>JS使用<strong>词法作用域</strong>。也就是说，<strong>作用域是根据代码的静态书写顺序决定的，与如何执行、在哪执行无关。</strong></p>
+
+<p>JS中存在四种作用域：</p>
+
+<ul>
+  <li><strong>全局作用域Global：</strong> JS程序开始执行就生成的初始作用域;</li>
+  <li><strong>函数作用域Closure：</strong> 函数内部生成的作用域；</li>
+  <li><strong>块级作用域Block：</strong> 使用<code>{}</code>括起来的部分，如果不是函数，形成的作用域是块级作用域；</li>
+  <li><strong>模块作用域Module：</strong> 使用ES6模块引入的变量汇总在一起，单独存在于一个作用域中。</li>
+</ul>
+
+<p>作用域链通过<strong>函数声明时内部记载的<code>[[Scopes]]</code>内部属性（一个栈）</strong>，和<strong>函数执行环境中变量对象VO记载的作用域链属性</strong>来实现，它的原理是：</p>
+
+<ol>
+  <li>JS程序执行过程中，如果遇见<strong>函数声明</strong>或<strong>函数表达式</strong>（具名或匿名）：
+    <ul>
+      <li>如果当前执行环境是全局：则函数的<code>[[Scopes]]</code>内部属性被设置为只有全局变量对象window/global；</li>
+      <li>否则，新声明的函数可能存在对其他函数作用域内变量的引用：
+        <ol>
+          <li>对新创建的函数内部进行静态词法分析，找到它引用的外部作用域变量（LHS查询或RHS查询都有效）；</li>
+          <li>除最末端全局作用域外，对当前执行环境作用域链内其他作用域中变量进行一轮筛选，只保留被新声明函数引用的变量；</li>
+          <li>将筛选后的被引用外部变量，按各自作用域分组，分别组成新的对象叫做闭包Closure（保持原链中的位置关系），放入堆内存中；</li>
+          <li>将闭包按原作用域链顺序（栈顺序），组成新的作用域链，保存在新声明函数的内部<code>[[Scopes]]</code>属性中。</li>
+        </ol>
+      </li>
+      <li>如果没有任何对外部变量的引用，新声明的函数<code>[[Scopes]]</code>属性上只有全局变量对象window/global；</li>
+    </ul>
+  </li>
+  <li>当声明的函数fn被执行：
+    <ol>
+      <li>创建新的函数执行环境，包含新的活动对象AO；</li>
+      <li>将函数fn的内部<code>[[Scopes]]</code>属性值取出，作为当前执行环境变量对象VO的初始作用域链；</li>
+      <li>将当前函数执行环境，压入函数执行栈，继续执行；</li>
+      <li>执行过程中，当前函数作用域始终在作用域链的最顶部。查找变量先在当前变量对象VO上查找，如果找不到，则沿着作用域链向下在各作用域中查找，一直到全局作用域，找不到则报错。</li>
+    </ol>
+  </li>
+</ol>
+
+<h2 id="21-块级作用域">2.1 块级作用域</h2>
+
+<p>一对花括号会创建一个块级作用域。if{}、for(){}、while(){}和普通的{}都会创建块级作用域。</p>
+
+<p>for{}和while{}循环，相当于多次执行了块级作用域创建，并在新的块作用域内修改变量。</p>
+
+<p>函数内部是函数作用域，全局环境是全局作用域。</p>
+
+<h3 id="211-forwhile循环内声明函数">2.1.1 for、while循环内声明函数</h3>
+
+<p>for{}和while{}循环，相当于多次创建了块级作用域。如果使用let声明变量，每次是在新的块作用域内声明、修改变量。</p>
+
+<p>因此每一个在for、while循环内声明的函数，都通过[[Scopes]]记录下当前的外部作用域，也就是不同的块级作用域，因此当它们在执行的时候，引用的也是不同的块级作用域内的不同变量。这也就解释了如下的代码：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+  <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+  <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="c1">// 0,1,2,3,4,5,6,7,8,9</span>
+<span class="c1">// let声明的i，绑定在块级作用域内，相当于有如下块级作用域{i:0}、{i:1}、{i:2}、{i:3}...</span>
+<span class="c1">// setTimeout内部声明的箭头函数的[[Scopes]]，记录了每次迭代时产生的外部的块级作用域里的i。</span>
+<span class="c1">// 当后续这个箭头函数按序执行的时候，创建函数执行环境，作用域链引用的是创建时[[Scopes]]记录的各自外部块级作用域，因此log的是每个块级作用域下的不同i，也就是0-9</span>
+
+<span class="c1">// 详细解释如下 —— Mars 2021.08.31：</span>
+<span class="c1">// ----------------------------------</span>
+<span class="c1">// 1. 函数是引用类型，匿名箭头函数在作为参数传递的时候，相当于在外部先声明、再引用（传递的是内存地址）；</span>
+<span class="c1">// 2. 在外部声明的时候，[[Scopes]]属性里记录了箭头函数的作用域链：Block{i: 0/1/2...} -&gt; Global；</span>
+<span class="c1">// 3. for循环相当于是多次创建了块级作用域{}，并在每一个块级作用域中使用let单独声明了变量i，并在每个块级作用域中独立执行内部函数setTimeout；</span>
+<span class="c1">//-----------------------------------</span>
+
+<span class="c1">// Arrow function is declared outside of setTimeout func.</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">arrow</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">arrow</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// same to</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+    <span class="p">},</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// same to</span>
+<span class="p">{</span>
+    <span class="c1">// Block Scope 0</span>
+    <span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+    <span class="p">},</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">{</span>
+    <span class="c1">// Block Scope 1</span>
+    <span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+    <span class="p">},</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h1 id="三上下文-context-this属性指向">三、<strong>上下文 Context: this属性指向</strong></h1>
+
+<p>对于当前执行环境，它的<strong>上下文</strong>，指的是<strong>当前执行环境中变量对象VO的this属性值</strong></p>
+
+<h2 id="31-哪里有this-什么时候才会改变this">3.1 哪里有this? 什么时候才会改变this?</h2>
+
+<p><strong>this存在于执行环境的变量对象VO中。</strong></p>
+
+<p>也就是说，以下两种执行环境内部，都存在this属性。</p>
+
+<ul>
+  <li><strong>全局执行环境</strong>：this指向全局对象window(或global)；
+    <ul>
+      <li>非严格模式，浏览器全局执行环境中this 指向 <strong>window对象（Node是global对象）</strong>；</li>
+      <li>严格模式，全局作用域下this为undefined。</li>
+    </ul>
+  </li>
+  <li><strong>函数执行环境：</strong>函数被执行，为它新建了执行环境压入环境栈。其中的this属性指向，<strong>与调用函数的对象或new操作符等有关</strong>。</li>
+</ul>
+
+<p>函数作用域中的this指向，只有函数被调用的时候才被决定。</p>
+
+<p><strong>改变函数fn执行时的执行环境内this指向的几种情况：</strong></p>
+
+<ul>
+  <li>函数直接裸执行；</li>
+  <li>函数作为对象的方法，被执行；</li>
+  <li>使用了new 操作符；</li>
+  <li>使用了fn.call、fn.apply等显式设置this的方法；</li>
+  <li>使用了fn.bind强行绑定fn的this。</li>
+</ul>
+
+<h2 id="32-普通函数内部的this">3.2 普通函数内部的this</h2>
+
+<p>使用函数声明或函数表达式声明的函数，内部的this：</p>
+
+<p><strong>指向将这个函数作为方法调用的对象，也就是函数作为方法被调用时，点号前面的对象。</strong></p>
+
+<p>如果函数被直接裸调用，而不是作为对象的方法（不使用’obj.func’形式，而是func()形式），那么浏览器下<strong>默认情况函数的this为window，严格模式为undefined</strong>。</p>
+
+<h2 id="33-箭头函数内的this">3.3 箭头函数内的this</h2>
+
+<p><strong>箭头函数内部作用域的没有自己的this，它始终引用它被声明的时刻，执行环境变量对象的this。</strong></p>
+
+<p>翻译成人话：</p>
+
+<ul>
+  <li>
+    <p><strong>全局作用域中定义的箭头函数，this值始终指向window，永远不会改变。</strong></p>
+  </li>
+  <li>
+    <p><strong>一个函数A中定义的箭头函数，箭头函数里的this就等同于函数A执行时的this。</strong> 只要A的this不变，箭头函数在任何地方以任何形式调用this都不变。</p>
+  </li>
+  <li>
+    <p><strong>call、apply和bind对箭头函数都无效。</strong></p>
+  </li>
+</ul>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">outer</span><span class="p">(){</span>
+<span class="c1">// 这里inner是箭头函数，它内部的this和它定义上下文outer的this是一致的。</span>
+    <span class="kd">let</span> <span class="nx">inner</span> <span class="o">=</span> <span class="p">()</span><span class="o">=&gt;</span><span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">inner</span>
+<span class="p">}</span>
+
+<span class="c1">// 这里outer()被裸调用，outer的this是window。</span>
+<span class="c1">// 返回内部箭头函数inner，this与outer一致，因此也为window，赋值给了变量a。</span>
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">outer</span><span class="p">()</span>
+
+<span class="nx">a</span><span class="p">()</span> <span class="c1">// window</span>
+</code></pre></div></div>
+
+<h2 id="34-new-操作符会改变函数执行环境this指向">3.4 new 操作符会改变函数执行环境this指向</h2>
+
+<p>使用<strong>new操作符 + 构造函数</strong>语法，会<strong>改变新创建的构造函数执行环境内部的this指向</strong>。</p>
+
+<p>构造函数执行环境内的this，<strong>被修改为指向当前环境 new 操作符左侧被赋值的变量（新创建的实例）</strong>；</p>
+
+<blockquote>
+  <p>即使是被<code>bind(context)</code>绑定过上下文的函数，在使用<code>new</code>的时候，其内部的this仍然会被修改指向为新创建的实例。</p>
+</blockquote>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">People</span> <span class="p">{</span>
+    <span class="kd">constructor</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">let</span> <span class="nx">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">People</span><span class="p">(</span><span class="dl">'</span><span class="s1">Mars</span><span class="dl">'</span><span class="p">);</span>
+<span class="c1">// People函数执行环境，被修改为p1；</span>
+<span class="c1">// 因此，People中进行的this.name = name操作，相当于是p1.name = name操作。</span>
+</code></pre></div></div>
+
+<h2 id="35-callapply和bind修改this">3.5 call、apply和bind修改this</h2>
+
+<p>call、apply和bind只对普通函数有效，箭头函数无效。</p>
+
+<p>它们的作用是显式修改函数执行时，执行环境中this的指向。</p>
+
+<p>bind的修改是长期的，call和apply是一次性调用。</p>
+
+<h1 id="四var和let的区别">四、var和let的区别</h1>
+
+<h2 id="41-是否有块级作用域">4.1 是否有块级作用域</h2>
+
+<p>var声明的变量只能存在于<strong>函数作用域</strong>和<strong>全局作用域</strong>，<strong>没有块级作用域</strong>。在块级作用域内部声明的var，会穿透块级作用域泄漏到外部。</p>
+
+<p><strong>let声明的变量可以存在于块级作用域</strong>，块级作用域内部用let声明的变量，只能在块内部访问，外部无法访问。</p>
+
+<h2 id="42-变量提升暂时性死区">4.2 变量提升、暂时性死区</h2>
+
+<p>var声明的变量，声明会被提升到块级作用域的头部，而赋值还是在本地。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// other js code..</span>
+
+<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>其实是发生了下面的事情：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span><span class="p">;</span>  <span class="c1">//此时a是undefined.</span>
+<span class="c1">// other js code..</span>
+
+<span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>因此var声明的变量可以提前使用，只是此时为undefined。</p>
+
+<p>而let声明的变量，在当前代码块开始位置直到let声明之前区域，叫做暂时性死区，不可访问，否则报错。</p>
+
+<h2 id="43-var可以重复声明">4.3 var可以重复声明</h2>
+
+<p>var可以重复声明同名的变量，后面的覆盖前面的。而let不可以（报错）。</p>
+
+<h2 id="44-是否会变成全局变量">4.4 是否会变成全局变量</h2>
+
+<p>let 在全局作用域下声明变量，不会变成全局变量，也就是不会出现在window的属性中；</p>
+
+<p>var在全局作用域下声明变量，会默认变成window的属性。</p>
+
+<h1 id="五箭头函数和普通函数的区别">五、箭头函数和普通函数的区别</h1>
+
+<p><strong>箭头函数：</strong></p>
+
+<ul>
+  <li>执行环境中没有自己的this，this引用定义时执行环境的this;</li>
+  <li>不能使用new操作符；</li>
+  <li>没有prototype属性；</li>
+  <li>内部没有arguments对象；</li>
+  <li>call和apply、bind无效；</li>
+  <li>内部不能使用<code>yield</code>关键字，因此不能用作generator。</li>
+</ul>
+
+<p><strong>普通函数</strong></p>
+
+<p>与之相反。</p>
+
+<h2 id="箭头函数不适用的场景">箭头函数不适用的场景</h2>
+
+<p>箭头函数本身不能用作：</p>
+
+<ol>
+  <li>构造函数；</li>
+  <li>Generator函数；</li>
+</ol>
+
+<p>如果箭头函数内部含有<code>this</code>，它不适用于：</p>
+
+<ol>
+  <li>定义对象的方法；</li>
+  <li>动态上下文的回调函数；</li>
+</ol>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="JavaScript"><span>JavaScript</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/11/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构基础">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/12/19/%E4%B8%80%E4%BA%9B%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AE%97%E6%B3%95/" title="经典算法集">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/11/08/JS%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E4%B8%8E%E4%BD%9C%E7%94%A8%E5%9F%9F-this%E6%8C%87%E5%90%91/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

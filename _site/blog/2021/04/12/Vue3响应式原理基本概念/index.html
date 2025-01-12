@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Vue3响应式原理基本概念及手动实现 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Vue3响应式原理基本概念及手动实现" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Vue3的响应式原理" />
+<meta property="og:description" content="Vue3的响应式原理" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/04/12/Vue3%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/04/12/Vue3%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-04-12T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"Vue3的响应式原理","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/04/12/Vue3%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/","headline":"Vue3响应式原理基本概念及手动实现","dateModified":"2021-04-12T00:00:00+08:00","datePublished":"2021-04-12T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/04/12/Vue3%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">Vue3响应式原理基本概念及手动实现</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Apr 12, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>Vue3的响应式原理</p>
+</blockquote>
+
+<h1 id="一-vue3响应式基本实现原理">一、 Vue3响应式基本实现原理</h1>
+
+<p>假设reacObj是Vue中的一个响应式对象，它具有属性a和b；</p>
+
+<p>Vue3使用reactive(obj)函数，创建一个响应式的对象，返回一个obj的代理对象Proxy。</p>
+
+<p>reactive内部使用track、effect和trigger三个关键方法来描述响应式过程：</p>
+
+<ul>
+  <li>track(obj, property)：对obj中的property进行响应式追踪；</li>
+  <li>effect: 依赖某一个响应式property的变量的计算方法函数；</li>
+  <li>trigger(obj, property)：对依赖obj.property的所有变量计算方法进行重新调用。</li>
+</ul>
+
+<p>基本流程是：</p>
+
+<p>reacitive函数使用Proxy的捕获器，对响应式对象property的get和set操作进行捕获。</p>
+
+<ul>
+  <li>当get的时候，对属性进行track操作；</li>
+  <li>当set的时候，对属性进行trigger操作。</li>
+</ul>
+
+<blockquote>
+  <p>解释：</p>
+
+  <p>当get操作被捕获，说明有变量计算需要访问这个响应式属性，也就是依赖这个属性，所以要对这次get操作的effect进行追踪，添加到dep中以便后续进行响应式更新。</p>
+
+  <p>当set操作被捕获，说明有变量被更改，那么需要找到这个变量的dep依赖集，并运行内部的全部方法，来更新依赖它的全部变量。</p>
+</blockquote>
+
+<h2 id="11-对于响应式对象内部属性pbjprop">1.1 对于响应式对象内部属性pbj.prop</h2>
+
+<p>对于属性a，如果我们用一个集合Set记录了依赖a的所有变量和它们的计算方法函数（这些计算方法函数叫做effect），在更新a的时候，将这些方法一一重新调用一遍，就可以实现a更改之后依赖它的变量的实时更新，也就是a属性成为了响应式的。</p>
+
+<p>Vue中，为每个响应式对象内部属性所建立的Set对象称为一个dep（PS:dependency，依赖集），只要在修改任何响应式变量后，对应的依赖集dep内方法全部运行一次，就能实现其他变量的更新。</p>
+
+<blockquote>
+  <p>使用Set对象的理由是：它可以保证依赖集内部没有重复。</p>
+</blockquote>
+
+<h2 id="12-对于响应式对象本身obj">1.2 对于响应式对象本身obj</h2>
+
+<p>一个响应式对象本身可能具有多个属性，需要为它们每个单独建立一个dep依赖集，然后用另一个映射Map将对象属性和dep一一对应。</p>
+
+<p>当track另一个对象属性property2的时候，就把这个property2也添加到映射Map里，然后把所有依赖property2的变量计算方法添加到新的对应dep中，并在Map中与property2对应起来。</p>
+
+<p>这样，这个Map就记录了这个对象obj的全部属性的依赖信息，并可以根据属性更新其对应的那一部分依赖变量。这个Map变量名为depsMap。</p>
+
+<h2 id="13-对于整个vue应用实例中所有响应式对象">1.3 对于整个Vue应用实例中所有响应式对象</h2>
+
+<p>一个Vue应用实例，可能声明有多个响应式对象，每一个响应式对象及其内部属性都应该被记录并追踪(track)。</p>
+
+<p>整个应用实例使用一个WeakMap，记录应用实例中的每个响应式对象。这个WeakMap为targetMap。</p>
+
+<p><img src="/assets/posts/11.png" alt="响应式依赖图" /></p>
+
+<h2 id="14-effectfn的实现">1.4 effect(fn)的实现</h2>
+
+<ul>
+  <li>假设一个fn在执行的过程中，引用了某一响应式对象obj的属性prop；</li>
+  <li>这个fn就是一个依赖(effect)，需要在obj.prop被重新赋值的时候，再次调用来保证更新；</li>
+  <li>因为需要在获取响应式对象的属性过程中，收集这个依赖fn，因此必须获取到当前执行函数fn的引用；</li>
+  <li>解决方法是：把函数作为effect()的参数包装起来执行，然后在包装器里面获取到函数的引用，进行依赖收集。</li>
+</ul>
+
+<h2 id="15-trackobj-property的实现">1.5 track(obj, property)的实现</h2>
+
+<p>track(obj, property)运行后：</p>
+
+<ol>
+  <li>从targetMap中查找obj，如果没有就创建一个新的Map并赋值给obj对应的值，并作为depsMap返回。如果已经存在，则找到对应的depsMap；</li>
+  <li>在找到的depsMap中，查找property。如果没有则创建一个新的Set，赋值给property对应的值作为dep，并返回这个dep。如果已经存在，则返回找到的Dep；</li>
+  <li>在dep中加入全部effect。</li>
+</ol>
+
+<h2 id="16-triggerobj-property的实现">1.6 trigger(obj, property)的实现</h2>
+
+<p>trigger(obj, property)运行后：</p>
+
+<ol>
+  <li>先从targetMap中查找obj，然后找到对应的depsMap；</li>
+  <li>从depsMap中查找property，找出对应的dep；</li>
+  <li>对dep中每一个effect进行执行。</li>
+</ol>
+
+<blockquote>
+  <p><strong>弱映射WeakMap：</strong>只能储存对象，且当对象在其他地方没有引用的时候，WeakSet内的对象会被垃圾回收机制识别并回收。</p>
+</blockquote>
+
+<h2 id="17-reactive函数将对象变成响应式">1.7 reactive()函数：将对象变成响应式</h2>
+
+<p>Vue使用reactive(obj)函数，将一个对象变成响应式对象。（设置捕获器，返回Proxy对象即可）</p>
+
+<p>官方教程代码如下：（示例，并非源码）</p>
+
+<p><img src="/assets/posts/12.png" alt="reactive实现" /></p>
+
+<h1 id="二为什么要使用proxy相比objectdefineproperty有什么好处">二、为什么要使用Proxy，相比Object.defineProperty有什么好处？</h1>
+
+<ul>
+  <li>Object.defineProperty只能劫持对象中已经存在的属性，动态添加的新属性无法劫持（Proxy可以）；</li>
+  <li>Object.defineProperty不能监听数组变化（Proxy可以）；</li>
+  <li>Proxy存在兼容性问题，且无法完全polyfill.</li>
+</ul>
+
+<h1 id="三手动实现vue响应式代码">三、手动实现Vue响应式代码</h1>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Mars 2021.08</span>
+<span class="kd">class</span> <span class="nx">Dep</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">dep</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Set</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="nx">trigger</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">e</span> <span class="k">of</span> <span class="k">this</span><span class="p">.</span><span class="nx">dep</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">e</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nx">add</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">dep</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nx">activeEffect</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">objsMap</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">WeakMap</span><span class="p">();</span>
+
+<span class="kd">function</span> <span class="nx">effect</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">activeEffect</span> <span class="o">=</span> <span class="nx">fn</span><span class="p">;</span>
+    <span class="nx">fn</span><span class="p">();</span>
+    <span class="nx">activeEffect</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">track</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">prop</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">activeEffect</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">objsMap</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">obj</span><span class="p">))</span> <span class="nx">objsMap</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Map</span><span class="p">());</span>
+        <span class="kd">let</span> <span class="nx">depsMap</span> <span class="o">=</span> <span class="nx">objsMap</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">depsMap</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">prop</span><span class="p">))</span> <span class="nx">depsMap</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">prop</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Dep</span><span class="p">());</span>
+        <span class="kd">let</span> <span class="nx">dep</span> <span class="o">=</span> <span class="nx">depsMap</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">prop</span><span class="p">);</span>
+        <span class="nx">dep</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">activeEffect</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">trigger</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">prop</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">objsMap</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">obj</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">objsMap</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">obj</span><span class="p">).</span><span class="nx">has</span><span class="p">(</span><span class="nx">prop</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nx">objsMap</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">obj</span><span class="p">).</span><span class="kd">get</span><span class="p">(</span><span class="nx">prop</span><span class="p">).</span><span class="nx">trigger</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">reactive</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">handler</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="kd">get</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">prop</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">track</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">prop</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nb">Reflect</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">prop</span><span class="p">);</span>
+        <span class="p">},</span>
+        <span class="kd">set</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">prop</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">let</span> <span class="nx">oldValue</span> <span class="o">=</span> <span class="nb">Reflect</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">prop</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">oldValue</span> <span class="o">!==</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nb">Reflect</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">prop</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+                <span class="nx">trigger</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">prop</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">handler</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+<span class="c1">// test</span>
+<span class="kd">let</span> <span class="nx">cal</span> <span class="o">=</span> <span class="nx">reactive</span><span class="p">({</span>
+    <span class="na">a</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="na">b</span><span class="p">:</span> <span class="mi">13</span>
+<span class="p">});</span>
+
+<span class="nx">effect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">cal</span><span class="p">.</span><span class="nx">a</span> <span class="o">+</span> <span class="nx">cal</span><span class="p">.</span><span class="nx">b</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Vue"><span>Vue</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/04/12/MVC-MVP%E5%92%8CMVVM%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%90%AB%E4%B9%89%E5%92%8C%E7%90%86%E8%A7%A3/" title="MVC、MVP和MVVM架构的含义和理解.">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/04/12/axios%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" title="axios基本操作">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/04/12/Vue3%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

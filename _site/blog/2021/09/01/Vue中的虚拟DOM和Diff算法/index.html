@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Vue3中的虚拟DOM和Diff算法 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Vue3中的虚拟DOM和Diff算法" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="一、虚拟DOM是什么？基本实现流程是？" />
+<meta property="og:description" content="一、虚拟DOM是什么？基本实现流程是？" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/09/01/Vue%E4%B8%AD%E7%9A%84%E8%99%9A%E6%8B%9FDOM%E5%92%8CDiff%E7%AE%97%E6%B3%95/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/09/01/Vue%E4%B8%AD%E7%9A%84%E8%99%9A%E6%8B%9FDOM%E5%92%8CDiff%E7%AE%97%E6%B3%95/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-09-01T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"一、虚拟DOM是什么？基本实现流程是？","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/09/01/Vue%E4%B8%AD%E7%9A%84%E8%99%9A%E6%8B%9FDOM%E5%92%8CDiff%E7%AE%97%E6%B3%95/","headline":"Vue3中的虚拟DOM和Diff算法","dateModified":"2021-09-01T00:00:00+08:00","datePublished":"2021-09-01T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/09/01/Vue%E4%B8%AD%E7%9A%84%E8%99%9A%E6%8B%9FDOM%E5%92%8CDiff%E7%AE%97%E6%B3%95/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">Vue3中的虚拟DOM和Diff算法</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Sep 1, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <h1 id="一虚拟dom是什么基本实现流程是">一、虚拟DOM是什么？基本实现流程是？</h1>
+
+<h2 id="1-什么是虚拟dom">1. 什么是虚拟DOM</h2>
+
+<p><strong>虚拟DOM是用JS对象，对真实DOM树进行的简化模拟。</strong></p>
+
+<p>基本的虚拟DOM元素，叫做VNode，它包含以下几个属性：</p>
+
+<ul>
+  <li><strong>tag:</strong> 对应的DOM元素标签名；</li>
+  <li><strong>props:</strong> 对应的DOM元素Attributes；</li>
+  <li><strong>children:</strong> 子元素。可以是纯文本子元素，也可以是VNode子元素。</li>
+</ul>
+
+<h2 id="2-基本的虚拟dom实现流程">2. 基本的虚拟DOM实现流程</h2>
+
+<p>虚拟DOM的实现流程：</p>
+
+<ol>
+  <li>通过createNode（也常写作<strong>h函数</strong>），生成VNode节点；</li>
+  <li>各VNode节点通过children属性，相互嵌套形成树结构，构成<strong>虚拟DOM树</strong>（与真实DOM一一映射）；</li>
+  <li>每当数据有更新，同步更新虚拟DOM树 <strong>（对应操作：render）</strong>；</li>
+  <li><strong>将新、旧虚拟DOM树进行比较(对应操作：diff)，找出差异之处；</strong></li>
+  <li><strong>将这些差异之处，增量更新到真实的DOM树中(对应操作：patch —— 打补丁)；</strong></li>
+</ol>
+
+<p>虚拟DOM更新一次操作的时间复杂度：</p>
+
+<blockquote>
+  <p><strong>O(render V-DOM) + O(diff) + O(patch)</strong></p>
+</blockquote>
+
+<p>其中，render和diff是纯JS操作，patch操作复杂度与DOM的更改量<strong>δdom</strong>正相关；</p>
+
+<p><img src="/assets/posts/31.png" alt="虚拟DOM" /></p>
+
+<h1 id="二为什么需要虚拟dom而不是直接操作dom">二、为什么需要虚拟DOM而不是直接操作DOM？</h1>
+
+<p>使用JS模拟DOM（虚拟DOM）的原因：</p>
+
+<ol>
+  <li>操作DOM元素的操作比较昂贵，JS操作相对便宜。虚拟DOM的render+diff是纯JS操作，patch操作复杂度与DOM的更改量δdom正相关；因此，虚拟DOM可以在各种情况下都保证相对不错的性能：
+    <ul>
+      <li>在DOM树元素较多而修改的部分较少的情况下：执行虚拟DOM的【render + diff + patch】操作，比直接重新生成渲染整个DOM树消耗更低；</li>
+      <li>在全部元素都修改了的情况下：直接重新生成替换DOM树的效率更高，render+diff操作将成为额外代价；</li>
+    </ul>
+  </li>
+  <li>使UI界面生成函数化；</li>
+  <li>虚拟DOM树是一个JS对象，可以作为一种通用格式，不局限于浏览器DOM，也可以在其他平台进行渲染；</li>
+</ol>
+
+<h1 id="三虚拟dom与diff算法的简易实现">三、虚拟DOM与diff算法的简易实现</h1>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// create a [vnode], with properties:</span>
+<span class="c1">// 1. tag: HTML NodeTag </span>
+<span class="c1">// 2. props: HTML element attributes</span>
+<span class="c1">//    props contain 2 kinds: </span>
+<span class="c1">//      - [eventListener] 'onEvent';</span>
+<span class="c1">//      - [normal attributes] 'attr';</span>
+<span class="c1">// 3. children: child vnodes.</span>
+<span class="c1">//    child nodes contain 2 kinds: </span>
+<span class="c1">//      - [text] normal text string node;  &lt;div&gt;123&lt;/div&gt;</span>
+<span class="c1">//      - [other Vnodes] &lt;div&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;</span>
+<span class="kd">function</span> <span class="nx">h</span><span class="p">(</span><span class="nx">tag</span><span class="p">,</span> <span class="nx">props</span><span class="p">,</span> <span class="nx">children</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="nx">tag</span><span class="p">,</span>
+        <span class="nx">props</span><span class="p">,</span>
+        <span class="nx">children</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="c1">// mount [vnode] to a [container].</span>
+<span class="kd">function</span> <span class="nx">mount</span><span class="p">(</span><span class="nx">vnode</span><span class="p">,</span> <span class="nx">container</span><span class="p">,</span> <span class="nx">anchor</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// Create an DOM element according to vnode's tag. </span>
+    <span class="kd">const</span> <span class="nx">el</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">vnode</span><span class="p">.</span><span class="nx">tag</span><span class="p">)</span>
+
+    <span class="c1">// When a Vnode is mounted:</span>
+    <span class="c1">// Set a property to Vnode to memorize the real DOM element where it's mounted.</span>
+    <span class="nx">vnode</span><span class="p">.</span><span class="nx">el</span> <span class="o">=</span> <span class="nx">el</span>
+
+    <span class="c1">// Set attributes. (props)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">vnode</span><span class="p">.</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">vnode</span><span class="p">.</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">key</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="dl">'</span><span class="s1">on</span><span class="dl">'</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nx">el</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="nx">key</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="nx">toLowerCase</span><span class="p">(),</span> <span class="nx">vnode</span><span class="p">.</span><span class="nx">props</span><span class="p">[</span><span class="nx">key</span><span class="p">])</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">el</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">vnode</span><span class="p">.</span><span class="nx">props</span><span class="p">[</span><span class="nx">key</span><span class="p">])</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Dealing with Vnode's children node.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">vnode</span><span class="p">.</span><span class="nx">children</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">vnode</span><span class="p">.</span><span class="nx">children</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">el</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">vnode</span><span class="p">.</span><span class="nx">children</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">vnode</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">child</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                <span class="nx">mount</span><span class="p">(</span><span class="nx">child</span><span class="p">,</span> <span class="nx">el</span><span class="p">)</span>
+            <span class="p">})</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Anchor means:</span>
+    <span class="c1">// In container element, where the new element to insert before.</span>
+    <span class="c1">// anchor should be an real DOM element, and it should be the container element's child element.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">anchor</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">container</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="nx">anchor</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// No anchor, insert it at the tail.</span>
+        <span class="nx">container</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">el</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// patch() function:</span>
+<span class="c1">// Compare n1 node (old) and n2 node (new), find their difference &amp; modify them in the real DOM tree.</span>
+<span class="kd">function</span> <span class="nx">patch</span><span class="p">(</span><span class="nx">n1</span><span class="p">,</span> <span class="nx">n2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 1. check if n1 and n2 are of the same type</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">n1</span><span class="p">.</span><span class="nx">tag</span> <span class="o">!==</span> <span class="nx">n2</span><span class="p">.</span><span class="nx">tag</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 2. if not same type, replace directly</span>
+        <span class="kd">const</span> <span class="nx">parent</span> <span class="o">=</span> <span class="nx">n1</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">parentNode</span>
+        <span class="kd">const</span> <span class="nx">anchor</span> <span class="o">=</span> <span class="nx">n1</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">nextSibling</span>
+        <span class="nx">parent</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">n1</span><span class="p">.</span><span class="nx">el</span><span class="p">)</span>
+        <span class="nx">mount</span><span class="p">(</span><span class="nx">n2</span><span class="p">,</span> <span class="nx">parent</span><span class="p">,</span> <span class="nx">anchor</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Reuse the original DOM element</span>
+    <span class="kd">const</span> <span class="nx">el</span> <span class="o">=</span> <span class="p">(</span><span class="nx">n2</span><span class="p">.</span><span class="nx">el</span> <span class="o">=</span> <span class="nx">n1</span><span class="p">.</span><span class="nx">el</span><span class="p">)</span>
+
+    <span class="c1">// 3. if yes</span>
+    <span class="c1">// 3.1 diff props</span>
+    <span class="kd">const</span> <span class="nx">oldProps</span> <span class="o">=</span> <span class="nx">n1</span><span class="p">.</span><span class="nx">props</span> <span class="o">||</span> <span class="p">{}</span>
+    <span class="kd">const</span> <span class="nx">newProps</span> <span class="o">=</span> <span class="nx">n2</span><span class="p">.</span><span class="nx">props</span> <span class="o">||</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">newProps</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">const</span> <span class="nx">newValue</span> <span class="o">=</span> <span class="nx">newProps</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
+        <span class="kd">const</span> <span class="nx">oldValue</span> <span class="o">=</span> <span class="nx">oldProps</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">newValue</span> <span class="o">!==</span> <span class="nx">oldValue</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">newValue</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">el</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">newValue</span><span class="p">)</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">el</span><span class="p">.</span><span class="nx">removeAttribute</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">oldProps</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">key</span> <span class="k">in</span> <span class="nx">newProps</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nx">el</span><span class="p">.</span><span class="nx">removeAttribute</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">// 3.2 diff children</span>
+    <span class="kd">const</span> <span class="nx">oc</span> <span class="o">=</span> <span class="nx">n1</span><span class="p">.</span><span class="nx">children</span> <span class="c1">// old children</span>
+    <span class="kd">const</span> <span class="nx">nc</span> <span class="o">=</span> <span class="nx">n2</span><span class="p">.</span><span class="nx">children</span> <span class="c1">// new children</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">nc</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// pure text children.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">nc</span> <span class="o">!==</span> <span class="nx">oc</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">el</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">nc</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">nc</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// vnode array children.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">oc</span><span class="p">))</span> <span class="p">{</span>
+            <span class="c1">// array diff</span>
+            <span class="kd">const</span> <span class="nx">commonLength</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">oc</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">nc</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">commonLength</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">patch</span><span class="p">(</span><span class="nx">oc</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">nc</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">nc</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">oc</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">nc</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">oc</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">c</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">mount</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span> <span class="nx">el</span><span class="p">))</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">oc</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">nc</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">oc</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">nc</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">c</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                    <span class="nx">el</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">el</span><span class="p">)</span>
+                <span class="p">})</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">el</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">''</span>
+            <span class="nx">nc</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">c</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">mount</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span> <span class="nx">el</span><span class="p">))</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">const</span> <span class="nx">Component</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="na">count</span><span class="p">:</span> <span class="mi">0</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">h</span><span class="p">(</span>
+            <span class="dl">'</span><span class="s1">div</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+                <span class="na">onClick</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="o">++</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="nb">String</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">createApp</span><span class="p">(</span><span class="nx">Component</span><span class="p">,</span> <span class="nx">container</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// implement this</span>
+    <span class="kd">const</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">reactive</span><span class="p">(</span><span class="nx">Component</span><span class="p">.</span><span class="nx">data</span><span class="p">())</span>
+    <span class="kd">let</span> <span class="nx">unMount</span> <span class="o">=</span> <span class="kc">true</span>
+    <span class="kd">let</span> <span class="nx">prevTree</span>
+    <span class="nx">watchEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="kd">const</span> <span class="nx">tree</span> <span class="o">=</span> <span class="nx">Component</span><span class="p">.</span><span class="nx">render</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">unMount</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">tree</span><span class="p">);</span>
+            <span class="nx">mount</span><span class="p">(</span><span class="nx">tree</span><span class="p">,</span> <span class="nx">container</span><span class="p">)</span>
+            <span class="nx">unMount</span> <span class="o">=</span> <span class="kc">false</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">patch</span><span class="p">(</span><span class="nx">prevTree</span><span class="p">,</span> <span class="nx">tree</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="nx">prevTree</span> <span class="o">=</span> <span class="nx">tree</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="c1">// calling this should actually mount the component.</span>
+<span class="nx">createApp</span><span class="p">(</span><span class="nx">Component</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">app</span><span class="dl">'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h1 id="四vue3中真实的diff算法">四、Vue3中真实的diff算法</h1>
+
+<p><a href="/blog/2021/09/06/Vue3中的diff算法">Vue3中的diff算法</a></p>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Vue"><span>Vue</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/08/31/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/" title="前端路由">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/09/02/Webpack%E7%AC%94%E8%AE%B0/" title="Webpack笔记汇总">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/09/01/Vue%E4%B8%AD%E7%9A%84%E8%99%9A%E6%8B%9FDOM%E5%92%8CDiff%E7%AE%97%E6%B3%95/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

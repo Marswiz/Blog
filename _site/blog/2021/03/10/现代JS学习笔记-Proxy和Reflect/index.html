@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>现代JS学习笔记：Proxy和Reflect | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="现代JS学习笔记：Proxy和Reflect" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="学习内容：《现代JavaScript教程》" />
+<meta property="og:description" content="学习内容：《现代JavaScript教程》" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Proxy%E5%92%8CReflect/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Proxy%E5%92%8CReflect/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-10T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"学习内容：《现代JavaScript教程》","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Proxy%E5%92%8CReflect/","headline":"现代JS学习笔记：Proxy和Reflect","dateModified":"2021-03-10T00:00:00+08:00","datePublished":"2021-03-10T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Proxy%E5%92%8CReflect/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">现代JS学习笔记：Proxy和Reflect</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Mar 10, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>学习内容：<a href="https://zh.javascript.info/">《现代JavaScript教程》</a></p>
+</blockquote>
+
+<h1 id="proxy和reflect">Proxy和Reflect</h1>
+<h2 id="proxy代理器">Proxy代理器</h2>
+<h3 id="proxy是什么">Proxy是什么</h3>
+
+<p>Proxy顾名思义，是一个对象的代理对象。</p>
+
+<p>Proxy可以将一个对象包装成另一个对象，可以简单理解为被包装对象的“经纪人”。它监控对这个被包装对象的一切操作，并针对不同的操作，代替这个对象执行一些设定好的操作。Proxy是ES6之后才添加的新对象。</p>
+
+<blockquote>
+  <p>对象是明星，Proxy是这个明星的经纪人，要找明星办事先要联系经纪人.</p>
+
+  <p>经纪人可以拒绝你的任何要求，或者可以告诉你一些明星的信息，也可以帮你传信给明星本人。</p>
+</blockquote>
+
+<h3 id="proxy基本语法">Proxy基本语法</h3>
+
+<p>Proxy的基本语法是这样的：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span><span class="err">；</span>
+</code></pre></div></div>
+
+<p>其中，target是被包装的对象，handler是代理配置（也叫“捕获器”（trap），就是拦截各种操作的方法）。</p>
+
+<p>一般可以将handler对象在外部单独声明，然后在声明Proxy的时候直接使用变量名。</p>
+
+<p>对Proxy进行操作，如果Proxy存在针对这种操作的捕获器trap，则将执行捕获器定义的操作。如果不存在，就直接把这种操作传入给被包装的对象。</p>
+
+<p>handler捕获器有<strong>13种</strong>，见下表。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>内部方法</th>
+      <th>Handler方法</th>
+      <th>何时触发</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[[Get]]</td>
+      <td>get</td>
+      <td>读取属性</td>
+    </tr>
+    <tr>
+      <td>[[Set]]</td>
+      <td>set</td>
+      <td>写入属性</td>
+    </tr>
+    <tr>
+      <td>[[HasProperty]]</td>
+      <td>has</td>
+      <td>in 操作符</td>
+    </tr>
+    <tr>
+      <td>[[Delete]]</td>
+      <td>deleteProperty</td>
+      <td>delete 操作符</td>
+    </tr>
+    <tr>
+      <td>[[Call]]</td>
+      <td>apply</td>
+      <td>函数调用</td>
+    </tr>
+    <tr>
+      <td>[[Construct]]</td>
+      <td>construct</td>
+      <td>new 操作符</td>
+    </tr>
+    <tr>
+      <td>[[GetPrototypeOf]]</td>
+      <td>getPrototypeOf</td>
+      <td>Object.getPrototypeOf</td>
+    </tr>
+    <tr>
+      <td>[[SetPrototypeOf]]</td>
+      <td>setPrototypeOf</td>
+      <td>Object.setPrototypeOf</td>
+    </tr>
+    <tr>
+      <td>[[IsExtensible]]</td>
+      <td>isExtensible</td>
+      <td>Object.isExtensible</td>
+    </tr>
+    <tr>
+      <td>[[PreventExtensions]]</td>
+      <td>preventExtensions</td>
+      <td>Object.preventExtensions</td>
+    </tr>
+    <tr>
+      <td>[[DefineOwnProperty]]</td>
+      <td>defineProperty</td>
+      <td>Object.defineProperty, Object.defineProperties</td>
+    </tr>
+    <tr>
+      <td>[[GetOwnProperty]]</td>
+      <td>getOwnPropertyDescriptor</td>
+      <td>Object.getOwnPropertyDescriptor, for..in, Object.keys/values/entries</td>
+    </tr>
+    <tr>
+      <td>[[OwnPropertyKeys]]</td>
+      <td>ownKeys</td>
+      <td>Object.getOwnPropertyNames, Object.getOwnPropertySymbols, for..in, Object/keys/values/entries</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>这里的内部方法，是Js语言中操作对象最底层的方法，这些方法我们不能直接使用，仅仅能在规范中使用。</p>
+
+  <p>但是我们可以通过Proxy检测并拦截这些底层方法。</p>
+</blockquote>
+
+<h3 id="常见的捕获器设置">常见的捕获器设置</h3>
+
+<p>new Proxy(target, handler)创建的时候，第二个参数捕获器handler是一个对象，里面的各个方法设定了捕获到各种操作后，进行相应的处理方式。
+最简单常见的是get和set捕获器，它们分别在target被获取和被修改的时候触发。</p>
+
+<h4 id="get捕获器">get捕获器</h4>
+
+<p>要拦截读取操作，handler 应该有 get(target, property, receiver) 方法。
+读取属性时触发该方法，参数如下：</p>
+<ul>
+  <li>target —— 是目标对象，该对象被作为第一个参数传递给 new Proxy;</li>
+  <li>property —— 目标属性名;</li>
+  <li>receiver —— 与Getter访问器属性有关，暂时不考虑。</li>
+</ul>
+
+<h4 id="set捕获器">set捕获器</h4>
+
+<p>当写入属性时 set 捕捉器被触发。
+set(target, property, value, receiver)：</p>
+<ul>
+  <li>target —— 是目标对象，该对象被作为第一个参数传递给 new Proxy，</li>
+  <li>property —— 目标属性名称，</li>
+  <li>value —— 目标属性的值，</li>
+  <li>receiver —— 与 get 捕捉器类似，仅与 setter 访问器属性相关。
+set捕获器在属性值成功设定后，必须返回true(return true)。否则会报错。</li>
+</ul>
+
+<h4 id="ownkeys捕获器">ownKeys捕获器</h4>
+
+<p>Object.keys，for..in 循环和大多数其他遍历对象属性的方法都使用内部方法 <strong>[[OwnPropertyKeys]]</strong>（由 ownKeys 捕捉器拦截) 来获取属性列表。</p>
+
+<p>ownKeys捕获器可以捕获这些行为。</p>
+
+<p>★ 几种不同遍历对象属性方法之间的区别：</p>
+
+<ol>
+  <li>Object.getOwnPropertyNames(obj) 返回所有非 Symbol 键，无论是否enumerable；</li>
+  <li>Object.getOwnPropertySymbols(obj) 只返回 Symbol 键；</li>
+  <li>Object.keys/values() 返回带有 enumerable 标志的非 Symbol 键/值；</li>
+  <li>for..in 循环遍历所有带有 enumerable 标志的非 Symbol 键，还会返回原型对象的键。</li>
+</ol>
+
+<p>ownKeys(target)传入一个目标对象，它应该Return 一个数组对象，里面元素是想要返回的遍历结果。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">unModified</span><span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">(</span><span class="nx">obj</span><span class="p">,{</span>
+    <span class="nx">ownKeys</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">[</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">b</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">c</span><span class="dl">'</span><span class="p">];</span> 
+<span class="c1">//这里设定在遍历的时候返回a,b,c,但是每个属性都相当于没有配置属性标志，enumerable默认为false。所以只能用Object.getOwnPropertyName()遍历才能显示出来。其他方法返回都是空的。</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="has捕获器">has捕获器</h4>
+
+<p>has捕获器在对包装对象使用in操作符的时候触发。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">has</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span><span class="nx">prop</span><span class="p">){}</span>
+<span class="c1">// target是包装的对象本身，prop表示in前面的，也就是传入的属性参数。</span>
+</code></pre></div></div>
+
+<h4 id="apply捕获器">apply捕获器</h4>
+
+<p>apply(target, thisArg, args) 捕捉器能使代理以函数的方式被调用：</p>
+
+<ul>
+  <li>target 是目标对象（在 JavaScript 中，函数就是一个对象）；</li>
+  <li>thisArg 是 this 的值；</li>
+  <li>args 是参数列表。</li>
+</ul>
+
+<p>具体见：<a href="https://zh.javascript.info/proxy#proxy-apply">proxy-apply</a></p>
+
+<h3 id="proxy的弊端">Proxy的弊端</h3>
+<h4 id="proxy--target">Proxy ！= target</h4>
+
+<p>Proxy虽然可以把外部的操作透明地传给内部，但是毕竟代理后的Proxy对象和原target不是一个对象，因此他们之间不相等。</p>
+
+<h4 id="使用内部插槽的对象无法使用">使用”内部插槽”的对象无法使用</h4>
+
+<p><strong>有些特殊类型对象的数据，使用“内部插槽”的形式保存，并使用内部方法修改（比如Map.set()），并不通过常规</strong>[[get]]/[[set]]<strong>这类内建方法，因此代理后无法实现捕获和修改等操作。</strong></p>
+
+<p>这类对象类型包括：<strong>Map/Set/Date/Promise/class的#开头私有属性</strong>。</p>
+
+<p>这些对象需要通过以下方式，将原本的内部方法绑定到自身后返回使用：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Map</span><span class="p">();</span>
+<span class="kd">let</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">(</span><span class="nx">map</span><span class="p">,</span> <span class="p">{</span>
+  <span class="kd">get</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">prop</span><span class="p">,</span> <span class="nx">receiver</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">value</span> <span class="o">=</span> <span class="nb">Reflect</span><span class="p">.</span><span class="kd">get</span><span class="p">(...</span><span class="nx">arguments</span><span class="p">);</span>
+    <span class="k">return</span> <span class="k">typeof</span> <span class="nx">value</span> <span class="o">==</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span> <span class="p">?</span> <span class="nx">value</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="p">:</span> <span class="nx">value</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">proxy</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="dl">'</span><span class="s1">test</span><span class="dl">'</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">proxy</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">test</span><span class="dl">'</span><span class="p">));</span> <span class="c1">// 1（工作了！）</span>
+</code></pre></div></div>
+
+<h2 id="reflect对象">Reflect对象</h2>
+<h3 id="reflect对象引入的目的">Reflect对象引入的目的</h3>
+
+<p>Reflect对象是ES6新加入的一个内置对象，它的目的如下：</p>
+
+<ul>
+  <li>将原来Object中本来属于语言内部的一些方法，转移到Reflect对象上，未来的新的语言内部方法都只部署在Reflect对象上；</li>
+  <li>修改如defineProperty的某些Object方法的返回结果，使更合理；</li>
+  <li>把原来的delete obj， key in obj这类命令式操作，都转化为<strong>函数操作</strong>Reflect.deleteProperty()、Reflect.has()；</li>
+  <li>★Reflect对象的方法与Proxy对象的方法一一对应，只要是Proxy对象的方法，就能在Reflect对象上找到对应的方法。这就让Proxy对象可以方便地调用对应的Reflect方法，完成默认行为，作为修改行为的基础。</li>
+</ul>
+
+<p>也就是说，不管Proxy怎么修改默认行为，你总可以在Reflect上获取原始的默认行为。</p>
+
+<p>有了Reflect对象以后，很多操作会更易读。</p>
+
+<h3 id="reflect静态方法">Reflect静态方法</h3>
+
+<p>Reflect对象一共有 13 个静态方法。</p>
+
+<ul>
+  <li>Reflect.apply(target, thisArg, args)</li>
+  <li>Reflect.construct(target, args)</li>
+  <li>Reflect.get(target, name, receiver)</li>
+  <li>Reflect.set(target, name, value, receiver)</li>
+  <li>Reflect.defineProperty(target, name, desc)</li>
+  <li>Reflect.deleteProperty(target, name)</li>
+  <li>Reflect.has(target, name)</li>
+  <li>Reflect.ownKeys(target)</li>
+  <li>Reflect.isExtensible(target)</li>
+  <li>Reflect.preventExtensions(target)</li>
+  <li>Reflect.getOwnPropertyDescriptor(target, name)</li>
+  <li>Reflect.getPrototypeOf(target)</li>
+  <li>Reflect.setPrototypeOf(target, prototype)</li>
+</ul>
+
+<p>上面这些方法的作用，大部分与Object对象的同名方法的作用都是相同的，而且它与Proxy对象的方法是一一对应的。</p>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="JavaScript"><span>JavaScript</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Promise/" title="现代JS学习笔记：Promise">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%8E%A7%E5%88%B6/" title="现代JS学习笔记：代码质量控制">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Proxy%E5%92%8CReflect/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

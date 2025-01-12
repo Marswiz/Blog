@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>现代JS学习笔记：代码质量控制 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="现代JS学习笔记：代码质量控制" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="学习内容：《现代JavaScript教程》" />
+<meta property="og:description" content="学习内容：《现代JavaScript教程》" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%8E%A7%E5%88%B6/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%8E%A7%E5%88%B6/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-10T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"学习内容：《现代JavaScript教程》","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%8E%A7%E5%88%B6/","headline":"现代JS学习笔记：代码质量控制","dateModified":"2021-03-10T00:00:00+08:00","datePublished":"2021-03-10T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%8E%A7%E5%88%B6/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">现代JS学习笔记：代码质量控制</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Mar 10, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>学习内容：<a href="https://zh.javascript.info/">《现代JavaScript教程》</a></p>
+</blockquote>
+
+<h1 id="21-代码质量">21	代码质量</h1>
+<h2 id="211-断点调试">21.1	断点调试</h2>
+
+<ol>
+  <li>Chrome打开控制台，在脚本的行号上单击，就可以设置断点。右击可以设置条件断点。</li>
+  <li>在代码中直接写入命令： debugger。就可以在当前位置停下并打开调试窗；</li>
+</ol>
+
+<h2 id="212-注释">21.2	注释</h2>
+
+<p>应该注释这些内容：</p>
+
+<ol>
+  <li>整体架构，高层次的观点。</li>
+  <li>函数的用法。</li>
+  <li>重要的解决方案，特别是在不是很明显时。</li>
+</ol>
+
+<p>避免注释这些内容：</p>
+
+<ol>
+  <li>描述“代码如何工作”和“代码做了什么”。</li>
+  <li>避免在代码已经足够简单或代码有很好的自描述性而不需要注释的情况下，还写些没必要的注释。</li>
+</ol>
+
+<h2 id="213-代码风格">21.3	代码风格</h2>
+
+<p>官方建议的代码风格：</p>
+
+<p><img src="/assets/posts/1.png" alt="官方代码风格" /></p>
+
+<p>建议风格列表如下（非必须）：</p>
+
+<ul>
+  <li>左花括号与相应的关键词在同一行上 — 而不是新起一行。左括号前还应该有一个空格；</li>
+  <li>过长的代码应该分隔成多行，一行代码的最大长度应该在团队层面上达成一致。通常是 80 或 120 个字符；</li>
+  <li>水平方向上，每次缩进2个空格；</li>
+  <li>垂直方向上，每个逻辑代码块前后各空一行。 永远不应该出现9行没有空行的情况；</li>
+  <li>每一个语句后面都应该有一个分号。即使它可以被跳过；</li>
+  <li>尽量避免代码嵌套层级过深；</li>
+  <li>主代码辅助函数的声明，放在代码最后写，先写调用代码。</li>
+</ul>
+
+<h2 id="214-避免忍者代码忍者垃圾代码的测试人员">21.4	避免“忍者代码”（忍者：垃圾代码的测试人员）</h2>
+
+<ul>
+  <li>正确命名变量，体现变量的含义，不要使用没意义甚至一个字母的变量；</li>
+  <li>不要为了体现个人智慧或可以简短而丧失代码可读性；</li>
+  <li>不要使用缩写，否则很难识别；</li>
+  <li>不要使用抽象的变量名，例如：data/value/num/str等；</li>
+  <li>不要使用看起来相似的变量名：比如data和date;</li>
+  <li>同一个函数命名前缀应该达成同一种功能，show\display\paint这些如果都作为显示使用，则应该统一不应该随机出现；</li>
+  <li>不要复制相同的名字变量另作他用；</li>
+  <li>不要在变量名头部随意使用下划线；</li>
+  <li>不要使用带有个人感情的词汇命名变量，比如：theBestThing;</li>
+  <li>不要在不同的代码块内使用同名变量；</li>
+  <li>函数不应该有除自身功能之外的副作用，并且返回期待类型的结果；</li>
+  <li>函数的命名与函数的功能应该统一，不要添油加醋的功能。</li>
+</ul>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="JavaScript"><span>JavaScript</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Proxy%E5%92%8CReflect/" title="现代JS学习笔记：Proxy和Reflect">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/" title="现代JS学习笔记：函数进阶">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%8E%A7%E5%88%B6/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

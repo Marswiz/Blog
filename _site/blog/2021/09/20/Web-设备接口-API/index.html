@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Web物理设备接口API | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Web物理设备接口API" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="目前的 Web 设备接口API： Web USB API; (USB通信) Web Serial API; （串口通信） Web NFC API; （NFC通信） Web Bluetooth API; （蓝牙通信） Web HID API; （人机接口设备通信）" />
+<meta property="og:description" content="目前的 Web 设备接口API： Web USB API; (USB通信) Web Serial API; （串口通信） Web NFC API; （NFC通信） Web Bluetooth API; （蓝牙通信） Web HID API; （人机接口设备通信）" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/09/20/Web-%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3-API/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/09/20/Web-%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3-API/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-09-20T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"目前的 Web 设备接口API： Web USB API; (USB通信) Web Serial API; （串口通信） Web NFC API; （NFC通信） Web Bluetooth API; （蓝牙通信） Web HID API; （人机接口设备通信）","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/09/20/Web-%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3-API/","headline":"Web物理设备接口API","dateModified":"2021-09-20T00:00:00+08:00","datePublished":"2021-09-20T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/09/20/Web-%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3-API/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">Web物理设备接口API</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Sep 20, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p><strong>目前的 Web 设备接口API：</strong></p>
+
+  <ol>
+    <li><a href="#21-web-usb-api">Web USB API; (USB通信)</a></li>
+    <li><a href="#22-web-serial-api">Web Serial API; （串口通信）</a></li>
+    <li><a href="#23-web-nfc-api">Web NFC API; （NFC通信）</a></li>
+    <li><a href="#24-web-bluetooth-api">Web Bluetooth API; （蓝牙通信）</a></li>
+    <li><a href="#25-web-hid-api">Web HID API; （人机接口设备通信）</a></li>
+  </ol>
+
+</blockquote>
+
+<p>为保证安全，这些API：</p>
+
+<ul>
+  <li>只在htttps或wss协议下才可获取；</li>
+  <li>单例模式：它们的接口类不能通过<code>new</code>实例化，方法也不能直接调用，在浏览器中需要通过<code>navigator</code>下面的属性来获取对应接口实例。(<code>navigator.usb</code>等)</li>
+</ul>
+
+<h1 id="一web物理设备接口api的使用场景">一、Web物理设备接口API的使用场景</h1>
+
+<p>Web物理设备接口API的前景非常广阔。</p>
+
+<p>它的优势主要是：利用Web的<strong>跨平台性</strong>，通过物理设备接口API，可以让开发者<strong>充分利用用户现有的设备（无需重新购买）</strong>，为用户开发使用体验更好的各类Web应用（无需安装且跨平台）。</p>
+
+<p>Google在2020年底的开发者大会上，专题讲解了这类Chrome新特性，并提供了<strong>多种新的Web应用场景</strong>：</p>
+
+<blockquote>
+  <ol>
+    <li><strong>Web Serial：</strong> 为每个用户配备一个微型物理设备（与用户主机通过串口连接），使用Web Serial API与其进行通信，对用户进行识别和认证，用户无需安装任何软件，只需要打开一个网页，就可以打开IDE进行代码编写。同时，软件更新只需要在网页服务器统一进行，无需考虑用户平台，也无需用户手动更新。</li>
+    <li><strong>Web NFC:</strong> 艺术博物馆为每张画作配备一个NFC贴片，浏览者无需安装应用，打开网页即可贴近NFC查看具体画作信息。</li>
+    <li><strong>Web HID:</strong> 键盘鼠标厂商通过Web网页直接控制、更新自家设备的固件，无需另配设备驱动；</li>
+  </ol>
+</blockquote>
+
+<h1 id="二web各类物理设备接口api的特性及使用">二、Web各类物理设备接口API的特性及使用</h1>
+<h2 id="21-web-usb-api">2.1 Web USB API</h2>
+<h3 id="211-usb-类">2.1.1 USB 类</h3>
+<h4 id="2111-事件">2.1.1.1 事件</h4>
+<h5 id="21111-usbonconnect">2.1.1.1.1 USB.onconnect</h5>
+
+<p>每当连接到先前配对的USB设备时，调用此事件处理器。</p>
+
+<h5 id="21112-usbondisconnect">2.1.1.1.2 USB.ondisconnect</h5>
+
+<p>每当配对USB设备断开连接时，调用此事件处理器。</p>
+
+<h4 id="2112-方法">2.1.1.2 方法</h4>
+<h5 id="21121-usbgetdevices">2.1.1.2.1 USB.getDevices()</h5>
+
+<p>返回Promise，Resolve为当前源下，先前配对过的USB设备组成的数组。</p>
+
+<h5 id="21122-usbrequestdevicefilters">2.1.1.2.2 USB.requestDevice(<code>&lt;filters&gt;</code>)</h5>
+
+<p>请求获取USB设备。（弹出用户选择窗口，返回promise对象）</p>
+
+<p>传入一个filters对象，其中有<code>filters</code>属性，值为一个数组，代表选择的USB设备类型过滤器。过滤器中属性取值范围：</p>
+
+<ul>
+  <li>vendorId</li>
+  <li>productId</li>
+  <li>classCode</li>
+  <li>subclassCode</li>
+  <li>protocolCode</li>
+  <li>serialNumber</li>
+</ul>
+
+<h2 id="22-web-serial-api">2.2 Web Serial API</h2>
+
+<blockquote>
+  <p><strong>Web Serial API: Web 串口通信</strong></p>
+
+  <p>Web Serial API 提供了一种途径，让网页可以通过javascript读写串口设备。</p>
+
+  <p>这个API将通过允许网页文档与微型控制器、3D打印机等物理设备进行串口通信的方式，桥接web和物理现实世界。</p>
+</blockquote>
+
+<h3 id="221-serial-类">2.2.1 Serial 类</h3>
+
+<p>Serial类，提供了Web串口通信的属性和方法。</p>
+
+<blockquote>
+  <p>Serial类<strong>无法手动实例化</strong>，其原型上的方法也<strong>不能手动调用</strong>，只能通过Chrome内置实例navigator.serial调用。</p>
+</blockquote>
+
+<h4 id="2211-serial-方法">2.2.1.1 Serial 方法</h4>
+
+<h5 id="22111-navigatorserialrequestportoptions">2.2.1.1.1 navigator.serial.requestPort(<code>[options]</code>)</h5>
+
+<p>这个方法<strong>必须由用户主动操作来调用（比如点击按钮）</strong>。</p>
+
+<p>第一次访问网页，如果想要使用串口通信，必须先调用这个方法，来让用户选择暴露哪个串口给网页，之后才能获取到串口。</p>
+
+<p>返回一个Promise：</p>
+<ul>
+  <li>当用户完成选择后，resolve为一个SerialPort对象，也就是用户选择的串口；</li>
+  <li>当用户取消选择，reject。</li>
+</ul>
+
+<p><code>options</code>为一个对象，可包含以下属性：</p>
+
+<ul>
+  <li><strong>filters</strong>: 过滤串口，值为一个数组，里面包含一系列过滤信息对象<strong>filterIObj</strong>，每个过滤信息对象filterObj可以包含:
+    <ul>
+      <li><strong>usbVendorId</strong>: 一个无符号整数，识别USB设备的制造商；</li>
+      <li><strong>usbProductId</strong>: 一个无符号整数，识别USB设备。</li>
+    </ul>
+  </li>
+</ul>
+
+<h5 id="22112-navigatorserialgetports">2.2.1.1.2 navigator.serial.getPorts()</h5>
+
+<p>返回一个Promise对象：</p>
+
+<ul>
+  <li>resolve为一个数组arr；</li>
+  <li>arr中包含了一系列SerialPort实例对象，表示<strong>当前源</strong>下已被允许访问的串口集合（通过之前的requestPort）。</li>
+</ul>
+
+<h4 id="2212-serial-事件">2.2.1.2 Serial 事件</h4>
+<h5 id="22121-connect事件">2.2.1.2.1 connect事件</h5>
+
+<p>当串口与设备连接时触发。</p>
+
+<h5 id="22122-disconnect事件">2.2.1.2.2 disconnect事件</h5>
+
+<p>当串口与设备断开连接时触发。</p>
+
+<h4 id="2213-serial-使用示例">2.2.1.3 Serial 使用示例</h4>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">navigator</span><span class="p">.</span><span class="nx">serial</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">connect</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// Connect to `e.target` or add it to a list of available ports.</span>
+<span class="p">});</span>
+
+<span class="nb">navigator</span><span class="p">.</span><span class="nx">serial</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">disconnect</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// Remove `e.target` from the list of available ports.</span>
+<span class="p">});</span>
+
+<span class="nb">navigator</span><span class="p">.</span><span class="nx">serial</span><span class="p">.</span><span class="nx">getPorts</span><span class="p">().</span><span class="nx">then</span><span class="p">((</span><span class="nx">ports</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// Initialize the list of available ports with `ports` on page load.</span>
+<span class="p">});</span>
+
+<span class="nx">button</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">usbVendorId</span> <span class="o">=</span> <span class="p">...;</span>
+  <span class="nb">navigator</span><span class="p">.</span><span class="nx">serial</span><span class="p">.</span><span class="nx">requestPort</span><span class="p">({</span> <span class="na">filters</span><span class="p">:</span> <span class="p">[{</span> <span class="nx">usbVendorId</span> <span class="p">}]}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">port</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// Connect to `port` or add it to the list of available ports.</span>
+  <span class="p">}).</span><span class="k">catch</span><span class="p">((</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// The user didn't select a port.</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="222-serialport-类">2.2.2 SerialPort 类</h3>
+
+<!-- todo -->
+
+<h2 id="23-web-nfc-api">2.3 Web NFC API</h2>
+
+<blockquote>
+  <p>仅在移动端浏览器可获取。</p>
+</blockquote>
+
+<!-- todo -->
+
+<h2 id="24-web-bluetooth-api">2.4 Web Bluetooth API</h2>
+<h3 id="241-bluetooth-类">2.4.1 Bluetooth 类</h3>
+<h4 id="2411-bluetoothgetavailability">2.4.1.1 Bluetooth.getAvailability()</h4>
+
+<p>返回Promise，resolve为一个布尔值。该值指示用户代理是否支持蓝牙。</p>
+
+<h4 id="2412-bluetoothgetdevices">2.4.1.2 Bluetooth.getDevices()</h4>
+<p>返回一个解析为BluetoothDevices数组的Promise，该数组的源端已经通过调用<code>Bluetooth.requestDevice()</code>获得了允许。</p>
+
+<h4 id="2413-bluetoothrequestdeviceoptions">2.4.1.3 Bluetooth.requestDevice(<code>[options]</code>)</h4>
+<p>通过传入一个指定的选项，请求蓝牙设备。当配对成功，返回resolve为配对的BluetoothDevice对象的Promise。</p>
+
+<h2 id="25-web-hid-api">2.5 Web HID API</h2>
+
+<p>类似于USB API，通过<code>navigator.hid</code>获取。</p>
+
+<!-- todo -->
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Web"><span>Web</span></a>
+      
+      <a id="tags" href="Web API"><span>Web API</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/09/20/Web-Component/" title="Web组件： Web Component">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/09/20/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E8%BF%9B%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/" title="浏览器的进程、线程与页面渲染流程">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/09/20/Web-%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3-API/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

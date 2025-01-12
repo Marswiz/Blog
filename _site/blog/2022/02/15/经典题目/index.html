@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>经典优秀题目 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="经典优秀题目" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="经典的题目。 记录一些解决思路比较巧妙，具有参考价值的题目。" />
+<meta property="og:description" content="经典的题目。 记录一些解决思路比较巧妙，具有参考价值的题目。" />
+<link rel="canonical" href="http://localhost:4000/blog/2022/02/15/%E7%BB%8F%E5%85%B8%E9%A2%98%E7%9B%AE/" />
+<meta property="og:url" content="http://localhost:4000/blog/2022/02/15/%E7%BB%8F%E5%85%B8%E9%A2%98%E7%9B%AE/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-02-15T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"经典的题目。 记录一些解决思路比较巧妙，具有参考价值的题目。","@type":"BlogPosting","url":"http://localhost:4000/blog/2022/02/15/%E7%BB%8F%E5%85%B8%E9%A2%98%E7%9B%AE/","headline":"经典优秀题目","dateModified":"2022-02-15T00:00:00+08:00","datePublished":"2022-02-15T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2022/02/15/%E7%BB%8F%E5%85%B8%E9%A2%98%E7%9B%AE/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">经典优秀题目</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Feb 15, 2022
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>经典的题目。</p>
+
+  <p>记录一些解决思路比较巧妙，具有参考价值的题目。</p>
+</blockquote>
+
+<h1 id="逃离黑洞">逃离黑洞</h1>
+<h2 id="题目">题目</h2>
+
+<p><strong>【 逃离黑洞 】</strong></p>
+
+<p>你驾驶一艘飞船正在宇宙中遨游，宇宙可简化为一个二维平面，你所在的位置坐标是<code>[0,0]</code>，你想要到达的目标坐标是<code>[a,b]</code>。</p>
+
+<p>宇宙中有若干个黑洞，它们的坐标在<code>holes</code>数组中给出，每一个坐标为一对正整数值，代表黑洞中心的横、纵坐标位置<code>[x,y]</code>，给出的黑洞中心点都位于平面内（含边界）。</p>
+
+<p>假设每个黑洞的半径<code>r</code>都是相同的，当你的位置与黑洞中心距离<code>l &lt;= r</code>时，你会被立即吸入黑洞。</p>
+
+<p><strong>求你有机会到达目标坐标的条件下，最大的黑洞半径<code>r</code>。</strong></p>
+
+<p>你可以在宇宙中沿着任意连续路线行驶，且位置不必在整数坐标点上。</p>
+
+<p><img src="/assets/posts/45.png" alt="Black hole" /></p>
+
+<h2 id="思路">思路</h2>
+
+<ol>
+  <li>黑洞半径越小，通过越容易，半径越大，通过越困难。则问题的答案<code>r</code>具有单调性，可以考虑使用<strong>二分查找</strong>。假设我们判断黑洞半径<code>r</code>是否可以通过的函数为<code>can(r)</code>，下面思考如何实现；</li>
+  <li>黑洞的最小半径为<code>r = 0</code>，最大半径为<code>r = Math.min(a,b)</code>。此外，当某一个黑洞覆盖了目标位置<code>[a,b]</code>时，目标位置也不再可到达，因此最大半径还需要考虑<strong>距离目标位置最近的黑洞中心点，到目标位置的距离l。r需要取a,b,l中的最小值</strong>，此时我们可以知道目标点一定不会被黑洞覆盖；</li>
+  <li>当半径变大时，某些黑洞会相交，它们中间没有间隙，因此可以被看做是一个黑洞。这与集合的合并有关，考虑使用<strong>并查集</strong>维护；</li>
+  <li>因为当前位置为<code>[0,0]</code>。当目标位置不可到达时，目标位置要么被<strong>黑洞与上、下边界</strong>形成的隔离带隔开，要么被<strong>黑洞与左、下边界</strong>形成的隔离带隔开；</li>
+  <li>对于每一个黑洞半径<code>r</code>，我们用并查集维护连在一起的黑洞集合，并且记录集合中黑洞的最上、下、左位置的坐标，用来判断是否与上述边界形成隔离带；</li>
+  <li>如果连在一起的黑洞集合与左、下边界或上、下边界形成了隔离带，我们就无法通过，此时<code>r</code>过大，<code>can(r)</code>应该返回false；</li>
+  <li>否则，有缝隙，<code>can(r)</code>应该返回<code>true</code>。</li>
+</ol>
+
+<h2 id="代码">代码</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">blackHole</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">holes</span> <span class="o">=</span> <span class="p">[])</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nx">r</span> <span class="o">=</span> <span class="kc">Infinity</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="p">[</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">]</span> <span class="k">of</span> <span class="nx">holes</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">r</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">r</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">sqrt</span><span class="p">((</span><span class="nx">x</span><span class="o">-</span><span class="nx">a</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="nx">y</span><span class="o">-</span><span class="nx">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)));</span>
+    <span class="p">}</span>
+    <span class="nx">r</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">r</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">);</span>
+
+    <span class="kd">function</span> <span class="nx">touched</span><span class="p">(</span><span class="nx">c1</span><span class="p">,</span> <span class="nx">c2</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="c1">// 检查是否触碰</span>
+        <span class="kd">let</span> <span class="nx">cur</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">sqrt</span><span class="p">((</span><span class="nx">c1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nx">c2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="nx">c1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="nx">c2</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">cur</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">r</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="nx">can</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// judge if radius = r can pass.</span>
+        <span class="kd">let</span> <span class="kd">set</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UnionFind</span><span class="p">(</span><span class="nx">holes</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">holes</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">holes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">touched</span><span class="p">(</span><span class="nx">holes</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">holes</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="nx">r</span><span class="p">))</span> <span class="kd">set</span><span class="p">.</span><span class="nx">merge</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">j</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="k">of</span> <span class="kd">set</span><span class="p">.</span><span class="kd">set</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">let</span> <span class="p">{</span>
+                <span class="nx">top</span><span class="p">,</span>
+                <span class="nx">left</span><span class="p">,</span>
+                <span class="nx">down</span>
+            <span class="p">}</span> <span class="o">=</span> <span class="kd">set</span><span class="p">.</span><span class="nx">getValue</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">down</span> <span class="o">-</span> <span class="nx">r</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">top</span> <span class="o">+</span> <span class="nx">r</span> <span class="o">&gt;=</span> <span class="nx">b</span> <span class="o">||</span> <span class="nx">left</span> <span class="o">-</span> <span class="nx">r</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="nx">l</span> <span class="o">&lt;</span> <span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 二分查找</span>
+        <span class="kd">let</span> <span class="nx">m</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">ceil</span><span class="p">((</span><span class="nx">l</span> <span class="o">+</span> <span class="nx">r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">can</span><span class="p">(</span><span class="nx">m</span><span class="p">))</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">m</span><span class="p">;</span>
+        <span class="k">else</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">r</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nx">UnionFind</span> <span class="p">{</span> 
+    <span class="c1">// 并查集</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">holes</span> <span class="o">=</span> <span class="p">[])</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">holes</span> <span class="o">=</span> <span class="nx">holes</span><span class="p">;</span>
+        <span class="kd">let</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Map</span><span class="p">();</span>
+        <span class="kd">let</span> <span class="kd">set</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Set</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">holes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">map</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="p">{</span>
+                <span class="na">parent</span><span class="p">:</span> <span class="nx">i</span><span class="p">,</span>
+                <span class="na">rank</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="na">top</span><span class="p">:</span> <span class="nx">holes</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+                <span class="na">down</span><span class="p">:</span> <span class="nx">holes</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+                <span class="na">left</span><span class="p">:</span> <span class="nx">holes</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+            <span class="p">});</span>
+            <span class="kd">set</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">map</span> <span class="o">=</span> <span class="nx">map</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="kd">set</span> <span class="o">=</span> <span class="kd">set</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">isSame</span><span class="p">(</span><span class="nx">e1</span><span class="p">,</span> <span class="nx">e2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">getParent</span><span class="p">(</span><span class="nx">e1</span><span class="p">)</span> <span class="o">===</span> <span class="k">this</span><span class="p">.</span><span class="nx">getParent</span><span class="p">(</span><span class="nx">e2</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">getParent</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">e</span><span class="p">).</span><span class="nx">parent</span> <span class="o">===</span> <span class="nx">e</span><span class="p">)</span> <span class="k">return</span> <span class="nx">e</span><span class="p">;</span>
+        <span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getParent</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">e</span><span class="p">).</span><span class="nx">parent</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">e</span><span class="p">).</span><span class="nx">parent</span> <span class="o">=</span> <span class="nx">res</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">getSize</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="kd">set</span><span class="p">.</span><span class="nx">size</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">add</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">e</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="p">{</span>
+            <span class="na">parent</span><span class="p">:</span> <span class="nx">e</span><span class="p">,</span>
+            <span class="na">rank</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">});</span>
+        <span class="k">this</span><span class="p">.</span><span class="kd">set</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">refreshValue</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">c</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">p</span><span class="p">).</span><span class="nx">top</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">p</span><span class="p">).</span><span class="nx">top</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">holes</span><span class="p">[</span><span class="nx">c</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">p</span><span class="p">).</span><span class="nx">left</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">p</span><span class="p">).</span><span class="nx">left</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">holes</span><span class="p">[</span><span class="nx">c</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">p</span><span class="p">).</span><span class="nx">down</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">p</span><span class="p">).</span><span class="nx">down</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">holes</span><span class="p">[</span><span class="nx">c</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="nx">getValue</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">merge</span><span class="p">(</span><span class="nx">e1</span><span class="p">,</span> <span class="nx">e2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">p1</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getParent</span><span class="p">(</span><span class="nx">e1</span><span class="p">),</span>
+            <span class="nx">p2</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getParent</span><span class="p">(</span><span class="nx">e2</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">p1</span> <span class="o">===</span> <span class="nx">p2</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+        <span class="kd">let</span> <span class="nx">r1</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">p1</span><span class="p">).</span><span class="nx">rank</span><span class="p">,</span>
+            <span class="nx">r2</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">p2</span><span class="p">).</span><span class="nx">rank</span><span class="p">;</span>
+        <span class="kd">let</span> <span class="nx">np</span> <span class="o">=</span> <span class="nx">r1</span> <span class="o">&gt;=</span> <span class="nx">r2</span> <span class="p">?</span> <span class="nx">p1</span> <span class="p">:</span> <span class="nx">p2</span><span class="p">;</span>
+        <span class="kd">let</span> <span class="nx">nc</span> <span class="o">=</span> <span class="nx">r1</span> <span class="o">&gt;=</span> <span class="nx">r2</span> <span class="p">?</span> <span class="nx">p2</span> <span class="p">:</span> <span class="nx">p1</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">nc</span><span class="p">).</span><span class="nx">parent</span> <span class="o">=</span> <span class="nx">np</span><span class="p">;</span>
+        <span class="c1">// refresh the top, left, down value of new parent.</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">refreshValue</span><span class="p">(</span><span class="nx">np</span><span class="p">,</span> <span class="nx">nc</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">r1</span> <span class="o">===</span> <span class="nx">r2</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">np</span><span class="p">).</span><span class="nx">rank</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="kd">set</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">nc</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="c1">// test</span>
+<span class="kd">let</span> <span class="nx">holes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+<span class="p">];</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">blackHole</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="nx">holes</span><span class="p">));</span> <span class="c1">// 4</span>
+</code></pre></div></div>
+
+<h1 id="所有子数组的最小值之和">所有子数组的最小值之和</h1>
+
+<h2 id="题目-1">题目</h2>
+
+<p>给定一个整数数组<code>arr</code>，找到<code>min(b)</code>的总和，其中<code>b</code>的范围为<code>arr</code>的每个子数组（连续）。</p>
+
+<p>由于答案可能很大，因此 返回答案模<code>10^9 + 7</code>。</p>
+
+<p><strong>输入</strong>：<code>arr = [3,1,2,4]</code></p>
+
+<p><strong>输出</strong>：<code>17</code></p>
+
+<p><strong>解释</strong>：子数组为: <code>[3]，[1]，[2]，[4]，[3,1]，[1,2]，[2,4]，[3,1,2]，[1,2,4]，[3,1,2,4]</code>。 最小值为 <code>3，1，2，4，1，1，2，1，1，1</code>，和为 <code>17</code>。</p>
+
+<blockquote>
+  <p>数据量大，需要<code>O(n)</code>解法。</p>
+</blockquote>
+
+<h2 id="思路-1">思路</h2>
+
+<ol>
+  <li>暴力枚举不可行，因为复杂度为<code>O(n2)</code>；</li>
+  <li>每个子数组，都一定含有一个最小值。那么反过来思考，对于每个元素<code>arr[i]</code>，都对应着若干以它作为最小值的子数组；</li>
+  <li>可以枚举每个元素<code>arr[i]</code>，找到以它作为最小值的子数组数目<code>n</code>，那么这个元素对于结果（最小值和）的贡献为<code>n * arr[i]</code>；</li>
+  <li>问题转化为：如何确定以<code>arr[i]</code>为最小值的子数组数目？如果一个子数组以<code>arr[i]</code>为最小值，那么在<code>arr[i]</code>两侧，一定有若干值<code>&gt;= arr[i]</code>的元素；</li>
+  <li>假设<code>arr[i]</code>左侧有<code>m</code>个大于等于其值的元素，右侧有<code>n</code>个，那么加上<code>arr[i]</code>自身，它们一共形成了<code>m * n + m + n + 1</code>个子数组，这些子数组都是以<code>arr[i]</code>为最小值的；</li>
+  <li>我们找到<code>arr[i]</code>左侧第一个小于它的元素位置<code>l</code>，和右侧第一个小于它的元素位置<code>r</code>，那么用上面的计算方法就可以计算出最终结果；</li>
+  <li>找到第一个小于自身的元素位置，标准方法是<strong>单调栈</strong>。此时还有一个很重要的注意点：如果存在相同的值的元素怎么办？<code>[2,2,2,2]</code>这样的数组，岂不是中间会重复计算很多次？；</li>
+  <li>让左、右区间一开一闭就可以了！比如在左侧寻找<code>&lt;= arr[i]</code>的第一个元素位置，而在右侧寻找<code>&lt; arr[i]</code>的第一个元素位置。</li>
+</ol>
+
+<p><img src="/assets/posts/56.png" alt="minSum" /></p>
+
+<h2 id="代码-1">代码</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">sumSubarrayMins</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">mod</span> <span class="o">=</span> <span class="mi">1</span><span class="nx">e9</span> <span class="o">+</span> <span class="mi">7</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">stk</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">let</span> <span class="nx">after</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">slice</span><span class="p">().</span><span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="kd">let</span> <span class="nx">before</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">slice</span><span class="p">().</span><span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="nx">arr</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">i</span><span class="p">,</span><span class="nx">idx</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">while</span> <span class="p">(</span><span class="nx">stk</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">stk</span><span class="p">[</span><span class="nx">stk</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">&gt;</span> <span class="nx">i</span><span class="p">)</span> <span class="nx">after</span><span class="p">[</span><span class="nx">stk</span><span class="p">.</span><span class="nx">pop</span><span class="p">()]</span> <span class="o">=</span> <span class="nx">idx</span><span class="p">;</span>
+        <span class="nx">stk</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">idx</span><span class="p">);</span>
+    <span class="p">});</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">stk</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="nx">after</span><span class="p">[</span><span class="nx">stk</span><span class="p">.</span><span class="nx">pop</span><span class="p">()]</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">while</span> <span class="p">(</span><span class="nx">stk</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">stk</span><span class="p">[</span><span class="nx">stk</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">&gt;=</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="nx">before</span><span class="p">[</span><span class="nx">stk</span><span class="p">.</span><span class="nx">pop</span><span class="p">()]</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
+        <span class="nx">stk</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">stk</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="nx">before</span><span class="p">[</span><span class="nx">stk</span><span class="p">.</span><span class="nx">pop</span><span class="p">()]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">left</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">-</span> <span class="nx">before</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="kd">let</span> <span class="nx">right</span> <span class="o">=</span> <span class="nx">after</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">-</span> <span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="nx">res</span> <span class="o">=</span> <span class="nx">res</span> <span class="o">%</span> <span class="nx">mod</span> <span class="o">+</span> <span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="nx">left</span> <span class="o">+</span> <span class="nx">right</span> <span class="o">+</span> <span class="nx">left</span> <span class="o">*</span> <span class="nx">right</span><span class="p">)</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">)</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h1 id="最大宽度坡">最大宽度坡</h1>
+
+<h2 id="题目-2">题目</h2>
+
+<p>给定一个整数数组<code>A</code>，坡是元组 <code>(i, j)</code>，其中 <code>i &lt; j</code> 且 <code>A[i] &lt;= A[j]</code>。这样的坡的宽度为 <code>j - i</code>。</p>
+
+<p>找出 A 中的坡的最大宽度，如果不存在，返回 0 。</p>
+
+<h2 id="思路-2">思路</h2>
+
+<ol>
+  <li>暴力方法时间复杂度是<code>O(n^2)</code>；</li>
+  <li>观察发现：如果找到了这样一对元素<code>i &lt; j</code>满足要求，我们希望<code>j</code>和<code>i</code>相距尽可能远，也就是说对于每个<code>j</code>，我们希望用尽可能小的<code>i</code>和它匹配，这样宽度更大；</li>
+  <li>考察<code>i</code>位置元素<code>A[i]</code>和<code>i</code>之后区间的元素<code>A[t]</code>，如果<code>A[t] &gt;= A[i]</code>，那么能与<code>A[t]</code>形成有效数对的元素<code>A[j]</code>，都能与<code>A[i]</code>形成有效数对，且区间<code>[i,j]</code>更宽。<strong>因此无需对位于<code>i</code>之后，且值更大的元素进行考虑</strong>；</li>
+  <li>我们分别对<code>i</code>位置的元素、<code>j</code>位置的元素性质进行考察：假设一对元素<code>i &lt; j</code>满足要求，对于<code>[i+1, j-1]</code>之间的元素<code>t</code>，如果也满足<code>A[t] &gt;= A[i]</code>，那么：
+    <ol>
+      <li>考察元素对<code>(i,t)</code>：因为<code>t-i &lt; j-i</code>，宽度更小，因此对结果没有影响；</li>
+      <li>如果<code>A[t] &lt;= A[j]</code>，考察元素对<code>(t,j)</code>：因为<code>j-t &lt; j-i</code>，宽度更小，因此对结果没有影响；</li>
+      <li>综上，<strong>如果存在元素<code>i &lt; j</code>满足要求，我们只需要考虑<code>[i,j]</code>之外的元素匹配情况，无需对<code>[i,j]</code>区间再作考虑。</strong></li>
+    </ol>
+  </li>
+  <li>基于以上结论，使用<strong>单调栈</strong>实现高效算法：
+    <ol>
+      <li>从前向后遍历，维护一个单调递减的单调栈，栈底元素为<code>A[0]</code>；</li>
+      <li>从后向前遍历，假设当前遍历的元素为<code>A[j]</code>，栈顶元素在<code>A</code>中的索引为<code>top</code>:
+        <ol>
+          <li>如果<code>A[j] &gt;= A[top]</code>: 则记录区间宽度<code>j - top</code>到结果（取最大值），并在栈中弹出<code>top</code>；</li>
+          <li>如果<code>A[j] &lt; A[top]</code>，继续向前移动<code>j</code>，不做任何操作。</li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+</ol>
+
+<p><img src="/assets/posts/57.png" alt="po" /></p>
+
+<p><img src="/assets/posts/58.png" alt="po" /></p>
+
+<h2 id="代码-2">代码</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">maxWidthRamp</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">stk</span> <span class="o">=</span> <span class="p">[];</span> <span class="c1">// 单调栈</span>
+    <span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">nums</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">stk</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">stk</span><span class="p">[</span><span class="nx">stk</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span> <span class="nx">stk</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="nx">nums</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 从后向前遍历，找最大宽度</span>
+        <span class="k">while</span> <span class="p">(</span><span class="nx">stk</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">stk</span><span class="p">[</span><span class="nx">stk</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span> <span class="nx">res</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="nx">i</span> <span class="o">-</span> <span class="nx">stk</span><span class="p">.</span><span class="nx">pop</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h1 id="在二叉树中分配硬币">在二叉树中分配硬币</h1>
+<h2 id="题目-3">题目</h2>
+<blockquote>
+  <p><a href="https://leetcode-cn.com/problems/distribute-coins-in-binary-tree/">979. 在二叉树中分配硬币</a></p>
+</blockquote>
+
+<h2 id="思路-3">思路</h2>
+
+<ol>
+  <li>叶子节点如果有多余的硬币，只能向父节点转移。同理，如果叶子节点缺硬币，只能由父节点转移给它；</li>
+  <li>那么考察两个叶子节点的父节点，它的硬币转移情况可能有：
+    <ol>
+      <li>左边硬币多、右边硬币少（或者相反），那么需求可以内部消化（左手倒右手）；</li>
+      <li>左右硬币都多，那么左右子节点都需要向父节点转移硬币；</li>
+      <li>左右硬币都少，那么父节点需要向左右子节点输送硬币；</li>
+    </ol>
+  </li>
+  <li>我们将子节点向父节点输出<code>n</code>个硬币记为<code>+n</code>，将从父节点索取<code>n</code>个硬币记为<code>-n</code>，那么：
+    <ol>
+      <li>左子节点向父节点输送<code>L</code>(索取则<code>L</code>为负值)个硬币；</li>
+      <li>右子节点向父节点输送<code>R</code>(索取则<code>R</code>为负值)个硬币；</li>
+      <li>父节点此时的硬币总数为<code>node.val + L + R</code>；</li>
+      <li>父节点只需要保留一个给自己，其余要向上输出（或者索取），数目为<code>node.val + L + R - 1</code>。</li>
+    </ol>
+  </li>
+  <li>对于父节点，我们可以按子节点同样的方式递归处理，将它的硬币需求向上传递，直到根节点；</li>
+  <li>对于每个节点，它与左子节点交换的硬币数为<code>abs(L)</code>，它与右子节点交换的硬币数为<code>abs(R)</code>，我们需要对每个节点将它们加和起来作为结果；</li>
+</ol>
+
+<blockquote>
+  <p>即使是左右倒右手（L和R一正一负），也是需要计入结果的。</p>
+</blockquote>
+
+<h2 id="代码-3">代码</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">distributeCoins</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">root</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kd">function</span> <span class="nx">dfs</span><span class="p">(</span><span class="nx">node</span> <span class="o">=</span> <span class="nx">root</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">node</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kd">let</span> <span class="nx">left</span> <span class="o">=</span> <span class="nx">dfs</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">left</span><span class="p">);</span>
+        <span class="kd">let</span> <span class="nx">right</span> <span class="o">=</span> <span class="nx">dfs</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">right</span><span class="p">);</span>
+        <span class="nx">res</span> <span class="o">+=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">left</span><span class="p">)</span> <span class="o">+</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">right</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">node</span><span class="p">.</span><span class="nx">val</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="nx">left</span> <span class="o">+</span> <span class="nx">right</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">dfs</span><span class="p">();</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Personal"><span>Personal</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2022/01/26/%E7%BA%AA%E5%BF%B5%E7%A2%91%E8%B0%B7/" title="纪念碑谷">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2022/03/10/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/" title="编译原理_CS143_Standford">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2022/02/15/%E7%BB%8F%E5%85%B8%E9%A2%98%E7%9B%AE/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

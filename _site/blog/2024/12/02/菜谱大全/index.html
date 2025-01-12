@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>菜谱大全 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="菜谱大全" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="私人菜谱大全 基础 高汤" />
+<meta property="og:description" content="私人菜谱大全 基础 高汤" />
+<link rel="canonical" href="http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8/" />
+<meta property="og:url" content="http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-12-02T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"私人菜谱大全 基础 高汤","@type":"BlogPosting","url":"http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8/","headline":"菜谱大全","dateModified":"2024-12-02T00:00:00+08:00","datePublished":"2024-12-02T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">菜谱大全</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Dec 2, 2024
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>私人菜谱大全</p>
+</blockquote>
+
+<h1 id="基础">基础</h1>
+<h2 id="高汤">高汤</h2>
+
+<p><a href="/assets/PDFs/recipes/基础/高汤/20200903_日式鲣鱼昆布高汤.pdf">日式鲣鱼昆布高汤</a></p>
+
+<h2 id="主食">主食</h2>
+
+<p><a href="/assets/PDFs/recipes/基础/主食/20200903_米饭.pdf">米饭</a></p>
+
+<h1 id="酱汁">酱汁</h1>
+
+<p><a href="/assets/PDFs/recipes/酱汁/20190624_蒜虾油.pdf">蒜虾油</a></p>
+
+<p><a href="/assets/PDFs/recipes/酱汁/20190625_广式焖酱(煲仔酱).pdf">广式焖酱(煲仔酱)</a></p>
+
+<p><a href="/assets/PDFs/recipes/酱汁/20190625_广式黑椒汁.pdf">广式黑椒汁</a></p>
+
+<p><a href="/assets/PDFs/recipes/酱汁/20190625_甜酱油.pdf">甜酱油</a></p>
+
+<p><a href="/assets/PDFs/recipes/酱汁/20230220_寿司醋.pdf">寿司醋</a></p>
+
+<h1 id="主菜">主菜</h1>
+
+<p><a href="/assets/PDFs/recipes/主菜/20190625_葱油鸡.pdf">葱油鸡</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20191016_日式牛肉饭.pdf">日式牛肉饭</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200622_泡椒凤爪.pdf">泡椒凤爪</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200622_经典牛肉汉堡.pdf">经典牛肉汉堡</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200622_金针菇蒸牛肉.pdf">金针菇蒸牛肉</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200622泡椒凤爪.pdf">泡椒凤爪</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200625_辣椒炒肉.pdf">辣椒炒肉</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200705_广式炒面.pdf">广式炒面</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200706_宫保鸡丁.pdf">宫保鸡丁</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200811_简易日式炸鸡.pdf">简易日式炸鸡</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200811_黄焖鸡.pdf">黄焖鸡</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200903_意式培根蛋黄酱面.pdf">意式培根蛋黄酱面</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200903_胡椒芝士牛肉饭.pdf">胡椒芝士牛肉饭</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200903_酸菜丸子炖排骨.pdf">酸菜丸子炖排骨</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200903_酸豆角炒肉末.pdf">酸豆角炒肉末</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200907_黄油炒蘑菇.pdf">黄油炒蘑菇</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200909_广州白切鸡.pdf">广州白切鸡</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20200909_日式芝麻拌菠菜.pdf">日式芝麻拌菠菜</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20201212_糖醋里脊.pdf">糖醋里脊</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20201214_豉汁蒸排骨.pdf">豉汁蒸排骨</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20201215_杭椒牛柳.pdf">杭椒牛柳</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20201216_蒜粉炸鸡腿.pdf">蒜粉炸鸡腿</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20201220_韩式炸鸡.pdf">韩式炸鸡</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20201228_韩国辛奇泡菜.pdf">韩国辛奇泡菜</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20210219_煲仔饭.pdf">煲仔饭</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20210219_金牌蒜香骨.pdf">金牌蒜香骨</a></p>
+
+<p><a href="/assets/PDFs/recipes/主菜/20230220_卷寿司.pdf">卷寿司</a></p>
+
+<h1 id="配菜">配菜</h1>
+
+<p><a href="/assets/PDFs/recipes/配菜/20191016_温泉蛋.pdf">温泉蛋</a></p>
+
+<p><a href="/assets/PDFs/recipes/配菜/20191021_黄金皮蛋.pdf">黄金皮蛋</a></p>
+
+<p><a href="/assets/PDFs/recipes/配菜/20230220_梅渍小番茄.pdf">梅渍小番茄</a></p>
+
+<h1 id="汤粥">汤粥</h1>
+
+<p><a href="/assets/PDFs/recipes/汤粥/20190712_窝蛋牛肉粥.pdf">窝蛋牛肉粥</a></p>
+
+<p><a href="/assets/PDFs/recipes/汤粥/20200907_奶油蘑菇浓汤.pdf">奶油蘑菇浓汤</a></p>
+
+<p><a href="/assets/PDFs/recipes/汤粥/20200909_西班牙蔬菜冷汤.pdf">西班牙蔬菜冷汤</a></p>
+
+<h1 id="甜品">甜品</h1>
+
+<p><a href="/assets/PDFs/recipes/甜品/20190727_香芋椰汁西米露.pdf">香芋椰汁西米露</a></p>
+
+<p><a href="/assets/PDFs/recipes/甜品/20191012_陈皮红豆沙.pdf">陈皮红豆沙</a></p>
+
+<p><a href="/assets/PDFs/recipes/甜品/20191103_姜撞奶.pdf">姜撞奶</a></p>
+
+<p><a href="/assets/PDFs/recipes/甜品/20191103_蜜芋头.pdf">蜜芋头</a></p>
+
+<p><a href="/assets/PDFs/recipes/甜品/20210219_杏仁豆腐.pdf">杏仁豆腐</a></p>
+
+<h1 id="饮品">饮品</h1>
+
+<p><a href="/assets/PDFs/recipes/饮品/20191102_港式冻柠茶.pdf">港式冻柠茶</a></p>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Cuisine"><span>Cuisine</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2024/03/26/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1/" title="机械设计">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>JavaScript一些内置API | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="JavaScript一些内置API" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="JavaScript一些内置API： 跨文档通信API、FIle API、媒体元素API、拖放API、Page Visibility API、Performance API、Web组件 API 、Observer API" />
+<meta property="og:description" content="JavaScript一些内置API： 跨文档通信API、FIle API、媒体元素API、拖放API、Page Visibility API、Performance API、Web组件 API 、Observer API" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/06/01/JavaScript%E4%B8%80%E4%BA%9B%E5%86%85%E7%BD%AEAPI/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/06/01/JavaScript%E4%B8%80%E4%BA%9B%E5%86%85%E7%BD%AEAPI/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-06-01T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"JavaScript一些内置API： 跨文档通信API、FIle API、媒体元素API、拖放API、Page Visibility API、Performance API、Web组件 API 、Observer API","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/06/01/JavaScript%E4%B8%80%E4%BA%9B%E5%86%85%E7%BD%AEAPI/","headline":"JavaScript一些内置API","dateModified":"2021-06-01T00:00:00+08:00","datePublished":"2021-06-01T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/06/01/JavaScript%E4%B8%80%E4%BA%9B%E5%86%85%E7%BD%AEAPI/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">JavaScript一些内置API</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Jun 1, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>JavaScript一些内置API：</p>
+
+  <p>跨文档通信API、FIle API、媒体元素API、拖放API、Page Visibility API、Performance API、Web组件 API 、Observer API</p>
+</blockquote>
+
+<h1 id="1-跨文档通信api">1. 跨文档通信API</h1>
+
+<p>主要是全局对象的<code>postMessage()</code>方法。</p>
+
+<p>用于窗口间通信，或工作线程之间的通信。</p>
+
+<h1 id="11-postmessage方法的使用">1.1 postMessage()方法的使用</h1>
+
+<p>postMessage()方法接受三个参数：<strong>①消息本体； ②一个表示消息接受目标页面【源】的字符串； ③(与web worker相关)可传输对象数组；</strong></p>
+
+<blockquote>
+  <p>其中第二个参数非常重要，发动消息的目标页面只有在与这个参数同源的情况下才能正常收到message。这是一种保护策略。</p>
+</blockquote>
+
+<h1 id="12-目标页面的响应事件">1.2 目标页面的响应事件</h1>
+
+<p>目标页面在成功接收postMessage发来的消息后，在自身window对象上会触发<strong>message</strong>事件（异步，因为传输可能会有时延）。</p>
+
+<p>message的事件对象event具有下列信息：</p>
+
+<ul>
+  <li>data: 传输的消息本体；</li>
+  <li>origin：发送消息的文档的源；</li>
+  <li>source：发送消息的文档的window的代理对象，主要用来向消息来源页面回复消息source.postMessage()。</li>
+</ul>
+
+<h1 id="13-跨文档通信的注意事项">1.3 跨文档通信的注意事项</h1>
+
+<p>postMessage的第二个参数可以保证接收页面的源，接收页面在收到消息后也应该对消息的来源event.origin进行检查，确保来自可信的地方。</p>
+
+<h1 id="2-file-api">2. File API</h1>
+
+<p>File API用于访问并处理用户本地的文件。</p>
+
+<h1 id="21-获取本地文件的方式">2.1 获取本地文件的方式</h1>
+
+<p>获取文件的方式主要有两种：</p>
+
+<ol>
+  <li>文件类型input元素：<input type="file" /></li>
+  <li>文件拖放</li>
+</ol>
+
+<h1 id="211-文件类型input元素">2.1.1 文件类型input元素</h1>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"file"</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<p>文件类型的input元素，本身具有files属性，里面包含了用户选择的文件集合（FileList类实例）。</p>
+
+<p>其中的每个file可以通过索引获取，每个file对象都包含如下基本信息:</p>
+
+<ul>
+  <li>name: 本地系统中的文件名；</li>
+  <li>size: 文件体积（字节）；</li>
+  <li>type: MIME类型（字符串）；</li>
+  <li>lastModifiedDate：文件最后修改的时间（字符串）。</li>
+</ul>
+
+<p>获取文件的详细内容，必须使用下面的文件读取器FileReader。</p>
+
+<h1 id="212-文件拖放">2.1.2 文件拖放</h1>
+
+<p>拖放本地文件到页面，在drop的事件对象<code>event.dataTransfer.files</code>中获取文件列表。</p>
+
+<h1 id="22-filereader-文件读取器">2.2 FileReader 文件读取器</h1>
+
+<p>FileReader用于异步读取本地文件内容，可以选择多种读取类型。</p>
+
+<p>FileReader为全局构造函数，使用前需要先实例化。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileReader</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>FileReader实例具有下列方法：</p>
+
+<ul>
+  <li>readAsText(file,encoding)： 读取文件为文本；</li>
+  <li>readAsDataURL(file)：读取文件为内容的URL；</li>
+  <li>readAsBinaryString(file)：读取文件为二进制数据；</li>
+  <li>readAsArrayBuffer(file)：读取文件为ArrayBuffer。</li>
+</ul>
+
+<p>FileReader实例读取文件过程中会有如下几个事件：</p>
+
+<ul>
+  <li>progress: 每50ms触发一次，与XHR对象的progress事件相同，用来反馈文件读取的进度；</li>
+  <li>error： 读取文件发生错误时触发；</li>
+  <li>load： 读取文件完成后触发。</li>
+</ul>
+
+<p>文件读取结果在reader.result中获取。因为文件读取是异步操作，需要在reader的load事件回调中获取reader.result。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">reader</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">load</span><span class="dl">'</span><span class="p">,</span><span class="nx">e</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">reader</span><span class="p">.</span><span class="nx">result</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<h1 id="23-对象url">2.3 对象URL</h1>
+
+<p>访问本地文件时，可以不读取文件内容到JavaScript，而是通过内存地址直接访问内存中的文件。这就是文件的对象URL（也叫Blob URL）</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 为文件创建对象URL：返回指向文件内存地址的URL</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">createObjectURL</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>使用这个URL，浏览器可以直接从本地相应的内存位置获取文件，并读取到页面上，不用像FileReader那样预先读取到JS中。</p>
+
+<h1 id="3-媒体元素api">3. 媒体元素API</h1>
+
+<!-- // todo -->
+
+<h1 id="4-h5原生拖放api">4. H5原生拖放API</h1>
+
+<p>元素被拖动时，依次触发：</p>
+
+<ul>
+  <li>dragstart</li>
+  <li>drag</li>
+  <li>dragend</li>
+</ul>
+
+<p>元素拖动到一个有效目标上时，依次触发：</p>
+
+<ul>
+  <li>dragenter;</li>
+  <li>dragover;</li>
+  <li>dragleave / drop；</li>
+</ul>
+
+<p><strong>让一个元素变成可放置区域的方法：</strong> 通过<code>e.preventDefault()</code>阻止它的<code>dragenter</code>和<code>dragover</code>默认事件。（之后光标由阻止变为可放置）</p>
+
+<h1 id="5-page-visibility-api">5. Page Visibility API</h1>
+
+<p>提供页面是否被用户可见的信息。（比如页面被最小化等）</p>
+
+<ul>
+  <li><strong>document.visibilityState</strong>：
+    <ul>
+      <li>visible: 页面可见（标签被打开，或者通过预览形式）；</li>
+      <li>hidden: 页面用户不可见。</li>
+    </ul>
+  </li>
+  <li><strong>visibilityChange事件：</strong> 当页面可见性变化时触发；</li>
+</ul>
+
+<h1 id="6-performance-api">6. Performance API</h1>
+
+<p>接口暴露在<code>window.performance</code>对象上。</p>
+
+<ul>
+  <li><strong>performance.now()</strong>: 返回一个更精确的时间戳（微秒精度）。每次页面打开或工作者线程创建，<code>performance.now()</code>从0开始计时。</li>
+  <li><strong>performance.getEntries()</strong> 返回performance性能时间线，内含度量性能的多个对象。</li>
+</ul>
+
+<h1 id="7-web组件-api">7. Web组件 API</h1>
+
+<p>见web组件blog。</p>
+
+<h1 id="8-observer-api">8. Observer API</h1>
+
+<p>Observer API系列，一共有 4 个：</p>
+
+<ul>
+  <li><strong>Intersection Observer API</strong>：观察可见性</li>
+  <li><strong>Resize Observer API</strong>：观察大小变化</li>
+  <li><strong>Mutation Observer API</strong>：提供了监视 DOM 树的变化的能力</li>
+  <li><strong>Performance Observer API</strong>：用于观察性能</li>
+</ul>
+
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="JavaScript"><span>JavaScript</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/06/01/DOM%E4%B9%8BMutation_Oberver/" title="Observer APIs">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/06/01/window.requestAnimationFrame%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E9%87%8D%E7%BB%98/" title="window.requestAnimationFrame定时器与浏览器重绘">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/06/01/JavaScript%E4%B8%80%E4%BA%9B%E5%86%85%E7%BD%AEAPI/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

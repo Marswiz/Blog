@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Vuex基操与原理 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Vuex基操与原理" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Vuex 用于统一管理Vue app中各组件的状态，好处有二： ① 避免了属性父传子，子改父的麻烦操作。尤其是组件数目多、嵌套深的情况。 ② 可以统一拦截修改状态的操作，从而进行一些记录，做到修改状态有迹可循，方便查错维护。" />
+<meta property="og:description" content="Vuex 用于统一管理Vue app中各组件的状态，好处有二： ① 避免了属性父传子，子改父的麻烦操作。尤其是组件数目多、嵌套深的情况。 ② 可以统一拦截修改状态的操作，从而进行一些记录，做到修改状态有迹可循，方便查错维护。" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/04/29/Vuex%E5%9F%BA%E6%93%8D%E4%B8%8E%E5%8E%9F%E7%90%86/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/04/29/Vuex%E5%9F%BA%E6%93%8D%E4%B8%8E%E5%8E%9F%E7%90%86/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-04-29T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"Vuex 用于统一管理Vue app中各组件的状态，好处有二： ① 避免了属性父传子，子改父的麻烦操作。尤其是组件数目多、嵌套深的情况。 ② 可以统一拦截修改状态的操作，从而进行一些记录，做到修改状态有迹可循，方便查错维护。","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/04/29/Vuex%E5%9F%BA%E6%93%8D%E4%B8%8E%E5%8E%9F%E7%90%86/","headline":"Vuex基操与原理","dateModified":"2021-04-29T00:00:00+08:00","datePublished":"2021-04-29T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/04/29/Vuex%E5%9F%BA%E6%93%8D%E4%B8%8E%E5%8E%9F%E7%90%86/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">Vuex基操与原理</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Apr 29, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>Vuex 用于统一管理Vue app中各组件的状态，好处有二：</p>
+
+  <p>① 避免了属性父传子，子改父的麻烦操作。尤其是组件数目多、嵌套深的情况。</p>
+
+  <p>② 可以统一拦截修改状态的操作，从而进行一些记录，做到修改状态有迹可循，方便查错维护。</p>
+</blockquote>
+
+<h1 id="store-仓库">Store 仓库</h1>
+
+<p>vuex通过创建Store，并作为插件应用在Vue app实例上，来达到统一管理app实例中组件状态的目的。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">createStore</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">vuex</span><span class="dl">'</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">createApp</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">vue</span><span class="dl">'</span>
+<span class="k">import</span> <span class="nx">App</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">App.vue</span><span class="dl">'</span>
+
+<span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">createApp</span><span class="p">(</span><span class="nx">App</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="nx">createStore</span><span class="p">({</span>
+    <span class="nx">state</span><span class="p">(){</span>
+        <span class="c1">// define states here.</span>
+    <span class="p">},</span>
+    <span class="na">mutations</span><span class="p">:</span> <span class="p">{</span>
+        <span class="c1">// define mutations here.</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">()</span>
+</code></pre></div></div>
+<p><strong>vuex的方法全部类似vue, createStore()传入的对象也与根组件配置对象形式相同，就像只是换了属性名字。data换为state，methods换为mutations,computed换为getter。</strong></p>
+
+<p>在app.use(store)执行后，app根组件实例上会被挂载一个$store全局对象，这样全部组件都可以在内部通过this.$store引用这个store内的数据。</p>
+
+<blockquote>
+  <p>在Vue3 组合式API的setup()函数中，this不指向组件实例,也就不能用this.$store访问。</p>
+
+  <p>此时需要从vuex引入useStore 方法，并在setup中声明 const store = useStore();</p>
+
+  <p>这样，通过这个变量store就可以访问vuex store了。</p>
+</blockquote>
+
+<h1 id="state-状态">State 状态</h1>
+
+<p>state是vuex中保存的状态，不能直接修改，必须通过mutations中定义的方法进行修改。</p>
+
+<p>store中的state都是响应式的，在组件中可以通过computed()计算属性来引入，并保持响应式。</p>
+
+<p>mapState()方法可以从vuex中引入，用来方便一次性获取多个store中的state，并返回给computed。</p>
+
+<h1 id="mutations-变更突变">Mutations 变更（突变）</h1>
+
+<p>vuex store 配置的mutations属性中声明对state的各种操作方式。</p>
+
+<p>它们应该是修改state的唯一方式，虽然通过store.state.xx直接修改也是可以的，不会报错，但是这样就不能对组件修改操作进行拦截，也有悖设计原则，无法确定哪个组件修改了state，对debug产生困扰。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// store config</span>
+<span class="c1">// mutation函数在被调用的时候，State永远作为第一个参数传入，之后的参数可以自定义</span>
+<span class="nx">mutations</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nx">increment</span> <span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">state</span><span class="p">.</span><span class="nx">count</span> <span class="o">+=</span> <span class="nx">n</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// components</span>
+<span class="p">{</span>
+    <span class="nx">store</span><span class="p">.</span><span class="nx">commit</span><span class="p">(</span><span class="dl">'</span><span class="s1">increment</span><span class="dl">'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<blockquote>
+  <p>官方说明： mutation应该必须为同步函数。</p>
+
+  <p>就像mutation的含义一样，它是直接变更state的。如果产生异步，则会出现违背设计的未知问题。</p>
+</blockquote>
+
+<p>mapMutations 用来在子组件的methods中，一次性commit多个mutation。</p>
+
+<h1 id="getters-计算状态">getters 计算状态</h1>
+
+<p>getters相当于vue组件中的computed计算属性。只不过它是在store中定义的，全局组件都可以使用。</p>
+
+<p>getters的设置目的是定义全局计算属性，免去每次在组件中引入并声明的繁琐。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+    <span class="nl">getters</span><span class="p">:</span> <span class="p">{</span>
+        <span class="c1">// 对state中的arr.good 为 true的子数组进行返回</span>
+        <span class="nl">goodArr</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">arr</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">arr</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span><span class="k">return</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">good</span> <span class="o">===</span> <span class="kc">true</span><span class="p">})</span><span class="nx">_</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>同样，mapGetters方法用于一次性获取多个getter属性到组件。</p>
+
+<h1 id="actions-动作">Actions 动作</h1>
+
+<p>Actions 和 Mutations 差不多，官方提出他们的两点区别如下：</p>
+
+<ol>
+  <li>Mutations直接修改status，而Actions是commit mutations，相当于间接通过mutations修改state;</li>
+  <li>Actions可以是异步函数。</li>
+</ol>
+
+<p>actions在触发的时候，会传入一个参数context，相当于整个store的上下文环境引用。</p>
+
+<p>可以通过这个context，获取store内的任意属性。比如:context.state, context.mutation。</p>
+
+<p>因此也可以使用解构语法，在传入context的时候直接获取想要的方法：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">actions</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nx">increment</span> <span class="p">({</span> <span class="nx">commit</span> <span class="p">})</span> <span class="p">{</span>
+    <span class="c1">// 解构获取了store.commit</span>
+    <span class="nx">commit</span><span class="p">(</span><span class="dl">'</span><span class="s1">increment</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>不同于mutation的commit，actions的触发方式是dispatch。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// trigger an action inside a component.</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">store</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">(</span><span class="dl">'</span><span class="s1">action1</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>actions可以是异步的，因为它们是通过一个个的mutation来修改state的。不论什么时候触发mutation，只要最终触发了的不同mutation互不影响，store.state的最终状态就一样。</p>
+
+<p>但是，触发修改同一state的多个mutation，触发的先后顺序可能造成state最终的结果不同。比如一个state为价格10，先+3再×2，和先×2再+3，结果不一致。</p>
+
+<p>这时，就需要对actions进行设计，让它触发mutation的先后顺序可控。具体见官网下例：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// assuming `getData()` and `getOtherData()` return Promises</span>
+
+<span class="nx">actions</span><span class="p">:</span> <span class="p">{</span>
+  <span class="k">async</span> <span class="nx">actionA</span> <span class="p">({</span> <span class="nx">commit</span> <span class="p">})</span> <span class="p">{</span>
+    <span class="nx">commit</span><span class="p">(</span><span class="dl">'</span><span class="s1">gotData</span><span class="dl">'</span><span class="p">,</span> <span class="k">await</span> <span class="nx">getData</span><span class="p">())</span>
+  <span class="p">},</span>
+  <span class="k">async</span> <span class="nx">actionB</span> <span class="p">({</span> <span class="nx">dispatch</span><span class="p">,</span> <span class="nx">commit</span> <span class="p">})</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="nx">dispatch</span><span class="p">(</span><span class="dl">'</span><span class="s1">actionA</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// wait for `actionA` to finish</span>
+    <span class="nx">commit</span><span class="p">(</span><span class="dl">'</span><span class="s1">gotOtherData</span><span class="dl">'</span><span class="p">,</span> <span class="k">await</span> <span class="nx">getOtherData</span><span class="p">())</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Vue"><span>Vue</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/04/29/Vue3%E7%A9%B6%E7%AB%9F%E6%AF%94Vue2%E5%A5%BD%E5%9C%A8%E5%93%AA/" title="Vue3新特性">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/05/02/HTTPs%E5%8D%8F%E8%AE%AE/" title="HTTPs协议">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/04/29/Vuex%E5%9F%BA%E6%93%8D%E4%B8%8E%E5%8E%9F%E7%90%86/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>紧固件长度选取</title>
+    <style>
+        .para {
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .result {
+            font-size: 2em;
+            color: salmon;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div class="para">
+            <div id="screwDiameterName" class="paraName">螺纹公称直径：</div>
+            <input id="screwDiameterNameValue" class="paraValue" value="6"> mm
+        </div>
+        <div class="para">
+            <div id="innerLength" class="paraName">被连接件长度：</div>
+            <input id="innerLengthValue" class="paraValue" value="20"> mm
+        </div>
+        <div class="para">
+            <span id="ifHasPlate" class="paraName">是否有平垫：</span>
+            <input id="ifHasPlateValue" class="paraValue" type="checkbox" checked>是
+        </div> 
+        <div class="result">
+            您需要的螺钉长度是：<span id="resultValue">- -</span> mm。
+        </div>
+    </div>
+</body>
+<script src="./main.js"></script>
+</html>

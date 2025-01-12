@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Vue-Router笔记 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Vue-Router笔记" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Vuex-Router: 路由管理工具" />
+<meta property="og:description" content="Vuex-Router: 路由管理工具" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/09/02/Vue-Router%E7%AC%94%E8%AE%B0/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/09/02/Vue-Router%E7%AC%94%E8%AE%B0/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-09-02T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"Vuex-Router: 路由管理工具","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/09/02/Vue-Router%E7%AC%94%E8%AE%B0/","headline":"Vue-Router笔记","dateModified":"2021-09-02T00:00:00+08:00","datePublished":"2021-09-02T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/09/02/Vue-Router%E7%AC%94%E8%AE%B0/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">Vue-Router笔记</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Sep 2, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>Vuex-Router: 路由管理工具</p>
+</blockquote>
+
+<h1 id="路由链接路由出口">路由链接、路由出口</h1>
+
+<p>这是两个vue-router内置组件：</p>
+
+<ul>
+  <li><code>&lt;router-link&gt;</code>: 用来存放路由链接的内置组件，点击即可进行路由跳转；</li>
+  <li><code>&lt;router-view&gt;</code>: 用来显示路由匹配结果的内置组件，路由匹配到的组件会显示在这里。</li>
+</ul>
+
+<h1 id="js-配置一个vue-router基本流程">JS: 配置一个vue-router基本流程</h1>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 官方代码示例：</span>
+
+<span class="c1">// 1. 引入路由需要的vue组件.</span>
+<span class="c1">// 也可以从其他文件导入</span>
+<span class="kd">const</span> <span class="nx">Home</span> <span class="o">=</span> <span class="p">{</span> <span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;div&gt;Home&lt;/div&gt;</span><span class="dl">'</span> <span class="p">}</span>
+<span class="kd">const</span> <span class="nx">About</span> <span class="o">=</span> <span class="p">{</span> <span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;div&gt;About&lt;/div&gt;</span><span class="dl">'</span> <span class="p">}</span>
+
+<span class="c1">// 【路由配置】</span>
+<span class="c1">// 2. 定义一些路由</span>
+<span class="c1">// 每个路由都需要映射到一个组件。</span>
+<span class="c1">// 我们后面再讨论嵌套路由。</span>
+<span class="kd">const</span> <span class="nx">routes</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">,</span> <span class="na">component</span><span class="p">:</span> <span class="nx">Home</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/about</span><span class="dl">'</span><span class="p">,</span> <span class="na">component</span><span class="p">:</span> <span class="nx">About</span> <span class="p">},</span>
+<span class="p">]</span>
+
+<span class="c1">// 【路由器配置】</span>
+<span class="c1">// 3. 创建路由实例并传递 `routes` 配置</span>
+<span class="c1">// 你可以在这里输入更多的配置，但我们在这里</span>
+<span class="c1">// 暂时保持简单</span>
+<span class="kd">const</span> <span class="nx">router</span> <span class="o">=</span> <span class="nx">VueRouter</span><span class="p">.</span><span class="nx">createRouter</span><span class="p">({</span>
+  <span class="c1">// 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。</span>
+  <span class="na">history</span><span class="p">:</span> <span class="nx">VueRouter</span><span class="p">.</span><span class="nx">createWebHashHistory</span><span class="p">(),</span>
+  <span class="nx">routes</span><span class="p">,</span> <span class="c1">// `routes: routes` 的缩写</span>
+<span class="p">})</span>
+
+<span class="c1">// 5. 创建并挂载到vue根实例</span>
+<span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">Vue</span><span class="p">.</span><span class="nx">createApp</span><span class="p">({})</span>
+<span class="c1">//确保 _use_ 路由实例使</span>
+<span class="c1">//整个应用支持路由。</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">router</span><span class="p">)</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">mount</span><span class="p">(</span><span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="c1">// OK，路由已经应用。</span>
+</code></pre></div></div>
+
+<h1 id="动态路由匹配">动态路由匹配</h1>
+
+<p>路由配置中：</p>
+
+<ul>
+  <li>path可以定义部分动态字段，通过<code>:dymPara</code>形式定义；</li>
+  <li>当匹配到路由后，在路由对象route的params属性中可以获取到匹配到的<code>dymPara</code>实际字段。</li>
+</ul>
+
+<h2 id="为动态路由匹配设定规则">为动态路由匹配设定规则</h2>
+<h3 id="正则表达式">正则表达式</h3>
+
+<p>可以在路由动态字段后面加上一对圆括号，里面设定一个匹配的正则表达式。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// route配置</span>
+<span class="c1">// id的匹配对象是：一个或多个数字。</span>
+<span class="c1">// 不满足则无法匹配到这个路由。</span>
+<span class="p">{</span>
+  <span class="nl">path</span><span class="p">:</span> <span class="s2">`/user-:id(\\d+)`</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="匹配多个动态部分">匹配多个动态部分</h3>
+
+<p>在动态字段结尾，使用<code>*</code>(零个或多个)或<code>+</code>（一个或多个）操作符，表示动态字段支持重复。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">routes</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="c1">// /:chapters -&gt;  匹配 /one, /one/two, /one/two/three, 等</span>
+  <span class="p">{</span> <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/:chapters+</span><span class="dl">'</span> <span class="p">},</span>
+  <span class="c1">// /:chapters -&gt; 匹配 /, /one, /one/two, /one/two/three, 等</span>
+  <span class="p">{</span> <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/:chapters*</span><span class="dl">'</span> <span class="p">},</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="可选动态部分">可选动态部分</h3>
+
+<p>在动态字段结尾，添加<code>?</code>操作符，表示动态部分可选。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 匹配 /user-mars 或 /user-</span>
+<span class="p">{</span>
+  <span class="nl">path</span><span class="p">:</span> <span class="s2">`/user-:id?`</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="嵌套路由">嵌套路由</h1>
+
+<p>一个路由的组件中，如果还有<code>&lt;router-view&gt;</code>出口，希望通过这个路由的子路由进行匹配显示不同的组件，则需要使用嵌套路由实现。</p>
+
+<p>一个路由的子路由，通过该路由配置的<code>children</code>选项配置。子路由匹配的组件内容，会通过上层路由组件中的<code>&lt;router-view&gt;</code>输出。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+    <span class="nl">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/user/</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">component</span><span class="p">:</span> <span class="nx">UserInfo</span><span class="p">,</span>
+    <span class="nx">children</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="c1">// 当匹配'/user/Mars'时，UserInfo中的&lt;router-view&gt;显示MarsInfo组件。</span>
+        <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Mars</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">component</span><span class="p">:</span> <span class="nx">MarsInfo</span><span class="p">,</span>
+    <span class="p">},{</span>
+        <span class="c1">// 当匹配'/user/Liu'时，UserInfo中的&lt;router-view&gt;显示LiuInfo组件。</span>
+        <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Liu</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">component</span><span class="p">:</span> <span class="nx">LiuInfo</span><span class="p">,</span>
+    <span class="p">}],</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="为路由命名">为路由命名</h1>
+
+<p>在路由配置中配置<code>name</code>属性，可以为该路由命名。</p>
+
+<p>被命名的路由，在其他地方使用的时候，可以不用再通过url触发，通过传入配置对象，减少url硬编码的麻烦：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">routes</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/user/:username</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">user</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">component</span><span class="p">:</span> <span class="nx">User</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+
+<span class="c1">// 使用</span>
+<span class="o">&lt;</span><span class="nx">router</span><span class="o">-</span><span class="nx">link</span> <span class="p">:</span><span class="nx">to</span><span class="o">=</span><span class="dl">"</span><span class="s2">{ name: 'user', params: { username: 'erina' }}</span><span class="dl">"</span><span class="o">&gt;</span>
+  <span class="nx">User</span>
+<span class="o">&lt;</span><span class="sr">/router-link</span><span class="err">&gt;
+</span>
+<span class="c1">// 或</span>
+<span class="nx">router</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">user</span><span class="dl">'</span><span class="p">,</span> <span class="na">params</span><span class="p">:</span> <span class="p">{</span> <span class="na">username</span><span class="p">:</span> <span class="dl">'</span><span class="s1">erina</span><span class="dl">'</span> <span class="p">}</span> <span class="p">})</span>
+</code></pre></div></div>
+
+<h1 id="命名视图">命名视图</h1>
+
+<p>同一个路由，匹配的组件内可以定义<strong>多个<code>&lt;router-view&gt;</code>出口</strong>，通过<code>name</code>属性命名。</p>
+
+<p>路由通过配置项中的<code>components</code>选项，对每个<code>&lt;router-view&gt;</code>出口显示哪一组件进行定义。</p>
+
+<h1 id="用router上的方法跳转路由">用router上的方法跳转路由</h1>
+
+<p>基本和<code>window.history</code>一样：</p>
+
+<ul>
+  <li><code>router.push(&lt;route&gt;)</code>: 添加新记录，并跳转到新路由;</li>
+  <li><code>router.replace(&lt;route&gt;)</code>: 覆盖当前记录，并跳转到新路由;</li>
+  <li><code>router.go(&lt;num&gt;)</code>: 向前、向后（负数）跳转num个路由;</li>
+</ul>
+
+<h1 id="将路由的匹配参数routeparams设置为组件的props">将路由的匹配参数route.params设置为组件的props</h1>
+
+<p>配置路由的<code>props</code>选项为true，即可将路由匹配的参数route.params直接设置为组件的<code>props</code>，而不是在组件内通过<code>this.$route.params</code>获取参数。</p>
+
+<p>这样可以解耦组件和路由，组件可以被应用到其他地方，而非与路由参数强绑定（必须要this.$route.params和组件内的使用方式一致才能正确显示组件）。</p>
+
+<p><a href="https://next.router.vuejs.org/zh/guide/essentials/passing-props.html">将 props 传递给路由组件</a></p>
+
+<h1 id="重定向">重定向</h1>
+
+<p>路由重定向在路由配置中的<code>redirect</code>选项配置。</p>
+
+<p>配置了重定向的路由在触发时，会直接跳转到重定向的路由，也不会触发当前路由的导航守卫<code>beforeEnter</code>。</p>
+
+<p>有两种方式设置重定向路由：</p>
+
+<ol>
+  <li><strong>静态：</strong>直接传入一个路由配置对象；</li>
+  <li><strong>动态：</strong>传入一个函数<code>cur =&gt; {...target route}</code>，接收当前路由cur为参数，可以根据当前路由的参数，动态重定向到对应的路由。</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 动态重定向路由配置：</span>
+  <span class="p">{</span>
+    <span class="c1">// /search/text 被动态重定向到 --&gt; /search?q=text</span>
+    <span class="nl">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/search/:searchText</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">redirect</span><span class="p">:</span> <span class="nx">cur</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="c1">// 方法接收当前路由作为参数****</span>
+      <span class="c1">// return 重定向的路由</span>
+      <span class="k">return</span> <span class="p">{</span> <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/search</span><span class="dl">'</span><span class="p">,</span> <span class="na">query</span><span class="p">:</span> <span class="p">{</span> <span class="na">q</span><span class="p">:</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">searchText</span> <span class="p">}</span> <span class="p">}</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+</code></pre></div></div>
+
+<h1 id="别名-alias">别名 alias</h1>
+
+<p>为当前路由设置别名，与当前路由具有相同的效果。</p>
+
+<p>可以是一个单独的路径字符串，也可以是一个由它们组成的数组（代表多个别名）。</p>
+
+<p>别名会如实显示在url中。</p>
+
+<p><strong>别名与重定向的区别：</strong></p>
+
+<p>别名没有重定向过程，与原路由是一样的效果，相当于配置了与原路由一模一样的多个路由；</p>
+<ul>
+  <li>重定向是在进入原路由后，又执行了跳转到另一个路由。</li>
+</ul>
+
+<h1 id="历史记录模式">历史记录模式</h1>
+
+<p>在router配置中的<code>history</code>选项设置。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">router</span> <span class="o">=</span> <span class="nx">createRouter</span><span class="p">({</span>
+    <span class="c1">// hash mode.</span>
+  <span class="na">history</span><span class="p">:</span> <span class="nx">createWebHashHistory</span><span class="p">(),</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<h2 id="1-hash模式默认">1. hash模式（默认）</h2>
+
+<p>在router配置项中的history选项，传入<code>createWebHashHistory()</code>。</p>
+
+<p><strong>hash模式的特点：</strong></p>
+
+<ol>
+  <li>url中存在一个<code>/#/</code>，#之后的部分都是<strong>hash部分，不会被传送到服务器</strong>（hash路由完全发生在前端）；</li>
+  <li>页面url的hash部分发生变化，不会引起页面的刷新；</li>
+  <li>hash部分发生变化，会新增一条记录到history，因此可以进行前进、后退操作；</li>
+  <li>服务器无法获得用户的实际url，用户请求的始终是#之前的url部分，因此在路由跳转、刷新后服务器无需进行任何配置，因为请求的都是同一个url；</li>
+  <li>每次点击触发路由，hash部分改变，但是并<strong>不会发送新的http请求，仅仅是在前端js层面执行了代码</strong>(进行了组件替换)，搜索引擎爬虫可能无法获取到替换后页面的内容；</li>
+</ol>
+
+<h2 id="2-history模式">2. history模式</h2>
+
+<p>在router配置项中的history选项，传入<code>createWebHistory()</code>。</p>
+
+<p><strong>history模式的特点：</strong></p>
+
+<ol>
+  <li>url中没有’#’，更为美观；</li>
+  <li><strong>全部url都会被传给服务器</strong>，进行对应的资源请求。因此服务器必须把<strong>所有可能用到的url都重定向到SPA根页面的html</strong>，否则一旦用户刷新页面，可能报错404；</li>
+  <li>通过history的<code>pushState()</code>和<code>replaceState()</code>方法实现修改路由（修改history记录，不会造成刷新），通过监听<code>popState</code>事件进行路由跳转操作；</li>
+</ol>
+
+<h1 id="路由懒加载">路由懒加载</h1>
+
+<p>通过动态引入组件<code>cosnt comp = import(component)</code>，实现让路由<strong>只有在被访问到的时候，才去加载组件</strong>。</p>
+
+<p>这可以提高页面的加载速度。</p>
+
+<p>只有在第一次访问对应路由时，执行加载对应的组件，加载完成后组件会被缓存，供再次使用。</p>
+
+<p><strong>全部路由，理论上都应该使用动态引入组件的懒加载模式。</strong></p>
+
+<h1 id="-导航守卫导航过程中的钩子">★ 导航守卫（导航过程中的钩子）</h1>
+
+<p>所有的导航守卫，都可以接受两个参数<code>(to, from)</code>，beforeEach和beforeRouteEnter可以接受第三个参数next。</p>
+
+<h2 id="1-全局守卫">1. 全局守卫</h2>
+
+<ul>
+  <li><strong>router.beforeEach</strong>： 每次导航被触发，在所有钩子最前面调用；</li>
+  <li><strong>router.beforeResolve</strong>：每次导航被触发，在<strong>异步组件被解析后，导航被确认之前</strong>调用；</li>
+  <li><strong>router.afterEach</strong>：每次导航被触发，在所有钩子最后面调用；</li>
+</ul>
+
+<h2 id="2-路由专属守卫">2. 路由专属守卫</h2>
+
+<p>在路由配置中，可以为某一路由单独配置自己的守卫。</p>
+
+<ul>
+  <li><strong>beforeEnter</strong>: 在该路由进入前调用；</li>
+</ul>
+
+<h2 id="3-为组件单独配置路由守卫">3. 为组件单独配置路由守卫</h2>
+
+<p>组件内，可以单独配置专属于这个组件的路由守卫，在组件被路由加载后调用。</p>
+
+<ul>
+  <li><strong>beforeRouteEnter</strong>: 组件已确定被路由加载，在路由执行之前调用；</li>
+  <li><strong>beforeRouteUpdate</strong>: 当路由发生变动，但是组件被重复使用的时候调用；</li>
+  <li><strong>beforeRouteLeave</strong>: 当渲染该组件的路由，即将跳转到其他路由时调用。</li>
+</ul>
+
+<h2 id="4-路由守卫调用时序">4. 路由守卫调用时序</h2>
+
+<ol>
+  <li>Navigation triggered.</li>
+  <li>Call <strong>beforeRouteLeave</strong> guards in deactivated components.</li>
+  <li>Call global <strong>beforeEach</strong> guards.</li>
+  <li>Call <strong>beforeRouteUpdate</strong> guards in reused components.</li>
+  <li>Call <strong>beforeEnter</strong> in route configs.</li>
+  <li>Resolve async route components.</li>
+  <li>Call <strong>beforeRouteEnter</strong> in activated components.</li>
+  <li>Call global <strong>beforeResolve</strong> guards.</li>
+  <li>Navigation is confirmed.</li>
+  <li>Call global <strong>afterEach</strong> hooks.</li>
+  <li>DOM updates triggered.</li>
+  <li>Call callbacks passed to <strong>next in beforeRouteEnter</strong> guards with instantiated instances.</li>
+</ol>
+
+<h1 id="路由元数据-meta">路由元数据 meta</h1>
+
+<p>配置路由的时候，可以传入一个<code>meta</code>属性，为路由添加一些额外的数据。</p>
+
+<p>因此，可以在导航守卫执行的时候，访问to路由或from路由的元数据，来针对性执行对应的逻辑。</p>
+
+<h1 id="导航--异步获取数据">导航 &amp; 异步获取数据</h1>
+
+<p><strong>导航完成后获取数据</strong>和<strong>导航完成前获取数据</strong>都是可以的。</p>
+
+<blockquote>
+  <p><strong>导航完成之后获取</strong>：先完成导航，然后在接下来的组件生命周期钩子中获取数据（比如<code>beforeCreate</code>或<code>created</code>）。在数据获取期间显示“加载中”之类的指示。</p>
+
+  <p><strong>导航完成之前获取</strong>：导航完成前，在<code>beforeRouteEnter</code>钩子中获取数据，在数据获取成功后执行导航。</p>
+</blockquote>
+
+<h1 id="组合式api">组合式API</h1>
+
+<p>组合式 API中使用Vue-Router，需要从<code>vue-router</code>引入方法：</p>
+
+<ul>
+  <li><strong>useRouter</strong>： 返回<code>this.$router</code>;</li>
+  <li><strong>useRoute</strong>： 返回<code>this.$route</code>；</li>
+</ul>
+
+<h1 id="路由后的滚动行为">路由后的滚动行为</h1>
+
+<p>router配置的<code>scrollBehavior</code>选项，可以配置路由跳转后的默认滚动行为（位置，滚动是否顺滑等）。</p>
+
+<p><a href="https://next.router.vuejs.org/zh/guide/advanced/scroll-behavior.html">滚动行为</a></p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">router</span> <span class="o">=</span> <span class="nx">createRouter</span><span class="p">({</span>
+  <span class="nx">scrollBehavior</span><span class="p">(</span><span class="nx">to</span><span class="p">,</span> <span class="k">from</span><span class="p">,</span> <span class="nx">savedPosition</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 始终滚动到顶部</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="na">top</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span>
+  <span class="p">},</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Vue"><span>Vue</span></a>
+      
+      <a id="tags" href="Vue-Router"><span>Vue-Router</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/09/02/%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95-Source-Map/" title="开发调试：Source Map">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/09/02/Vuex%E7%AC%94%E8%AE%B0/" title="Vuex笔记">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/09/02/Vue-Router%E7%AC%94%E8%AE%B0/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

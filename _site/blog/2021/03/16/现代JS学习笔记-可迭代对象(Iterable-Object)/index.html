@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>现代JS学习笔记：可迭代对象(Iterable Object) | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="现代JS学习笔记：可迭代对象(Iterable Object)" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="学习内容：《现代JavaScript教程》" />
+<meta property="og:description" content="学习内容：《现代JavaScript教程》" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/03/16/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1(Iterable-Object)/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/03/16/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1(Iterable-Object)/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-16T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"学习内容：《现代JavaScript教程》","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/03/16/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1(Iterable-Object)/","headline":"现代JS学习笔记：可迭代对象(Iterable Object)","dateModified":"2021-03-16T00:00:00+08:00","datePublished":"2021-03-16T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/03/16/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1(Iterable-Object)/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">现代JS学习笔记：可迭代对象(Iterable Object)</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Mar 16, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>学习内容：<a href="https://zh.javascript.info/">《现代JavaScript教程》</a></p>
+</blockquote>
+
+<h1 id="可迭代对象-iterable-object">可迭代对象 Iterable Object</h1>
+
+<h2 id="1-同步可迭代对象">1	同步可迭代对象</h2>
+<p>是数组的泛化。这个概念是说任何对象都可以被定制为可在 for..of 循环中使用的对象。</p>
+
+<p>为了让 range 对象可迭代（也就让 for..of 可以运行）我们需要为对象添加一个名为 Symbol.iterator 的方法（一个专门用于使对象可迭代的内置 symbol）。</p>
+
+<ul>
+  <li>当 for..of 循环启动时，它会调用这个方法（如果没找到，就会报错）。这个方法必须返回一个 迭代器（iterator） —— 一个有 next 方法的对象；</li>
+  <li>从此开始，for..of 仅适用于这个被返回的对象；</li>
+  <li>当 for..of 循环希望取得下一个数值，它就调用这个对象的 next() 方法；</li>
+  <li>next() 方法返回的结果的格式必须是 <code>{done: Boolean, value: any}</code>，当 done=true 时，表示迭代结束，否则 value 是下一个值。</li>
+</ul>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Queue</span><span class="p">(</span><span class="nx">num</span><span class="p">){</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">num</span> <span class="o">=</span> <span class="nx">num</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">[</span><span class="nb">Symbol</span><span class="p">.</span><span class="nx">iterator</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(){</span>  <span class="c1">//★这里开始定义了迭代器函数</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">current</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="na">total</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">num</span><span class="p">,</span>
+      <span class="nx">next</span><span class="p">(){</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">current</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">total</span><span class="p">){</span>
+          <span class="k">this</span><span class="p">.</span><span class="nx">current</span><span class="o">++</span><span class="p">;</span>
+          <span class="k">return</span> <span class="p">{</span>
+            <span class="na">done</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="na">value</span><span class="p">:</span> <span class="dl">'</span><span class="s1">人</span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">current</span>
+          <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+          <span class="k">return</span> <span class="p">{</span>
+            <span class="na">done</span><span class="p">:</span> <span class="kc">true</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Queue</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">item</span> <span class="k">of</span> <span class="nx">a</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span>
+<span class="p">}</span> <span class="c1">//人1人2人3人4人5</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>！注意：为什么使用for…of遍历一个数组，无法修改原数组的内容？</strong></p>
+
+  <p>数组作为可迭代对象，本质上使用的是next()函数返回的新对象里的value属性，所以使用for…of遍历数组获取的是另一个对象的属性,直接修改遍历结果，无法影响到原对象。</p>
+
+  <p>相当于使用可迭代对象方法进行迭代操作是安全的，永远不会修改原对象内容。</p>
+</blockquote>
+
+<h2 id="2-可迭代遍历与类数组对象的区别">2	★可迭代（遍历）与类数组对象的区别</h2>
+
+<p><strong>可迭代对象</strong>，指的是部署了Symbol.iterator函数，能用for…of进行遍历的对象。</p>
+
+<blockquote>
+  <p>内置可迭代对象：String、Array、Map、Set</p>
+</blockquote>
+
+<p><strong>类数组对象</strong>，指的是具有length属性，并且具有数字索引的对象。</p>
+
+<blockquote>
+  <p>可迭代对象和类数组对象，都可以用Array.from(iterable)，显式转化为‘真’数组。</p>
+</blockquote>
+
+<h2 id="3-异步可迭代对象">3	异步可迭代对象</h2>
+
+<p>为对象设置<code>[Symbol.iterator]</code>方法，可以使用for…of循环对对象进行迭代。前提是迭代过程是同步的，而不是异步的。</p>
+
+<p>如果每次迭代存在异步过程，比如每次迭代都要向服务器请求信息，则需要使用另外的迭代方法。</p>
+
+<p>要使对象异步迭代：</p>
+
+<ul>
+  <li>使用 Symbol.asyncIterator 取代 Symbol.iterator。</li>
+  <li>next() 方法应该返回一个 promise（带有下一个值，并且状态为 fulfilled）。关键字 async 可以实现这一点，我们可以简单地使用 async next()。</li>
+  <li>我们应该使用 for await (let item of iterable) 循环来迭代这样的对象。(注意关键字 await。)</li>
+</ul>
+
+<blockquote>
+  <p><strong>注意：</strong>
+异步的迭代对象，无法使用…spread语法展开。因为默认使用[Symbol.iterator]而不是[Symbol.asyncIterator]，如果不存在会报错。</p>
+</blockquote>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="JavaScript"><span>JavaScript</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/03/11/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%90%86%E8%A7%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF-%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1/" title="现代JS学习笔记：理解浏览器事件循环——宏任务和微任务">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/03/20/JS%E4%B8%AD%E6%8C%89%E5%80%BC%E4%BC%A0%E9%80%92%E5%92%8C%E6%8C%89%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92%E7%9A%84%E5%8E%9F%E7%90%86/" title="JavaScript中按值传递和按引用传递的原理">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/03/16/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8F%AF%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1(Iterable-Object)/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

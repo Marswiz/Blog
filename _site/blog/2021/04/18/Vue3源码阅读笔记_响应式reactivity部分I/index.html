@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Vue3源码阅读笔记——响应式reactivity部分I:effect/track/trigger | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Vue3源码阅读笔记——响应式reactivity部分I:effect/track/trigger" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="尝试探索Vue3源码： 响应式reactivity部分。 原项目目录： /packages/reactivity" />
+<meta property="og:description" content="尝试探索Vue3源码： 响应式reactivity部分。 原项目目录： /packages/reactivity" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/04/18/Vue3%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0_%E5%93%8D%E5%BA%94%E5%BC%8Freactivity%E9%83%A8%E5%88%86I/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/04/18/Vue3%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0_%E5%93%8D%E5%BA%94%E5%BC%8Freactivity%E9%83%A8%E5%88%86I/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-04-18T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"尝试探索Vue3源码： 响应式reactivity部分。 原项目目录： /packages/reactivity","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/04/18/Vue3%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0_%E5%93%8D%E5%BA%94%E5%BC%8Freactivity%E9%83%A8%E5%88%86I/","headline":"Vue3源码阅读笔记——响应式reactivity部分I:effect/track/trigger","dateModified":"2021-04-18T00:00:00+08:00","datePublished":"2021-04-18T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/04/18/Vue3%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0_%E5%93%8D%E5%BA%94%E5%BC%8Freactivity%E9%83%A8%E5%88%86I/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">Vue3源码阅读笔记——响应式reactivity部分I:effect/track/trigger</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Apr 18, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>尝试探索Vue3源码： 响应式reactivity部分。</p>
+
+  <p>原项目目录： /packages/reactivity</p>
+</blockquote>
+
+<h1 id="1-effectts">1. effect.ts</h1>
+
+<h2 id="11-定义depkeytodepmap和targetmap的接口类型">1.1 定义dep、keyToDepMap和targetMap的接口类型</h2>
+
+<p>可以看到，这里：</p>
+
+<ul>
+  <li>dep被定义为由ReactiveEffect组成的Set集合；</li>
+  <li>KeyToDepMap被定义为&lt;any,Dep&gt;类型构成的Map；</li>
+  <li>targetMap为一WeakMap实例，其内部元素类型为&lt;any, KeyToDepMap&gt;。</li>
+</ul>
+
+<p>执行顺序是： targetMap -&gt; keyToDepMap -&gt; dep</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">type</span> <span class="nx">Dep</span> <span class="o">=</span> <span class="nb">Set</span><span class="o">&lt;</span><span class="nx">ReactiveEffect</span><span class="o">&gt;</span>
+<span class="nx">type</span> <span class="nx">KeyToDepMap</span> <span class="o">=</span> <span class="nb">Map</span><span class="o">&lt;</span><span class="nx">any</span><span class="p">,</span> <span class="nx">Dep</span><span class="o">&gt;</span>
+<span class="kd">const</span> <span class="nx">targetMap</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">WeakMap</span><span class="o">&lt;</span><span class="nx">any</span><span class="p">,</span> <span class="nx">KeyToDepMap</span><span class="o">&gt;</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="12-reactiveeffect接口定义">1.2 reactiveEffect接口定义</h2>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kr">interface</span> <span class="nx">ReactiveEffect</span><span class="o">&lt;</span><span class="nx">T</span> <span class="o">=</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="p">():</span> <span class="nx">T</span> <span class="c1">//直接执行的定义</span>
+  <span class="na">_isEffect</span><span class="p">:</span> <span class="kc">true</span> <span class="c1">// 判断是否为effect的标志，reactiveEffect永远为true. </span>
+  <span class="na">id</span><span class="p">:</span> <span class="nx">number</span>  <span class="c1">// reactiveEffect 的 ID</span>
+  <span class="na">active</span><span class="p">:</span> <span class="nx">boolean</span> <span class="c1">// reactiveEffect是否为活动状态</span>
+  <span class="na">raw</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">T</span> <span class="c1">// reactiveEffect内effect的原始函数</span>
+  <span class="na">deps</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">Dep</span><span class="o">&gt;</span> <span class="c1">// 保存reactiveEffect在那些Dep中注册的信息，用&lt;dep&gt;类型的Array存放</span>
+  <span class="na">options</span><span class="p">:</span> <span class="nx">ReactiveEffectOptions</span> <span class="c1">// reactiveEffect的选项配置</span>
+  <span class="na">allowRecurse</span><span class="p">:</span> <span class="nx">boolean</span> <span class="c1">// 是否允许递归reactiveEffect？ </span>
+<span class="p">}</span>
+</code></pre></div></div>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kr">interface</span> <span class="nx">ReactiveEffectOptions</span> <span class="p">{</span>
+  <span class="nx">lazy</span><span class="p">?:</span> <span class="nx">boolean</span> <span class="c1">// reactiveEffect是否是懒执行的</span>
+  <span class="nx">scheduler</span><span class="p">?:</span> <span class="p">(</span><span class="nx">job</span><span class="p">:</span> <span class="nx">ReactiveEffect</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span>
+  <span class="nx">onTrack</span><span class="p">?:</span> <span class="p">(</span><span class="nx">event</span><span class="p">:</span> <span class="nx">DebuggerEvent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span>
+  <span class="nx">onTrigger</span><span class="p">?:</span> <span class="p">(</span><span class="nx">event</span><span class="p">:</span> <span class="nx">DebuggerEvent</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span>
+  <span class="nx">onStop</span><span class="p">?:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="k">void</span>
+  <span class="nx">allowRecurse</span><span class="p">?:</span> <span class="nx">boolean</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="13-createreactiveeffect函数">1.3 createReactiveEffect函数</h2>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// effectStack为当前所有ReactiveEffect组成的数组，默认初始值为空；</span>
+<span class="kd">const</span> <span class="nx">effectStack</span><span class="p">:</span> <span class="nx">ReactiveEffect</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">// activeEffect声明，取值类型为ReactiveEffect或undefined，没设置初始值（所以是undefined）；</span>
+<span class="kd">let</span> <span class="nx">activeEffect</span><span class="p">:</span> <span class="nx">ReactiveEffect</span> <span class="o">|</span> <span class="kc">undefined</span>
+</code></pre></div></div>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">createReactiveEffect</span><span class="o">&lt;</span><span class="nx">T</span> <span class="o">=</span> <span class="nx">any</span><span class="o">&gt;</span><span class="p">(</span>
+  <span class="nx">fn</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">T</span><span class="p">,</span> <span class="c1">// Effect记录的原始操作fn</span>
+  <span class="nx">options</span><span class="p">:</span> <span class="nx">ReactiveEffectOptions</span>  <span class="c1">// 配置选项</span>
+<span class="p">):</span> <span class="nx">ReactiveEffect</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>
+
+<span class="c1">// 返回的effect：是一个函数，可以被执行。</span>
+  <span class="kd">const</span> <span class="nx">effect</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">reactiveEffect</span><span class="p">():</span> <span class="nx">unknown</span> <span class="p">{</span>
+<span class="c1">// 这里定义了返回的effect这个函数，在后续被执行时候，发生的事情。</span>
+<span class="c1">// 当这个effect不是active激活状态，按options.scheduler是否为true，决定返回effect为undefined或执行fn()；</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">effect</span><span class="p">.</span><span class="nx">active</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">options</span><span class="p">.</span><span class="nx">scheduler</span> <span class="p">?</span> <span class="kc">undefined</span> <span class="p">:</span> <span class="nx">fn</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="c1">// 当执行时的effectStack栈中，还没有包含这个Effect时：（已包含不进行任何操作）</span>
+<span class="c1">// 1. 先在所有Deps中彻底清除这个effect，以防重复注册；</span>
+<span class="c1">// 2. 尝试重新track这个effect，并且把它重新push到effectStack，并且设置它为当前的activeEffect，然后执行effect原始方法fn();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">effectStack</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">effect</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nx">cleanup</span><span class="p">(</span><span class="nx">effect</span><span class="p">)</span>
+      <span class="k">try</span> <span class="p">{</span>
+        <span class="nx">enableTracking</span><span class="p">()</span>
+        <span class="nx">effectStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">effect</span><span class="p">)</span>
+        <span class="nx">activeEffect</span> <span class="o">=</span> <span class="nx">effect</span>
+        <span class="k">return</span> <span class="nx">fn</span><span class="p">()</span>
+      <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+        <span class="nx">effectStack</span><span class="p">.</span><span class="nx">pop</span><span class="p">()</span>
+        <span class="nx">resetTracking</span><span class="p">()</span>
+        <span class="nx">activeEffect</span> <span class="o">=</span> <span class="nx">effectStack</span><span class="p">[</span><span class="nx">effectStack</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">as</span> <span class="nx">ReactiveEffect</span> <span class="c1">// effect函数接口类型为ReactiveEffect，也就是effect函数上具有ReactiiveEffect接口定义的各种属性（函数属性）。</span>
+<span class="c1">// 下面设置了这个返回的effect函数的函数属性。</span>
+  <span class="nx">effect</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">uid</span><span class="o">++</span> <span class="c1">// 每次uid+1,effect从0开始每个有自己的id。</span>
+  <span class="nx">effect</span><span class="p">.</span><span class="nx">allowRecurse</span> <span class="o">=</span> <span class="o">!!</span><span class="nx">options</span><span class="p">.</span><span class="nx">allowRecurse</span> <span class="c1">// 按配置决定effect是否可递归。</span>
+  <span class="nx">effect</span><span class="p">.</span><span class="nx">_isEffect</span> <span class="o">=</span> <span class="kc">true</span>
+  <span class="nx">effect</span><span class="p">.</span><span class="nx">active</span> <span class="o">=</span> <span class="kc">true</span> 
+  <span class="nx">effect</span><span class="p">.</span><span class="nx">raw</span> <span class="o">=</span> <span class="nx">fn</span> <span class="c1">// effect记录的原始方法fn</span>
+  <span class="nx">effect</span><span class="p">.</span><span class="nx">deps</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">// 初始Effect不注册在任何dep中</span>
+  <span class="nx">effect</span><span class="p">.</span><span class="nx">options</span> <span class="o">=</span> <span class="nx">options</span> <span class="c1">// effect也记录了创建时的配置对象信息</span>
+  <span class="k">return</span> <span class="nx">effect</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="14-effect相关函数定义">1.4 effect相关函数定义</h2>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">function</span> <span class="nx">effect</span><span class="o">&lt;</span><span class="nx">T</span> <span class="o">=</span> <span class="nx">any</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="c1">// 传入两个参数： 一个是fn函数，是effect需要运行的主体函数；</span>
+<span class="c1">// 另一个是options，默认值为空对象，是ReactiveEffectOptions类型的配置对象，为这个effect进行配置。</span>
+  <span class="nx">fn</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">T</span><span class="p">,</span>
+  <span class="nx">options</span><span class="p">:</span> <span class="nx">ReactiveEffectOptions</span> <span class="o">=</span> <span class="nx">EMPTY_OBJ</span>
+<span class="p">):</span> <span class="nx">ReactiveEffect</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>  <span class="c1">//返回值是reactiveEffect接口类型的</span>
+<span class="c1">// fn可能本身就是effect类型，因为这里需要原始fn函数，所以读取它的原始函数</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">isEffect</span><span class="p">(</span><span class="nx">fn</span><span class="p">))</span> <span class="p">{</span> <span class="c1">//如果fn是一个Effect,则读取它的原始函数</span>
+    <span class="nx">fn</span> <span class="o">=</span> <span class="nx">fn</span><span class="p">.</span><span class="nx">raw</span>
+  <span class="p">}</span>
+  <span class="kd">const</span> <span class="nx">effect</span> <span class="o">=</span> <span class="nx">createReactiveEffect</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="c1">//使用fn和options配置调用createReactiveEffect,创建effect(一个带有ReactiveEffect接口类型的函数)用于返回值。</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">options</span><span class="p">.</span><span class="nx">lazy</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//非懒执行的effect，创建后立即执行一次</span>
+    <span class="nx">effect</span><span class="p">()</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">effect</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>停止一个effect函数:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">function</span> <span class="nx">stop</span><span class="p">(</span><span class="nx">effect</span><span class="p">:</span> <span class="nx">ReactiveEffect</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">// 当effect为Active状态时：</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">effect</span><span class="p">.</span><span class="nx">active</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">// 先彻底清除掉这个effect</span>
+    <span class="nx">cleanup</span><span class="p">(</span><span class="nx">effect</span><span class="p">)</span> 
+<span class="c1">// 如果Effect有手动停止函数onStop，就运行一下。</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">effect</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">onStop</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">effect</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">onStop</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="c1">// 让这个effect的Active属性为false</span>
+    <span class="nx">effect</span><span class="p">.</span><span class="nx">active</span> <span class="o">=</span> <span class="kc">false</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// cleanup function: 用来彻底清除一个effect</span>
+<span class="kd">function</span> <span class="nx">cleanup</span><span class="p">(</span><span class="nx">effect</span><span class="p">:</span> <span class="nx">ReactiveEffect</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">// 1. 先提取包含这个effect的所有dep</span>
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">deps</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">effect</span>
+<span class="c1">// 2. 遍历清除所有dep内的这个effect</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">deps</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">deps</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">deps</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="k">delete</span><span class="p">(</span><span class="nx">effect</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="c1">// 3. 手动销毁deps对象，腾出内存；</span>
+    <span class="nx">deps</span><span class="p">.</span><span class="nx">length</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="15-track相关函数">1.5 track相关函数</h2>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 设置当前是否可以进行Track操作的总开关：shouldTrack</span>
+<span class="kd">let</span> <span class="nx">shouldTrack</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="c1">// 记录track的历史</span>
+<span class="kd">const</span> <span class="nx">trackStack</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1">// 终止Track方法</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">pauseTracking</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">trackStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">shouldTrack</span><span class="p">)</span>
+  <span class="nx">shouldTrack</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="p">}</span>
+
+<span class="c1">// 开启track方法</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">enableTracking</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">trackStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">shouldTrack</span><span class="p">)</span>
+  <span class="nx">shouldTrack</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="p">}</span>
+
+<span class="c1">// 返回上一个track操作状态</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">resetTracking</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">last</span> <span class="o">=</span> <span class="nx">trackStack</span><span class="p">.</span><span class="nx">pop</span><span class="p">()</span>
+  <span class="nx">shouldTrack</span> <span class="o">=</span> <span class="nx">last</span> <span class="o">===</span> <span class="kc">undefined</span> <span class="p">?</span> <span class="kc">true</span> <span class="p">:</span> <span class="nx">last</span>
+<span class="p">}</span>
+
+<span class="c1">// 定义Track函数： 用于track一个effect。</span>
+<span class="c1">// 传入的参数有： 1. target： track的对象  2. type: track的操作类型，定义如下  3. key： track的target的key</span>
+<span class="c1">// export const enum TrackOpTypes {</span>
+<span class="c1">//  GET = 'get',</span>
+<span class="c1">//  HAS = 'has',</span>
+<span class="c1">//  ITERATE = 'iterate'</span>
+<span class="c1">// }</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">track</span><span class="p">(</span><span class="nx">target</span><span class="p">:</span> <span class="nx">object</span><span class="p">,</span> <span class="nx">type</span><span class="p">:</span> <span class="nx">TrackOpTypes</span><span class="p">,</span> <span class="nx">key</span><span class="p">:</span> <span class="nx">unknown</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">// 这里先进行如下两个判断：</span>
+<span class="c1">// ① ！shouldTrack 为判定当前不允许track操作</span>
+<span class="c1">// ② activeEffect === undefined 为判定当前没有活跃状态的effect，当然这时就无法进行track，因为无effect可track.</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">shouldTrack</span> <span class="o">||</span> <span class="nx">activeEffect</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span>
+  <span class="p">}</span>
+<span class="c1">// 获取需要track的target对象对应的depsMap，没有则创建新map。</span>
+  <span class="kd">let</span> <span class="nx">depsMap</span> <span class="o">=</span> <span class="nx">targetMap</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">depsMap</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">targetMap</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="p">(</span><span class="nx">depsMap</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Map</span><span class="p">()))</span>
+  <span class="p">}</span>
+<span class="c1">// 在depsMap中通过key获取到对应的dep，没有则创建</span>
+  <span class="kd">let</span> <span class="nx">dep</span> <span class="o">=</span> <span class="nx">depsMap</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">dep</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">depsMap</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="p">(</span><span class="nx">dep</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Set</span><span class="p">()))</span>
+  <span class="p">}</span>
+<span class="c1">// 当dep中还没注册(track)当前活跃的effect(activeEffect时)，执行track操作。具体看下面每一步。</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">dep</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">activeEffect</span><span class="p">))</span> <span class="p">{</span>
+<span class="c1">// 1. 在Dep中添加这个effect，</span>
+    <span class="nx">dep</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">activeEffect</span><span class="p">)</span>
+<span class="c1">// 2. 在当前track的effect中，添加注册dep的信息</span>
+    <span class="nx">activeEffect</span><span class="p">.</span><span class="nx">deps</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">dep</span><span class="p">)</span>
+<span class="c1">// △3. 在开发环境：当当前的effect配置中具有onTrack方法时，表明开发者需要在此时执行这个onTrack操作。</span>
+<span class="c1">// 此时传入相关的对象，执行onTrack方法。</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">__DEV__</span> <span class="o">&amp;&amp;</span> <span class="nx">activeEffect</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">onTrack</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">activeEffect</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">onTrack</span><span class="p">({</span>
+        <span class="na">effect</span><span class="p">:</span> <span class="nx">activeEffect</span><span class="p">,</span>
+        <span class="nx">target</span><span class="p">,</span>
+        <span class="nx">type</span><span class="p">,</span>
+        <span class="nx">key</span>
+      <span class="p">})</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="16-trigger函数">1.6 trigger函数</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">function</span> <span class="nx">trigger</span><span class="p">(</span>
+  <span class="nx">target</span><span class="p">:</span> <span class="nx">object</span><span class="p">,</span>
+  <span class="nx">type</span><span class="p">:</span> <span class="nx">TriggerOpTypes</span><span class="p">,</span>
+  <span class="nx">key</span><span class="p">?:</span> <span class="nx">unknown</span><span class="p">,</span>
+  <span class="nx">newValue</span><span class="p">?:</span> <span class="nx">unknown</span><span class="p">,</span>
+  <span class="nx">oldValue</span><span class="p">?:</span> <span class="nx">unknown</span><span class="p">,</span>
+  <span class="nx">oldTarget</span><span class="p">?:</span> <span class="nb">Map</span><span class="o">&lt;</span><span class="nx">unknown</span><span class="p">,</span> <span class="nx">unknown</span><span class="o">&gt;</span> <span class="o">|</span> <span class="nb">Set</span><span class="o">&lt;</span><span class="nx">unknown</span><span class="o">&gt;</span>
+<span class="p">)</span> <span class="p">{</span>
+<span class="c1">// 获取target对应的depsMap</span>
+  <span class="kd">const</span> <span class="nx">depsMap</span> <span class="o">=</span> <span class="nx">targetMap</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">depsMap</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// never been tracked： 从未被track的effect，不需做任何操作直接返回。</span>
+    <span class="k">return</span>
+  <span class="p">}</span>
+
+<span class="c1">// 声明需要被触发的所有Effect集合：effects</span>
+  <span class="kd">const</span> <span class="nx">effects</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Set</span><span class="o">&lt;</span><span class="nx">ReactiveEffect</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="c1">// 添加effect到effects的函数，传入一个dep Set。</span>
+  <span class="kd">const</span> <span class="nx">add</span> <span class="o">=</span> <span class="p">(</span><span class="nx">effectsToAdd</span><span class="p">:</span> <span class="nb">Set</span><span class="o">&lt;</span><span class="nx">ReactiveEffect</span><span class="o">&gt;</span> <span class="o">|</span> <span class="kc">undefined</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">effectsToAdd</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">effectsToAdd</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">effect</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">effect</span> <span class="o">!==</span> <span class="nx">activeEffect</span> <span class="o">||</span> <span class="nx">effect</span><span class="p">.</span><span class="nx">allowRecurse</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">effects</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">effect</span><span class="p">)</span>
+        <span class="p">}</span>
+      <span class="p">})</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+<span class="c1">// 当触发操作类型是CLEAR时，重新触发Target全部的effect。</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">===</span> <span class="nx">TriggerOpTypes</span><span class="p">.</span><span class="nx">CLEAR</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// collection being cleared</span>
+    <span class="c1">// trigger all effects for target</span>
+    <span class="nx">depsMap</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">add</span><span class="p">)</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">key</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">length</span><span class="dl">'</span> <span class="o">&amp;&amp;</span> <span class="nx">isArray</span><span class="p">(</span><span class="nx">target</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">//这里是修改数组长度对应的触发操作</span>
+    <span class="nx">depsMap</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">dep</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">key</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">length</span><span class="dl">'</span> <span class="o">||</span> <span class="nx">key</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="nx">newValue</span> <span class="k">as</span> <span class="nx">number</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">add</span><span class="p">(</span><span class="nx">dep</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">})</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// schedule runs for SET | ADD | DELETE</span>
+       <span class="c1">// 其他操作</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">key</span> <span class="o">!==</span> <span class="k">void</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">add</span><span class="p">(</span><span class="nx">depsMap</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span>
+    <span class="p">}</span>
+
+    <span class="c1">// also run for iteration key on ADD | DELETE | Map.SET</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="nx">TriggerOpTypes</span><span class="p">.</span><span class="na">ADD</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">target</span><span class="p">))</span> <span class="p">{</span>
+          <span class="nx">add</span><span class="p">(</span><span class="nx">depsMap</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">ITERATE_KEY</span><span class="p">))</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">isMap</span><span class="p">(</span><span class="nx">target</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nx">add</span><span class="p">(</span><span class="nx">depsMap</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">MAP_KEY_ITERATE_KEY</span><span class="p">))</span>
+          <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">isIntegerKey</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="p">{</span>
+          <span class="c1">// new index added to array -&gt; length changes</span>
+          <span class="nx">add</span><span class="p">(</span><span class="nx">depsMap</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">length</span><span class="dl">'</span><span class="p">))</span>
+        <span class="p">}</span>
+        <span class="k">break</span>
+      <span class="k">case</span> <span class="nx">TriggerOpTypes</span><span class="p">.</span><span class="na">DELETE</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">target</span><span class="p">))</span> <span class="p">{</span>
+          <span class="nx">add</span><span class="p">(</span><span class="nx">depsMap</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">ITERATE_KEY</span><span class="p">))</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">isMap</span><span class="p">(</span><span class="nx">target</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nx">add</span><span class="p">(</span><span class="nx">depsMap</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">MAP_KEY_ITERATE_KEY</span><span class="p">))</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">break</span>
+      <span class="k">case</span> <span class="nx">TriggerOpTypes</span><span class="p">.</span><span class="na">SET</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">isMap</span><span class="p">(</span><span class="nx">target</span><span class="p">))</span> <span class="p">{</span>
+          <span class="nx">add</span><span class="p">(</span><span class="nx">depsMap</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">ITERATE_KEY</span><span class="p">))</span>
+        <span class="p">}</span>
+        <span class="k">break</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">run</span> <span class="o">=</span> <span class="p">(</span><span class="na">effect</span><span class="p">:</span> <span class="nx">ReactiveEffect</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">__DEV__</span> <span class="o">&amp;&amp;</span> <span class="nx">effect</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">onTrigger</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">effect</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">onTrigger</span><span class="p">({</span>
+        <span class="nx">effect</span><span class="p">,</span>
+        <span class="nx">target</span><span class="p">,</span>
+        <span class="nx">key</span><span class="p">,</span>
+        <span class="nx">type</span><span class="p">,</span>
+        <span class="nx">newValue</span><span class="p">,</span>
+        <span class="nx">oldValue</span><span class="p">,</span>
+        <span class="nx">oldTarget</span>
+      <span class="p">})</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">effect</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">scheduler</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">effect</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">scheduler</span><span class="p">(</span><span class="nx">effect</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">effect</span><span class="p">()</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="nx">effects</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">run</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Vue"><span>Vue</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/04/12/axios%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" title="axios基本操作">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/04/19/Vue3%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0_%E5%93%8D%E5%BA%94%E5%BC%8Freactivity%E9%83%A8%E5%88%86II/" title="Vue3源码阅读笔记——响应式reactivity部分II:reactive,ref等">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/04/18/Vue3%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0_%E5%93%8D%E5%BA%94%E5%BC%8Freactivity%E9%83%A8%E5%88%86I/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

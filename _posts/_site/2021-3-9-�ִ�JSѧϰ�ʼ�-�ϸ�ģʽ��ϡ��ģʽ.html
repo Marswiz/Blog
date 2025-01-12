@@ -1,0 +1,40 @@
+<blockquote>
+  <p>学习内容：<a href="https://zh.javascript.info/">《现代JavaScript教程》</a></p>
+</blockquote>
+
+<h1 id="严格模式">严格模式</h1>
+<h2 id="声明严格模式">声明严格模式</h2>
+<p>在整个脚本文件首部，或函数体开头，声明：</p>
+
+<p><code>“use strict” 或 ‘use strict’</code></p>
+
+<p>可以使整个脚本或这个函数体内部，使用现代的JS严格模式。</p>
+
+<blockquote>
+  <p><strong>！Attention</strong></p>
+
+  <p>① ‘use strict’或“use strict”只能出现在脚本最顶部，只有注释可以出现在它上面。</p>
+
+  <p>② 没有办法取消严格模式。一旦启用，没有取消的方法。</p>
+
+  <p>③ classes和modules会自动启用严格模式，无需声明。</p>
+
+  <p>④ 除非为了兼容代码，否则最好在首部声明严格模式，以规范编程。</p>
+</blockquote>
+
+<h2 id="严格模式与稀松sloppy模式的区别">严格模式与稀松（Sloppy）模式的区别</h2>
+<p>JS代码默认是Sloppy Mode稀松模式的，它对应使用了’use strict’的严格模式。严格模式的变更如下：</p>
+<blockquote>
+
+  <ol>
+    <li>变量必须先声明，再使用。否则报错；</li>
+    <li>原有的静默错误，都会显式地报错：比如给只读属性、不可写属性赋值，都会报错；</li>
+    <li>试图删除不可删除的属性，会抛出异常。比如： delete Object.prototype；</li>
+    <li>严格模式下，函数的参数名不能重复；比如： function fun1(a,a,b){}会报错；</li>
+    <li>严格模式下，八进制语法不可用。比如：0o67；</li>
+    <li>严格模式下，禁止给原始类型设置属性。比如： true.good，123.type。</li>
+    <li>禁止删除声明的变量。比如：var a; delete a;</li>
+    <li>禁止使用with；</li>
+  </ol>
+</blockquote>
+

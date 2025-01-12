@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>前端防抖(debounce)和节流(throttle) | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="前端防抖(debounce)和节流(throttle)" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="防抖和节流，在本质上都是为了防止函数被多次频繁触发，采取的保护措施。 防抖和节流的区别：在约定的时间间隔内重复执行函数，是否重新计时。节流不会重新计时，而防抖会。" />
+<meta property="og:description" content="防抖和节流，在本质上都是为了防止函数被多次频繁触发，采取的保护措施。 防抖和节流的区别：在约定的时间间隔内重复执行函数，是否重新计时。节流不会重新计时，而防抖会。" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/03/31/%E5%89%8D%E7%AB%AF%E9%98%B2%E6%8A%96(debounce)%E5%92%8C%E8%8A%82%E6%B5%81(throttle)/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/03/31/%E5%89%8D%E7%AB%AF%E9%98%B2%E6%8A%96(debounce)%E5%92%8C%E8%8A%82%E6%B5%81(throttle)/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-31T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"防抖和节流，在本质上都是为了防止函数被多次频繁触发，采取的保护措施。 防抖和节流的区别：在约定的时间间隔内重复执行函数，是否重新计时。节流不会重新计时，而防抖会。","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/03/31/%E5%89%8D%E7%AB%AF%E9%98%B2%E6%8A%96(debounce)%E5%92%8C%E8%8A%82%E6%B5%81(throttle)/","headline":"前端防抖(debounce)和节流(throttle)","dateModified":"2021-03-31T00:00:00+08:00","datePublished":"2021-03-31T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/03/31/%E5%89%8D%E7%AB%AF%E9%98%B2%E6%8A%96(debounce)%E5%92%8C%E8%8A%82%E6%B5%81(throttle)/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">前端防抖(debounce)和节流(throttle)</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Mar 31, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>防抖和节流，在本质上都是为了防止函数被多次频繁触发，采取的保护措施。</p>
+
+  <p>防抖和节流的区别：在约定的时间间隔内重复执行函数，是否重新计时。节流不会重新计时，而防抖会。</p>
+</blockquote>
+
+<h1 id="一防抖-debounce">一、防抖 (Debounce)</h1>
+
+<p>防抖（Debounce）：在函数被执行后的规定间隔时间内，无法再次执行函数。如果间隔时间内再次执行了函数，则重新计算时间间隔。</p>
+
+<p>防抖可以保证函数不会被连续触发，规定时间间隔内最多只能触发一次。连续的触发事件如果间隔均小于防抖规定的时间间隔，则只会在最后一次事件结束之后才会执行。</p>
+
+<p>下面是一段实现函数防抖的代码：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">// 防抖函数</span>
+    <span class="kd">function</span> <span class="nx">debounce</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">delay</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">timer</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="k">return</span> <span class="kd">function</span> <span class="p">(...</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">timer</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">){</span>
+                <span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">timer</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="nx">timer</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                <span class="nx">fn</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">);</span> <span class="c1">// 防止this指向错误 </span>
+            <span class="p">},</span> <span class="nx">delay</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="nx">say</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">let</span> <span class="nx">debouncedSay</span> <span class="o">=</span> <span class="nx">_debounce</span><span class="p">(</span><span class="nx">say</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">debounceElement</span><span class="dl">'</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">keyup</span><span class="dl">'</span><span class="p">,</span> <span class="nx">debouncedSay</span><span class="p">);</span>  <span class="c1">//输入结束1S后才会打印到控制台。</span>
+</code></pre></div></div>
+
+<p><strong>应用：</strong></p>
+
+<ul>
+  <li>input元素在输入的时候，输入完毕再获取输入值，而不是在输入的时候一直触发；</li>
+  <li>resize事件，等到窗口调整完成后再触发事件。</li>
+</ul>
+
+<h1 id="二节流throttle">二、节流（Throttle）</h1>
+
+<p>节流（Throttle）：函数在规定的时间间隔内最多执行1次，时间间隔内多次触发无任何效果，不会重新计算时间间隔。</p>
+
+<p>节流模式分为：</p>
+
+<ul>
+  <li><strong>首节流</strong>：第一次触发立即响应，事件结束之后不再响应； （时间戳实现法）</li>
+  <li><strong>尾节流</strong>：第一次触发不立即响应，需要等到第一次时间间隔到了才响应，事件结束之后也会在最后一个间隔周期到了的时候保留一次响应；（setTimeout实现法）</li>
+  <li><strong>首尾节流</strong>：第一次触发立即响应，事件结束后的下一个间隔周期也保留一次响应；（前二者结合）</li>
+</ul>
+
+<p>下面是一段实现函数节流的代码：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">// 首节流</span>
+    <span class="kd">function</span> <span class="nx">throttleFront</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">delay</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">prevTime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">return</span> <span class="kd">function</span> <span class="p">(...</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">let</span> <span class="nx">curTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">curTime</span> <span class="o">-</span> <span class="nx">prevTime</span> <span class="o">&gt;=</span> <span class="nx">delay</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">prevTime</span> <span class="o">=</span> <span class="nx">curTime</span><span class="p">;</span>
+                <span class="nx">fn</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 尾节流</span>
+    <span class="kd">function</span> <span class="nx">throttleEnd</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">delay</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">timer</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="k">return</span> <span class="kd">function</span> <span class="p">(...</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">timer</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">timer</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                    <span class="nx">fn</span><span class="p">(...</span><span class="nx">args</span><span class="p">);</span>
+                    <span class="nx">timer</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+                <span class="p">},</span> <span class="nx">delay</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 首尾节流</span>
+    <span class="kd">function</span> <span class="nx">throttleBoth</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">delay</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">prevTime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kd">let</span> <span class="nx">timer</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="k">return</span> <span class="kd">function</span> <span class="p">(...</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">let</span> <span class="nx">curTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+        <span class="c1">// 第一次触发和中间过程的触发，都是使用时间戳实现；</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">curTime</span> <span class="o">-</span> <span class="nx">prevTime</span> <span class="o">&gt;=</span> <span class="nx">delay</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">fn</span><span class="p">(...</span><span class="nx">args</span><span class="p">);</span>
+                <span class="nx">prevTime</span> <span class="o">=</span> <span class="nx">curTime</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// 这里相当于是防抖，只有事件结束后的最后一次触发，才使用setTimeout进行。</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">timer</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">timer</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="nx">timer</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                    <span class="nx">fn</span><span class="p">(...</span><span class="nx">args</span><span class="p">);</span>
+                <span class="p">},</span> <span class="nx">delay</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>应用：</strong></p>
+
+<ul>
+  <li>scroll，resize等事件，防止高频触发；</li>
+  <li>鼠标点击事件，防止高频触发；</li>
+</ul>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Frontend"><span>Frontend</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/03/30/FE%E5%BE%85%E5%81%9A%E4%BA%8B%E9%A1%B9%E6%B8%85%E5%8D%95/" title="FE待做事项清单">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/04/01/Leancloud%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E6%8D%AE%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E6%8C%87%E5%8D%97/" title="Leancloud初始化与结构化数据基本操作指南">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/03/31/%E5%89%8D%E7%AB%AF%E9%98%B2%E6%8A%96(debounce)%E5%92%8C%E8%8A%82%E6%B5%81(throttle)/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

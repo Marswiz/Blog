@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>前端异步请求相关问题 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="前端异步请求相关问题" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="前端发送http请求，跨域、跨页面通信的几种方式梳理 Refer: 阮一峰CORS 一、发送异步Http请求几种方式; 二、跨域问题;" />
+<meta property="og:description" content="前端发送http请求，跨域、跨页面通信的几种方式梳理 Refer: 阮一峰CORS 一、发送异步Http请求几种方式; 二、跨域问题;" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/05/02/%E5%89%8D%E7%AB%AF%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/05/02/%E5%89%8D%E7%AB%AF%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-05-02T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"前端发送http请求，跨域、跨页面通信的几种方式梳理 Refer: 阮一峰CORS 一、发送异步Http请求几种方式; 二、跨域问题;","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/05/02/%E5%89%8D%E7%AB%AF%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/","headline":"前端异步请求相关问题","dateModified":"2021-05-02T00:00:00+08:00","datePublished":"2021-05-02T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/05/02/%E5%89%8D%E7%AB%AF%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">前端异步请求相关问题</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">May 2, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>前端发送http请求，跨域、跨页面通信的几种方式梳理</p>
+
+  <p>Refer: <a href="https://www.ruanyifeng.com/blog/2016/04/cors.html">阮一峰CORS</a></p>
+
+  <p><a href="#一发送异步http请求的几种方式">一、发送异步Http请求几种方式</a>;</p>
+
+  <p><a href="#二跨域问题">二、跨域问题</a>;</p>
+</blockquote>
+
+<h1 id="一发送异步http请求的几种方式">一、发送异步Http请求的几种方式</h1>
+
+<h2 id="1-原生ajax">1. 原生Ajax</h2>
+
+<ol>
+  <li>实例化<code>XMLHttpRequest</code>对象；</li>
+  <li>绑定xhr对象状态变化监听函数；</li>
+  <li>打开xhr对象；</li>
+  <li>发送http请求。</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+<span class="nx">xhr</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">===</span> <span class="mi">4</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">status</span> <span class="o">&gt;=</span> <span class="mi">200</span> <span class="o">&amp;&amp;</span> <span class="nx">xhr</span><span class="p">.</span><span class="nx">status</span> <span class="o">&lt;</span> <span class="mi">300</span> <span class="o">||</span> <span class="nx">xhr</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">304</span><span class="p">){</span>
+            <span class="c1">// do something</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// fault. do something.</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="dl">'</span><span class="s1">get</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span> <span class="c1">// true异步，false同步。</span>
+<span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span> <span class="c1">// 向服务器发送信息</span>
+</code></pre></div></div>
+
+<h3 id="11-原生ajax的一些细节">1.1 原生Ajax的一些细节</h3>
+
+<ul>
+  <li>如果传入相对URL，则是相对当前代码所在页面；</li>
+  <li>调用open()不会发送请求，只是为send()做好准备，send()执行后才发出请求；</li>
+  <li>XHR对象有一个readyState属性，整个请求过程可能有五个值：
+    <ul>
+      <li>0：未初始化。尚未调用open();</li>
+      <li>1：已打开。已经调用open()，尚未调用send();</li>
+      <li>2：已发送。已经调用send()，尚未收到响应；</li>
+      <li>3：接收中。已经接收到部分响应；</li>
+      <li>4：完成。已经收到所有响应，可以使用。</li>
+    </ul>
+  </li>
+  <li>收到响应前，可以调用xhr.abort()方法取消异步请求；</li>
+  <li>除了默认的http头部之外，如果想添加其他请求头，可以用xhr.setRequestHeader()方法，在发送请求send之前添加；</li>
+  <li>如果有查询字符串，需要用encodeURIComponent()函数编码后，附加在URL的后面，再发送GET请求；</li>
+  <li>可以为xhr对象设置timeout属性，用来表示它的最大响应时长。如果超时仍未响应，则中断请求：
+    <ul>
+      <li>超时会触发ontimeout事件；</li>
+      <li>超时后，readyState值仍为4。</li>
+    </ul>
+  </li>
+  <li>请求过程中会触发一系列事件，从前到后分别是：
+    <ul>
+      <li>loadstart： 接收响应的第一个字节时触发；</li>
+      <li>progress： 接收响应期间，反复触发；
+        <ul>
+          <li>progress事件对象中包含：lengthComputable、position、totalSize三个属性；
+            <ul>
+              <li>lengthComputable：布尔值。代表接收的数据长度是否是可计算的；</li>
+              <li>position：接收到的字节数；</li>
+              <li>totalSize：总字节数。</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>error、abort或load： load在接收响应完成时触发，error在出错条件下触发，abort在调用abort()终止请求时触发；</li>
+      <li>loadend：代表通信完成，在上面三个事件之后触发。</li>
+    </ul>
+  </li>
+  <li>通过CORS跨域发送ajax请求：
+    <ul>
+      <li>默认不会携带凭据信息，包括cookie信息、Http认证和客户端SSL证书；</li>
+      <li>如果想带有凭据信息，需要将xhr.withCredentials属性设为ture;</li>
+      <li>服务器响应需要带有头部：Access-Control-Allow-Credentials: true， 如果没有，则浏览器不会把响应交付给JS请求对象。</li>
+    </ul>
+  </li>
+  <li>同步Ajax请求会阻塞页面，影响用户体验。一般除非是在页面生命周期末尾unload事件上发送请求，不使用同步Ajax请求(unload上执行的异步请求会被取消，因为页面即将销毁，浏览器认为没有必要再进行异步请求)；</li>
+</ul>
+
+<h2 id="2-fetch-api">2. Fetch API</h2>
+
+<blockquote>
+  <p>Fetch API是JavaScript原生的，基于Promise的标准请求API。（无需加载额外资源）</p>
+</blockquote>
+
+<h2 id="3-axios">3. axios</h2>
+
+<p>基于Ajax和Promise封装的请求库。</p>
+
+<h1 id="二跨域问题">二、跨域问题</h1>
+
+<h2 id="1-什么是同源策略什么时候出现跨域问题">1. 什么是同源策略？什么时候出现跨域问题？</h2>
+
+<p>在HTML标签(比如img,script等)和CSS中(url函数)使用url进行资源请求，浏览器默认不设任何限制，可以对任何资源url进行请求。</p>
+
+<p>一般情况下，<strong>下列三种情况只能在同源条件下实现</strong>，非同源默认会报错（跨域错误）：</p>
+
+<ul>
+  <li>读取Cookie、LocalStorage 和 IndexDB</li>
+  <li>获取DOM 元素</li>
+  <li>Js发送AJAX请求</li>
+</ul>
+
+<p>这是浏览器的一种基本的保护策略，叫做同源策略。</p>
+
+<blockquote>
+  <p><strong>同源策略</strong></p>
+
+  <p>协议、域名和端口号都相同的请求，叫做同源请求。JS代码内只能发出同源请求。</p>
+
+  <p>即便两个不同的域名指向同一个 ip 地址，也非同源。</p>
+</blockquote>
+
+<h2 id="2-跨域ajax请求的几种常见解决方式">2. 跨域AJAX请求的几种常见解决方式</h2>
+
+<h3 id="21-跨域资源共享corscross-origin-resource-sharing">2.1 跨域资源共享（CORS：Cross Origin Resource Sharing）</h3>
+
+<p>CORS是W3C标准，是跨域请求的根本解决方式。</p>
+
+<p>实现CORS通信的关键是服务器。只要服务器实现了CORS接口，就可以跨源通信。</p>
+
+<p>浏览器将请求分为两种：<strong>简单请求</strong>和<strong>非简单请求</strong>。</p>
+
+<blockquote>
+  <p><strong>简单请求</strong></p>
+
+  <p>（1) 请求方法是以下三种方法之一：</p>
+
+  <p>HEAD</p>
+
+  <p>GET</p>
+
+  <p>POST</p>
+
+  <p>（2）HTTP的头信息不超出以下几种字段：</p>
+
+  <p>Accept</p>
+
+  <p>Accept-Language</p>
+
+  <p>Content-Language</p>
+
+  <p>Last-Event-ID</p>
+
+  <p>Content-Type：只限于三个值application/x-www-form-urlencoded、multipart/form-data、text/plain</p>
+</blockquote>
+
+<p>简单请求和非简单请求，浏览器的发送流程如下图所示：</p>
+
+<p><img src="/assets/posts/13.png" alt="CORS的简单请求和非简单请求" /></p>
+
+<h3 id="22-jsonp">2.2 JSONP</h3>
+
+<p>JSONP是一种古老的广泛使用的跨域请求方式，好处是可以兼容很多老式的浏览器。</p>
+
+<p>JSONP主要是利用了<strong>script标签内src属性请求不受跨域限制的特点</strong>。</p>
+
+<p><strong>JSONP的主要流程：</strong></p>
+
+<ol>
+  <li>在页面引入或写好要执行的函数；</li>
+  <li>创建一个&lt;script&gt;标签或动态创建一个script元素，src属性为跨域请求的地址，地址的最后用?callback=funcName，向服务器标记函数方法名；</li>
+  <li>挂载这个script元素，发出请求；</li>
+  <li>服务器收到这个请求后，解析callback后的函数名funcName，然后返回一个<strong>funcName函数执行的代码字符串: <code>funcName(&lt;data&gt;)</code></strong>，里面包含参数<code>&lt;data&gt;</code>，就是服务器想要浏览器执行的操作；</li>
+  <li>浏览器接收响应，作为代码执行。</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// 让不同的jsonp请求回调函数名不同。</span>
+<span class="kd">const</span> <span class="nx">jsonp</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">params</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">res</span><span class="p">,</span> <span class="nx">rej</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">id</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="kd">let</span> <span class="nx">callbackName</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">callback</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">id</span><span class="p">;</span>
+        <span class="kd">let</span> <span class="nx">src</span> <span class="o">=</span> <span class="nx">url</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">?</span><span class="dl">'</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">k</span> <span class="k">of</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">params</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nx">src</span> <span class="o">+=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">k</span><span class="p">}</span><span class="s2">=</span><span class="p">${</span><span class="nx">params</span><span class="p">[</span><span class="nx">k</span><span class="p">]}</span><span class="s2">&amp;`</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nx">src</span> <span class="o">+=</span> <span class="s2">`callback=</span><span class="p">${</span><span class="nx">callbackName</span><span class="p">}</span><span class="s2">`</span>
+        <span class="kd">let</span> <span class="nx">script</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">script</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">script</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">src</span><span class="p">;</span>
+        <span class="nb">window</span><span class="p">[</span><span class="nx">callbackName</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="nx">res</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+            <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span>
+        <span class="p">};</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>JSONP的局限性：</p>
+
+<ol>
+  <li><strong>需要前后端协调配合；</strong></li>
+  <li><strong>JSONP只能发<code>GET</code>请求。</strong></li>
+</ol>
+
+<h3 id="23-websocket">2.3 WebSocket</h3>
+
+<p>WebSocket是一种协议，它不受同源策略限制。</p>
+
+<p>只要服务器支持，使用WebSocket协议(ws:// 或 wss://)进行请求即可。</p>
+
+<h3 id="24-代理服务器">2.4 代理服务器</h3>
+
+<h3 id="241-本地代理服务器">2.4.1 本地代理服务器</h3>
+
+<p>服务器间通信不受同源策略限制。</p>
+
+<p>因此，可以在本地用node开启一个设置了CORS的服务器，用这个服务器转发请求到目标服务器。</p>
+
+<h3 id="242-nginx代理">2.4.2 Nginx代理</h3>
+
+<p>通过<code>Nginx</code>开启一个正向代理服务器。</p>
+
+<h1 id="二-跨窗口通信">二、 跨窗口通信</h1>
+
+<blockquote>
+  <p><strong>同源策略规定：</strong></p>
+
+  <p>如果我们有对另外一个窗口（例如，一个使用 window.open 创建的弹窗，或者一个窗口中的 iframe）的引用，并且该窗口是<strong>同源</strong>的，那么我们就具有对该窗口的<strong>全部访问权限</strong>。</p>
+
+  <p>否则，如果该窗口不是同源的，那么我们就无法访问该窗口中的内容：变量，文档，任何东西。唯一的例外是 location：我们可以修改它（进而重定向用户）。但是我们无法读取 location（因此，我们无法看到用户当前所处的位置，也就不会泄漏任何信息）。</p>
+
+  <p>非同源的窗口，还可以通过postMessage向其发送一条消息。这是对于非同源页面引用唯二的两个操作。</p>
+
+  <blockquote>
+    <p>— 现代JS教程</p>
+  </blockquote>
+</blockquote>
+
+<p>对于与当前页不同源的页面引用，只能进行下面两个操作之一：</p>
+
+<ol>
+  <li>修改它的<code>location</code>（重定向）；</li>
+  <li>给它发送一个信息<code>postMessage(&lt;message&gt;)</code>。</li>
+</ol>
+
+<p>要想让同一个二级域下的所有子域都被视作同源，需要在每个页面上添加以下代码：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 为当前页面设置域（默认为当前页面URL的域名）</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">domain</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">site.com</span><span class="dl">'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="1-同源跨窗口通信">1. 同源跨窗口通信</h2>
+
+<h3 id="11-broadcast-channel-api-广播频道">1.1 Broadcast Channel API （广播频道）</h3>
+
+<p>Broadcast Channel API 可以实现<strong>同源下</strong>浏览器不同窗口，Tab页，frame或者 iframe 下的 浏览器上下文 (通常是同一个网站下不同的页面)之间的简单通讯。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 1.连接到test_channel广播频道，如果还没有这个频道，这代表创建一个名叫test_channel的广播频道</span>
+<span class="kd">const</span> <span class="nx">bc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BroadcastChannel</span><span class="p">(</span><span class="dl">'</span><span class="s1">test_channel</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="c1">// 2.向广播信道发送消息</span>
+<span class="nx">bc</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="dl">'</span><span class="s1">This is a test message.</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="c1">// 3.其他所有链接到这个广播频道的页面，可以接收到一个message事件</span>
+<span class="nx">bc</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// 4.断开频道连接</span>
+<span class="nx">bc</span><span class="p">.</span><span class="nx">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="12-利用localstorage">1.2 利用localStorage</h3>
+
+<p>同源的页面，可以访问同一个localStorage。</p>
+
+<p>通过对localStorage的修改进行监听(storage事件)，可以实现跨页面通信。</p>
+
+<h2 id="2-非同源跨窗口通信">2. 非同源跨窗口通信</h2>
+
+<h3 id="21-可以获取到目标窗口的引用时-postmessage">2.1 可以获取到目标窗口的引用时: postMessage</h3>
+
+<p>这种情况包括嵌入iframe，使用window.open打开这类情况。</p>
+
+<p>跨窗口通信有以下三步：</p>
+
+<ol>
+  <li>获取到目标窗口的引用<code>win</code>，然后调用<strong>win.postMessage(message, targetOrigin)</strong>方法</li>
+</ol>
+
+<blockquote>
+  <p>这里: data是要发送的数据，targetOrigin是目标窗口的源。</p>
+
+  <p>也就是说，只有目标窗口在指定的源下(协议、域和端口)，才能正常接收到消息。</p>
+
+  <p>这保护了目标页面的安全，因为发送方此时与目标页面不同源，因此不能知道目标页面现在实际的源，用户可以随时更改到任何源。这样设定保证了数据不会被发送到非目标源的页面。</p>
+</blockquote>
+
+<ol>
+  <li>在目标页面上，写入好window.onmessage事件，用于监听收取来自外部页面的message。</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">window</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="c1">// do someting with the message.</span>
+<span class="c1">// 此时的e具有三个内部属性： ①data：数据本身；②origin:发送方的源； ③source：发送方窗口的引用（可以随时使用e.source.postMessage反向发送消息。）；</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="22-axxxcom-与-bxxxcom-通信修改documentdomain">2.2 a.xxx.com 与 b.xxx.com 通信：修改document.domain</h3>
+
+<p>两个页面位于同一个上级域名的不同子域名下，原本为非同源（因为域不同），通过分别设置<code>document.domain = 'xxx.com'</code>，可让二者为同源。</p>
+
+<p>这样通过<code>a.xxx.com</code>的<code>&lt;iframe&gt;</code>就可以获取到<code>b.xxx.com</code>的全部内容了。</p>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="异步请求"><span>异步请求</span></a>
+      
+      <a id="tags" href="跨域"><span>跨域</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/05/02/HTTPs%E5%8D%8F%E8%AE%AE/" title="HTTPs协议">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/05/02/%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9C%AC%E5%9C%B0%E5%A6%82%E4%BD%95%E5%82%A8%E5%AD%98%E6%95%B0%E6%8D%AE/" title="Cookie、Session和Web Storage">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/05/02/%E5%89%8D%E7%AB%AF%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

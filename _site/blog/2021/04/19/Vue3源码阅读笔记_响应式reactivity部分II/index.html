@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Vue3源码阅读笔记——响应式reactivity部分II:reactive,ref等 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Vue3源码阅读笔记——响应式reactivity部分II:reactive,ref等" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="尝试探索Vue3源码： 响应式reactivity部分: reactive,ref等。 原项目目录： /packages/reactivity" />
+<meta property="og:description" content="尝试探索Vue3源码： 响应式reactivity部分: reactive,ref等。 原项目目录： /packages/reactivity" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/04/19/Vue3%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0_%E5%93%8D%E5%BA%94%E5%BC%8Freactivity%E9%83%A8%E5%88%86II/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/04/19/Vue3%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0_%E5%93%8D%E5%BA%94%E5%BC%8Freactivity%E9%83%A8%E5%88%86II/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-04-19T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"尝试探索Vue3源码： 响应式reactivity部分: reactive,ref等。 原项目目录： /packages/reactivity","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/04/19/Vue3%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0_%E5%93%8D%E5%BA%94%E5%BC%8Freactivity%E9%83%A8%E5%88%86II/","headline":"Vue3源码阅读笔记——响应式reactivity部分II:reactive,ref等","dateModified":"2021-04-19T00:00:00+08:00","datePublished":"2021-04-19T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/04/19/Vue3%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0_%E5%93%8D%E5%BA%94%E5%BC%8Freactivity%E9%83%A8%E5%88%86II/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">Vue3源码阅读笔记——响应式reactivity部分II:reactive,ref等</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Apr 19, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>尝试探索Vue3源码： 响应式reactivity部分: reactive,ref等。</p>
+
+  <p>原项目目录： /packages/reactivity</p>
+</blockquote>
+
+<h1 id="1-reactive函数">1. reactive()函数</h1>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * Creates a reactive copy of the original object.
+ *
+ * The reactive conversion is "deep"—it affects all nested properties. In the
+ * ES2015 Proxy based implementation, the returned proxy is **not** equal to the
+ * original object. It is recommended to work exclusively with the reactive
+ * proxy and avoid relying on the original object.
+ *
+ * A reactive object also automatically unwraps refs contained in it, so you
+ * don't need to use `.value` when accessing and mutating their value:
+ *
+ * ```js
+ * const count = ref(0)
+ * const obj = reactive({
+ *   count
+ * })
+ *
+ * obj.count++
+ * obj.count // -&gt; 1
+ * count.value // -&gt; 1
+ * 
+ */</span>
+
+<span class="c1">// 对不同的响应式对象，分别在内部声明了不同的weakMap用来储存。</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">reactiveMap</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">WeakMap</span><span class="o">&lt;</span><span class="nx">Target</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">shallowReactiveMap</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">WeakMap</span><span class="o">&lt;</span><span class="nx">Target</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">readonlyMap</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">WeakMap</span><span class="o">&lt;</span><span class="nx">Target</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span><span class="p">()</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">shallowReadonlyMap</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">WeakMap</span><span class="o">&lt;</span><span class="nx">Target</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span><span class="p">()</span>
+
+
+<span class="c1">// 常规reactive()函数定义如下，返回的是非shallow非readonly的响应式对象。</span>
+<span class="c1">// 类似地，还有shallowReactive()、readonly()、shallowReadonly()，用来创建不同类型的响应式对象。</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">reactive</span><span class="o">&lt;</span><span class="nx">T</span> <span class="kd">extends</span> <span class="nx">object</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">target</span><span class="p">:</span> <span class="nx">T</span><span class="p">):</span> <span class="nx">UnwrapNestedRefs</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">reactive</span><span class="p">(</span><span class="nx">target</span><span class="p">:</span> <span class="nx">object</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// if trying to observe a readonly proxy, return the readonly version.</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">target</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">target</span> <span class="k">as</span> <span class="nx">Target</span><span class="p">)[</span><span class="nx">ReactiveFlags</span><span class="p">.</span><span class="nx">IS_READONLY</span><span class="p">])</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">target</span>
+  <span class="p">}</span>
+
+<span class="c1">// 这里返回了创建的响应式对象。</span>
+  <span class="k">return</span> <span class="nx">createReactiveObject</span><span class="p">(</span>
+    <span class="nx">target</span><span class="p">,</span>
+    <span class="kc">false</span><span class="p">,</span>
+    <span class="c1">// 传入对应的handler，对于普通reactive对象就是mutableHandler，这些handler决定了对target执行各种操作时发生的行为。</span>
+    <span class="nx">mutableHandlers</span><span class="p">,</span>
+    <span class="nx">mutableCollectionHandlers</span><span class="p">,</span>
+    <span class="nx">reactiveMap</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// 这里传入的target是Target类型：</span>
+<span class="c1">// 它的定义：也可以是原始object，但可选具有以下四个内部属性：__v_skip，__v_isReactive，__v_isReadonly，__v_raw。</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="kr">enum</span> <span class="nx">ReactiveFlags</span> <span class="p">{</span>
+  <span class="c1">// SKIP为ture,代表这个对象永远不会成为reactive对象</span>
+  <span class="nx">SKIP</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">__v_skip</span><span class="dl">'</span><span class="p">,</span>
+
+  <span class="c1">// IS_REACTIVE为true，代表为reactive对象</span>
+  <span class="nx">IS_REACTIVE</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">__v_isReactive</span><span class="dl">'</span><span class="p">,</span>
+
+  <span class="c1">// IS_READONLY为true，代表这是只读reactive对象</span>
+  <span class="nx">IS_READONLY</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">__v_isReadonly</span><span class="dl">'</span><span class="p">,</span>
+
+  <span class="c1">// RAW中记录了reactive proxy对象代理的原始值</span>
+  <span class="nx">RAW</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">__v_raw</span><span class="dl">'</span>
+<span class="p">}</span>
+<span class="k">export</span> <span class="kr">interface</span> <span class="nx">Target</span> <span class="p">{</span>
+  <span class="p">[</span><span class="nx">ReactiveFlags</span><span class="p">.</span><span class="nx">SKIP</span><span class="p">]?:</span> <span class="nx">boolean</span>
+  <span class="p">[</span><span class="nx">ReactiveFlags</span><span class="p">.</span><span class="nx">IS_REACTIVE</span><span class="p">]?:</span> <span class="nx">boolean</span>
+  <span class="p">[</span><span class="nx">ReactiveFlags</span><span class="p">.</span><span class="nx">IS_READONLY</span><span class="p">]?:</span> <span class="nx">boolean</span>
+  <span class="p">[</span><span class="nx">ReactiveFlags</span><span class="p">.</span><span class="nx">RAW</span><span class="p">]?:</span> <span class="nx">any</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">createReactiveObject</span><span class="p">(</span>
+  <span class="nx">target</span><span class="p">:</span> <span class="nx">Target</span><span class="p">,</span>
+  <span class="nx">isReadonly</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>
+  <span class="nx">baseHandlers</span><span class="p">:</span> <span class="nx">ProxyHandler</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="nx">collectionHandlers</span><span class="p">:</span> <span class="nx">ProxyHandler</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="nx">proxyMap</span><span class="p">:</span> <span class="nb">WeakMap</span><span class="o">&lt;</span><span class="nx">Target</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span>
+<span class="p">)</span> <span class="p">{</span>
+<span class="c1">// 非对象的原始值不能用reactive()转化</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">target</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">__DEV__</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="s2">`value cannot be made reactive: </span><span class="p">${</span><span class="nb">String</span><span class="p">(</span><span class="nx">target</span><span class="p">)}</span><span class="s2">`</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">target</span>
+  <span class="p">}</span>
+  <span class="c1">// 如果target本身就是一个reactive proxy，则直接返回。</span>
+  <span class="c1">// exception: calling readonly() on a reactive object</span>
+  <span class="k">if</span> <span class="p">(</span>
+    <span class="nx">target</span><span class="p">[</span><span class="nx">ReactiveFlags</span><span class="p">.</span><span class="nx">RAW</span><span class="p">]</span> <span class="o">&amp;&amp;</span>
+    <span class="o">!</span><span class="p">(</span><span class="nx">isReadonly</span> <span class="o">&amp;&amp;</span> <span class="nx">target</span><span class="p">[</span><span class="nx">ReactiveFlags</span><span class="p">.</span><span class="nx">IS_REACTIVE</span><span class="p">])</span>
+  <span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">target</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 已经注册过的target proxy，直接获取并返回。</span>
+  <span class="kd">const</span> <span class="nx">existingProxy</span> <span class="o">=</span> <span class="nx">proxyMap</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">existingProxy</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">existingProxy</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 根据不同的target类型，创建设置不同的proxy handler，返回对应proxy。</span>
+  <span class="c1">// 这些handler内部，定义了对target各种操作的拦截器，在各个调用时机执行trace或trigger方法，用来实现target的响应式。</span>
+  <span class="c1">// target就是传入用来创建响应式的原始变量。</span>
+  <span class="c1">//</span>
+  <span class="c1">// Vue定义的target类型有三种：COMMON/COLLECTION/INVALID</span>
+  <span class="c1">// COMMON: object和array</span>
+  <span class="c1">// COLLECTION: map,set,weakmap,weakset</span>
+  <span class="c1">// 其他都是INVALID：直接返回原target。</span>
+  <span class="c1">// </span>
+  <span class="kd">const</span> <span class="nx">targetType</span> <span class="o">=</span> <span class="nx">getTargetType</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">targetType</span> <span class="o">===</span> <span class="nx">TargetType</span><span class="p">.</span><span class="nx">INVALID</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">target</span>
+  <span class="p">}</span>
+  
+  <span class="c1">// 这里使用了不同的handler，创建proxy，然后返回。</span>
+  <span class="kd">const</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">(</span>
+    <span class="nx">target</span><span class="p">,</span>
+    <span class="nx">targetType</span> <span class="o">===</span> <span class="nx">TargetType</span><span class="p">.</span><span class="nx">COLLECTION</span> <span class="p">?</span> <span class="nx">collectionHandlers</span> <span class="p">:</span> <span class="nx">baseHandlers</span>
+  <span class="p">)</span>
+  <span class="c1">// 在对应的map记录新生成的proxy。 然后返回proxy</span>
+  <span class="nx">proxyMap</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">proxy</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nx">proxy</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h1 id="2-用于创建响应式对象proxy的拦截器basehandlers和collectionhandlers">2. 用于创建响应式对象proxy的拦截器：baseHandlers和collectionHandlers</h1>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 普通reactive()函数的proxy handler</span>
+<span class="c1">// 只捕获五种操作：Get，set，deleteProperty,has和ownkeys</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">mutableHandlers</span><span class="p">:</span> <span class="nx">ProxyHandler</span><span class="o">&lt;</span><span class="nx">object</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span>
+   <span class="kd">get</span><span class="p">,</span>
+   <span class="kd">set</span><span class="p">,</span>
+   <span class="nx">deleteProperty</span><span class="p">,</span>
+   <span class="nx">has</span><span class="p">,</span>
+   <span class="nx">ownKeys</span>
+<span class="p">}</span>
+
+<span class="c1">// 下面拿一个最常见的get捕获器，进行说明。</span>
+
+<span class="c1">// 普通reactive()函数proxy get拦截器的定义。</span>
+<span class="kd">const</span> <span class="kd">get</span> <span class="o">=</span> <span class="nx">createGetter</span><span class="p">()</span>
+<span class="kd">function</span> <span class="nx">createGetter</span><span class="p">(</span><span class="nx">isReadonly</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">shallow</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// 这里设置了读取(GET)一个Target的某一个key时所进行的操作。</span>
+  <span class="k">return</span> <span class="kd">function</span> <span class="kd">get</span><span class="p">(</span><span class="nx">target</span><span class="p">:</span> <span class="nx">Target</span><span class="p">,</span> <span class="nx">key</span><span class="p">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">symbol</span><span class="p">,</span> <span class="nx">receiver</span><span class="p">:</span> <span class="nx">object</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// get的target属性是内部属性：ReactiveFlags.IS_REACTIVE、ReactiveFlags.IS_READONLY、ReactiveFlags.RAW时的返回值。</span>
+    <span class="c1">// ReactiveFlags.RAW返回原始对象target, 其他按情况返回对应布尔值。</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">key</span> <span class="o">===</span> <span class="nx">ReactiveFlags</span><span class="p">.</span><span class="nx">IS_REACTIVE</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="o">!</span><span class="nx">isReadonly</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">key</span> <span class="o">===</span> <span class="nx">ReactiveFlags</span><span class="p">.</span><span class="nx">IS_READONLY</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">isReadonly</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span>
+  <span class="c1">// Marswiz: receiver是捕获器中，传入的调用这个捕获器的原始对象。</span>
+  <span class="c1">// 这里的含义是：只有从各个Map中注册过的proxy get这个raw值（也就是通过createReactive、createReadonly这类工厂函数创建的proxy）.</span>
+  <span class="c1">// 才返回原始target，其他proxy对象即使有ReactiveFlags.RAW属性，也用这个get捕获器，也不会返回target,因为vue不认这个对象，它不是从Vue内部创建的。</span>
+      <span class="nx">key</span> <span class="o">===</span> <span class="nx">ReactiveFlags</span><span class="p">.</span><span class="nx">RAW</span> <span class="o">&amp;&amp;</span>
+      <span class="nx">receiver</span> <span class="o">===</span>
+        <span class="p">(</span><span class="nx">isReadonly</span>
+          <span class="p">?</span> <span class="nx">shallow</span>
+            <span class="p">?</span> <span class="nx">shallowReadonlyMap</span>
+            <span class="p">:</span> <span class="nx">readonlyMap</span>
+          <span class="p">:</span> <span class="nx">shallow</span>
+            <span class="p">?</span> <span class="nx">shallowReactiveMap</span>
+            <span class="p">:</span> <span class="nx">reactiveMap</span>
+        <span class="p">).</span><span class="kd">get</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span>
+    <span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">target</span>
+    <span class="p">}</span>
+
+    <span class="c1">// ！！注意：如果target是数组对象，有特殊规则限制！</span>
+    <span class="kd">const</span> <span class="nx">targetIsArray</span> <span class="o">=</span> <span class="nx">isArray</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span>
+    <span class="c1">// 对于数组的target，如果get的key是arrayInstrumentations中注册的，则执行arrayInstrumentations内对应的方法。</span>
+    <span class="c1">// arrayInstrumentations主要拦截数组的三种操作: 'includes', 'indexOf', 'lastIndexOf'</span>
+    <span class="c1">// 这三种操作因为对数组元素的身份敏感，如果一个数组内还有嵌套的reactive元素，那么在执行这些操作的时候有可能出现错误结果。</span>
+    <span class="c1">// arrayInstrumentations 保证了无论是直接按照内部reactive()对象执行这些方法还是通过原始值RawValue，都能获取到正确的结果。</span>
+    <span class="c1">// 同时，在执行这些方法的时候，如果数组target本身没有被track，则按数组的索引字符串为key进行track。</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isReadonly</span> <span class="o">&amp;&amp;</span> <span class="nx">targetIsArray</span> <span class="o">&amp;&amp;</span> <span class="nx">hasOwn</span><span class="p">(</span><span class="nx">arrayInstrumentations</span><span class="p">,</span> <span class="nx">key</span><span class="p">))</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nb">Reflect</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">arrayInstrumentations</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">receiver</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 获取Target对应key的目标值res。</span>
+    <span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="nb">Reflect</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">receiver</span><span class="p">)</span>
+    <span class="c1">//  内置symbol作为key，或者没有被track的key，都直接返回目标值。</span>
+    <span class="k">if</span> <span class="p">(</span>
+      <span class="nx">isSymbol</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+        <span class="p">?</span> <span class="nx">builtInSymbols</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">key</span> <span class="k">as</span> <span class="nx">symbol</span><span class="p">)</span>
+        <span class="p">:</span> <span class="nx">isNonTrackableKeys</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+    <span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">res</span>
+    <span class="p">}</span>
+
+    <span class="c1">//  ★★★★★★★    关键操作    ★★★★★★★</span>
+    <span class="c1">//  非只读target，对target.key进行track。 </span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isReadonly</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">track</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">TrackOpTypes</span><span class="p">.</span><span class="nx">GET</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">//  浅响应式对象，直接返回目标结果。</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">shallow</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">res</span>
+    <span class="p">}</span>
+
+    <span class="c1">//  如果目标值本身直接是ref对象，直接返回Ref.value</span>
+    <span class="c1">//  ！！！注意这里有一个例外：target是Array数组类型，且key是整数索引时，默认直接返回ref而不是ref.value;</span>
+    <span class="c1">//  也就是说，在响应式数组中，保存的ref，在执行get操作的时候，返回值仍然是ref，需要进行.value操作才能获取到结果。</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">isRef</span><span class="p">(</span><span class="nx">res</span><span class="p">))</span> <span class="p">{</span>
+      <span class="c1">// ref unwrapping - does not apply for Array + integer key.</span>
+      <span class="kd">const</span> <span class="nx">shouldUnwrap</span> <span class="o">=</span> <span class="o">!</span><span class="nx">targetIsArray</span> <span class="o">||</span> <span class="o">!</span><span class="nx">isIntegerKey</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+      <span class="k">return</span> <span class="nx">shouldUnwrap</span> <span class="p">?</span> <span class="nx">res</span><span class="p">.</span><span class="nx">value</span> <span class="p">:</span> <span class="nx">res</span>
+    <span class="p">}</span>
+
+    <span class="c1">//  如果目标值是对象类型，按是否只读，转化为 只读响应式对象 or 普通响应式对象 返回。</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">res</span><span class="p">))</span> <span class="p">{</span>
+      <span class="c1">// Convert returned value into a proxy as well. we do the isObject check</span>
+      <span class="c1">// here to avoid invalid value warning. Also need to lazy access readonly</span>
+      <span class="c1">// and reactive here to avoid circular dependency.</span>
+      <span class="k">return</span> <span class="nx">isReadonly</span> <span class="p">?</span> <span class="nx">readonly</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">:</span> <span class="nx">reactive</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 其他默认情况，都直接返回res目标值。</span>
+    <span class="k">return</span> <span class="nx">res</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>readonly proxy的拦截器：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Marswiz: 只读对象的proxy捕获器</span>
+<span class="c1">// 只拦截get/set/deleteProperty三个操作。</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">readonlyHandlers</span><span class="p">:</span> <span class="nx">ProxyHandler</span><span class="o">&lt;</span><span class="nx">object</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">get</span><span class="p">:</span> <span class="nx">readonlyGet</span><span class="p">,</span>
+  <span class="c1">// 可以看到，这里Set和deleteProperty都不进行任何操作，且开发环境会报错。</span>
+  <span class="kd">set</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">__DEV__</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span>
+        <span class="s2">`Set operation on key "</span><span class="p">${</span><span class="nb">String</span><span class="p">(</span><span class="nx">key</span><span class="p">)}</span><span class="s2">" failed: target is readonly.`</span><span class="p">,</span>
+        <span class="nx">target</span>
+      <span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">true</span>
+  <span class="p">},</span>
+  <span class="nx">deleteProperty</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">__DEV__</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span>
+        <span class="s2">`Delete operation on key "</span><span class="p">${</span><span class="nb">String</span><span class="p">(</span><span class="nx">key</span><span class="p">)}</span><span class="s2">" failed: target is readonly.`</span><span class="p">,</span>
+        <span class="nx">target</span>
+      <span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="3-ref函数">3. ref()函数</h1>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ref的几个重载：</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">ref</span><span class="o">&lt;</span><span class="nx">T</span> <span class="kd">extends</span> <span class="nx">object</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">value</span><span class="p">:</span> <span class="nx">T</span><span class="p">):</span> <span class="nx">ToRef</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">ref</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">value</span><span class="p">:</span> <span class="nx">T</span><span class="p">):</span> <span class="nx">Ref</span><span class="o">&lt;</span><span class="nx">UnwrapRef</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;&gt;</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">ref</span><span class="o">&lt;</span><span class="nx">T</span> <span class="o">=</span> <span class="nx">any</span><span class="o">&gt;</span><span class="p">():</span> <span class="nx">Ref</span><span class="o">&lt;</span><span class="nx">T</span> <span class="o">|</span> <span class="kc">undefined</span><span class="o">&gt;</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">ref</span><span class="p">(</span><span class="nx">value</span><span class="p">?:</span> <span class="nx">unknown</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">createRef</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// createRef()： 可以看到这里是返回了一个RefImpl类的实例。</span>
+<span class="kd">function</span> <span class="nx">createRef</span><span class="p">(</span><span class="nx">rawValue</span><span class="p">:</span> <span class="nx">unknown</span><span class="p">,</span> <span class="nx">shallow</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">isRef</span><span class="p">(</span><span class="nx">rawValue</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">rawValue</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nx">RefImpl</span><span class="p">(</span><span class="nx">rawValue</span><span class="p">,</span> <span class="nx">shallow</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// RefImpl Class类</span>
+<span class="kd">class</span> <span class="nx">RefImpl</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="kr">private</span> <span class="na">_value</span><span class="p">:</span> <span class="nx">T</span>
+
+  <span class="kr">public</span> <span class="nx">readonly</span> <span class="nx">__v_isRef</span> <span class="o">=</span> <span class="kc">true</span>
+
+  <span class="kd">constructor</span><span class="p">(</span><span class="kr">private</span> <span class="na">_rawValue</span><span class="p">:</span> <span class="nx">T</span><span class="p">,</span> <span class="kr">public</span> <span class="nx">readonly</span> <span class="nx">_shallow</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">// 根据是否shallow（浅响应式），来确定内部_value的值：浅的话就直接传入原始值，非浅就把原始值深度转化为响应式再传入。</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">_value</span> <span class="o">=</span> <span class="nx">_shallow</span> <span class="p">?</span> <span class="nx">_rawValue</span> <span class="p">:</span> <span class="nx">convert</span><span class="p">(</span><span class="nx">_rawValue</span><span class="p">)</span>
+  <span class="p">}</span>
+
+<span class="c1">// 这里是ref响应式的核心内容：</span>
+<span class="c1">// ① 在get这个ref.value的时候，对这个响应式对象的原始对象value属性进行GET形式的Track；</span>
+<span class="c1">// ② 在set这个ref.value的时候，对新的值newVal和旧的值value进行比较，如果有改动，就将内部的_rawValue修改为newVal，然后将_value修改为响应式的newVal，然后用newVal对原始对象的value属性进行SET trigger。</span>
+<span class="c1">// </span>
+<span class="c1">// ★★★</span>
+<span class="c1">// toRaw的函数定义：这里使用了逻辑表达式进行递归，很难理解。</span>
+<span class="c1">// 结果就是通过传入对象observed,层层递归找到最内层的[ReactiveFlags.RAW]值返回。如果对象observed本身就不带有[ReactiveFlags.RAW]值，说明本身就是原始对象，就返回对象本身。</span>
+<span class="c1">// export function toRaw&lt;T&gt;(observed: T): T {</span>
+<span class="c1">//     return (</span>
+<span class="c1">//         (observed &amp;&amp; toRaw((observed as Target)[ReactiveFlags.RAW])) || observed</span>
+<span class="c1">// )</span>
+<span class="c1">// }</span>
+  <span class="kd">get</span> <span class="nx">value</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">track</span><span class="p">(</span><span class="nx">toRaw</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="nx">TrackOpTypes</span><span class="p">.</span><span class="nx">GET</span><span class="p">,</span> <span class="dl">'</span><span class="s1">value</span><span class="dl">'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_value</span>
+  <span class="p">}</span>
+
+  <span class="kd">set</span> <span class="nx">value</span><span class="p">(</span><span class="nx">newVal</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">hasChanged</span><span class="p">(</span><span class="nx">toRaw</span><span class="p">(</span><span class="nx">newVal</span><span class="p">),</span> <span class="k">this</span><span class="p">.</span><span class="nx">_rawValue</span><span class="p">))</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">_rawValue</span> <span class="o">=</span> <span class="nx">newVal</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">_value</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_shallow</span> <span class="p">?</span> <span class="nx">newVal</span> <span class="p">:</span> <span class="nx">convert</span><span class="p">(</span><span class="nx">newVal</span><span class="p">)</span>
+      <span class="nx">trigger</span><span class="p">(</span><span class="nx">toRaw</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="nx">TriggerOpTypes</span><span class="p">.</span><span class="nx">SET</span><span class="p">,</span> <span class="dl">'</span><span class="s1">value</span><span class="dl">'</span><span class="p">,</span> <span class="nx">newVal</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Vue"><span>Vue</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/04/18/Vue3%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0_%E5%93%8D%E5%BA%94%E5%BC%8Freactivity%E9%83%A8%E5%88%86I/" title="Vue3源码阅读笔记——响应式reactivity部分I:effect/track/trigger">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/04/19/Good_Sites/" title="前端优秀资料站">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/04/19/Vue3%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0_%E5%93%8D%E5%BA%94%E5%BC%8Freactivity%E9%83%A8%E5%88%86II/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

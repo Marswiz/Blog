@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>前（后）端鉴权方式 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="前（后）端鉴权方式" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="前端鉴权：掘金" />
+<meta property="og:description" content="前端鉴权：掘金" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/09/06/%E5%89%8D%E7%AB%AF%E9%89%B4%E6%9D%83%E6%96%B9%E5%BC%8F/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/09/06/%E5%89%8D%E7%AB%AF%E9%89%B4%E6%9D%83%E6%96%B9%E5%BC%8F/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-09-06T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"前端鉴权：掘金","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/09/06/%E5%89%8D%E7%AB%AF%E9%89%B4%E6%9D%83%E6%96%B9%E5%BC%8F/","headline":"前（后）端鉴权方式","dateModified":"2021-09-06T00:00:00+08:00","datePublished":"2021-09-06T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/09/06/%E5%89%8D%E7%AB%AF%E9%89%B4%E6%9D%83%E6%96%B9%E5%BC%8F/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">前（后）端鉴权方式</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Sep 6, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p><a href="https://juejin.cn/post/6898630134530752520#heading-2">前端鉴权：掘金</a></p>
+</blockquote>
+
+<h1 id="一cookie--session">一、cookie + session</h1>
+
+<p><img src="/assets/posts/1.webp" alt="cookie+session" /></p>
+
+<ul>
+  <li>浏览器登录发送账号密码，服务端查用户库，校验用户;</li>
+  <li>服务端把用户登录状态存为 session，生成一个 session_ID;</li>
+  <li>通过登录接口返回，把 sessionID set 到 cookie 上;</li>
+  <li>此后浏览器再请求业务接口，session_ID 随 cookie 带上;</li>
+  <li>服务端查 session_ID 校验 session;</li>
+  <li>成功后正常做业务处理，返回结果。</li>
+</ul>
+
+<p><strong>优点：</strong></p>
+
+<ul>
+  <li>因为主要信息在服务器存储，客户端只需要存储一个用来标识唯一性的ID，减少了请求携带cookie的体积；</li>
+</ul>
+
+<p><strong>缺点：</strong></p>
+
+<ul>
+  <li>服务端需要对每个session进行储存，压力大；</li>
+  <li>服务端如果是集群，需要把session用额外独立的库集中储存。</li>
+</ul>
+
+<h1 id="二token">二、token</h1>
+
+<p><img src="/assets/posts/2.webp" alt="token" /></p>
+
+<ul>
+  <li>用户登录，服务端校验账号密码，获得用户信息;</li>
+  <li>把<strong>用户信息、配置等编码成 token</strong>，通过 cookie set 到浏览器;</li>
+  <li>此后用户请求业务接口，通过 cookie 携带 token;</li>
+  <li>接口校验 token 有效性，进行正常业务接口处理。</li>
+</ul>
+
+<blockquote>
+  <p><strong>token与session的区别？</strong></p>
+
+  <ol>
+    <li>
+      <p>token携带了用户的完整信息，通过服务端密钥编码储存在客户端，服务端不进行储存；而session则主要由服务端保存会话数据；</p>
+    </li>
+    <li>
+      <p>狭义上，session指代“服务端保存会话信息，客户端用cookie储存会话id”的鉴权形式，而token更为灵活，指代“客户端可以存在任何位置，服务器不保存信息”的鉴权形式；</p>
+    </li>
+  </ol>
+</blockquote>
+
+<p><strong>优点：</strong></p>
+
+<ul>
+  <li>服务端不保存用户会话信息，避免查库带来的延迟；</li>
+  <li>服务端压力小，不需要设置session统一管理架构，降低成本。</li>
+</ul>
+
+<p><strong>缺点：</strong></p>
+
+<ul>
+  <li>token一般较长，请求携带cookie体积较大；</li>
+</ul>
+
+<h1 id="三jwtjson-web-token">三、JWT：JSON Web Token</h1>
+
+<h2 id="什么是jwt">什么是JWT</h2>
+
+<p>JWT是Token的一种实现。它和普通Token都是访问资源的令牌。它们的<strong>区别</strong>是：</p>
+
+<p>普通Token在被服务器收到后，服务器可能需要去查询数据库才能确认用户的身份，而JWT本身就包含加密信息，服务器利用自己的密钥对JWT进行验证，就可以确定用户身份，不需要查询数据库。</p>
+
+<p>校验JWT的网站：<a href="https://jwt.io/">JWT校验</a></p>
+
+<p><img src="/assets/posts/60.png" alt="JWT" /></p>
+
+<h2 id="jwt组成">JWT组成</h2>
+
+<h3 id="header和payload">Header和Payload</h3>
+
+<p>JWT由三部分组成：<strong>Header、Payload</strong>和<strong>Signature</strong>。</p>
+
+<p>其中Header中的字段比较固定：</p>
+
+<ul>
+  <li>**typ: ** 类型。值恒定为<code>'JWT'</code>；</li>
+  <li>**alg: ** 签名的加密算法。一般选为<code>'HS256'</code>；</li>
+</ul>
+
+<p>Payload的字段可以自由设置。</p>
+
+<p>Header和Payload的原始数据都是JSON格式，通过Base64编码后，放入JWT的前两个部分。</p>
+
+<h3 id="signature-签名">Signature 签名</h3>
+
+<p>签名由两部分计算而成：</p>
+
+<ul>
+  <li><strong>A:</strong> Header和Payload的Base64编码串，中间用<code>','</code>串联；</li>
+  <li><strong>B:</strong> 安全码Secret-Code。可以自由指定，用于对JWT的有效性进行校验。（长度不超过256bit）</li>
+</ul>
+
+<p>加密方式一般选择<code>HS256</code>，即加密后的字符串为<code>HS256(A, B)</code>。它将放在JWT的第三部分。</p>
+
+<h2 id="jwt的校验">JWT的校验</h2>
+
+<p>服务端收到用户的JWT后：通过指定的安全码Secret-Code，对JWT的前两部分进行一次HS256计算即可，结果与第三部分进行比对，如果一致可通过校验。</p>
+
+<h1 id="四单点登录">四、单点登录</h1>
+
+<h2 id="1-什么是单点登录">1. 什么是单点登录？</h2>
+
+<p>假设一个公司拥有多个业务，部署在多个域名下，只要用户在一个业务下完成登录，访问其他业务页面可自动登录，叫做<strong>单点登录</strong>。</p>
+
+<h2 id="2-如何实现">2. 如何实现？</h2>
+
+<p>同一域名下的不同子域名，可以使用<strong>cookie的domain关键字</strong>来实现。</p>
+
+<p>不同域名下，单点登录需要使用<strong>独立的认证服务SSO</strong>来实现。</p>
+
+<p><img src="/assets/posts/3.webp" alt="单点登录" /></p>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Safety"><span>Safety</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/09/06/%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8/" title="前端安全">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/09/08/Vue%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" title="Vue使用注意事项">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/09/06/%E5%89%8D%E7%AB%AF%E9%89%B4%E6%9D%83%E6%96%B9%E5%BC%8F/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

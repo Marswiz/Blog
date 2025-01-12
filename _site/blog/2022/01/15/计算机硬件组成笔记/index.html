@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>计算机硬件组成笔记 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="计算机硬件组成笔记" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="计算机硬件组成" />
+<meta property="og:description" content="计算机硬件组成" />
+<link rel="canonical" href="http://localhost:4000/blog/2022/01/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6%E7%BB%84%E6%88%90%E7%AC%94%E8%AE%B0/" />
+<meta property="og:url" content="http://localhost:4000/blog/2022/01/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6%E7%BB%84%E6%88%90%E7%AC%94%E8%AE%B0/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-01-15T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"计算机硬件组成","@type":"BlogPosting","url":"http://localhost:4000/blog/2022/01/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6%E7%BB%84%E6%88%90%E7%AC%94%E8%AE%B0/","headline":"计算机硬件组成笔记","dateModified":"2022-01-15T00:00:00+08:00","datePublished":"2022-01-15T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2022/01/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6%E7%BB%84%E6%88%90%E7%AC%94%E8%AE%B0/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">计算机硬件组成笔记</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Jan 15, 2022
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>计算机硬件组成</p>
+</blockquote>
+
+<h1 id="cpu结构及工作原理">CPU结构及工作原理</h1>
+<h2 id="进程和线程">进程和线程</h2>
+
+<p>程序平时储存在硬盘中，当我们执行程序，程序就从硬盘中被加载到内存。</p>
+
+<p>在内存中的程序就叫做进程。每一个进程都被分配了独立的资源（内存空间、网络端口等），进程是系统分配资源的最小单位。</p>
+
+<p>进程在开始运行的时候，操作系统会帮助找到第一行待执行代码，叫做主线程。一颗CPU内核，同时只能运行一个线程。</p>
+
+<blockquote>
+  <p><strong>多线程一定更快吗？</strong></p>
+
+  <p>对于单核CPU来说，运行多线程程序需要在线程间进行切换。线程切换是需要花费额外时间的，因此并不是多线程一定速度更快。</p>
+</blockquote>
+
+<h2 id="cpu的组成">CPU的组成</h2>
+
+<ul>
+  <li>程序计数器PC（Program Counter）;</li>
+  <li>寄存器(Register);</li>
+  <li>算术逻辑单元ALU（）;</li>
+  <li>缓存 (Cache);</li>
+</ul>
+
+<h2 id="cpu缓存">CPU缓存</h2>
+<h3 id="cpu寄存器和内存读取数据速度的比较">CPU寄存器和内存读取数据速度的比较</h3>
+
+<p>CPU从自身的<strong>寄存器</strong>读取数据的速度，大约比从内存读取数据速度快100倍。</p>
+
+<h3 id="多级缓存">多级缓存</h3>
+
+<p><a href="https://coolshell.cn/articles/20793.html">CPU的多级缓存</a></p>
+
+<p>对数据进行缓存，是解决这类问题的通用思路。</p>
+
+<p>通过对从内存中读取的数据进行缓存，减少CPU下次读取数据的耗时。缓存可以设置若干级，距离CPU从近到远，读取速度从快到慢。</p>
+
+<p>现在CPU一般设置三级缓存，各级缓存的功能有所不同：</p>
+
+<ol>
+  <li>L1级缓存：CPU的指令缓存，用于缓存CPU的指令；</li>
+  <li>L2级缓存：数据缓存，每个内核独立，用于缓存这个CPU内核的数据；</li>
+  <li>L3级缓存：数据缓存，各内核共用，用于CPU内核间交换数据。</li>
+</ol>
+
+<p><img src="/assets/posts/46.png" alt="cache" /></p>
+
+<p>CPU缓存的工作顺序：</p>
+
+<ol>
+  <li>从L1调取指令；</li>
+  <li>从L2读取数据，如果没有则从L3尝试读取数据；</li>
+  <li>如果没有，从内存读取数据。</li>
+</ol>
+
+<p>各级缓存的存取时间估计：</p>
+
+<ul>
+  <li>L1：4个CPU时钟周期；</li>
+  <li>L2：11个CPU时钟周期；</li>
+  <li>L3：39个CPU时钟周期；</li>
+  <li>内存：107个CPU时钟周期；</li>
+</ul>
+
+<h3 id="缓存行">缓存行</h3>
+
+<p>单独按字节访问内存，开销过大。现代CPU是按块访问内存的，一般是<code>64Bit</code>，称为一个<strong>缓存行</strong>。</p>
+
+<h3 id="内存与缓存的映射关系">内存与缓存的映射关系</h3>
+
+<p>从内存中读取的数据，该存放到哪一块缓存区域呢？这个问题也就是内存与缓存的映射关系问题。</p>
+
+<p>一般有三种形式：</p>
+
+<ul>
+  <li>直接映射：类似于将地址取模。固定的单个内存地址对应固定的单个缓存位置。</li>
+  <li>完全关联：任意对应。任意内存地址，对应任意缓存位置。</li>
+  <li>N路组关联：将缓存地址分为<code>N</code>组，每个内存地址对应单独的一组缓存地址。查找缓存时先找到对应的组别，然后在组内遍历。</li>
+</ul>
+
+<p>直接映射查找迅速，但是因为映射关系太过死板，缓存又不像哈希表一样可以使用拉链法等，缓存中后来的数据会替代先前的数据，导致缓存被频繁更替，命中率不高。</p>
+
+<p>完全关联映射太过宽松，虽然可以保证最大程度地缓存数据，但是查找时必须完全遍历整个缓存，查找效率低。</p>
+
+<p>因此现代CPU一般采用折中方案<code>N-Ways</code>，即N路关联。</p>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Computer Science"><span>Computer Science</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2022/01/12/JS%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="JS：数据结构与算法">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2022/01/26/%E7%BA%AA%E5%BF%B5%E7%A2%91%E8%B0%B7/" title="纪念碑谷">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2022/01/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6%E7%BB%84%E6%88%90%E7%AC%94%E8%AE%B0/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

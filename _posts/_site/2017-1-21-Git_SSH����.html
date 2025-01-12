@@ -1,0 +1,34 @@
+<h3 id="1git-初始化配置">1.Git 初始化配置</h3>
+<p>建立本地文件夹base，右击Git bash 运行
+<code class="solo">git init</code></p>
+
+<h3 id="2设置git-全局用户名和email">2.设置Git 全局用户名和Email</h3>
+<p><code class="solo">git config --global user.name "Mars" </code>
+<code class="solo">git config --global user.email "marswiz@yeah.net"</code></p>
+
+<h3 id="3查看本地是否存在ssh文件">3.查看本地是否存在SSH文件</h3>
+<p>在本地C盘用户→本用户文件夹下显示隐藏文件，看是否.ssh文件。</p>
+
+<h3 id="4利用git生成本地ssh文件">4.利用Git生成本地SSH文件</h3>
+<p><code class="solo">ssh-keygen -t rsa -C "marswiz@yeah.net"</code></p>
+
+<blockquote>
+  <p>直接使用ssh-keygen命令也是可以的，默认生成的就是rsa SSH，（会提示设置放置SSH的目录和每次动用SSH需要输入的口令，私人电脑可以不用设置。）</p>
+</blockquote>
+
+<h3 id="5设置github上ssh-pub-key">5.设置Github上SSH pub key</h3>
+<p>在本地C盘用户→本用户文件夹下显示隐藏文件，.ssh文件夹内找到pub key，打开并复制添加到github SSH控制项内。</p>
+
+<h3 id="6测试是否可以连通">6.测试是否可以连通</h3>
+<p><code class="solo">ssh -T git@github.com </code></p>
+
+<h3 id="7添加远程库">7.添加远程库</h3>
+<p><code class="solo">git remote add origin git@github.com:Marswiz/Marswiz.github.io.git </code></p>
+
+<blockquote>
+  <p>这里建议使用SSH协议的远程库形式，如果使用https协议那么SSH就无法作为凭证使用，每次都会提示输入用户名和密码才能进行git仓库的操作，很麻烦。
+使用HTTPs协议，如果想不用每次都输入用户名和密码，需要配置“凭据缓存”，把凭据信息暂时保存在内存： git config –global credential.helper cache</p>
+</blockquote>
+
+<h3 id="8git-pull">8.Git pull</h3>
+<p><code class="solo">git pull -f origin master</code></p>

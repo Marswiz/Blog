@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>现代JS学习笔记：Promise | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="现代JS学习笔记：Promise" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="学习内容：《现代JavaScript教程》" />
+<meta property="og:description" content="学习内容：《现代JavaScript教程》" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Promise/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Promise/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-10T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"学习内容：《现代JavaScript教程》","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Promise/","headline":"现代JS学习笔记：Promise","dateModified":"2021-03-10T00:00:00+08:00","datePublished":"2021-03-10T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Promise/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">现代JS学习笔记：Promise</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Mar 10, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>学习内容：<a href="https://zh.javascript.info/">《现代JavaScript教程》</a></p>
+</blockquote>
+
+<h1 id="13-promise">13	Promise</h1>
+<h2 id="131-基于回调的异步编程">13.1	基于回调的异步编程</h2>
+
+<p>比如想要在一个请求完成后，立即执行一个函数。这个形式叫做异步编程，可以使用回调函数的形式编写。如下：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">loadScript</span><span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">script</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">script</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">script</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">src</span><span class="p">;</span>
+  <span class="nx">script</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">callback</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span> <span class="c1">//这里编写了script标签载入后的回调函数。</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">loadScript</span><span class="p">(</span><span class="dl">'</span><span class="s1">https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js</span><span class="dl">'</span><span class="p">,</span> <span class="nx">script</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="s2">`Cool, the script </span><span class="p">${</span><span class="nx">script</span><span class="p">.</span><span class="nx">src</span><span class="p">}</span><span class="s2"> is loaded`</span><span class="p">);</span>
+  <span class="nx">alert</span><span class="p">(</span> <span class="nx">_</span> <span class="p">);</span> <span class="c1">// 所加载的脚本中声明的函数</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>这种回调函数在少量的嵌套时没问题，在多层嵌套时，比如回调里面还有异步的回调，多层嵌套会导致代码难以维护。</p>
+
+<h2 id="132-promise基本知识">13.2	Promise基本知识</h2>
+
+<p>Promise含义是“承诺”，顾名思义，一个Promise对象是一个承诺，它承诺了在一段时间后会给出某种解决方案：抛出一个结果或抛出错误。</p>
+
+<p>Promise对象的存在是为了解决异步编程中的回调地狱问题。Promise在“生产者”和“消费者”之间达成契约，作为中间商，当生产者一旦产出结果，立即通报给消费者。</p>
+
+<p>Promise()是JavaScript内置构造函数。语法如下：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">promise</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//参数为一个函数，函数参数列表第一个是resolve函数，第二个是reject函数，这两个函数都是JS内置的，无需自己定义。</span>
+  <span class="c1">// executor（生产者代码）</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>Promise构造时传入的函数被称为executor，它最终一定应该调用resolve或reject函数中的一个，代表执行成功返回结果 或 出现Error。</p>
+
+<h2 id="133-promise中的resolve和reject函数">13.3	Promise中的resolve和reject函数</h2>
+
+<p>Promise对象在构造的时候，传入的executor函数带有两个参数，resolve和reject函数。</p>
+
+<p>这两个函数都是可以直接执行的（Js内部定义好的），可以传入任何类型的值。</p>
+
+<p>resolve(value)传入的value会作为promise最终输出的Value保存在promise的result属性中。reject（error）传入的error会作为promise错误输出值，保存在promise的内部result属性中。</p>
+
+<ol>
+  <li>使用reject函数作为报错输出时，一般建议使用Error对象作为参数，因为这样可以明确看出是出现了错误，后面有很多好处。</li>
+  <li>promise中resolve和reject调用时间不受限制，不一定非要异步操作，也可以直接调用二者其一，把promise立即解决。</li>
+</ol>
+
+<h2 id="134-promise对象的内部属性">13.4	Promise对象的内部属性</h2>
+
+<p>Promise对象具有两个内部属性：state 和 result。</p>
+
+<ul>
+  <li>state: 初始值为’pending’，当resolve函数运行后，变更为’fulfilled’。在reject函数运行后，变更为’rejected’；</li>
+  <li>result: 初始值为undefined。在resolved函数运行后变更为返回的结果value，在Reject函数运行后变更为错误对象error；</li>
+</ul>
+
+<p>所以， promise 最终必将变为以下状态之一：</p>
+
+<p>无论promise是被解决resolved还是被拒绝rejected，都称作settled。</p>
+
+<blockquote>
+  <p>注意：</p>
+
+  <p>state和result这两个属性，和原型对象<code>[[prototype]]</code>一样，都是内部属性，不能直接访问。只能通过.then()这类方法访问。</p>
+</blockquote>
+
+<h2 id="135-thencatch和finally">13.5	then()、catch()和finally()</h2>
+<h2 id="1351-then">13.5.1	then()</h2>
+
+<p>then()方法是promise对象内置的方法，可以调用，目的是在promise对象被resolved或rejected之后，做出相应操作。</p>
+
+<p>then传入两个函数作为参数，第一个函数代表了resolve之后执行的操作，第二个函数代表了reject之后执行的操作。</p>
+
+<p>promise 被 settle 后，始终都会传入一个结果给.then()内部的函数：当promise被resolve，传入结果给第一个函数参数；当promise被reject，传入结果给第二个函数参数。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* handle a successful result */</span> <span class="p">},</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* handle an error */</span> <span class="p">}</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p>如果只对promise运行成功之后的结果感兴趣，可以不传入第二个参数，只传入第一个函数参数。</p>
+
+<p>只要promise是settled状态，调用其.then函数就会立即执行传入的回调函数。</p>
+
+<p>then函数可以在一个promise上调用多次，相当于多次处理同一个promise产生的结果。</p>
+
+<blockquote>
+  <p><code>then()</code>方法传入的如果不是函数，传入的参数会被忽略，变成默认函数<code>val =&gt; val</code> （透传，参数传递给下一个.then）。</p>
+</blockquote>
+
+<h2 id="1352-catch">13.5.2	catch()</h2>
+
+<p>catch(func)只在promise被reject的时候才起作用。它相当于then(null, func)。</p>
+
+<h2 id="1353-finally">13.5.3	finally()</h2>
+
+<p>finally（func）中的func会在promise被Settled之后运行。</p>
+
+<p>基本相似于then(func, func)，表示无论如何，只要promise产生了结果，就一定要运行的函数。（比如执行某些清理操作。）</p>
+
+<p>finally()不处理promise运行的结果，只是执行某些一定要进行的操作。finally运行之后，带有结果的promise对象依然被传出，可以继续直接调用.then或.catch，对结果进行处理。</p>
+
+<h2 id="136-promise链">13.6	Promise链</h2>
+
+<p>一个Promise在使用了.then()之后，整个.then()返回的仍是一个promise（但不是原来的promise.），它也有.then()方法，可以继续调用。</p>
+
+<p>如果.then内部的两个函数返回了值，那么它就是整个.then()返回promise的result；如果没有返回值，.then()返回promise result是undefined。</p>
+
+<p>上一个.then()调用后的结果，会作为其返回promise对象的内部result属性值，下一个.then（）会获取该值进行相应处理。</p>
+
+<p>比如：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">resolve</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1000</span><span class="p">);</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span> 
+  <span class="nx">alert</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span> <span class="c1">// 1</span>
+  <span class="k">return</span> <span class="nx">result</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span> 
+  <span class="nx">alert</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span> <span class="c1">// 2</span>
+  <span class="k">return</span> <span class="nx">result</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span> <span class="c1">// 4</span>
+  <span class="k">return</span> <span class="nx">result</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>then方法内部也可以手动return一个promise对象，那么下一个.then将等待这个返回的promise对象Settle之后才会运行。这使得我们可以利用promise链进行一连串的异步行为。</p>
+
+<h2 id="137-promise构造函数自带的方法">13.7	Promise构造函数自带的方法</h2>
+
+<h2 id="1371-promiseall">13.7.1	Promise.all()</h2>
+
+<p>Promise.all()方法接收一个数组作为参数，当该数组中含有的所有Promise对象都被resolve，返回一个新promise对象，它的Result是原数组中所有result组成的数组（原数组中不是promise对象的，就原样返回）。</p>
+
+<p>当传入数组中有一个promise被reject，则Promise.all 就会立即被 reject，完全忽略列表中其他的 promise。它们的结果也被忽略。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">promise1</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+  <span class="nx">setTimeout</span><span class="p">(()</span><span class="o">=&gt;</span><span class="nx">resolve</span><span class="p">(</span><span class="dl">'</span><span class="s1">first promise resolved!</span><span class="dl">'</span><span class="p">),</span><span class="mi">1000</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="kd">let</span> <span class="nx">promise2</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+  <span class="nx">setTimeout</span><span class="p">(()</span><span class="o">=&gt;</span><span class="nx">resolve</span><span class="p">(</span><span class="dl">'</span><span class="s1">second promise resolved!</span><span class="dl">'</span><span class="p">),</span><span class="mi">3000</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="kd">let</span> <span class="nx">controler</span> <span class="o">=</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+  <span class="p">[</span><span class="nx">promise1</span><span class="p">,</span> <span class="nx">promise2</span><span class="p">,</span> <span class="mi">1234</span><span class="p">]</span>
+<span class="p">);</span>
+
+<span class="nx">controler</span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>  
+<span class="c1">// ["first promise resolved!", "second promise resolved!", 1234]</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<h2 id="1372-promiseallsettled">13.7.2	Promise.allSettled()</h2>
+
+<p>Promise.allSettled()方法接收一个数组作为参数，当该数组中含有的所有Promise对象都被settle，也就是被resolve或reject，就立即返回一个新promise对象，它的Result是由对象构成的数组，对象的结构视resolve或reject而不同，具体如下：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="nl">status</span><span class="p">:</span><span class="dl">"</span><span class="s2">fulfilled</span><span class="dl">"</span><span class="p">,</span> <span class="nx">value</span><span class="p">:</span><span class="nx">result</span><span class="p">}</span>  <span class="c1">// 对于成功的响应，</span>
+<span class="p">{</span><span class="nl">status</span><span class="p">:</span><span class="dl">"</span><span class="s2">rejected</span><span class="dl">"</span><span class="p">,</span> <span class="nx">reason</span><span class="p">:</span><span class="nx">error</span><span class="p">}</span> <span class="c1">//对于 error。</span>
+</code></pre></div></div>
+
+<h2 id="1373-promiserace">13.7.3	Promise.race（）</h2>
+
+<p>Promise.race()方法接收一个数组作为参数，返回该数组中第一个被settle的Promise结果（result或error）。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Promise</span><span class="p">.</span><span class="nx">race</span><span class="p">([</span>
+  <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">resolve</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)),</span>
+  <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">reject</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">"</span><span class="s2">Whoops!</span><span class="dl">"</span><span class="p">)),</span> <span class="mi">2000</span><span class="p">)),</span>
+  <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">resolve</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">3000</span><span class="p">))</span>
+<span class="p">]).</span><span class="nx">then</span><span class="p">(</span><span class="nx">alert</span><span class="p">);</span> <span class="c1">// 1</span>
+</code></pre></div></div>
+
+<h2 id="138-promisefication-promise化">13.8	Promisefication (Promise化)</h2>
+
+<p>“Promisification” 是用于一个简单转换的一个长单词。它指将一个接受回调的函数转换为一个返回 promise 的函数。</p>
+
+<p>具体的promisefy方法见：https://zh.javascript.info/promisify</p>
+
+<h2 id="139-微任务microtask">13.9	微任务microtask</h2>
+
+<p>Promise始终是异步的，它一旦被settle，它的then/catch/finally这些handler会被放入一个叫做微任务队列(microtask queue)的队列中等待被执行。</p>
+
+<p>当JS代码执行完毕后，JS引擎才会从微任务队列里按先后顺序执行这些任务。</p>
+
+<blockquote>
+  <p><strong>注：</strong></p>
+
+  <p>队列是一种数据结构，它的特点是先进先出。</p>
+
+  <p>因此，即使是创建后立即就被resolve或reject的promise对象，它的then方法也会在全部JS代码执行完毕后才会执行。</p>
+</blockquote>
+
+<h2 id="1310-asyncawait">13.10	async/await</h2>
+<h2 id="13101-async">13.10.1	async</h2>
+
+<p>async关键字可以用在函数的前部，它的含义是：</p>
+
+<ul>
+  <li>让这个函数总是返回一个 promise；</li>
+  <li>允许在该函数内使用 await。</li>
+</ul>
+
+<p>async关键字修饰的函数，即使return了一个非promise对象的变量，也会被作为Result包装成promise对象返回。</p>
+
+<h2 id="13102-await">13.10.2	await</h2>
+
+<p>await关键字用在async修饰的函数体内的promise对象前，它的含义是：</p>
+
+<p>让JS引擎暂停，等待这个promise对象被settle，然后返回结果result或错误error。（可以避免使用.then方法，让代码更容易阅读）</p>
+
+<blockquote>
+  <p>注意：</p>
+
+  <p>await 实际上会暂停函数的执行，直到 promise 状态变为 settled，然后以 promise 的结果继续执行。这个行为只是在本函数内有效，JavaScript 引擎可以同时处理其他任务：执行其他脚本，处理事件等。</p>
+
+  <p>await也可以Promise.all()一起使用，把许多promise对象包装在一起等待settle。</p>
+</blockquote>
+
+<h2 id="13103-asyncawait中的error处理">13.10.3	async/await中的Error处理</h2>
+
+<p>如果await后面的promise对象被reject了，那么这一行<strong>相当于抛出了这个Error</strong>。和throw error是一样的。</p>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="JavaScript"><span>JavaScript</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Js%E4%B8%AD%E5%90%84%E7%A7%8D%E5%8F%98%E9%87%8F%E4%B9%8B%E9%97%B4%E7%9A%84%E6%AF%94%E8%BE%83%E6%96%B9%E5%BC%8F/" title="现代JS学习笔记：JS中各种变量值之间的比较方式">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Proxy%E5%92%8CReflect/" title="现代JS学习笔记：Proxy和Reflect">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Promise/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

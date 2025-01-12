@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>现代JS学习笔记：DOM及其操作 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="现代JS学习笔记：DOM及其操作" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="学习内容：《现代JavaScript教程》" />
+<meta property="og:description" content="学习内容：《现代JavaScript教程》" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-DOM%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-DOM%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-10T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"学习内容：《现代JavaScript教程》","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-DOM%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/","headline":"现代JS学习笔记：DOM及其操作","dateModified":"2021-03-10T00:00:00+08:00","datePublished":"2021-03-10T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-DOM%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">现代JS学习笔记：DOM及其操作</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Mar 10, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>学习内容：<a href="https://zh.javascript.info/">《现代JavaScript教程》</a></p>
+</blockquote>
+
+<h1 id="17-domdocument-object-model">17	DOM（Document Object Model）</h1>
+<h2 id="171-dom">17.1	DOM</h2>
+
+<p>DOM将一个页面的所有内容转化为可以被JS获取、修改的对象树，包括页面的根（document）、元素、文本、注释等。</p>
+
+<p>一个HTML页面的DOM树大概是这种结构：</p>
+
+<p><img src="/assets/posts/2.png" alt="官方代码风格" /></p>
+
+<h2 id="172-dom节点类">17.2	DOM节点类</h2>
+
+<p>每一个DOM节点根据自身类型的不同，可能具有自身不同的属性。但是他们都遵循一定的继承规律，因而才能共享一些方法属性。</p>
+
+<p>DOM节点的继承关系如下：</p>
+
+<p><img src="/assets/posts/3.png" alt="官方代码风格" /></p>
+
+<p>EventTarget — 是根的“抽象（abstract）”类。该类的对象从未被创建。它作为一个基础，以便<strong>让所有 DOM 节点都支持所谓的“事件（event）”</strong>，我们会在之后学习它。</p>
+
+<p>Node — 也是一个“抽象”类，充当 DOM 节点的基础。它提供了树的核心功能：parentNode，nextSibling，childNodes 等（它们都是 getter）。Node 类的对象从未被创建。但是有一些继承自它的具体的节点类，例如：文本节点的 Text，元素节点的 Element，以及更多异域（exotic）类，例如注释节点的 Comment。</p>
+
+<p>Element — 是 DOM 元素的基本类。它提供了元素级的导航（navigation），例如 nextElementSibling，children，以及像 getElementsByTagName 和 querySelector 这样的搜索方法。浏览器中不仅有 HTML，还会有 XML 和 SVG。Element 类充当更多特定类的基本类：SVGElement，XMLElement 和 HTMLElement。</p>
+
+<ul>
+  <li>HTMLElement — 最终是所有 HTML 元素的基本类。各种 HTML 元素均继承自它：</li>
+  <li>HTMLInputElement — <code>&lt;input&gt;</code> 元素的类，</li>
+  <li>HTMLBodyElement — <code>&lt;body&gt;</code> 元素的类，</li>
+  <li>HTMLAnchorElement — <code>&lt;a&gt;</code> 元素的类，</li>
+</ul>
+
+<p>……等，每个标签都有自己的类，这些类可以提供特定的属性和方法。</p>
+
+<p>因此，给定节点的全部属性和方法都是继承的结果。</p>
+
+<h2 id="173-dom节点的属性">17.3	DOM节点的属性</h2>
+<h3 id="1731-nodetype">17.3.1	nodeType</h3>
+
+<p>过时的获取DOM节点类型的方法：每一个DOM类型有自己的nodeType值，是一个数字，对于元素节点 elem.nodeType == 1，对于文本节点 elem.nodeType == 3等。</p>
+
+<p>现在可以使用 instanceof 操作符查看节点类型。</p>
+
+<h3 id="1732-nodenametagname">17.3.2	nodeName、tagName</h3>
+
+<p>获取节点的名称。nodeName支持所有DOM节点，tagName仅支持元素节点。</p>
+
+<p>一般使用nodeName即可。tagName不如nodeName强大。</p>
+
+<h3 id="1733-innerhtmlouterhtml">17.3.3	innerHTML、outerHTML</h3>
+
+<p>innerHTML 属性允许将元素中的 HTML 获取为字符串形式，可直接修改。</p>
+
+<p>outerHTML 属性包含了元素的完整 HTML，就像 innerHTML 加上元素本身一样。也可以直接修改。</p>
+
+<blockquote>
+  <p><strong>！注意：</strong></p>
+
+  <p>直接修改innerHTML和outerHTML都会造成修改部分的刷新。</p>
+
+  <p>即使是使用+=这种部分修改的方法，DOM引擎也会先删除所有原有内容，然后加入修改后的内容。</p>
+</blockquote>
+
+<h3 id="1734-textcontent">17.3.4	textContent</h3>
+
+<p>textContent 提供了对元素内的文本的访问权限：仅文本，去掉所有<code> &lt;tags&gt;</code>。</p>
+
+<p>修改textContent的内容，如果里面包含类似HTML标签的文本，也会按照文本对待，不会真正地变成HTML。</p>
+
+<h3 id="1735-html特性写在tag标签内可识别的属性">17.3.5	HTML特性：写在tag标签内可识别的属性</h3>
+
+<p>HTML标准规定了各类型元素的一些标准特性（Attribute），在HTML中可以在tag标签内书写，并直接可以通过DOM节点访问（被自动识别）。比如<code>&lt;input&gt;</code>的value特性，<code>&lt;a&gt;</code>的href特性，各元素的id特性等。</p>
+
+<p>HTML特性是<strong>大小写不敏感</strong>的，而且总是字符串类型的。</p>
+
+<blockquote>
+  <p><strong>注意：</strong></p>
+
+  <p>属性Property和特性Attribute的区别：属性Property指的是JS对象内部储存的键值对，无论是标准的还是自定义非标准的。在DOM对象中既可以是HTML标准特性、原生属性也可以是自定义属性，都叫做Property。而特性Attribute指的是HTML元素中标准规定的一些属性，也就是常用于写在Tag内的那些标准属性。</p>
+</blockquote>
+
+<p><strong>★ HTML标准里规定的特性，都可以被浏览器自动识别，可直接通过DOM元素的同名属性访问。（注意必须是HTML规定的标准特性）</strong></p>
+
+<p><strong>★ 非标准属性，比如自定义属性，不能直接访问，需要通过专用API：</strong></p>
+
+<ul>
+  <li>DOMelement.hasAttribute(name) — 检查特性是否存在。</li>
+  <li>DOMelement.getAttribute(name) — 获取这个特性值。</li>
+  <li>DOMelement.setAttribute(name, value) — 设置这个特性值。</li>
+  <li>DOMelement.removeAttribute(name) — 移除这个特性。</li>
+</ul>
+
+<p>使用这些方法后，对应DOM对象的属性也会更新。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">DOMelement</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="err">‘</span><span class="kd">class</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="nx">value</span><span class="err">’</span><span class="p">);</span>
+<span class="nx">DOMelement</span><span class="p">.</span><span class="kd">class</span><span class="p">;</span> <span class="c1">//value</span>
+</code></pre></div></div>
+
+<h4 id="17351--html特性和dom属性有时存在差异">17.3.5.1	 HTML特性和DOM属性有时存在差异</h4>
+
+<p>比如：<code>&lt;input&gt;</code>元素内的checked特性，在使用.getAttribute()方法返回的是空字符串，而使用<code>DOMelement.checked</code>获取的是<code>true</code>布尔值。</p>
+
+<p><code>&lt;a&gt;标签</code>的<code>href=’#here’</code>特性，使用<code>getAttribute()</code>获取到的是字符串’#here’，而<code>DomElement.href</code>获取的是完整的URL。</p>
+
+<p>也就是说，<strong>getAttribute（）方法会照着HTML中书写的原样返回字符串</strong>。而DOM属性会返回JS想要的结果。</p>
+
+<h3 id="1736-非标准的html特性dataset">17.3.6	非标准的HTML特性：dataset</h3>
+
+<p>可以在HTML标签中使用非标准的自定义特性，然后在JS中用getAttribute/setAttribute方法获取与设置。</p>
+
+<p>但是为了防止冲突，预留了以data-开头的特性用于自定义使用。以data-开头的特性，可以在DOM对象中使用DOMelement.dataset中对应属性找到。比如：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">’obj’</span> <span class="na">data-pool=</span><span class="s">’swim’</span><span class="nt">&gt;&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>中的data-pool属性，可以使用obj.dataset.pool获取。</p>
+
+<p>data-time-counter这类使用短横线连接的自定义特性名，属性中使用<strong>驼峰法</strong>获取：<code>dataset.timeCounter</code>。</p>
+
+<h3 id="1737-自定义属性">17.3.7	自定义属性</h3>
+
+<p>也可以随意为DOM元素添加属性，使用自定义的命名。但需要注意他们是大小写敏感的。比如：可以设置document.body.say = function(){ alert(‘Hey!’) }</p>
+
+<h2 id="174-遍历dom节点">17.4	遍历DOM节点</h2>
+
+<h3 id="1741-顶层节点htmlbodyhead">17.4.1	顶层节点<code>&lt;html&gt;、&lt;body&gt;、&lt;head&gt;</code></h3>
+
+<ul>
+  <li>document.documentElement 对应 &lt;html&gt;节点；</li>
+  <li>document.body 对应 &lt;body&gt;节点；</li>
+  <li>document.head 对应 &lt;head&gt;节点。</li>
+</ul>
+
+<h3 id="1742-dom节点的遍历属性">17.4.2	DOM节点的遍历属性</h3>
+
+<p>如上图所示，每一个DOM节点都有遍历其他节点的方法。这些遍历是在纯DOM节点层面的，里面包含了html的各种类型节点，包括可能不关注的文本节点等。</p>
+
+<p>如果想在纯元素节点之间遍历，使用下面的这些属性。</p>
+
+<h2 id="175-dom对象的创建修改与插入">17.5	DOM对象的创建、修改与插入</h2>
+<h3 id="1751-创建dom节点">17.5.1	创建DOM节点</h3>
+
+<ul>
+  <li>document.createElement(tag)： 创建元素节点；</li>
+  <li>document.createTextNode(text)： 创建文本节点。</li>
+</ul>
+
+<h3 id="1752-修改dom节点">17.5.2	修改DOM节点</h3>
+
+<p>使用DOM对象的属性，直接修改新创建DOM对象。</p>
+
+<p>class特性，需要使用domElement.className修改，因为class是JS中保留关键字。</p>
+
+<h3 id="1753-插入dom节点">17.5.3	插入DOM节点</h3>
+
+<p>以下方法用于插入DOM节点：</p>
+
+<ul>
+  <li>node.append(…nodes or strings) —— 在 node 末尾 插入节点或字符串，</li>
+  <li>node.prepend(…nodes or strings) —— 在 node 开头 插入节点或字符串，</li>
+  <li>node.before(…nodes or strings) —— 在 node 前面 插入节点或字符串，</li>
+  <li>node.after(…nodes or strings) —— 在 node 后面 插入节点或字符串，</li>
+  <li>node.replaceWith(…nodes or strings) —— 将 node 替换为给定的节点或字符串。</li>
+</ul>
+
+<p>这些方法在参数为字符串时，插入到HTML后不会被识别为HTML代码，而是各种符号都被转义的字符串。如果想要使用字符串形式，为HTML文档动态添加可识别的HTML代码，需要使用DOM对象的.insertAdjacentHTML()方法：</p>
+
+<p>elem.insertAdjacentHTML(where, html)。该方法的第一个参数是代码字（code word），指定相对于 elem 的插入位置。必须为以下之一：</p>
+
+<ul>
+  <li>“beforebegin” — 将 html 插入到 elem 前插入，</li>
+  <li>“afterbegin” — 将 html 插入到 elem 开头，</li>
+  <li>“beforeend” — 将 html 插入到 elem 末尾，</li>
+  <li>“afterend” — 将 html 插入到 elem 后。</li>
+</ul>
+
+<h3 id="1754-替换dom节点">17.5.4	替换DOM节点</h3>
+<p>DOMelement.replaceWith()可以用于原地替换一个DOM节点。</p>
+<h3 id="1755-删除dom节点">17.5.5	删除DOM节点</h3>
+<p>使用DOMelement.remove()方法移除节点。</p>
+<h3 id="1756-移动dom节点">17.5.6	移动DOM节点</h3>
+<p>获取并移动一个DOM节点到另一个位置，引擎会自动将原HTML元素删除，然后在新的位置插入。（无需手动删除原节点）。</p>
+<h3 id="1757-克隆dom节点">17.5.7	克隆DOM节点</h3>
+<p>使用DOMelement.cloneNode( <Boolean> )来克隆一个DOM节点。</Boolean></p>
+<ul>
+  <li>当传入参数true时，为深克隆（全部子元素都克隆）；</li>
+  <li>当传入参数False,为浅克隆，克隆将不包含子元素。</li>
+</ul>
+
+<h2 id="176-使用dom修改获取css样式">17.6	使用DOM修改、获取CSS样式</h2>
+<h3 id="1761-直接修改style属性元素样式">17.6.1	直接修改style属性（元素样式）</h3>
+<p>DOM元素自身具有Style属性，可以直接使用JS访问修改。它对应的是HTML中这个元素的Style特性，也<strong>只对应HTML中的style特性</strong>（无法访问其他形式加入的CSS内容，比如外部样式表）。</p>
+
+<p><code>elem.style.width="100px"</code> 的效果等价于我们在 style 特性中有一个 width:100px 字符串。</p>
+
+<p>多词属性，需要进行驼峰化处理才能访问。</p>
+
+<p>这种修改方式的特点如下：</p>
+
+<ol>
+  <li>它比通过CSS Class修改的优先级要高(内联)，默认会覆盖CSS Class中相同的内容;</li>
+  <li>style.css只能逐一修改CSS属性（可能造成多次回流、重绘）；</li>
+  <li>如果需要像定义CSS一样，一次传入一个字符串作为Style，需要使用style.cssText = <string>；（这样操作会删除所有现有已定义的style特性）</string></li>
+  <li>只有需要复杂计算才能获取的CSS属性，需要通过这样的方式修改。其他情况一般默认应采用CSS Class修改。</li>
+</ol>
+
+<h3 id="1762-创建修改css-class">17.6.2	创建、修改CSS Class</h3>
+<h4 id="17621--classname">17.6.2.1	 className</h4>
+
+<p>早期的JS不允许设置‘class’为对象属性名，因为是保留关键字。所以早期使用className作为获取DOM元素CSS Class的属性名。</p>
+
+<p>className设置的是DOM元素完整的字符串，一旦修改整个class都会被替换。</p>
+
+<h4 id="17622--classlist">17.6.2.2	 classList</h4>
+
+<p>DOM元素还有一个classList属性，它是一个可迭代对象，里面记录着这个DOM元素上绑定的所有CSS Class。它自带四个方法：</p>
+
+<ul>
+  <li>elem.classList.add/remove(class) — 添加/移除类。</li>
+  <li>elem.classList.toggle(class) — 如果类不存在就添加类，存在就移除它。</li>
+  <li>elem.classList.contains(class) — 检查给定类，返回 true/false。</li>
+</ul>
+
+<h3 id="1763-获取最终css样式">17.6.3	获取最终CSS样式</h3>
+
+<p>使用.style只能获取定义在style特性中的CSS样式，不能获取最终的元素CSS。</p>
+
+<p>使用全局环境下的getComputedStyle(DOMelement,[pseudo])方法，可以返回计算后的(Computed)CSS结果对象，然后按需获取想要的结果。</p>
+
+<h2 id="177-dom元素的各种几何属性">17.7	DOM元素的各种几何属性</h2>
+
+<p>DOM元素自身具有一些反应自身几何性质的属性。这些属性所反应的信息如下图所示。</p>
+
+<h3 id="1771-offset参数">17.7.1	offset参数</h3>
+
+<p>带有offset的参数反应的是元素的外边界相关的参数。（元素的外边界，指的是元素border外的的最外层边界）</p>
+
+<ul>
+  <li>offsetParent: DOM元素的offset基准元素。offsetParent 是最接近的祖先（ancestor），在浏览器渲染期间，它被用于计算坐标。
+<br />它是下列元素之一：CSS 定位的（position 为 absolute，relative 或 fixed），或 &lt;td&gt;，&lt;th&gt;，&lt;table&gt;，或 &lt;body&gt;。</li>
+  <li>offsetLeft、offsetTop：元素左上角点到offsetParent左上角点的横向、纵向距离；</li>
+  <li>offsetWidth、offsetHeight: 元素<strong>外边界</strong>的宽度和高度；</li>
+</ul>
+
+<h3 id="1772-client参数">17.7.2	client参数</h3>
+
+<p>带有client的参数反应的是元素的<strong>内边界</strong>相关的参数。（元素的内边界，指的是元素border内的不包含滚动条的边界）</p>
+
+<ul>
+  <li>clientTop、clientLeft: 内边界左上角点到外边界左上角点的水平、垂直距离；（在一般条件的盒子模型中就是边界厚度）</li>
+  <li>clientWidth、clientHeight: 内边界的宽度和高度；</li>
+</ul>
+
+<h3 id="1773-scroll相关参数">17.7.3	scroll相关参数</h3>
+
+<p>是可滚动部分的相关参数。</p>
+
+<ul>
+  <li>scrollTop、scrollLeft:可滚动内容的上边界到现在内边界上边缘的距离；
+（已滚动的距离）</li>
+  <li>scrollWidth、scrollHeight: 可滚动部分的总宽度、高度；</li>
+</ul>
+
+<h3 id="1774-为什么不建议从css获取元素几何参数">17.7.4	为什么不建议从CSS获取元素几何参数？</h3>
+
+<p>① CSS中元素的几何参数，还取决于CSS box-sizing属性，因此不准；</p>
+
+<p>② CSS中获取到的几何参数，有可能是’auto’；</p>
+
+<p>③ 因为滚动条的存在，不同浏览器返回的CSS属性有差异。</p>
+
+<blockquote>
+  <p><strong>★ clientWidth与getComputedStyle(elem).width的区别？</strong></p>
+  <ol>
+    <li>clientWidth 值是数值，而 getComputedStyle(elem).width 返回一个以 px 作为后缀的字符串。</li>
+    <li>getComputedStyle 可能会返回非数值的 width，例如内联（inline）元素的 “auto”。</li>
+    <li>clientWidth 是元素的内部内容区域加上 padding，而 CSS width（具有标准的 box-sizing）是内部内容区域，不包括 padding。</li>
+    <li>如果有滚动条，并且浏览器为其保留了空间，那么某些浏览器会从 CSS width 中减去该空间（因为它不再可用于内容），而有些则不会这样做。clientWidth 属性总是相同的：如果为滚动条保留了空间，那么将减去滚动条的大小。</li>
+  </ol>
+</blockquote>
+
+<h3 id="1775-获取窗口的widthheight布局视口layout-viewport">17.7.5	获取窗口的width/height（布局视口Layout Viewport）</h3>
+
+<p>获取整个窗口（可视部分）的width或者height，需要使用document.documentElement 的 clientWidth/clientHeight：</p>
+
+<p><code>window.innerHeight</code> 和 <code>window.innerWidth</code> 都是包含了滚动条的。</p>
+
+<p><code>document.documentElement.clientWidth</code>是不包含滚动条的。</p>
+
+<h3 id="1776-获取整个文档的widthheight">17.7.6	获取整个文档的width/height</h3>
+
+<p>理论上使用document.documentElement.scrollWidth/scrollHeight.</p>
+
+<p>但是，由于种种历史原因，document.documentElement.scrollHeight经常不返回整个文档的高度，而是别的数据。因此必须使用以下方法：</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">scrollHeight</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">scrollHeight</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">scrollHeight</span><span class="p">,</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">offsetHeight</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">offsetHeight</span><span class="p">,</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">clientHeight</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">clientHeight</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="178-dom元素的坐标">17.8	DOM元素的坐标</h2>
+<h3 id="1781-坐标系">17.8.1	坐标系</h3>
+
+<p>大多数 JavaScript 方法处理的是以下两种坐标系中的一个：</p>
+
+<ul>
+  <li>相对于视口 — 类似于 position:fixed，从视口的顶部/左侧边缘计算得出。
+我们将这些坐标表示为 clientX/clientY，当我们研究事件属性时，就会明白为什么使用这种名称来表示坐标。</li>
+  <li>相对于文档 — 与文档根（document root）中的 position:absolute 类似，从文档的顶部/左侧边缘计算得出。
+我们将它们表示为 pageX/pageY。</li>
+</ul>
+
+<h3 id="1782-获取dom元素的视口坐标">17.8.2	获取DOM元素的视口坐标</h3>
+
+<p>每个DOM元素都有一个<code>getBoundingClientRect()</code>方法，它返回一个对象（DOMRect对象），里面包含了各种这个元素相对于窗口的坐标属性。</p>
+
+<p><img src="/assets/posts/35.png" alt="bounding" /></p>
+
+<h3 id="1783-获取视口中某一坐标的元素">17.8.3	获取视口中某一坐标的元素</h3>
+
+<p><code>document.elementFromPoint(x,y)</code>可以获取当前窗口的x,y坐标点，嵌套最多的DOM元素。（指哪打哪！）</p>
+
+<h3 id="1784-获取dom元素的文档坐标">17.8.4	获取DOM元素的文档坐标</h3>
+
+<p>思路是：先获取DOM元素的窗口坐标，然后获取整个窗口的滚动参数(<code>window.pageXOffset</code>、<code>window.pageYOffset</code>)，然后将两者相加。</p>
+
+<h2 id="179-页面滚动">17.9	页面滚动</h2>
+<h3 id="1791-获取当前窗口的滚动参数">17.9.1	获取当前窗口的滚动参数</h3>
+
+<p><code>window.pageXOffset</code>和<code>window.pageYOffset</code>可以获取当前窗口的滚动位置参数。但是这两个参数都是只读的。</p>
+
+<h3 id="1792-直接使用js代码操作页面滚动">17.9.2	直接使用JS代码操作页面滚动</h3>
+
+<p>有三种方式可以使用JS操作页面滚动：</p>
+
+<ol>
+  <li>可以通过直接赋值给document.documentElement.scrollTop/scrollLeft来实现页面的滚动；</li>
+  <li>window.scrollTo(x,y)和window.scrollBy(delta_x,delta_y)可以实现直接滚动到xy和相对当前位置步进滚动delta_x,delta_y的功能。</li>
+  <li>★ DOMElement.scrollIntoView(<code>&lt;Boolean&gt;</code>)；这个方法可以使任何DOM节点立即跳转到窗口内。（当传入的Boolean为true,节点位于窗口最上方。当为false，在窗口最下方。）</li>
+</ol>
+
+<h3 id="1793-禁止页面滚动">17.9.3	禁止页面滚动</h3>
+
+<p>要使文档不可滚动，只需要设置 <code>document.body.style.overflow = "hidden"</code>。该页面将“冻结”在其当前滚动位置上。</p>
+
+<p>document.body.style.overflow = “” 可以恢复滚动。</p>
+
+<p>这个方法滚动条会消失，所以页面会有点变化。</p>
+
+<h2 id="1710-dom事件">17.10	★DOM事件</h2>
+
+<h3 id="17101-绑定dom事件的方法">17.10.1	绑定DOM事件的方法</h3>
+<h4 id="171011--html标签特性">17.10.1.1	 HTML标签特性</h4>
+
+<p>直接在HTML标签内写onclick、onload这类特性。</p>
+
+<p>这种显式传入的方式，函数尾部应该带有括号。</p>
+
+<h4 id="171012--js获取dom元素并绑定">17.10.1.2	 JS获取DOM元素并绑定</h4>
+
+<p>用JS获取DOM元素，然后绑定onload、onclick这类方法。（传入函数体，而不是调用的函数）</p>
+
+<p>上面这两种方法会互相覆盖。</p>
+
+<p>DOM事件中This就是发生事件的那个元素本身。</p>
+<h4 id="171013--addeventlistener">17.10.1.3	 addEventListener()</h4>
+
+<p>使用addEventListener（）可以为DOM元素添加多个事件。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">element</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">handler</span><span class="p">[,</span> <span class="nx">options</span><span class="p">]);</span>
+</code></pre></div></div>
+
+<ul>
+  <li>event：事件名，例如：”click”；</li>
+  <li>handler：处理程序；</li>
+  <li>options：具有以下属性的附加可选对象：
+    <ul>
+      <li>once：如果为 true，那么会在被触发后自动删除监听器。</li>
+      <li>capture：&lt;true/false&gt;元素在捕获还是冒泡阶段发生(true: 捕获， false:冒泡)。由于历史原因，options 也可以是 false/true，它与 {capture: false/true} 相同。</li>
+      <li>passive：如果为 true，那么处理程序将不会调用 preventDefault().</li>
+    </ul>
+  </li>
+</ul>
+
+<p>使用removeEventListener()去除DOM元素上绑定的事件。</p>
+
+<h3 id="17102-事件对象">17.10.2	事件对象</h3>
+
+<p>DOM事件发生的时候，会生成一个事件对象event，里面记载了这次事件的一些信息。这个event对象可以通过事件的handler参数进行引用。</p>
+
+<h3 id="17103-使用对象作为处理程序handleevent">17.10.3	使用对象作为处理程序handleEvent</h3>
+
+<p>addEventListener()第二个参数不仅可以传入函数作为事件，还可以传入对象obj。</p>
+
+<p>这种情况下，将默认使用obj.handleEvent()作为事件。</p>
+
+<blockquote>
+  <p><strong>为什么要使用对象呢？</strong></p>
+
+  <p>因为一个对象内可以定义多个方法，这样每一个单独的功能就能独立出来，单独起一个函数名，这样的代码更直观容易维护、修改。</p>
+</blockquote>
+
+<h3 id="17104-事件的冒泡和捕获">17.10.4	事件的冒泡和捕获</h3>
+<h4 id="171041--事件冒泡">17.10.4.1	 事件冒泡</h4>
+<p>默认情况下，几乎所有的事件都以冒泡的形式发生。（focus事件不冒泡）</p>
+
+<h5 id="1710411--什么是事件冒泡">17.10.4.1.1	 什么是事件冒泡？</h5>
+<p>一个元素，它被包裹在它的父级元素中，然后还有更高层的元素包裹。这些元素上可能都被挂载了自己的事件。（比如click）</p>
+
+<p>冒泡的意思，就是当你在一个内部元素上触发事件（click），它先在最内层的元素上发生，然后是上一层父级元素的事件，逐级直到最顶层元素事件完毕。像一个气泡一样，从最下面一直传递到最上面。</p>
+
+<h3 id="17105-阻止浏览器默认行为">17.10.5	阻止浏览器默认行为</h3>
+
+<p>浏览器的默认行为，比如点击链接会跳转等，可以被手动取消。总共有两种方法：</p>
+
+<ol>
+  <li>event.preventDefault()方法；</li>
+  <li>使用on<code>&lt;event&gt;</code>分配事件时，可以<strong>返回false</strong>表示阻止浏览器默认行为。</li>
+</ol>
+
+<h2 id="1711-页面生命周期">17.11	页面生命周期</h2>
+
+<p>以下事件按页面生命流程发生。</p>
+
+<h3 id="17111-domcontentloaded">17.11.1	DOMContentLoaded</h3>
+
+<p>此时浏览器已完全加载 HTML，并构建了 DOM 树，但此时像 <code>&lt;img&gt; </code>和样式表之类的外部资源可能尚未加载完成。</p>
+
+<p>这个事件的使用方法是：</p>
+
+<p>document.addEventListener(‘DOMContentLoaded’, func);</p>
+
+<h3 id="17112-load">17.11.2	load</h3>
+
+<p>浏览器不仅加载完成了 HTML，还加载完成了所有外部资源：图片，样式等。</p>
+
+<p>这个事件在window对象上挂载。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="nx">func</span><span class="p">;</span>
+</code></pre></div></div>
+<h3 id="17113-beforeunload">17.11.3	beforeunload</h3>
+
+<p>当用户点击离开，或者试图关闭页面，会触发这个事件函数。</p>
+
+<p>window.onbeforeunload = func;</p>
+
+<p>这里注意：func的返回值有重要意义，func返回False或者一个字符串的时候，浏览器会触发弹出离开前的确认信息。</p>
+
+<p>因为这个功能经常被滥用，现在返回字符串也不会被显示出来，只是当做返回了false。</p>
+
+<h3 id="17114-unload">17.11.4	unload</h3>
+
+<p>当访问者离开页面时，window 对象上的 unload 事件就会被触发。我们可以在那里做一些不涉及延迟的操作，例如关闭相关的弹出窗口。</p>
+
+<h3 id="17115-监测页面生命周期变化的方法">17.11.5	监测页面生命周期变化的方法</h3>
+
+<p>document.readyState 记载了页面的加载状态。它有四种取值：</p>
+
+<ul>
+  <li>uninitialized - 还未开始载入</li>
+  <li>loading - 载入中</li>
+  <li>interactive - 已加载，文档与用户可以开始交互</li>
+  <li>complete - 载入完成</li>
+</ul>
+
+<p>可以在document上加载一个readystatechange监听器，当页面生命周期发生变化，会执行相应函数。</p>
+
+<h2 id="1712-script的同步加载与异步加载">17.12	<code>&lt;script&gt;</code>的同步加载与异步加载</h2>
+<h3 id="17121-同步加载">17.12.1	同步加载</h3>
+
+<p><code>&lt;script&gt;</code>默认情况下在页面中是同步加载的，也就是说当浏览器对HTML解析到script标签时，会<strong>立即下载+执行</strong>里面的代码，整个页面停止加载，进行等待，直到JS下载+执行完毕。</p>
+
+<h3 id="17122-异步加载">17.12.2	异步加载</h3>
+
+<p><img src="/assets/posts/defer.webp" alt="defer" /></p>
+
+<h4 id="171221-defer">17.12.2.1	defer</h4>
+
+<p>在Script标签中加入defer 特性，就是告诉浏览器不要等待这个脚本下载。浏览器将继续加载后面的 HTML，构建 DOM。JS脚本会异步下载（与页面加载并发），然后等 DOM 解析完成后，脚本才会执行。</p>
+
+<p>defer标记的脚本，会在DOM解析完成后（解析到<code>&lt;/html&gt;</code>），但<code>DOMContentLoaded</code>事件触发前，<strong>按照声明的先后顺序</strong>执行。</p>
+
+<p>排在后面的<code>defer</code>脚本，即使先加载完成，也等待前面的加载执行完毕后再执行。</p>
+
+<h4 id="171222-async">17.12.2.2	async</h4>
+
+<p>在下载方面，<code>async</code> 与 <code>defer</code> 相同，都是让脚本不阻塞页面加载，异步下载。</p>
+
+<p>但是async标记的script不会等待任何其他DOM元素或Script的加载或执行，它是<strong>完全独立的，独立加载+执行，下载完了立即执行，可能发生在页面周期的任何时候</strong>。</p>
+
+<h3 id="17123-动态脚本加载">17.12.3	动态脚本加载</h3>
+
+<p>在JS中创建script对象，然后添加到页面中的脚本。叫做动态脚本。</p>
+
+<p><strong>动态脚本默认和带有<code>async</code>关键字是一样的</strong>：立即加载，按加载完成先后顺序执行，与代码内挂载的顺序无关。</p>
+
+<p>但如果手动设置了<code>async = false</code>，则以挂载先后顺序执行，就是defer。</p>
+
+<h2 id="1713-其他资源的加载">17.13	其他资源的加载</h2>
+
+<p>onload和onerror几乎可以用在带有src特性的任何DOM元素上。</p>
+
+<p>图片<code> &lt;img&gt;</code>，外部样式，脚本和其他资源都提供了 load 和 error 事件以跟踪它们的加载：</p>
+
+<ul>
+  <li>load 在成功加载时被触发。</li>
+  <li>error 在加载失败时被触发。</li>
+</ul>
+
+<p>唯一的例外是 <code>&lt;iframe&gt;</code>：出于历史原因，不管加载成功还是失败，即使页面没有被找到，它都会触发 load 事件。</p>
+
+<h2 id="1714-dom变动观察器">17.14	DOM变动观察器</h2>
+
+<p>MutationObserver 是一个内建对象，它观察 DOM 元素，并在检测到更改时触发回调。具体见：<a href="https://zh.javascript.info/mutation-observer">Mutation Observer</a></p>
+
+<h2 id="1715-事件循环">17.15	事件循环</h2>
+
+<p>当浏览器没有任务执行时，处于休眠状态。当任务出现，则按照出现的先后顺序执行任务，先进入的任务先执行。</p>
+
+<h3 id="17151-宏任务">17.15.1	宏任务</h3>
+
+<p>以下内容被称为宏任务，这些任务按照出现的顺序在浏览器内部组成一个序列，按照进入的先后顺序执行，先进先出。</p>
+
+<ul>
+  <li><strong>Js脚本</strong>：当外部脚本 <code>&lt;script src="..."&gt;</code> 加载完成时，任务就是执行它。</li>
+  <li><strong>事件回调</strong>：例如当用户移动鼠标时，任务就是派生出 mousemove 事件和执行处理程序。</li>
+  <li><strong>定时器</strong>：当安排的（scheduled）setTimeout 时间到达时，任务就是执行其回调。</li>
+</ul>
+
+<p>宏任务执行的间隙，如果有微任务，则浏览器<strong>先执行微任务，然后执行DOM渲染</strong>。在一个宏任务的执行过程中不进行DOM渲染，完成后才进行。</p>
+
+<h3 id="17152-微任务">17.15.2	微任务</h3>
+
+<p>微任务仅来自于我们的代码。它们通常是由 promise 创建的：对 .then/catch/finally 处理程序的执行会成为微任务。微任务也被用于 await 的“幕后”，因为它是 promise 处理的另一种形式。</p>
+
+<p>还有一个特殊的函数 <code>queueMicrotask(func)</code>，它手动添加<code>func</code>到微任务队列，以在下次执行时机执行。</p>
+
+<p>每个宏任务之后，引擎会立即执行微任务队列中的所有任务，然后再执行其他的宏任务，或渲染，或进行其他任何操作。</p>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="JavaScript"><span>JavaScript</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/03/09/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8E%9F%E5%9E%8B%E4%B8%8E%E7%BB%A7%E6%89%BF/" title="现代JS学习笔记：原型与继承">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Generator-%E7%94%9F%E6%88%90%E5%99%A8/" title="现代JS学习笔记：Generator（生成器）">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/03/10/%E7%8E%B0%E4%BB%A3JS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-DOM%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

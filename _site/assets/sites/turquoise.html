@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绿松石圆珠瓷度计算器</title>
+    <style>
+        #content {
+            padding: 1em;
+            width: 80%;
+            border: 1px solid black;
+            border-radius: 1em;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        #res {
+            margin-top: 1em;
+            font-weight: bold;
+        }
+        .result {
+            color: #00a323;
+            font-size: 2em;
+        }
+       #warn {
+            font-size: 2em;
+            margin-top: 1em;
+            color: red;
+            background-color: rgb(255, 227, 227);
+       } 
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <div class="item">直径(mm)：<input type="number" id="dia" value="12"></div>
+        <div class="item">孔道(mm)：<input type="number" id="hole" value="1.2"></div>
+        <div class="item">克重(g)：<input type="number" id="weight" value="3"></div>
+    </div>
+    <div id="res">该绿松石密度为<span class="result" id="rho">???</span>，质地级别为<span class="result" id="rating"> ??? </span>，瓷度为<span class="result" id="cidu"> ??? </span>。</div>
+    <div id="warn"></div>
+</body>
+<script>
+    let dia = document.querySelector('#dia');
+    let hole = document.querySelector('#hole');
+    let weight = document.querySelector('#weight');
+    let all = [dia, hole, weight];
+
+    function cal() {
+        let d = dia.value;
+        let h = hole.value;
+        let w = weight.value;
+        let vol = 4/3*Math.PI*Math.pow(d/2, 3) - 0.25*Math.PI*h*h*d;
+        let res = w/vol*1000;
+        let rating = res >= 2.7 ? 'T1' : res >= 2.5 ? 'T2' : 'T3';
+        let cidu = res >= 2.7 ? '高瓷' : res >= 2.5 ? '中瓷' : '低瓷';
+        document.querySelector('#rating').innerHTML = rating;
+        document.querySelector('#cidu').innerHTML = cidu;
+        document.querySelector('#rho').innerHTML = res.toFixed(2);
+        if (res > 2.95 || res < 2.35) document.querySelector('#warn').innerHTML = '该绿松石密度异常！请谨慎辨别是否为假货。';
+        else document.querySelector('#warn').innerHTML = '';
+    }
+
+    all.forEach(i => {
+        i.addEventListener('change', ()=>{cal();});
+    });
+</script>
+</html>

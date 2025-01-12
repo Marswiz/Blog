@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>ECMAScript6 学习笔记 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="ECMAScript6 学习笔记" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="学习内容：《ECMAScript 6 入门》 —— 阮一峰 Ps:仅用于个人学习笔记使用，大量内容和实例可能直接复制原文。" />
+<meta property="og:description" content="学习内容：《ECMAScript 6 入门》 —— 阮一峰 Ps:仅用于个人学习笔记使用，大量内容和实例可能直接复制原文。" />
+<link rel="canonical" href="http://localhost:4000/blog/2019/08/21/ECMAScript6-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
+<meta property="og:url" content="http://localhost:4000/blog/2019/08/21/ECMAScript6-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-08-21T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"学习内容：《ECMAScript 6 入门》 —— 阮一峰 Ps:仅用于个人学习笔记使用，大量内容和实例可能直接复制原文。","@type":"BlogPosting","url":"http://localhost:4000/blog/2019/08/21/ECMAScript6-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/","headline":"ECMAScript6 学习笔记","dateModified":"2019-08-21T00:00:00+08:00","datePublished":"2019-08-21T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2019/08/21/ECMAScript6-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">ECMAScript6 学习笔记</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Aug 21, 2019
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>学习内容：<a href="http://es6.ruanyifeng.com/">《ECMAScript 6 入门》 —— 阮一峰</a>
+<br />Ps:仅用于个人学习笔记使用，大量内容和实例可能直接复制原文。</p>
+</blockquote>
+
+<h2 id="1-块级作用域let-与-const-声明变量">1. 块级作用域、let 与 const 声明变量</h2>
+<h3 id="11-let-命令">1.1 let 命令</h3>
+
+<ul>
+  <li>只在其所在的代码块（花括号）内起作用；</li>
+  <li>可以用于声明<code>for</code>循环的计数器<code>i</code>，使得<code>i</code>只作用于<code>for</code>的代码块里，每一轮都生成新的<code>i</code>而不是将<code>i</code>泄露于全局；</li>
+  <li>不存在变量提升现象；</li>
+  <li>一旦<code>let</code>在块级作用域中声明，就与这个代码块绑定，外部同名变量不能在这个代码块内使用；</li>
+  <li>块级作用域在<code>let</code>声明前，对于同名变量是<code>"暂时性死区"</code>，不可使用，否则报错；</li>
+  <li><code>let</code>不允许在相同块级作用域内，重复声明同名变量；</li>
+</ul>
+
+<h3 id="12-块级作用域">1.2 块级作用域</h3>
+<ul>
+  <li><code>ES6</code>引入了块级作用域，明确允许在块级作用域之中声明函数;</li>
+  <li><code>ES6</code>规定，块级作用域之中，函数声明语句的行为类似于let，在块级作用域之外不可引用;</li>
+  <li>应该避免在块级作用域内声明函数。如果确实需要，也应该写成函数表达式，而不是函数声明语句。</li>
+</ul>
+
+<h3 id="13-const-命令">1.3 const 命令</h3>
+<ul>
+  <li><code>const</code>声明一个只读的常量。一旦声明，常量的值就不能改变；</li>
+  <li><code>const</code>一旦声明变量，就必须立即初始化，不能留到以后赋值；</li>
+  <li>与<code>let</code>具有相同的属性；</li>
+  <li><code>const</code>实际上保证的，并不是变量的值不得改动，而是变量指向的那个内存地址所保存的数据不得改动。当<code>const</code>保存的是<code>基本类型变量</code>，可以保证其值不被修改。但如果保存的是对象等<code>引用类型变量</code>，因为本质上变量只是一个指向实际对象堆内存地址的指针，只能保证<code>const</code>变量所指向的内存地址固定，<code>const</code>声明不能约束指向的对象本身是否可改变（给<code>const</code>声明的对象修改属性是可以的）；</li>
+</ul>
+
+<h2 id="2-解构赋值">2. 解构赋值</h2>
+<h3 id="21-数组解构赋值">2.1 数组解构赋值</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="p">[</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">,</span><span class="nx">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
+</code></pre></div></div>
+<p>按照先后位置给数组内变量赋予相应的值。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="p">[</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">b</span><span class="dl">'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">];</span> <span class="c1">// x='a', y='b'</span>
+<span class="kd">let</span> <span class="p">[</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">b</span><span class="dl">'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">];</span> <span class="c1">// x='a', y='b'</span>
+</code></pre></div></div>
+<p>可以给数组内元素设定默认值。当给变量赋予的值严格等于<code>undefined</code>时，默认值生效。
+默认值也可以是函数，此时函数是<code>惰性求值</code>的，也就是说只有真的模式匹配失败变量被赋予默认值时才会执行。</p>
+<h3 id="22-对象解构赋值">2.2 对象解构赋值</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="p">{</span> <span class="nx">foo</span><span class="p">,</span> <span class="nx">bar</span> <span class="p">}</span> <span class="o">=</span> <span class="p">{</span> <span class="na">foo</span><span class="p">:</span> <span class="dl">'</span><span class="s1">aaa</span><span class="dl">'</span><span class="p">,</span> <span class="na">bar</span><span class="p">:</span> <span class="dl">'</span><span class="s1">bbb</span><span class="dl">'</span> <span class="p">};</span>
+<span class="nx">foo</span> <span class="c1">// "aaa"</span>
+<span class="nx">bar</span> <span class="c1">// "bbb"</span>
+</code></pre></div></div>
+<p>对象解构赋值的依据是对象的属性名，必须属性同名的变量才能发生赋值。</p>
+
+<p>如果因找不到相同属性名而不能解构，则变量会被赋予<code>undefined</code>。</p>
+
+<p>变量名也可以与属性名不一致，此时变量名必须作为属性的值在左边对象中标明。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="p">{</span> <span class="na">foo</span><span class="p">:</span> <span class="nx">baz</span> <span class="p">}</span> <span class="o">=</span> <span class="p">{</span> <span class="na">foo</span><span class="p">:</span> <span class="dl">'</span><span class="s1">aaa</span><span class="dl">'</span><span class="p">,</span> <span class="na">bar</span><span class="p">:</span> <span class="dl">'</span><span class="s1">bbb</span><span class="dl">'</span> <span class="p">};</span>
+<span class="nx">baz</span> <span class="c1">// "aaa"</span>
+<span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span> <span class="na">first</span><span class="p">:</span> <span class="dl">'</span><span class="s1">hello</span><span class="dl">'</span><span class="p">,</span> <span class="na">last</span><span class="p">:</span> <span class="dl">'</span><span class="s1">world</span><span class="dl">'</span> <span class="p">};</span>
+<span class="kd">let</span> <span class="p">{</span> <span class="na">first</span><span class="p">:</span> <span class="nx">f</span><span class="p">,</span> <span class="na">last</span><span class="p">:</span> <span class="nx">l</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">;</span>
+<span class="nx">f</span> <span class="c1">// 'hello'</span>
+<span class="nx">l</span> <span class="c1">// 'world'</span>
+</code></pre></div></div>
+<p>对象的解构赋值也可以取到对象继承的属性。</p>
+<h3 id="23-字符串解构赋值">2.3 字符串解构赋值</h3>
+<p>字符串可以像数组一样进行解构赋值，赋值规则是按先后位置。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">d</span><span class="p">,</span> <span class="nx">e</span><span class="p">]</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">hello</span><span class="dl">'</span><span class="p">;</span>
+<span class="nx">a</span> <span class="c1">// "h"</span>
+<span class="nx">b</span> <span class="c1">// "e"</span>
+<span class="nx">c</span> <span class="c1">// "l"</span>
+<span class="nx">d</span> <span class="c1">// "l"</span>
+<span class="nx">e</span> <span class="c1">// "o"</span>
+</code></pre></div></div>
+<h3 id="24-数值布尔值解构赋值">2.4 数值、布尔值解构赋值</h3>
+<p>数值和布尔值，解构赋值会先转为对象。只能赋值其中的<code>toString</code>等属性。</p>
+
+<p><code>undefined</code>和<code>null</code>无法解构赋值，会报错。</p>
+
+<h3 id="25-函数参数的解构赋值">2.5 函数参数的解构赋值</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">move</span><span class="p">({</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">}</span> <span class="o">=</span> <span class="p">{})</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="nx">move</span><span class="p">({</span><span class="na">x</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="na">y</span><span class="p">:</span> <span class="mi">8</span><span class="p">});</span> <span class="c1">// [3, 8]</span>
+<span class="nx">move</span><span class="p">({</span><span class="na">x</span><span class="p">:</span> <span class="mi">3</span><span class="p">});</span> <span class="c1">// [3, 0]</span>
+<span class="nx">move</span><span class="p">({});</span> <span class="c1">// [0, 0]</span>
+<span class="nx">move</span><span class="p">();</span> <span class="c1">// [0, 0]</span>
+</code></pre></div></div>
+<p>解释：函数的参数是一个对象<code>{x,y}</code>，<code>x</code>,<code>y</code>都有默认值<code>0</code>，函数参数对象的默认值是空对象<code>{}</code>。当函数未传入参数时，函数参数对象默认取值<code>{}</code>，则此时进行解构赋值，<code>x</code>，<code>y</code>都找不到同名属性用来赋值，则均取默认值<code>0</code>。因此输出为<code>[0,0]</code>。</p>
+
+<h3 id="26-解构赋值注意事项">2.6 解构赋值注意事项</h3>
+<ul>
+  <li>尽量不要用圆括号<code>()</code>；</li>
+  <li>只有赋值语句的非模式部分才允许使用圆括号<code>()</code>。</li>
+</ul>
+
+<h2 id="3-模板字符串">3. 模板字符串</h2>
+<h3 id="31-模板字符串说明">3.1 模板字符串说明</h3>
+<p>模板字符串（template string）是增强版的字符串，用反引号（`）标识。它可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量（用<code>${}</code>包裹）。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">text</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">我勒个去~</span><span class="dl">'</span><span class="p">;</span>
+<span class="s2">`我说： </span><span class="p">${</span><span class="nx">text</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>  <span class="c1">// 我说： 我勒个去~</span>
+</code></pre></div></div>
+<p>模板字符串表示多行字符串，所有的空格和缩进都会被保留在输出之中。</p>
+
+<p><code>${}</code>中表示的变量可以进行运算，也可以引用对象的属性，或者调用函数。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+<span class="s2">`</span><span class="p">${</span><span class="nx">x</span><span class="p">}</span><span class="s2"> + </span><span class="p">${</span><span class="nx">y</span><span class="p">}</span><span class="s2"> = </span><span class="p">${</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">}</span><span class="s2">`</span>
+<span class="c1">// "1 + 2 = 3"</span>
+
+<span class="s2">`</span><span class="p">${</span><span class="nx">x</span><span class="p">}</span><span class="s2"> + </span><span class="p">${</span><span class="nx">y</span> <span class="o">*</span> <span class="mi">2</span><span class="p">}</span><span class="s2"> = </span><span class="p">${</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span> <span class="o">*</span> <span class="mi">2</span><span class="p">}</span><span class="s2">`</span>
+<span class="c1">// "1 + 4 = 5"</span>
+
+<span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span><span class="na">x</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">y</span><span class="p">:</span> <span class="mi">2</span><span class="p">};</span>
+<span class="s2">`</span><span class="p">${</span><span class="nx">obj</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">y</span><span class="p">}</span><span class="s2">`</span>
+<span class="c1">// "3"</span>
+
+<span class="kd">function</span> <span class="nx">fn</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="dl">"</span><span class="s2">Hello World</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="s2">`foo </span><span class="p">${</span><span class="nx">fn</span><span class="p">()}</span><span class="s2"> bar`</span>
+<span class="c1">// foo Hello World bar</span>
+</code></pre></div></div>
+<p>模板字符串中引用未声明的变量，会报错。</p>
+
+<p>模板字符串中的变量如果内部是一个字符串，则会原样输出。</p>
+<h3 id="32-标签模板字符串">3.2 标签模板字符串</h3>
+<p>所谓<code>标签模板字符串</code>，就是模板字符串跟在一个<code>函数名</code>后面。</p>
+
+<p>当标签模板字符串中没有变量时，相当于<code>普通字符串</code>作为参数传入了函数并执行。、</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+<span class="nx">tag</span><span class="s2">`Hello </span><span class="p">${</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span> <span class="p">}</span><span class="s2"> world </span><span class="p">${</span> <span class="nx">a</span> <span class="o">*</span> <span class="nx">b</span> <span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+<span class="c1">// 等同于</span>
+<span class="nx">tag</span><span class="p">([</span><span class="dl">'</span><span class="s1">Hello </span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1"> world </span><span class="dl">'</span><span class="p">,</span> <span class="dl">''</span><span class="p">],</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span>
+</code></pre></div></div>
+<p>当标签模板字符串中含有变量，情况会变复杂。模板字符串中没被变量替换的部分会组合成一个字符串数组作为第一项参数传入。然后是各变量值作为独立参数依次传入。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">total</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nx">passthru</span><span class="s2">`The total is </span><span class="p">${</span><span class="nx">total</span><span class="p">}</span><span class="s2"> (</span><span class="p">${</span><span class="nx">total</span><span class="o">*</span><span class="mf">1.05</span><span class="p">}</span><span class="s2"> with tax)`</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">passthru</span><span class="p">(</span><span class="nx">literals</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">result</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+  <span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">literals</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">result</span> <span class="o">+=</span> <span class="nx">literals</span><span class="p">[</span><span class="nx">i</span><span class="o">++</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">result</span> <span class="o">+=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">msg</span> <span class="c1">// "The total is 30 (31.5 with tax)"</span>
+</code></pre></div></div>
+<p>解释：<code>passthru</code>函数只接受一个参数<code>literals</code>，而最后一行<code>msg</code>调用后传入了模板字符串<code>`The total is ${total} (${total*1.05} with tax)`</code>，由上一个例子，实际上是传入了<code>["The total is ", " (", " with tax)"],30,31.5</code>,而<code>literals</code>接受第一个赋值，被赋值<code>["The total is ", " (", " with tax)"]</code>。<code>arguments</code>则包含全部接收参数，为<code>["The total is ", " (", " with tax)"],30,31.5</code>。第七行的<code>i++</code>正好导致错开<code>arguments</code>里第一位的字符串数组，从而可以正确插入变量。</p>
+<h2 id="4-字符串新增方法">4. 字符串新增方法</h2>
+<h3 id="41-stringraw">4.1 String.raw()</h3>
+<p><code>String.raw()</code>一般用于处理<code>模板字符串</code>，返回模板字符串的原始值，且其中的每一个斜杠都被转义，每一个变量都被替换完毕。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">String</span><span class="p">.</span><span class="nx">raw</span><span class="s2">`Hi\n</span><span class="p">${</span><span class="mi">2</span><span class="o">+</span><span class="mi">3</span><span class="p">}</span><span class="s2">!`</span><span class="p">;</span>
+<span class="c1">// 返回 "Hi\\n5!"</span>
+
+<span class="nb">String</span><span class="p">.</span><span class="nx">raw</span><span class="s2">`Hi\u000A!`</span><span class="p">;</span>
+<span class="c1">// 返回 "Hi\\u000A!"</span>
+</code></pre></div></div>
+<h3 id="42-stringfromcodepoint-和-stringcodepointat">4.2 String.fromCodePoint() 和 String.codePointAt()</h3>
+<p><code>String.fromCodePoint()</code>接受一个<code>Unicode 码点</code>，返回对应的实际字符，且可识别码点大于<code>0xFFFF</code>的字符。</p>
+
+<p>如果接受的参数大于1个，则返回由参数码点实际字符组成的<code>字符串</code>。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">String</span><span class="p">.</span><span class="nx">fromCodePoint</span><span class="p">(</span><span class="mh">0x20CC5</span><span class="p">)</span>
+<span class="c1">// "𠳅"</span>
+<span class="nb">String</span><span class="p">.</span><span class="nx">fromCodePoint</span><span class="p">(</span><span class="mh">0x78</span><span class="p">,</span> <span class="mh">0x1f680</span><span class="p">,</span> <span class="mh">0x79</span><span class="p">)</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">x</span><span class="se">\</span><span class="s1">uD83D</span><span class="se">\</span><span class="s1">uDE80y</span><span class="dl">'</span>
+<span class="c1">// true</span>
+</code></pre></div></div>
+<p><code>String.codePointAt() </code>接受一个位置数值，返回该字符串位置的<code>Unicode码点</code>。</p>
+
+<h3 id="43-includes-startswith-和-endswith">4.3 includes(), startsWith() 和 endsWith()</h3>
+<p>接受一个字符串，返回Boolean值。</p>
+
+<p><code>includes()</code>：检查<code>传入字符串</code>是否为<code>原字符串</code>的<code>子字符串</code>。</p>
+
+<p><code>startsWith()</code>：检查<code>原字符串</code>是否以<code>传入字符串</code>开头。</p>
+
+<p><code>endWith()</code>：检查<code>原字符串</code>是否以<code>传入字符串</code>结尾。</p>
+
+<h3 id="44-repeat">4.4 repeat()</h3>
+<p><code>repeat()</code> 函数接受一个数值<code>N</code>，返回一个新字符串，表示将原字符串<code>重复N次</code>。</p>
+
+<p>如果<code>N</code>为小数，则<code>向下取整</code>。如果<code>N</code>为负数，则报错。</p>
+
+<h3 id="45-padstart-和-padend">4.5 padStart() 和 padEnd()</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">x</span><span class="dl">'</span><span class="p">.</span><span class="nx">padStart</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ab</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// 'ababx'</span>
+<span class="dl">'</span><span class="s1">x</span><span class="dl">'</span><span class="p">.</span><span class="nx">padStart</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ab</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// 'abax'</span>
+
+<span class="dl">'</span><span class="s1">x</span><span class="dl">'</span><span class="p">.</span><span class="nx">padEnd</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ab</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// 'xabab'</span>
+<span class="dl">'</span><span class="s1">x</span><span class="dl">'</span><span class="p">.</span><span class="nx">padEnd</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ab</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// 'xaba'</span>
+</code></pre></div></div>
+<p><code>padStart()</code> 和 <code>padEnd()</code>接受两个参数，第一个为数值<code>N</code>，第二个为字符串<code>string</code>。</p>
+
+<p>分别表示将原字符串调整为<code>N</code>位，不足的位数以<code>string</code>补齐。 <code>padStart()</code> 表示在原字符串前面补齐， <code>padEnd()</code>表示在原字符串后补齐。</p>
+
+<p>如果只传入一个数值，则默认以<code>空格</code>补齐。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">x</span><span class="dl">'</span><span class="p">.</span><span class="nx">padStart</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="c1">// '   x'</span>
+<span class="dl">'</span><span class="s1">x</span><span class="dl">'</span><span class="p">.</span><span class="nx">padEnd</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="c1">// 'x   '</span>
+</code></pre></div></div>
+<p>如果用来补全的字符串与原字符串，两者的长度之和超过了最大长度，则会截去超出位数的补全字符串。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">abc</span><span class="dl">'</span><span class="p">.</span><span class="nx">padStart</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="dl">'</span><span class="s1">0123456789</span><span class="dl">'</span><span class="p">)</span>
+<span class="c1">// '0123456abc'</span>
+</code></pre></div></div>
+<h3 id="46-trimstart-和-trimend">4.6 trimStart() 和 trimEnd()</h3>
+<p>用法同<code>trim()</code>，区别在于仅去除字符串前面或后面的空格。</p>
+
+<h3 id="47-matchall">4.7 matchAll()</h3>
+<p><code>matchAll()</code>方法返回一个正则表达式在当前字符串的所有匹配。</p>
+<h2 id="5-函数的扩展">5. 函数的扩展</h2>
+<h3 id="51-允许为函数赋默认值">5.1 允许为函数赋默认值</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">World</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// Hello World</span>
+<span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">China</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// Hello China</span>
+<span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello</span><span class="dl">'</span><span class="p">,</span> <span class="dl">''</span><span class="p">)</span> <span class="c1">// Hello</span>
+</code></pre></div></div>
+<p>函数具有一个<code>length</code>属性，返回函数<code>第一个赋予了默认值的参数前，未赋予默认值参数</code>的个数（不包括<code>rest 参数</code>）。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span> <span class="nx">abc</span><span class="p">(</span><span class="nx">r</span><span class="p">,</span><span class="nx">t</span><span class="p">,</span><span class="nx">s</span><span class="p">,</span><span class="nx">x</span><span class="p">){}).</span><span class="nx">length</span> <span class="c1">// 4</span>
+<span class="p">(</span><span class="kd">function</span> <span class="nx">abc</span><span class="p">(</span><span class="nx">r</span><span class="p">,</span><span class="nx">t</span><span class="p">,</span><span class="nx">s</span><span class="p">,</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">){}).</span><span class="nx">length</span> <span class="c1">// 3</span>
+<span class="p">(</span><span class="kd">function</span> <span class="nx">abc</span><span class="p">(</span><span class="nx">r</span><span class="p">,</span><span class="nx">t</span><span class="p">,</span><span class="nx">s</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="nx">x</span><span class="p">){}).</span><span class="nx">length</span> <span class="c1">// 2</span>
+</code></pre></div></div>
+<p>函数参数的默认值拥有一个单独的作用域，等到函数初始化完毕，这个作用域消失。如果作用域内存在同名变量，则优先使用参数作用域变量进行赋值。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">y</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">f</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1">// 2</span>
+
+</code></pre></div></div>
+<p>函数内部作用域内的变量<code>不能</code>影响参数的初始化赋值，如果参数作用域内没有用于赋值的同名变量，则会向<code>上级作用域</code>寻找。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">f</span><span class="p">(</span><span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">y</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">f</span><span class="p">()</span> <span class="c1">// 1</span>
+</code></pre></div></div>
+
+<h3 id="52-rest-参数">5.2 rest 参数</h3>
+<p>形如<code>...[变量名]</code>被称作<code>rest 参数</code>，表示函数多余的参数。其中<code>[变量名]</code>为一个数组，保存了多余的参数。
+<code>rest 参数</code>只能是最后一个参数，否则报错。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">add</span><span class="p">(...</span><span class="nx">values</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">val</span> <span class="k">of</span> <span class="nx">values</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">val</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">sum</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1">// 10</span>
+</code></pre></div></div>
+<h3 id="53-函数体内严格模式的使用注意事项">5.3 函数体内严格模式的使用注意事项</h3>
+<p>当函数存在<code>解构赋值</code>、<code>参数默认值</code>、<code>扩展运算符</code>时，不能在函数体内显式声明严格模式，否则报错。</p>
+<h3 id="54-name-属性">5.4 name 属性</h3>
+<p>函数的<code>name</code>属性返回函数的<code>函数名</code>，函数表达式声明的匿名函数也能返回<code>函数名</code>，匿名函数返回空字符串<code>''</code>。</p>
+<h3 id="55-箭头函数">5.5 箭头函数</h3>
+<p>箭头(“=&gt;”)可用于定义函数。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="nx">v</span> <span class="o">=&gt;</span> <span class="nx">v</span><span class="p">;</span>
+
+<span class="c1">// 等同于</span>
+<span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">v</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">;</span>
+<span class="c1">// 等同于</span>
+<span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">5</span> <span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+<span class="c1">// 等同于</span>
+<span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+<p>如果返回是一个对象，则返回对象外必须用圆括号括起来。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 报错</span>
+<span class="kd">let</span> <span class="nx">getTempItem</span> <span class="o">=</span> <span class="nx">id</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="nx">id</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Temp</span><span class="dl">"</span> <span class="p">};</span>
+
+<span class="c1">// 不报错</span>
+<span class="kd">let</span> <span class="nx">getTempItem</span> <span class="o">=</span> <span class="nx">id</span> <span class="o">=&gt;</span> <span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="nx">id</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Temp</span><span class="dl">"</span> <span class="p">});</span>
+</code></pre></div></div>
+<p>可以结合变量的解构赋值一起使用，例如：</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">full</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">first</span><span class="p">,</span> <span class="nx">last</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">first</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">last</span><span class="p">;</span>
+
+<span class="c1">// 等同于</span>
+<span class="kd">function</span> <span class="nx">full</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">person</span><span class="p">.</span><span class="nx">first</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">person</span><span class="p">.</span><span class="nx">last</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><strong>箭头函数内部<code>this</code>的指向是固定的，就指向定义时候的那个对象。</strong></p>
+
+<p>实际上箭头函数没有自己的<code>this</code>，它的<code>this</code>来源于外部<code>this</code>的引用。
+函数内部同样没有<code>arguments</code>，它也为外部<code>arguments</code>的引用。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Timer</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">s1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//line1</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">s2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="c1">// 箭头函数</span>
+  <span class="nx">setInterval</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">s1</span><span class="o">++</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
+  <span class="c1">// 普通函数</span>
+  <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">s2</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">timer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Timer</span><span class="p">();</span>
+<span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">s1: </span><span class="dl">'</span><span class="p">,</span> <span class="nx">timer</span><span class="p">.</span><span class="nx">s1</span><span class="p">),</span> <span class="mi">3100</span><span class="p">);</span>
+<span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">s2: </span><span class="dl">'</span><span class="p">,</span> <span class="nx">timer</span><span class="p">.</span><span class="nx">s2</span><span class="p">),</span> <span class="mi">3100</span><span class="p">);</span>
+<span class="c1">// s1: 3 箭头函数内的this.s1就指向Timer实例定义时的s1(line1).</span>
+<span class="c1">// s2: 0 没有箭头函数，则this.s2在Timer实例被创建后指向外部，而不是实例内部的s2.</span>
+</code></pre></div></div>
+<p>不应该使用箭头函数的三种场合：</p>
+<ol>
+  <li>定义对象的方法时；</li>
+  <li>需要动态使用<code>this</code>时；</li>
+  <li>函数体很复杂，有很多行时。</li>
+</ol>
+
+<h2 id="6-函数尾调用的优化">6. 函数尾调用的优化</h2>
+<p><a href="http://es6.ruanyifeng.com/#docs/function#%E5%B0%BE%E8%B0%83%E7%94%A8%E4%BC%98%E5%8C%96">尾调用的优化</a></p>
+
+<h2 id="7-symbol">7. Symbol</h2>
+<h3 id="71-symbol特性">7.1 Symbol特性</h3>
+<p><code>Symbol</code>是一种新的原始数据类型，表示一种独一无二的值。（目前JavaScript中的七种数据类型：<code>null、undefined、Number、String、Boolean、Object、Symbol</code>）</p>
+
+<p><code>Symbol</code>值通过<code>Symbol函数</code>生成。（注意：Symbol函数前<code>不能使用new命令</code>，否则会报错。）</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">s</span> <span class="o">=</span> <span class="nb">Symbol</span><span class="p">();</span>
+
+<span class="k">typeof</span> <span class="nx">s</span>
+<span class="c1">// "symbol"</span>
+</code></pre></div></div>
+<p><code>Symbol</code>可用于对象属性名，可完全保证不与任何其他属性名冲突。</p>
+
+<p><code>Symbol函数</code>可以接受一个字符串作为参数，表示对<code>Symbol实例</code>的描述，主要是为了在控制台显示，或者转为字符串时，比较容易区分。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">s1</span> <span class="o">=</span> <span class="nb">Symbol</span><span class="p">(</span><span class="dl">'</span><span class="s1">foo</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">s2</span> <span class="o">=</span> <span class="nb">Symbol</span><span class="p">(</span><span class="dl">'</span><span class="s1">bar</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">s1</span> <span class="c1">// Symbol(foo)</span>
+<span class="nx">s2</span> <span class="c1">// Symbol(bar)</span>
+
+<span class="nx">s1</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span> <span class="c1">// "Symbol(foo)"</span>
+<span class="nx">s2</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span> <span class="c1">// "Symbol(bar)"</span>
+</code></pre></div></div>
+
+<p>两个独立生成的<code>Symbol</code>彼此是不相等的，即使是相同参数生成的<code>Symbol</code>值也是一样。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 没有参数的情况</span>
+<span class="kd">let</span> <span class="nx">s1</span> <span class="o">=</span> <span class="nb">Symbol</span><span class="p">();</span>
+<span class="kd">let</span> <span class="nx">s2</span> <span class="o">=</span> <span class="nb">Symbol</span><span class="p">();</span>
+
+<span class="nx">s1</span> <span class="o">===</span> <span class="nx">s2</span> <span class="c1">// false</span>
+
+<span class="c1">// 有参数的情况</span>
+<span class="kd">let</span> <span class="nx">s1</span> <span class="o">=</span> <span class="nb">Symbol</span><span class="p">(</span><span class="dl">'</span><span class="s1">foo</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">s2</span> <span class="o">=</span> <span class="nb">Symbol</span><span class="p">(</span><span class="dl">'</span><span class="s1">foo</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">s1</span> <span class="o">===</span> <span class="nx">s2</span> <span class="c1">// false</span>
+</code></pre></div></div>
+<p><code>Symbol值</code>不能与其他类型的值进行运算，会报错。但是Symbol 值可以显式转为字符串,也可以转换为Boolean值。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">sym</span> <span class="o">=</span> <span class="nb">Symbol</span><span class="p">(</span><span class="dl">'</span><span class="s1">My symbol</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="dl">"</span><span class="s2">your symbol is </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">sym</span>
+<span class="c1">// TypeError: can't convert symbol to string</span>
+<span class="s2">`your symbol is </span><span class="p">${</span><span class="nx">sym</span><span class="p">}</span><span class="s2">`</span>
+<span class="c1">// TypeError: can't convert symbol to string</span>
+
+<span class="nb">String</span><span class="p">(</span><span class="nx">sym</span><span class="p">)</span> <span class="c1">// 'Symbol(My symbol)'</span>
+<span class="nx">sym</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span> <span class="c1">// 'Symbol(My symbol)'</span>
+
+<span class="kd">let</span> <span class="nx">sym</span> <span class="o">=</span> <span class="nb">Symbol</span><span class="p">();</span>
+<span class="nb">Boolean</span><span class="p">(</span><span class="nx">sym</span><span class="p">)</span> <span class="c1">// true</span>
+<span class="o">!</span><span class="nx">sym</span>  <span class="c1">// false</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">sym</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="nb">Number</span><span class="p">(</span><span class="nx">sym</span><span class="p">)</span> <span class="c1">// TypeError</span>
+<span class="nx">sym</span> <span class="o">+</span> <span class="mi">2</span> <span class="c1">// TypeError</span>
+</code></pre></div></div>
+<p>读取<code>Symbol</code>的描述值：<code>Symbol.description</code></p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">sym</span> <span class="o">=</span> <span class="nb">Symbol</span><span class="p">(</span><span class="dl">'</span><span class="s1">foo</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">sym</span><span class="p">.</span><span class="nx">description</span> <span class="c1">// "foo"</span>
+</code></pre></div></div>
+<h3 id="72-作为对象属性名的symbol">7.2 作为对象属性名的Symbol</h3>
+<p>将Symbol用于对象属性名的几种方式：</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">mySymbol</span> <span class="o">=</span> <span class="nb">Symbol</span><span class="p">();</span>
+
+<span class="c1">// 第一种写法</span>
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">a</span><span class="p">[</span><span class="nx">mySymbol</span><span class="p">]</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Hello!</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="c1">// 第二种写法</span>
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="p">[</span><span class="nx">mySymbol</span><span class="p">]:</span> <span class="dl">'</span><span class="s1">Hello!</span><span class="dl">'</span>
+<span class="p">};</span>
+
+<span class="c1">// 第三种写法</span>
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">mySymbol</span><span class="p">,</span> <span class="p">{</span> <span class="na">value</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello!</span><span class="dl">'</span> <span class="p">});</span>
+
+<span class="c1">// 以上写法都得到同样结果</span>
+<span class="nx">a</span><span class="p">[</span><span class="nx">mySymbol</span><span class="p">]</span> <span class="c1">// "Hello!"</span>
+</code></pre></div></div>
+<p>将Symbol用于对象属性名的几个注意事项：</p>
+<ol>
+  <li>Symbol 值作为对象属性名时，不能用点运算符，因为这样会将点后面的Symbol名误认作字符串。</li>
+  <li>在对象的内部，使用 Symbol 值定义属性时，Symbol 值必须放在方括号之中。</li>
+  <li>Symbol 作为属性名，该属性不会出现在<code>for...in、for...of</code>循环中，也不会被<code>Object.keys()、Object.getOwnPropertyNames()、JSON.stringify()</code>返回。</li>
+</ol>
+
+<h3 id="73-symbolfor">7.3 Symbol.for()</h3>
+<p><code>Symbol.for()</code>方法接受一个字符串作为参数，然后搜索有没有以该参数作为名称的Symbol值。如果有，就返回这个Symbol值，否则就新建并返回一个以该字符串为名称的Symbol值。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Symbol</span><span class="p">.</span><span class="k">for</span><span class="p">(</span><span class="dl">"</span><span class="s2">bar</span><span class="dl">"</span><span class="p">)</span> <span class="o">===</span> <span class="nb">Symbol</span><span class="p">.</span><span class="k">for</span><span class="p">(</span><span class="dl">"</span><span class="s2">bar</span><span class="dl">"</span><span class="p">)</span>
+<span class="c1">// true</span>
+<span class="nb">Symbol</span><span class="p">(</span><span class="dl">"</span><span class="s2">bar</span><span class="dl">"</span><span class="p">)</span> <span class="o">===</span> <span class="nb">Symbol</span><span class="p">(</span><span class="dl">"</span><span class="s2">bar</span><span class="dl">"</span><span class="p">)</span>
+<span class="c1">// false</span>
+</code></pre></div></div>
+<h3 id="74-内置的symbol值">7.4 内置的Symbol值</h3>
+<p>除了定义自己使用的 Symbol 值以外，ES6 还提供了 11 个内置的 Symbol 值，指向语言内部使用的方法。具体见：<a href="http://es6.ruanyifeng.com/#docs/symbol#%E5%86%85%E7%BD%AE%E7%9A%84-Symbol-%E5%80%BC">ES6提供的11个内置的Symbol值</a></p>
+
+<h2 id="8-set和map数据结构">8. Set和Map数据结构</h2>
+<h3 id="81-set数据结构">8.1 Set数据结构</h3>
+<p>ES6 提供了新的数据结构<code>Set</code>。它类似于数组，但是成员的值都是唯一的，没有重复的值。</p>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="JavaScript"><span>JavaScript</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2019/08/19/%E5%87%8F%E8%82%A5%E6%91%84%E5%85%A5%E8%AE%A1%E7%AE%97%E5%99%A8/" title="减肥摄入计算器">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2019/08/22/%E5%87%8F%E8%84%82%E7%AC%94%E8%AE%B0/" title="减脂学习笔记">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2019/08/21/ECMAScript6-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

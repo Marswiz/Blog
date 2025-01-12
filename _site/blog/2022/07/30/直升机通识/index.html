@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>直升机通识 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="直升机通识" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="直升机通识" />
+<meta property="og:description" content="直升机通识" />
+<link rel="canonical" href="http://localhost:4000/blog/2022/07/30/%E7%9B%B4%E5%8D%87%E6%9C%BA%E9%80%9A%E8%AF%86/" />
+<meta property="og:url" content="http://localhost:4000/blog/2022/07/30/%E7%9B%B4%E5%8D%87%E6%9C%BA%E9%80%9A%E8%AF%86/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-30T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"直升机通识","@type":"BlogPosting","url":"http://localhost:4000/blog/2022/07/30/%E7%9B%B4%E5%8D%87%E6%9C%BA%E9%80%9A%E8%AF%86/","headline":"直升机通识","dateModified":"2022-07-30T00:00:00+08:00","datePublished":"2022-07-30T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2022/07/30/%E7%9B%B4%E5%8D%87%E6%9C%BA%E9%80%9A%E8%AF%86/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">直升机通识</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Jul 30, 2022
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>直升机通识</p>
+</blockquote>
+
+<h1 id="直升机总体布局">直升机总体布局</h1>
+
+<ol>
+  <li>共轴双旋翼；</li>
+  <li>主旋翼+反扭矩机构；
+    <ul>
+      <li>尾桨；</li>
+      <li>涵道尾桨；</li>
+      <li>无尾桨：NOTAR（No Tail Rotor System 无尾桨传动系统）；</li>
+    </ul>
+  </li>
+</ol>
+
+<p><img src="/assets/posts/NOTAR.png" alt="NOTAR" /></p>
+
+<h1 id="直升机关键部件及其结构">直升机关键部件及其结构</h1>
+
+<h2 id="发动机">发动机</h2>
+
+<p>主要是<code>涡轴发动机</code>和<code>活塞发动机</code>。</p>
+
+<h2 id="旋翼和桨毂">旋翼和桨毂</h2>
+
+<p>旋翼的三种运动模式：<code>挥舞(Flap)</code>、<code>摆振(Drag)</code>和<code>变距(Pitch)</code>。</p>
+
+<p><img src="/assets/posts/63.png" alt="直升机旋翼三种运动模式" /></p>
+
+<p>在旧的直升机设计中，采用<code>金属全铰接桨毂</code>，旋翼三种运动模式对应着三种铰链机械结构：<code>挥舞铰</code>、<code>摆振铰</code>和<code>变距铰</code>。</p>
+
+<p><img src="/assets/posts/62.png" alt="直升机旋翼铰链" /></p>
+
+<h2 id="旋翼操纵机构旋转斜盘swash-plate">旋翼操纵机构：旋转斜盘(Swash Plate)</h2>
+
+<p>三个铰链中，挥舞铰和摆振铰都是依靠桨叶承受受的空气动力、离心力、自身的弹性以及阻尼器的复位阻力<code>自主工作</code>的，<code>不需人为干预</code>。</p>
+
+<p><strong>只有<code>变距铰</code>需要人为操纵，用来改变直升机的升力大小。</strong></p>
+
+<p>旋转斜盘(Swash Plate)机构用来操纵变距铰，实现对旋翼的<code>变距</code>功能，改变旋翼的升力从而改变飞机飞行状态。</p>
+
+<p><img src="/assets/posts/旋转斜盘.webp" alt="旋转斜盘" /></p>
+
+<p>旋转斜盘分为<code>动环</code>和<code>静环</code>两部分。动环与静环之间用球形轴承连接，<strong>一同升降，一同倾斜</strong>。</p>
+
+<h3 id="动环上斜盘">动环（上斜盘）</h3>
+
+<p>动环通过<code>变距拉杆</code>和<code>扭力臂</code>与旋翼固联，会随着旋翼一起转动。</p>
+
+<p>变距拉杆连接着旋翼的变距摇臂，通过变距拉杆的上下位移可以控制变距摇臂的角度，从而控制旋翼的总距（迎风角度）。</p>
+
+<p><img src="/assets/posts/变距.gif" alt="变距" /></p>
+
+<p>扭力臂用于传递动环与旋翼之间的扭力。</p>
+
+<h3 id="静环下斜盘">静环（下斜盘）</h3>
+
+<p>静环与飞机本体通过<code>防扭臂</code>和<code>操纵连杆</code>固联。通过操纵连杆，可以控制静环在主轴上的<code>上下位置</code>以及<code>倾斜角度</code>，从而带动控制上环的<code>上下位置</code>与<code>倾斜角度</code>，进而控制<code>旋翼的总距</code>。</p>
+
+<blockquote>
+  <p><strong>旋转斜盘控制直升机的具体过程是什么？</strong></p>
+
+  <p>1) <strong>旋转斜盘整体上升或下降</strong></p>
+
+  <p>旋转斜盘上升 -&gt; 变距拉杆上升 -&gt; 变距摇臂角度变大 -&gt; 旋翼迎风角度变大 -&gt; 旋翼总距整体变大 -&gt; 桨盘总升力变大 -&gt; 飞机垂直上升</p>
+
+  <p>2) <strong>旋转斜盘左右倾斜</strong></p>
+
+  <p>旋转斜盘静环向左倾斜（左低右高） -&gt; 动环也向左倾斜（左低右高） -&gt; 左侧变距拉杆下降，右侧变距拉杆升高 -&gt; 左侧变距摇臂角度变小，右侧变距摇臂角度变大 -&gt; 左侧旋翼迎风角度变小，右侧旋翼迎风角度变大 -&gt; 左侧旋翼总距变小（升力小），右侧旋翼总距变大（升力大） -&gt; 相对桨盘中心产生扭矩（逆时针）-&gt; 机体发生倾斜（左低右高）-&gt; 升力线向左倾斜，产生向左的分量 -&gt; 直升机向左位移。</p>
+</blockquote>
+
+<h2 id="主减速器">主减速器</h2>
+
+<p>主减速器(Main Gearbox)，它的作用是<code>减速</code>、<code>转向</code>和<code>并车</code>。</p>
+
+<h3 id="减速">减速</h3>
+
+<p>将发动机输出轴的高转速降低至旋翼适合的低转速，通过减速器的<code>行星齿轮系</code>来实现。</p>
+
+<p>主要参数是<code>减速比</code>。</p>
+
+<h3 id="转向">转向</h3>
+
+<p>发动机为了进、排气顺畅，一般是沿轴向安装的，而旋翼主轴是垂直安装，这个动力转向的过程也是在主减速器里通过纯齿轮机械结构实现。</p>
+
+<h3 id="并车">并车</h3>
+
+<p>并车的概念适用于<code>多发</code>直升机。</p>
+
+<p>通过将多个发动机输出的功率汇合到主减速箱，再由减速箱统一分配至旋翼、尾翼、发电机和液压泵等部件。</p>
+
+<h1 id="旋翼螺旋桨原理">旋翼(螺旋桨)原理</h1>
+<h2 id="螺旋桨理论基础">螺旋桨理论基础</h2>
+
+<p>影响螺旋桨拉力的几个因素：<strong>转速、桨叶攻角</strong>和<strong>桨叶翼型形状</strong>。</p>
+
+<p>桨叶上的攻角是桨叶弦线与来流方向的夹角。</p>
+
+<p><img src="/assets/posts/71.png" alt="攻角" /></p>
+
+<blockquote>
+  <p>因为螺旋桨的旋转速度从叶根到叶尖是逐渐增大的，在同一个前进速度的情况下，如果为保证相同的攻角，则需要逐渐降低桨叶角（从叶根到叶尖）。</p>
+</blockquote>
+
+<h2 id="定距与变距">定距与变距</h2>
+
+<p>螺旋桨的桨距是否可变。定距螺旋桨整个是刚性一体的，其桨距是不可变的。</p>
+
+<p>变距螺旋桨其桨距可调，典型的为恒速螺旋桨（可保持任意发动机功率下桨转速不变）。</p>
+
+<h2 id="螺旋桨尺寸">螺旋桨尺寸</h2>
+
+<p>轻型、微型无人机常用定距螺旋桨，尺寸通常用<code>X×Y</code>来表示，其中:</p>
+
+<ul>
+  <li><code>X</code>代表螺旋桨直径，单位为英寸(in)；</li>
+  <li><code>Y</code>代表螺距，即假设螺旋桨在刚性物质中旋转一圈，桨平面所能经过的距离，单位为英寸(in)。例如，<code>22×10</code>的螺旋桨尺寸为桨径<code>22in</code>，约为<code>55.88cm</code>，螺距<code>10in</code>，约为<code>25.4cm</code>。</li>
+</ul>
+
+<h2 id="正桨与反桨">正桨与反桨</h2>
+
+<p>一般的螺旋桨正面光滑，同时刻有相应的螺旋桨参数值。</p>
+
+<p>当该面朝前时，<strong>逆时针旋转产生拉力的为正桨，顺时针旋转产生拉力的为反桨</strong>。</p>
+
+<h2 id="桨叶数目">桨叶数目</h2>
+
+<p>一般常见两叶桨和三叶桨。（主要是受限于二战时期的发动机功率水平和材料、工艺水平）</p>
+
+<p>同转速下，桨叶数越多，则：</p>
+
+<ol>
+  <li>螺旋桨空气阻力越大，因而所需发动机功率越大；</li>
+  <li>桨叶提供的拉力越大。</li>
+</ol>
+
+<h2 id="螺旋桨性能">螺旋桨性能</h2>
+<h3 id="拉力与功率">拉力与功率</h3>
+
+<p><strong>拉力<code>T</code>近似是转速的二次函数，所需功率<code>P</code>是转速的三次函数。</strong></p>
+
+<p>螺旋桨的拉力与功率特性用<strong>静拉力系数</strong>与<strong>静功率系数</strong>表征。</p>
+
+<p><img src="/assets/posts/66.png" alt="拉力系数" /></p>
+
+<p>定距螺旋桨的静拉力系数和静功率系数，一般随螺旋桨转速变化不明显，可视为常数。</p>
+
+<h3 id="前进比">前进比</h3>
+
+<p>螺旋桨在飞机头部提供拉力时，飞机本身的飞行速度<code>V</code>会对螺旋桨各截面的迎角造成影响，从而影响螺旋桨的气动性能。</p>
+
+<p>为评估这种影响，用来流速度<code>V</code>与螺旋桨桨尖速度<code>n*π*D</code>之比作为参考特征数，定义为螺旋桨的<code>前进比</code>。</p>
+
+<p><img src="/assets/posts/67.png" alt="前进比" /></p>
+
+<h3 id="螺旋桨特性拉力系数功率系数随前进比的变化规律">螺旋桨特性：拉力系数、功率系数随前进比的变化规律</h3>
+
+<ul>
+  <li>拉力系数<code>C_T</code>：随前进比<code>J</code>的增加，呈<code>线性下降</code>规律；</li>
+  <li>功率系数<code>C_P</code>：与前进比<code>J</code>呈二次函数关系。在低前进比的情况下，几乎是常数。</li>
+</ul>
+
+<p><img src="/assets/posts/68.png" alt="gxt" /></p>
+
+<h3 id="螺旋桨效率">螺旋桨效率</h3>
+
+<p>螺旋桨将机械功率转化输出拉力功率的比值，为螺旋桨效率。</p>
+
+<ul>
+  <li>螺旋桨效率<code>η</code>与前进比<code>J</code>为近似二次函数关系，具有最高效率点；</li>
+  <li>定距螺旋桨，只有在一定的前进比<code>J</code>的情况下，螺旋桨效率才能达到最高；</li>
+</ul>
+
+<p><img src="/assets/posts/69.png" alt="螺旋桨效率" /></p>
+
+<p><img src="/assets/posts/70.png" alt="效率曲线" /></p>
+
+<h2 id="螺旋桨上的力">螺旋桨上的力</h2>
+
+<ol>
+  <li><strong>离心力</strong>：旋转产生的离心力大小将大于螺旋桨自身重力的7500倍；</li>
+  <li><strong>拉力弯曲力</strong>；</li>
+  <li><strong>扭矩弯曲力</strong>；</li>
+  <li><strong>气动扭转力</strong>；</li>
+  <li><strong>离心扭转力</strong>；</li>
+  <li><strong>振动力</strong>；</li>
+</ol>
+
+<h1 id="faq">FAQ</h1>
+<h2 id="直升机为什么不通过调节发动机转速来控制飞行高度速度">直升机为什么不通过调节发动机转速来控制飞行高度、速度？</h2>
+
+<p>直升机采取发动机定转速飞行，原因有三：</p>
+
+<p>1、涡轴发动机和旋翼的工作转速范围都非常窄，而且旋翼高速旋转时产生巨大的<code>转动惯量</code>，要靠调节转速改变升力<code>响应时间</code>将会很长，无法精确操控；</p>
+
+<p>2、结构复杂的主减速器已经承载了巨大的重力和旋转载荷，要再给它增加改变传动比的机构将<code>导致主减速器过大过重</code>，工程上不现实；</p>
+
+<p>3、高速旋转的旋翼<code>共振</code>现象严重，全机各个部件在设计时都要避开其固定的几个共振频率，如果旋翼转速可变将导致<code>共振频率跟着改变</code>，令动力学设计复杂化。</p>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="UAV"><span>UAV</span></a>
+      
+      <a id="tags" href="Helicopter"><span>Helicopter</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2022/07/30/%E7%9B%B4%E5%8D%87%E6%9C%BA%E5%8A%A8%E5%8A%9B%E5%AD%A6%E5%B7%A5%E7%A8%8B%E8%AE%BE%E8%AE%A1/" title="直升机动力学工程设计">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2022/08/10/UAV%E5%8A%A8%E5%8A%9B%E7%B3%BB%E7%BB%9F/" title="UAV动力系统">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2022/07/30/%E7%9B%B4%E5%8D%87%E6%9C%BA%E9%80%9A%E8%AF%86/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

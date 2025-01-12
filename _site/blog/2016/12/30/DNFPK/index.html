@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>DNF PK 系统有什么特点？ | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="DNF PK 系统有什么特点？" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="相关：DNF8年老玩家，曾获2011南京高校联赛冠军，四川四区 擅长职业：战斗法师 ＩＤ：⑨⑨归①" />
+<meta property="og:description" content="相关：DNF8年老玩家，曾获2011南京高校联赛冠军，四川四区 擅长职业：战斗法师 ＩＤ：⑨⑨归①" />
+<link rel="canonical" href="http://localhost:4000/blog/2016/12/30/DNFPK/" />
+<meta property="og:url" content="http://localhost:4000/blog/2016/12/30/DNFPK/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-12-30T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"相关：DNF8年老玩家，曾获2011南京高校联赛冠军，四川四区 擅长职业：战斗法师 ＩＤ：⑨⑨归①","@type":"BlogPosting","url":"http://localhost:4000/blog/2016/12/30/DNFPK/","headline":"DNF PK 系统有什么特点？","dateModified":"2016-12-30T00:00:00+08:00","datePublished":"2016-12-30T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2016/12/30/DNFPK/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">DNF PK 系统有什么特点？</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Dec 30, 2016
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <p><em>相关：DNF8年老玩家，曾获2011南京高校联赛冠军，四川四区 擅长职业：战斗法师 ＩＤ：⑨⑨归①</em></p>
+
+<blockquote>
+  <p>2016年F1天王赛刚刚结束，恭喜59 4:0 拿下OGC捍卫中国主场，同时也证明了在网络环境逐渐变好的情况下，中国DNF选手基本功扎实的优势愈发体现出来。作为8年老玩家（7年PK）
+，对DNFPK系统有一定的理解，在此盘点一下DNFPKC的特点。PS：因为比赛服没有装备差异，相对更为公平，所以说的以比赛服为主。</p>
+</blockquote>
+
+<h1 id="一代版本一代神版本与bug共存">一代版本一代神，版本与BUG共存</h1>
+<p>DNF老玩家应该都还记得最早的剑魂无限里鬼，战法碎霸一半血、伪连一套秒版本（怀念！），到后来的机械G3崛起，冰结破冰秒人的BUG，DNF的发展过程中，版本与
+BUG绝对是一个重要的组成部分。不过这里的BUG不是游戏代码的错误，而一般指的是某版本，人为对某个技能过度的加强影响了职业间强弱公平性。技能BUG也影响了一
+部分职业强弱的排名变化，比如冰结师的破冰飞刃高伤BUG，让当时的冰结师在国服几乎无人能敌，被大家屏蔽。第三赛季前的女气功在PK场一直很弱势，而第三赛季初为加强
+女气功PK能力设置的手动引爆分身技能，使女气功一跃成为当时PK场霸主的存在（后来因为太BT而和谐）。</p>
+
+<p>也因为这个原因，为了维护公平性，在BUG不能修复之前，这些不幸的职业在该版本一般会被禁止参加比赛。国服第一冰结师安心在破冰技能BUG版本期间两
+次无缘格斗大赛，最终导致他放弃冰结而转玩魔皇。</p>
+
+<p>现在的知名PK职业选手，早期刚出道的时候都或多或少地借了版本的东风。凤凰羽成名于机械G3高伤版本他创造的G3打法，逍遥尊的格斗天王大半
+要感谢当时的高网络延迟，二海当年在高伤时代线上赛伪连一套秒等等。不过好在第三赛季以来(尤其是Neople回归之后)，降低了各职业伤害（尤其是比赛服），
+游戏公平性大大增强，网络改善，游戏流畅度提高，版本BUG也越来越少了。</p>
+
+<h1 id="比赛服与国服线上与线下的巨大差异">比赛服与国服、线上与线下的巨大差异</h1>
+<p>游戏高昂的代理费用和运营成本导致网络代理商必然要从玩家身上吸取利润，国服刺激玩家消费的主要途径就是各种节日装扮和收费道具附带的增强属性，这些收费道具部分在PK场也同样有效，
+是造成国服与比赛服差别的原因。与比赛服相比，国服提升属性的途径主要是：<strong>宠物装备、强化增幅锻造、宠物属性、武器装扮和称号</strong>。</p>
+
+<p>顶级的PK装备带来的速度和伤害上的提升巨大，是装备一般的平民玩家不能抗衡的，因此国服想要玩到高分段装备绝对是决定因素之一。</p>
+
+<p><strong>角色属性对于连招、战术和跑位方面同样有影响。</strong>例如：力法的天击和落花掌滑行距离和发动速度受到人物攻击速度的影响，
+攻速越快，天击的滑行距离越长，相应扫过的范围也就越大，因此也就更容易命中对方和逃跑。</p>
+
+<p><img src="/assets/pics/blogPics/20161230dnf/2.jpg" alt="对比" title="2.jpg" /></p>
+
+<p>格斗系的4X扫地接技能如果没有一定的攻速做支持是不能成立的（当然手速也很重要）。释放速度直接影响发动速度和收招速度，硬直影响人物被命中后僵直时间（黄金套玩家基本不能平推），因为保护系统的存在，高属性的角色伤害更高，因此保护出的更快，相应的连招过程更短，连招方式倾向于高爆发打法，是平民玩家做不到的。</p>
+
+<p>而比赛服装备统一，伤害回归到较低的水平，比拼的是选手的<strong>战术策略、对职业的理解和临场心态与稳定程度</strong>。很多网络主播在国服风生水起，战斗力排名也非常高，而一到了比赛服就
+成绩平平，甚至打不进区域赛，就是因为在国服打的太久适应了高属性的角色玩法，跑位意识以及连招方式已经不适用于比赛服环境。同样这种差异也影响职业的对战策略，很多职业在国服高属性条件下具有强大的优势，而比赛服就相对弱很多，比如现版本元素、机械、大枪等。在这方面，最典型职业的莫过于召唤师和红眼。国服高伤版本召唤基本都会选择加满献祭以提供高爆发的献祭流打法，红眼则一般会选择放弃一些基础技能（如邪光斩），加满崩山裂地斩等高爆发技能一套打残对手。这样的打法在比赛服是不合适的，因为在面对像散打蓝拳力法这样的高机动性职业时会有较大的弱势，CD长收招慢（献祭会导致召唤本体暴露），一旦打空是很大的损失。还有比赛服的速度条件下，如果鬼剑士利用扫地波最大范围将对手扫倒地，立刻跑过去接上挑是很难成立的，而这种起手方式在国服基本占主流。因此比赛选手一般会均衡加点，利用各种技能的优势，增强综合能力而不是依赖高伤技能打爆发。</p>
+
+<p>还有一个不得不提的重要因素就是国服<strong>连发插件</strong>的普遍存在。按键连发导致普通攻击连招稳定性大大增加，很多玩家（尤其是红眼玩家）在国服PKC依赖普通攻击输出，对技能衔接节奏已经生疏。在比赛服，
+这样的输出方式显然是不可取的。一是正规比赛连发的禁止导致普通攻击浮空连、扫地连都会出现一定程度的不稳定性；二是在比赛服装备环境下普通攻击的伤害太低，输出太慢，过度依赖普攻输出会导致命中保护出现的时候还没有打
+出伤害保护，导致后面爆发技能不能命中，输出太慢，伤害不足。这也是很多打惯了国服环境玩家在比赛服不能适应的原因。</p>
+
+<h1 id="网络环境与硬件条件要求高">网络环境与硬件条件要求高</h1>
+<p>DNFPVP的网络格斗游戏属性决定了对网络延迟和硬盘读取速度的高要求。毫不夸张地说，一个100ms以上延迟和一个50ms以下延迟的DNF完全是两个游戏。
+早期机械硬盘时代的DNF和SSD时代的DNF在游戏体验上完全不同（同时装有SSD和机械硬盘的同学可以亲自尝试一下）。
+<strong>不同网络延迟和硬盘读取速度甚至
+可以直接影响PK的连击效果，乃至意外成为很多玩家追求的操作技巧。</strong>
+最典型的莫过于力法的伪连技术：在人物角色倒地即将起身的一刹那，DNF系统设定
+默认存在一个时间极短的蹲伏动作，然后才是真正的站立姿态。伪连成功秘诀就在于：利用力法炫纹的释放节奏，在这个起身蹲伏的瞬间击中对手，造成
+对方已经起身被攻击的判定，从而清零保护系统，可以继续打出下一套伤害。</p>
+
+<p><img src="/assets/pics/blogPics/20161230dnf/1.jpg" alt="对比" title="3.jpg" /></p>
+
+<p>伪连的难易程度取决于延迟高低。延迟非常低的时候（30以下），伪连非常难，需要极好的节奏感。延迟过高(大于150)的时候，伪连相对容易，但是破保护后的
+连接容易出现问题。在有一定的Ping值但是又不至于使连招不成立的条件下，力法伪连的优势才能体现出来。可以看到早期月与海的比赛大量应用伪连破保护
+连招打出极高伤害，而近期比赛由于网络环境的改善，伪连成功率下降，力法基本不会冒险选择伪连的激进打法。
+很多玩家会发现国服在不同位置网吧、不同配置机器上连击节奏有一定差别，就是网络延迟与硬件延迟造成的。所以国服DNF想要玩得流畅不
+吃延迟的亏，还需要一个<strong>配备高速SSD的硬盘和提高自己的上传速度</strong>才行。另外，这一差异体现基本只限于国服，由于比赛使用相同的机器以及
+线下基本归零的延迟，网络环境和硬件的差别在比赛中基本可以忽略不计。</p>
+
+<h1 id="职业差异显著存在相生相克天花板高可开发性强">职业差异显著，存在相生相克，天花板高可开发性强</h1>
+<p><strong>DNF的游戏角色设计非常出色。</strong>首先是各职业之间（这里不包括现在仍不能参赛的职业），无论是在操作难度、节奏速度、人物属性上还是从攻击方式、
+类型、与范围上都差异显著，各具特色，这使得不同类型玩家的需求都可以得到满足。（这里不得不吐槽一下nexon接盘的那段时间出的几个职业，不
+知道是不懂DNF还是纯粹的鹅厂为了更快的圈钱透支，真的不要太恶心。）</p>
+
+<p>同时职业设计上可以看出早期的开发者的用心，<strong>在职业技能设计上存在明显的相生相克关系</strong>，这在某种程度上维持了一种游戏平衡，也让PVP更具有趣味性和挑战性。格斗
+系的武神职业具有超高的爆发力和短时间的霸体buff，对于男女大枪这种近身防御技能少、
+收招速度慢依赖远程输出的职业简直是噩梦，然而面对同门柔道的强力抓取技，武神的霸体就基本成为废柴。被武神克制的大枪在面对召唤、机械、驱魔师等职业的时候
+，利用其技能的穿透力和良好的远程输出能力，反而具有相当大的优势。这样的相生相克在DNF中比比皆是，职业特性和技能间的克制让DNF比赛偶然性增加（所谓抽签决定
+成败），同时也意味着如果想取得好成绩，则必须在打法上攻克对自己克制的职业，更具挑战性。</p>
+
+<p>虽然职业强弱随着版本起伏，也存在相生相克，但和所有竞技游戏一样，最终<strong>决定比赛成败的永远不是角色职业，是选手本身</strong>。今年的F1天王赛，
+剑魂OGC刚刚结束自己的兵役期，回归比赛面对克制自己的近身物理克星、强势金身玩家凡神金度勋，依然以3:0横扫对手，足以证明OGC的强大实力。
+高水平的操作可以让一个不被看好的三线职业变成超一流。近几年的比赛也可以看出，比赛结果越来越出人意料，高水平比赛上职业差距的影响越来越小——强的不是职业，而是选手本身。</p>
+
+<h1 id="竞技元素丰富节奏快充满偶然性与戏剧性">竞技元素丰富，节奏快，充满偶然性与戏剧性</h1>
+<p>DNF比赛有丰富的竞技元素。首先是游戏本身的元素设计，<strong>角色姿态有站立、浮空、倒地三种，角色状态有霸体、抓取、无敌、僵直、折颈等，异常态有中毒、冰冻、灼烧、束缚
+、睡眠、诅咒、失明等。每个技能释放和命中的过程都是这些元素的组合，这导致每个职业的每个状态与技能，都具有相应的应对方式，即没有绝对无解的绝对克制技能。</strong>
+DNF比赛个人赛每场总时长最多3分钟，基本比赛会在两分三十秒之内结束，而这短短的150Ｓ时间内，两方会起手３－５次，也就是每回合交手，从跑位到起手至连击结束，
+平均仅有三十秒左右时间。在这短短三十秒不仅需要跑位，同时要随时对对手<strong>施放技能时机与附带的效果进行准确的判断，估计连击保护与对手的HP值位置，并及时调整自己的应对策略，因此非常考验选手的反应速度</strong>
+。这种快节奏也是所有格斗游戏的通用特点，DNF相比于传统的格斗游戏在技能操作上稍稍简单，但技能数目更多，竞技元素更多
+，比赛具有偶然性和戏剧性，充满各种亮眼的操作，可看性强。</p>
+
+<blockquote>
+  <p>总之，DNF作为独树一帜的格斗类游戏，在PVP系统制作方面还是比较优秀的。每年的赛事也给喜欢PK的玩家带来了无数印象深刻的精彩瞬间，希望有更多的选手参
+与比赛，体验惊险刺激的PK乐趣。同时希望中国能保持这次F1天王赛的好成绩。</p>
+</blockquote>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Game"><span>Game</span></a>
+      
+      <a id="tags" href="Zhihu"><span>Zhihu</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2016/12/26/jQuery_aPrompter/" title="jQuery 快速title提示器">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2017/01/02/jQuery_Selector/" title="jQuery Selector汇总">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2016/12/30/DNFPK/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

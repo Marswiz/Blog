@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>前端工程化 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="前端工程化" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="前端工程化" />
+<meta property="og:description" content="前端工程化" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/10/10/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/10/10/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-10-10T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"前端工程化","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/10/10/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/","headline":"前端工程化","dateModified":"2021-10-10T00:00:00+08:00","datePublished":"2021-10-10T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/10/10/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">前端工程化</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Oct 10, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>前端工程化</p>
+</blockquote>
+
+<h1 id="前端工程化包括什么">前端工程化包括什么</h1>
+
+<blockquote>
+  <p><a href="https://mp.weixin.qq.com/s?__biz=MzI1NTMwNDg3MQ==&amp;mid=2247485393&amp;idx=1&amp;sn=2e7db87ad4cb661201feb384104c537e&amp;chksm=ea36b219dd413b0f949b6fd8dea30456c820a0b938908edc9cc839cdc4d3851e945e06dc95a7&amp;scene=21#wechat_redirect">前端工程化的含义</a></p>
+</blockquote>
+
+<p>前端工程化一般包括四个方面：<strong>模块化、组件化、规范化和自动化</strong>。</p>
+
+<h2 id="模块化组件化">模块化、组件化</h2>
+
+<p>模块化就是将一个大文件拆分成相互依赖的小文件，再进行统一的拼装和加载。比如：CommonJS、ES6模块等。<strong>模块化是在文件层面上，对代码或资源的拆分。</strong></p>
+
+<p><strong>组件化是在设计层面上，对用户界面的拆分</strong>。一个组件可能在页面上占据独立的一块，并且可以独立实现某项功能。</p>
+
+<h2 id="规范化">规范化</h2>
+
+<p>一般来说，前端规范化大体上可以分类为编码规范、开发流程规范和文档规范等，每个大类中又有一些子类，如编码规范中包含有目录规范、文件命名规范、js/css代码规范等。</p>
+
+<h2 id="自动化">自动化</h2>
+
+<p>工程自动化基本包含以下几方面内容:</p>
+
+<ul>
+  <li>图标合并</li>
+  <li>持续集成</li>
+  <li>自动化构建</li>
+  <li>自动化部署</li>
+  <li>自动化测试</li>
+</ul>
+
+<h1 id="前端工程化实操">前端工程化实操</h1>
+
+<blockquote>
+  <p><a href="https://woai3c.gitee.io/introduction-to-front-end-engineering/">带你入门前端工程</a></p>
+</blockquote>
+
+<h2 id="技术选型">技术选型</h2>
+
+<ol>
+  <li>可控性</li>
+  <li>稳定性</li>
+  <li>适用性</li>
+  <li>易用性</li>
+</ol>
+
+<h2 id="规范化-1">规范化</h2>
+<h3 id="jscss规范">JS、CSS规范</h3>
+<h4 id="制定jscss规范">制定JS、CSS规范</h4>
+
+<p>找一份知名的代码规范（Js和CSS），根据团队实际进行个性化修改。</p>
+
+<p><strong>知名Js规范：</strong></p>
+
+<ul>
+  <li>airbnb 规范；</li>
+  <li>standard 规范；</li>
+  <li>百度规范；</li>
+</ul>
+
+<p><strong>知名CSS规范：</strong></p>
+
+<ul>
+  <li>styleguide;</li>
+  <li>spec;</li>
+</ul>
+
+<h4 id="检查规范">检查规范</h4>
+
+<p>Eslint + stylelint + VSCode。</p>
+
+<p><a href="https://juejin.cn/post/6892000216020189198">ESlint + Stylelint + VSCode自动格式化代码</a></p>
+
+<h3 id="git规范">Git规范</h3>
+<h4 id="分支管理规范">分支管理规范</h4>
+
+<p>一般项目分为<strong>master分支 + 其他分支</strong>。</p>
+
+<p>开发新功能、修改Bug，都需要从master分支新开一个分支，命名后在新分支上修改，然后再合并到master分支。</p>
+
+<h4 id="commit规范">commit规范</h4>
+
+<p>commit提交的信息格式如下：</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;type&gt;</span>(<span class="nt">&lt;scope&gt;</span>): <span class="nt">&lt;subject&gt;</span>
+<span class="nt">&lt;BLANK</span> <span class="na">LINE</span><span class="nt">&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;BLANK</span> <span class="na">LINE</span><span class="nt">&gt;</span>
+<span class="nt">&lt;footer&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>标题行 type: 描述主要修改类型和内容 <strong>（必填项）</strong>；</li>
+  <li>主题内容 body: 描述为什么修改, 做了什么样的修改, 以及开发的思路等等；（选填项）</li>
+  <li>页脚注释 footer: 可以写注释，BUG 号链接。（选填项）</li>
+</ul>
+
+<h5 id="type">type</h5>
+
+<ul>
+  <li>feat: 新功能、新特性</li>
+  <li>fix: 修改 bug</li>
+  <li>perf: 更改代码，以提高性能</li>
+  <li>refactor: 代码重构（重构，在不影响代码内部行为、功能下的代码修改）</li>
+  <li>docs: 文档修改</li>
+  <li>style: 代码格式修改, 注意不是 css 修改（例如分号修改）</li>
+  <li>test: 测试用例新增、修改</li>
+  <li>build: 影响项目构建或依赖项修改</li>
+  <li>revert: 恢复上一次提交</li>
+  <li>ci: 持续集成相关文件修改</li>
+  <li>chore: 其他修改（不在上述类型中的修改）</li>
+  <li>release: 发布新版本</li>
+  <li>workflow: 工作流相关文件修改</li>
+</ul>
+
+<h5 id="其他">其他</h5>
+
+<ul>
+  <li>scope: commit 影响的范围, 比如: route, component, utils, build…</li>
+  <li>subject: commit 的概述</li>
+  <li>body: commit 具体修改内容, 可以分为多行.</li>
+  <li>footer: 一些备注, 通常是 BREAKING CHANGE 或修复的 bug 的链接.</li>
+</ul>
+
+<h5 id="示例">示例</h5>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// git commit message.</span>
+<span class="nx">feat</span><span class="p">(</span><span class="nb">global</span><span class="p">):</span> <span class="err">添加网站主页静态页面</span>
+
+<span class="err">这是一个示例，假设对点检任务静态页面进行了一些描述。</span>
+ 
+<span class="err">这里是备注，可以是放</span><span class="nx">BUG</span><span class="err">链接或者一些重要性的东西。</span>
+</code></pre></div></div>
+
+<h5 id="自动检查工具">自动检查工具</h5>
+
+<p>使用<code>husky</code>工具进行检查。</p>
+
+<blockquote>
+  <p><a href="https://typicode.github.io/husky">Husky</a></p>
+</blockquote>
+
+<p>husky基于<code>git hooks</code>，实现对commit、push前后对代码、commit message等进行检查。</p>
+
+<h3 id="项目规范">项目规范</h3>
+
+<p>包括： <strong>项目的目录结构</strong>和<strong>文件的命名方式</strong>。</p>
+
+<p>项目目录结构一般包括：</p>
+
+<ul>
+  <li>public： 公共资源，不会被打包；</li>
+  <li>src：源码；</li>
+  <li>test： 测试代码。</li>
+</ul>
+
+<p>src代码中典型目录结构：</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├─api （接口）
+├─assets （静态资源）
+├─components （公共组件）
+├─styles （公共样式）
+├─router （路由）
+├─store （vuex 全局数据）
+├─utils （工具函数）
+└─views （页面）
+</code></pre></div></div>
+
+<h3 id="ui-规范">UI 规范</h3>
+
+<p>前端、UI、产品沟通，互相商量，最后制定下来，建议使用统一的 UI 组件库。</p>
+
+<h2 id="自动化-1">自动化</h2>
+<h3 id="测试">测试</h3>
+
+<p><a href="../前端测试">前端测试</a></p>
+
+<h3 id="部署">部署</h3>
+
+<p>部署项目，应该按如下步骤进行：</p>
+
+<ol>
+  <li>执行测试<code>npm run test</code>；</li>
+  <li>构建项目<code>npm run build</code>；</li>
+  <li>将打包好的文件，放置到服务器。</li>
+</ol>
+
+<p><strong>自动部署</strong>（又叫持续部署 Continuous Deployment，英文缩写 CD）一般通过<strong>监听<code>webhook</code>事件</strong>来实现。</p>
+
+<p><a href="https://juejin.cn/post/6887751398499287054">前端项目自动化部署——超详细教程（Jenkins、Github Actions）</a></p>
+
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="工程化"><span>工程化</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/09/21/%E6%80%9D%E7%BB%B4%E6%A8%A1%E5%9E%8B/" title="思维模型">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/10/10/%E5%89%8D%E7%AB%AF%E6%B5%8B%E8%AF%95/" title="前端测试">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/10/10/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

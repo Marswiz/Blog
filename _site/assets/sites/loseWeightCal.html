@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta title="减肥摄入计算器">
+	<title>减肥摄入计算器</title>
+	<style>
+		#box{
+			width: 100vw;
+			min-height: 50vw;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+			background-color: skyblue;
+		}
+
+		#innerBox{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 5vw;
+			width: 20%;
+			height: 20vw;
+			box-shadow: 0 0 5px #ff8c00;
+			background-color: white;
+			opacity: 1;
+		}
+		#innerBox::before {
+			content: '';
+			width: 20%;
+			height: 20vw;
+			position: absolute;
+			background-color: white;
+			opacity: 0.5;
+			z-index: -1;
+		}
+
+		button{
+			width: 50%;
+			height: 10%;
+			font-size: 1.2em;
+			background-color: white;
+			border: 1px solid gray;
+			border-radius: 10px;		
+			margin-top: 30px;
+		}
+		#proteinRes,#fatRes,#sugarRes{
+			color: #ff8c00;
+			font-weight: bold;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div id="innerBox">
+			<h2>减肥摄入计算器</h2>
+			<div style="align-self: flex-start; margin-left: 40px;">
+				<span>体重：</span><input type="text" placeholder="体重(Kg)" id="weight" value="74"> <span>Kg</span>
+			</div>
+			<div style="align-self: flex-start; margin-left: 40px;">
+				<span>卡路里系数：</span><input id="calNum" class="slides" type="range" min="14" max="16" step="0.1" value="14"><span id="res"></span>
+			</div>
+			<div style="align-self: flex-start; margin-left: 40px;">
+				<span>总卡路里：</span><span id="totalCal"></span><span> kCal</span>
+			</div>
+			<div style="align-self: flex-start; margin-left: 40px;">
+				<span>卡路里缺口：</span><input type="range" id="calLose" value="500" min="500" max="600" step="10"><span id="calLoseRes"></span <span> kCal</span>
+			</div>
+			<button id="cal">Calculate!</button>
+			<div id="results" style="margin-top: 30px;border: 1px solid gray;width: 80%;border-radius: 5px;padding:5px;">
+				<p>每日蛋白摄入：<span id="proteinRes"></span> g</p>
+				<p>每日油脂摄入：<span id="fatRes"></span> g</p>
+				<p>每日碳水摄入：<span id="sugarRes"></span> g</p>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script>
+	let weight = document.querySelector('#weight').value*2.2046226;
+	let totalCal = weight * document.querySelector('#calNum').value - document.querySelector('#calLose').value;
+	let protein = weight * 0.8;
+	let fat = weight * 0.35;
+	let sugar = (totalCal - protein*4 - fat*9)/4;
+
+	document.querySelector('#calNum').addEventListener('change',function(e){
+		document.querySelector('#res').innerHTML = e.target.value;
+	},false)
+	document.querySelector('#calLose').addEventListener('change',function(e){
+		document.querySelector('#calLoseRes').innerHTML = e.target.value;
+	},false)
+	document.querySelector('#cal').addEventListener('click',function(){
+		weight = document.querySelector('#weight').value*2.2046226;
+		totalCal = weight * document.querySelector('#calNum').value - document.querySelector('#calLose').value;
+		protein = weight * 0.8;
+		fat = weight * 0.35;
+		sugar = (totalCal - protein*4 - fat*9)/4;
+		document.querySelector('#proteinRes').innerHTML = protein.toFixed(2);
+		document.querySelector('#sugarRes').innerHTML = sugar.toFixed(2);
+		document.querySelector('#fatRes').innerHTML = fat.toFixed(2);
+	},false);
+	window.addEventListener('load',function(){
+		document.querySelector('#res').innerHTML = document.querySelector('#calNum').value;
+		document.querySelector('#totalCal').innerHTML = totalCal.toFixed(2);
+		document.querySelector('#calLoseRes').innerHTML = document.querySelector('#calLose').value;
+	},false)
+</script>
+</html>

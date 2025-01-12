@@ -1,0 +1,278 @@
+<blockquote>
+  <p>学习内容：<a href="https://cn.vuejs.org/v2/guide/">《Vue.js 官方教程》</a></p>
+</blockquote>
+
+<h2 id="1-声明式渲染">1. 声明式渲染</h2>
+<p>通过<code>new Vue()</code>可声明一个 <code>Vue应用</code>，其接受一个对象参数，在这个参数中用<code>el</code>属性标明<code>Vue对象挂载的HTML元素</code>，用<code>data</code>属性记载对象的数据值。</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+       {{ message }}
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+      <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+        <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello Vue!</span><span class="dl">'</span>
+        <span class="p">}</span>
+      <span class="p">})</span>
+    <span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+<h2 id="2-指令">2. 指令</h2>
+<blockquote>
+  <p><a href="/assets/pics/Vue指令.svg" title="Vue指令.svg">Vue指令-思维导图</a></p>
+</blockquote>
+
+<p>在<code>Vue应用所绑定的HTML元素上</code>，添加的带有<code>v-</code>前缀的属性叫做<code>指令</code>。</p>
+<h3 id="21-v-bind-指令">2.1 v-bind 指令</h3>
+<p><strong>缩写：</strong> <code>:</code></p>
+
+<p><code>v-bind</code>指令用于将HTML上元素的某一<code>属性</code>与<code>Vue应用内的某一属性</code>绑定在一起（共同变化）。</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app-2"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;span</span> <span class="na">v-bind:style=</span><span class="s">"cssContent"</span><span class="nt">&gt;</span>
+    你看到的我是蓝色的。
+  <span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="kd">var</span> <span class="nx">app2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+    <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app-2</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">cssContent</span><span class="p">:</span> <span class="dl">'</span><span class="s1">color: blue;</span><span class="dl">'</span>
+    <span class="p">}</span>
+  <span class="p">})</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+<h3 id="22-v-if-指令-条件渲染">2.2 v-if 指令 (条件渲染)</h3>
+<p>元素设置了<code>v-if</code>指令时，只有在<code>v-if</code>指令表达式返回<code>true</code>值时，元素才会被渲染，否则将不被渲染。</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"if"</span> <span class="na">v-if=</span><span class="s">'show'</span><span class="nt">&gt;</span>看得到吗？<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  <span class="kd">let</span> <span class="nx">iiff</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+    <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#if</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">show</span><span class="p">:</span> <span class="kc">false</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+  <span class="c1">// 此時看不到#if這個元素。</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+<h3 id="23-v-else-指令-条件渲染之后如果为假则渲染">2.3 v-else 指令 (条件渲染之后，如果为假则渲染)</h3>
+<p><code>v-else</code>指令表示条件渲染之后，如果为假则渲染此元素。
+(<code>v-else</code>元素必须紧跟在带<code>v-if</code>或者<code>v-else-if</code>的元素的后面，否则它将不会被识别。)</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">v-if=</span><span class="s">"Math.random() &gt; 0.5"</span><span class="nt">&gt;</span>
+  Now you see me
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">v-else</span><span class="nt">&gt;</span>
+  Now you don't
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+<h3 id="24-v-else-if-指令-条件渲染之后继续添加条件渲染块">2.4 v-else-if 指令 (条件渲染之后，继续添加条件渲染块)</h3>
+<p>表示 <code>v-if</code> 的“else if 块”。可以链式调用。
+(<code>v-else-if</code>元素必须紧跟在带<code>v-if</code>或者<code>v-else-if</code>的元素的后面，否则它将不会被识别。)</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">v-if=</span><span class="s">"type === 'A'"</span><span class="nt">&gt;</span>
+  A
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">v-else-if=</span><span class="s">"type === 'B'"</span><span class="nt">&gt;</span>
+  B
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">v-else-if=</span><span class="s">"type === 'C'"</span><span class="nt">&gt;</span>
+  C
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">v-else</span><span class="nt">&gt;</span>
+  Not A/B/C
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+<h3 id="25-v-show-指令-条件显示">2.5 v-show 指令 (条件显示)</h3>
+<p>根据<code>v-show</code>表达式之真假值，切换元素的 <code>display CSS 属性</code>。</p>
+<h3 id="26-v-for-指令-遍历渲染">2.6 v-for 指令 (遍历渲染)</h3>
+<p><code>v-for</code>指令表示利用目标元素的可遍历性，遍历多次渲染其每一内部元素。</p>
+
+<p>【接受数据类型】 Array | Object | number | string | Iterable (2.6 新增)</p>
+<h4 id="261-v-for-指令通常用法">2.6.1 v-for 指令通常用法</h4>
+<p>使用语法<code>alias in expression</code>遍历数组内每一元素。
+<strong>（不能使用在Vue应用绑定的根元素上，必须是内部的子元素）</strong></p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'app'</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">v-for=</span><span class="s">'item in list'</span><span class="nt">&gt;</span>
+      {{ item.content }}
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+<span class="kd">let</span> <span class="nx">app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">data</span><span class="p">:{</span>
+    <span class="na">list</span><span class="p">:</span> <span class="p">[{</span><span class="na">content</span><span class="p">:</span><span class="mi">1</span><span class="p">},{</span><span class="na">content</span><span class="p">:</span><span class="mi">2</span><span class="p">},{</span><span class="na">content</span><span class="p">:</span><span class="mi">3</span><span class="p">}]</span>
+  <span class="p">}</span>
+  <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+<h4 id="262-v-for-指令同时遍历数组的内容和索引">2.6.2 v-for 指令同时遍历数组的内容和索引</h4>
+<p>可以用<code>一个圆括号内的两个变量</code>对目标变量进行遍历，其遍历结果第一个为<code>遍历结果本身</code>，第二个为该遍历结果在原元素内的<code>索引值</code>。</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'app'</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">v-for=</span><span class="s">'(a,b) in list'</span><span class="nt">&gt;</span>
+      {{ a }} 
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+<span class="kd">let</span> <span class="nx">app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">data</span><span class="p">:{</span>
+    <span class="na">list</span><span class="p">:</span> <span class="p">[{</span><span class="na">content</span><span class="p">:</span><span class="mi">1</span><span class="p">},{</span><span class="na">content</span><span class="p">:</span><span class="mi">2</span><span class="p">},{</span><span class="na">content</span><span class="p">:</span><span class="mi">3</span><span class="p">}]</span>
+  <span class="p">}</span>
+  <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+<blockquote>
+  <p><strong>显示结果：<br /></strong>
+{ “content”: “1” }0<br />
+{ “content”: “2” }1<br />
+{ “content”: “3” }2</p>
+</blockquote>
+
+<h4 id="263-v-for-指令遍历对象属性">2.6.3 v-for 指令遍历对象属性</h4>
+<p>也可以用 <code>v-for</code> 来遍历一个对象的属性。</p>
+
+<p>可以使用单独的变量来遍历，也可以使用圆括号括着的两个或三个变量来遍历。</p>
+
+<blockquote>
+  <p>当使用一个变量时，遍历结果为每一属性的值；<br />
+当使用两个变量时，遍历结果第一个为每一属性的值，第二个为属性的键名；<br />
+使用三个变量时，遍历结果第一个为每一属性的值，第二个为属性的键名，第三个为每一属性的索引。</p>
+</blockquote>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"v-for-object"</span> <span class="na">class=</span><span class="s">"demo"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">v-for=</span><span class="s">"(a,b,c) in object"</span><span class="nt">&gt;</span>
+      {{ a }}/{{ b }}/{{ c }}
+  <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+</code></pre></div></div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#v-for-object</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">data</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">object</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">How to do lists in Vue</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">author</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Jane Doe</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">publishedAt</span><span class="p">:</span> <span class="dl">'</span><span class="s1">2016-04-10</span><span class="dl">'</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div></div>
+<blockquote>
+  <p><strong>显示结果：<br /></strong>
+How to do lists in Vue / title / 0 <br />
+Jane Doe / author / 1 <br />
+2016-04-10 / publishedAt / 2</p>
+</blockquote>
+
+<h4 id="263-v-for-指令渲染结果的更新机制及key属性的必要性">2.6.3 v-for 指令渲染结果的更新机制及key属性的必要性</h4>
+<p>Vue更新使用v-for渲染的元素列表时，采取<code>“就地更新”</code>的策略。<code>如果数据项的顺序被改变，Vue不会移动DOM来匹配顺序，而是就地更新每个元素，并确保它们在每个索引位置正确地渲染</code>。</p>
+
+<p>如果想让Vue<code>跟踪每个节点的身份</code>，当原始数据项更新，想让Vue对现有元素进行重新排序，则需要为每项绑定一个<code>key属性</code>。</p>
+
+<blockquote>
+  <p><a href="https://www.zhihu.com/question/61078310/answer/361261031">Vue2.0 中 v-for里面的 “就地复用” 策略 是什么？ - 霸都丶傲天的回答 - 知乎</a></p>
+</blockquote>
+
+<h3 id="27-v-on-指令">2.7 v-on 指令</h3>
+<p><strong>缩写：</strong> <code>@</code></p>
+
+<p><strong>接受数据类型：</strong> <code>Function | Inline Statement（内联语句） | Object</code></p>
+
+<p><strong>传入参数：</strong> <code>原生DOM事件event</code></p>
+
+<blockquote>
+  <p><strong>什么叫内联语句？</strong><br /> 内联语句，就是写在HTML部分的JavaScript语句。</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>什么叫传入参数？</strong><br />传入参数，也就是跟在指令+冒号（如v-on）后面的语句，与‘指令:’一同组成元素的属性。</p>
+</blockquote>
+
+<p><strong>修饰符：</strong></p>
+
+<p><code>.stop</code> - 调用 event.stopPropagation()。</p>
+
+<p><code>.prevent</code> - 调用 event.preventDefault()。</p>
+
+<p><code>.capture</code> - 添加事件侦听器时使用 capture 模式。</p>
+
+<p><code>.self</code> - 只当事件是从侦听器绑定的元素本身触发时才触发回调。</p>
+
+<p><code>.{keyCode | keyAlias}</code> - 只当事件是从特定键触发时才触发回调。</p>
+
+<p><code>.native</code> - 监听组件根元素的原生事件。</p>
+
+<p><code>.once</code> - 只触发一次回调。</p>
+
+<p><code>.left</code> - (2.2.0) 只当点击鼠标左键时触发。</p>
+
+<p><code>.right</code> - (2.2.0) 只当点击鼠标右键时触发。</p>
+
+<p><code>.middle</code> - (2.2.0) 只当点击鼠标中键时触发。</p>
+
+<p><code>.passive</code> - (2.3.0) 以 { passive: true } 模式添加侦听器</p>
+
+<p><strong>用法说明：</strong></p>
+
+<p><code>v-on</code>指令用于绑定事件监听器。</p>
+
+<p><code>v-on</code>用在普通元素上时，只能监听<code>原生 DOM 事件</code>。用在自定义元素组件上时，也可以监听子组件触发的<code>自定义事件</code>。</p>
+
+<p>在监听原生 DOM 事件时，方法以<code>event</code>为唯一的参数。如果使用内联语句，语句可以访问一个 <code>$event property</code>。 如：<code>v-on:click='show('love you',$event)'</code></p>
+
+<p><code>v-on</code>的修饰符如没有可以省略。</p>
+
+<p>从 Vue 2.4.0 开始，<code>v-on</code> 支持不带参数绑定一个事件/监听器键值对的对象。注意当使用对象语法时，是<code>不支持任何修饰器</code>的。</p>
+
+<h3 id="28-v-model-指令">2.8 v-model 指令</h3>
+
+<p><strong>功能：</strong>在表单元素或者Vue组件上，创建数据双向绑定。</p>
+
+<p><strong>使用元素限制：</strong> <code>&lt;input&gt;、&lt;select&gt;、&lt;textarea&gt;、components</code></p>
+
+<p><strong>修饰符：</strong></p>
+
+<p><code>.lazy</code> - 不监听<code>input</code>,改为监听<code>change</code>(在change事件之后才进行同步,也就是输入完毕input失去焦点后)。</p>
+
+<p><code>.number</code> - 把输入的字符串转为有效的数字。</p>
+
+<p><code>.trim</code> - 首尾空格去除。</p>
+
+<p><strong>具体使用情况说明：</strong></p>
+
+<p>v-model绑定参数的类型，应依据 <code>&lt;input&gt;</code>标签的type属性或不同标签情况进行选择：</p>
+
+<blockquote>
+  <ol>
+    <li>type=’radio’时，应绑定单个字符串或布尔值，该值绑定为所选择元素的value属性（如有），如果没有value属性则绑定选中与否的Truthy值；<br /></li>
+    <li>type=’checkbox’，且<code>&lt;input&gt;</code>个数为一个时，应绑定一个布尔值，该值绑定为所选择元素的选中情况(Truthy)；<br /></li>
+    <li>type=’checkbox’，且<code>&lt;input&gt;</code>个数为多个时，应绑定一个数组，该数组绑定为所选择元素的value属性组成的字符串数组，排列顺序按点击顺序；<br /></li>
+    <li>type=’range’，应绑定一个字符串，该值绑定为Range中选中的值；<br /></li>
+    <li>type=’color’，应绑定一个格式为’#XXXXXX’的字符串，代表初始颜色Rgb值，该值绑定为Color中选中的值；<br /></li>
+    <li>绑定到<code>&lt;select&gt;</code>元素且单选时(multiple= ‘false’)，应绑定到单个字符串，如果存在value属性，则该值绑定为value属性值，否则该值绑定为所选择<code>&lt;option&gt;</code>选项的<code>textContent</code>；<br /></li>
+    <li>绑定到<code>&lt;select&gt;</code>元素且多选时(multiple= ‘true’)，应绑定到一个数组，如果存在value属性，则该值绑定为value属性值，该值绑定为所选择<code>&lt;option&gt;</code>选项的textContent组成的字符串数组，排列顺序按option排列先后顺序；</li>
+  </ol>
+</blockquote>
+
+<h3 id="29-v-slot-指令">2.9 v-slot 指令</h3>
+
+<p><code>待补充</code></p>
+
+<h3 id="210-v-pre-指令">2.10 v-pre 指令</h3>
+
+<p><strong>功能：</strong>跳过这个元素和它的子元素的编译过程。可以用来显示原始 Mustache 标签。跳过大量没有指令的HTML节点可以加快编译。</p>
+
+<h3 id="211-v-cloak-指令">2.11 v-cloak 指令</h3>
+
+<p><strong>功能：</strong>用于控制元素在编译完成之前的显示效果。在编译完毕之前，<code>v-cloak</code>指令一直保持在元素上。一旦编译完毕，这个指令就消失了。</p>
+
+<h3 id="212-v-once-指令">2.12 v-once 指令</h3>
+
+<p><strong>功能：</strong>配置了<code>v-once</code>指令的元素，只能被渲染一次。之后的渲染，这一元素或组件被视为静态内容并跳过。</p>
+
+<h3 id="213-v-text-指令">2.13 v-text 指令</h3>
+
+<p><strong>功能：</strong>修改绑定元素的<code>textContent</code>（元素内的文本内容）。</p>
+
+<h3 id="214-v-html-指令">2.14 v-html 指令</h3>
+
+<p><strong>功能：</strong>修改元素的<code>innerHTML</code>。可以真正地插入HTML内容。<code>Mustache语法</code>内的HTML内容只会被识别为文本而不会被浏览器编译。</p>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Promise A+ 规范与实现 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Promise A+ 规范与实现" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Promise A+规范 与 手动实现" />
+<meta property="og:description" content="Promise A+规范 与 手动实现" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/09/20/PromiseA+%E8%A7%84%E8%8C%83%E4%B8%8E%E5%AE%9E%E7%8E%B0/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/09/20/PromiseA+%E8%A7%84%E8%8C%83%E4%B8%8E%E5%AE%9E%E7%8E%B0/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-09-20T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"Promise A+规范 与 手动实现","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/09/20/PromiseA+%E8%A7%84%E8%8C%83%E4%B8%8E%E5%AE%9E%E7%8E%B0/","headline":"Promise A+ 规范与实现","dateModified":"2021-09-20T00:00:00+08:00","datePublished":"2021-09-20T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/09/20/PromiseA+%E8%A7%84%E8%8C%83%E4%B8%8E%E5%AE%9E%E7%8E%B0/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">Promise A+ 规范与实现</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Sep 20, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>Promise A+规范 与 手动实现</p>
+</blockquote>
+
+<h1 id="一promis-a-规范">一、Promis A+ 规范</h1>
+
+<blockquote>
+  <p>截自：字节路白讲义</p>
+
+  <p><a href="https://promisesaplus.com/#notes">Promise A+ 官方原文</a></p>
+</blockquote>
+
+<h2 id="1-术语">1. 术语</h2>
+
+<ol>
+  <li>promise 是一个有then方法的对象或者是函数，行为遵循本规范;</li>
+  <li>thenable 是一个有then方法的对象或者是函数;</li>
+  <li>value 是promise状态成功时的值，也就是resolve的参数, 包括各种数据类型, 也包括undefined/thenable或者是 promise</li>
+  <li>reason 是promise状态失败时的值, 也就是reject的参数, 表示拒绝的原因</li>
+  <li>exception 是一个使用throw抛出的异常值</li>
+</ol>
+
+<h2 id="2-规范内容">2. 规范内容</h2>
+<h3 id="21-promise-states">2.1 Promise States</h3>
+
+<p>promise只有三种状态：</p>
+
+<ol>
+  <li>
+    <p><strong>pending</strong></p>
+
+    <p>1.1 初始的状态, 可改变.</p>
+
+    <p>1.2 一个promise在resolve或者reject前都处于这个状态。</p>
+
+    <p>1.3 可以通过 resolve -&gt; fulfilled 状态;</p>
+
+    <p>1.4 可以通过 reject -&gt; rejected 状态;</p>
+  </li>
+  <li>
+    <p><strong>fulfilled</strong></p>
+
+    <p>2.1 最终态, 不可变</p>
+
+    <p>2.2 一个promise被resolve后会变成这个状态.</p>
+
+    <p>2.3 必须拥有一个value值</p>
+  </li>
+  <li>
+    <p><strong>rejected</strong></p>
+
+    <p>3.1 最终态, 不可变</p>
+
+    <p>3.2 一个promise被reject后会变成这个状态</p>
+
+    <p>3.3 必须拥有一个reason</p>
+  </li>
+</ol>
+
+<p>总结一下, promise的状态流转规律是这样的：</p>
+
+<ul>
+  <li><strong>pending -&gt; resolve(value) -&gt; fulfilled</strong></li>
+  <li><strong>pending -&gt; reject(reason) -&gt; rejected</strong></li>
+</ul>
+
+<h3 id="22-then方法">2.2 then()方法</h3>
+
+<p>promise应该提供一个<code>then()</code>方法, 用来访问最终的结果, 无论是value还是reason.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">onFulfilled</span><span class="p">,</span> <span class="nx">onRejected</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p><strong>参数要求</strong></p>
+
+    <p>1.1 onFulfilled 必须是函数类型, 如果不是函数, 应该被忽略.</p>
+
+    <p>1.2 onRejected 必须是函数类型, 如果不是函数, 应该被忽略.</p>
+  </li>
+  <li>
+    <p><strong>onFulfilled 特性</strong></p>
+
+    <p>2.1 在promise变成 fulfilled 时，应该调用 onFulfilled, 参数是value</p>
+
+    <p>2.2 在promise变成 fulfilled 之前, 不应该被调用.</p>
+
+    <p>2.3 只能被调用一次(所以在实现的时候需要一个变量来限制执行次数)</p>
+  </li>
+  <li>
+    <p><strong>onRejected 特性</strong></p>
+
+    <p>3.1 在promise变成 rejected 时，应该调用 onRejected, 参数是reason</p>
+
+    <p>3.2 在promise变成 rejected 之前, 不应该被调用.</p>
+
+    <p>3.3 只能被调用一次(所以在实现的时候需要一个变量来限制执行次数)</p>
+  </li>
+  <li>
+    <p><strong>onFulfilled 和 onRejected 应该是微任务</strong></p>
+
+    <p>这里用<code>queueMicrotask</code>来实现微任务的调用.</p>
+  </li>
+  <li>
+    <p><strong>then方法可以被调用多次</strong></p>
+
+    <p>5.1 promise状态变成 fulfilled 后，所有的 onFulfilled 回调都需要按照then的顺序执行, 也就是按照注册顺序执行(所以在实现的时候需要一个数组来存放多个onFulfilled的回调)</p>
+
+    <p>5.2 promise状态变成 rejected 后，所有的 onRejected 回调都需要按照then的顺序执行, 也就是按照注册顺序执行(所以在实现的时候需要一个数组来存放多</p>
+  </li>
+  <li>
+    <p><strong>返回值</strong></p>
+
+    <p>then 应该返回一个promise</p>
+
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">promise2</span> <span class="o">=</span> <span class="nx">promise1</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">onFulfilled</span><span class="p">,</span> <span class="nx">onRejected</span><span class="p">);</span>
+</code></pre></div>    </div>
+
+    <p>6.1 onFulfilled 或 onRejected 执行的结果为x, 调用 resolvePromise( 这里大家可能难以理解, 可以先保留疑问, 下面详细讲一下resolvePromise是什么东西 )</p>
+
+    <p>6.2 如果 onFulfilled 或者 onRejected 执行时抛出异常e, promise2需要被reject</p>
+
+    <p>6.3 如果 onFulfilled 不是一个函数, promise2 以promise1的value 触发fulfilled</p>
+
+    <p>6.4 如果 onRejected 不是一个函数, promise2 以promise1的reason 触发rejected</p>
+  </li>
+  <li>
+    <p><strong>resolvePromise过程</strong></p>
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resolvePromise</span><span class="p">(</span><span class="nx">promise2</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span>
+</code></pre></div>    </div>
+
+    <p>7.1 如果 promise2 和 x 相等，那么 reject TypeError；</p>
+
+    <p>7.2 如果 x 是一个 promise；</p>
+
+    <ul>
+      <li>如果x是pending态，那么promise必须要在pending,直到 x 变成 fulfilled or rejected.</li>
+      <li>如果 x 被 fulfilled, fulfill promise with the same value.</li>
+      <li>如果 x 被 rejected, reject promise with the same reason.</li>
+    </ul>
+
+    <p>7.3 如果 x 是一个 object 或者 是一个 function：<code>let then = x.then.</code></p>
+
+    <ul>
+      <li>如果 x.then 这步出错，那么 reject promise with e as the reason.</li>
+      <li>如果 then 是一个函数，then.call(x, resolvePromiseFn, rejectPromise)
+    resolvePromiseFn 的 入参是 y, 执行 resolvePromise(promise2, y, resolve, reject);
+    rejectPromise 的 入参是 r, reject promise with r.</li>
+      <li>如果 resolvePromise 和 rejectPromise 都调用了，那么第一个调用优先，后面的调用忽略。</li>
+      <li>如果调用then抛出异常e</li>
+      <li>如果 resolvePromise 或 rejectPromise 已经被调用，那么忽略
+        则，reject promise with e as the reason</li>
+      <li>如果 then 不是一个function. fulfill promise with x.</li>
+    </ul>
+  </li>
+</ol>
+
+<h1 id="二手动实现">二、手动实现</h1>
+<h2 id="21-基本思路">2.1 基本思路</h2>
+
+<ol>
+  <li>通过为state设置<code>setter</code>，实现当状态state改变时(<code>prepend -&gt; fulfilled</code> 或 <code>prepend -&gt; rejected</code>)，根据改变的目标值，按序依次执行<code>.then()</code>传入的方法；</li>
+  <li>多次调用<code>.then()</code>，用2个队列数组分别保存传入的<code>onResolved</code>和<code>onRejected</code>函数，这样可以按传入顺序依次执行；</li>
+  <li><code>new Promise(fn)</code>传入的函数<code>fn</code>应该是直接同步调用的；</li>
+  <li><code>.then()</code>传入的函数应该是<strong>微任务</strong>，使用<code>queueMicrotask()</code>方法实现；</li>
+</ol>
+
+<h2 id="22-实现代码">2.2 实现代码</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">PENDING</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">REJECTED</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">rejected</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">FULFILLED</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">fulfilled</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nx">MPromise</span> <span class="p">{</span>
+    <span class="nx">_status</span> <span class="o">=</span> <span class="nx">PENDING</span><span class="p">;</span>
+
+    <span class="c1">// .then(onFulfilled: (res)=&gt;{}, onRejected: (res)=&gt;{}); </span>
+    <span class="c1">// all callbacks are microtasks.</span>
+    <span class="nx">RESOLVE_CALLBACKS</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">REJECT_CALLBACKS</span> <span class="o">=</span> <span class="p">[];</span>
+
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">reason</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="nx">fn</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">resolve</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="k">this</span><span class="p">.</span><span class="nx">reject</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">get</span> <span class="nx">status</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_status</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">set</span> <span class="nx">status</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_status</span> <span class="o">=</span> <span class="nx">e</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">e</span> <span class="o">===</span> <span class="nx">FULFILLED</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">callback</span> <span class="k">of</span> <span class="k">this</span><span class="p">.</span><span class="nx">RESOLVE_CALLBACKS</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">callback</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">e</span> <span class="o">===</span> <span class="nx">REJECTED</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">callback</span> <span class="k">of</span> <span class="k">this</span><span class="p">.</span><span class="nx">REJECT_CALLBACKS</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">callback</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">reason</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nx">resolve</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="nx">PENDING</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="nx">FULFILLED</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nx">reject</span><span class="p">(</span><span class="nx">reason</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="nx">PENDING</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">reason</span> <span class="o">=</span> <span class="nx">reason</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="nx">REJECTED</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nx">isFunc</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">typeof</span> <span class="nx">e</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">then</span><span class="p">(</span><span class="nx">onFulfilled</span><span class="p">,</span> <span class="nx">onRejected</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">const</span> <span class="nx">fulfillFn</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">isFunc</span><span class="p">(</span><span class="nx">onFulfilled</span><span class="p">)</span> <span class="p">?</span> <span class="nx">onFulfilled</span> <span class="p">:</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">value</span><span class="p">;</span>
+        <span class="kd">const</span> <span class="nx">rejectFn</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">isFunc</span><span class="p">(</span><span class="nx">onRejected</span><span class="p">)</span> <span class="p">?</span> <span class="nx">onRejected</span> <span class="p">:</span> <span class="p">(</span><span class="nx">reason</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="nx">reason</span><span class="p">;</span>
+        <span class="p">};</span>
+
+        <span class="kd">const</span> <span class="nx">fulfillFnWithTryCatch</span> <span class="o">=</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">,</span> <span class="nx">promise2</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="nx">queueMicrotask</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                <span class="k">try</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">isFunc</span><span class="p">(</span><span class="nx">onFulfilled</span><span class="p">))</span> <span class="p">{</span>
+                        <span class="nx">resolve</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                        <span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">fulfillFn</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+                        <span class="k">this</span><span class="p">.</span><span class="nx">_resolvePromise</span><span class="p">(</span><span class="nx">promise2</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">reject</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">});</span>
+        <span class="p">}</span>
+
+        <span class="kd">const</span> <span class="nx">rejectFnWithTryCatch</span> <span class="o">=</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">,</span> <span class="nx">promise2</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="nx">queueMicrotask</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                <span class="k">try</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">isFunc</span><span class="p">(</span><span class="nx">onRejected</span><span class="p">))</span> <span class="p">{</span>
+                        <span class="nx">reject</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">reason</span><span class="p">);</span>
+                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                        <span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">rejectFn</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">reason</span><span class="p">);</span>
+                        <span class="k">this</span><span class="p">.</span><span class="nx">_resolvePromise</span><span class="p">(</span><span class="nx">promise2</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">reject</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">});</span>
+        <span class="p">}</span>
+
+
+        <span class="k">switch</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="na">FULFILLED</span><span class="p">:</span> <span class="p">{</span>
+                <span class="kd">const</span> <span class="nx">promise2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MPromise</span><span class="p">((</span><span class="nx">resolve2</span><span class="p">,</span> <span class="nx">reject2</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                        <span class="nx">fulfillFnWithTryCatch</span><span class="p">(</span><span class="nx">resolve2</span><span class="p">,</span> <span class="nx">reject2</span><span class="p">,</span> <span class="nx">promise2</span><span class="p">);</span>
+                    <span class="p">},</span> <span class="mi">0</span><span class="p">);</span>
+                <span class="p">});</span>
+                <span class="k">return</span> <span class="nx">promise2</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">case</span> <span class="na">REJECTED</span><span class="p">:</span> <span class="p">{</span>
+                <span class="kd">const</span> <span class="nx">promise2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MPromise</span><span class="p">((</span><span class="nx">resolve2</span><span class="p">,</span> <span class="nx">reject2</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                        <span class="nx">rejectFnWithTryCatch</span><span class="p">(</span><span class="nx">resolve2</span><span class="p">,</span> <span class="nx">reject2</span><span class="p">,</span> <span class="nx">promise2</span><span class="p">)</span>
+                    <span class="p">},</span> <span class="mi">0</span><span class="p">);</span>
+                <span class="p">});</span>
+                <span class="k">return</span> <span class="nx">promise2</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">case</span> <span class="na">PENDING</span><span class="p">:</span> <span class="p">{</span>
+                <span class="kd">const</span> <span class="nx">promise2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MPromise</span><span class="p">((</span><span class="nx">resolve2</span><span class="p">,</span> <span class="nx">reject2</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">RESOLVE_CALLBACKS</span><span class="p">.</span><span class="nx">push</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                        <span class="nx">fulfillFnWithTryCatch</span><span class="p">(</span><span class="nx">resolve2</span><span class="p">,</span> <span class="nx">reject2</span><span class="p">,</span> <span class="nx">promise2</span><span class="p">);</span>
+                    <span class="p">});</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">REJECT_CALLBACKS</span><span class="p">.</span><span class="nx">push</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">rejectFnWithTryCatch</span><span class="p">(</span><span class="nx">resolve2</span><span class="p">,</span> <span class="nx">reject2</span><span class="p">,</span> <span class="nx">promise2</span><span class="p">));</span>
+                <span class="p">});</span>
+                <span class="k">return</span> <span class="nx">promise2</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nx">_resolvePromise</span><span class="p">(</span><span class="nx">newPromise</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">newPromise</span> <span class="o">===</span> <span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">reject</span><span class="p">(</span><span class="k">new</span> <span class="nx">TypeError</span><span class="p">(</span><span class="s2">`Try to resolve a promise with itself.`</span><span class="p">));</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="k">instanceof</span> <span class="nx">MPromise</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">x</span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">value</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">_resolvePromise</span><span class="p">(</span><span class="nx">newPromise</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">);</span>
+            <span class="p">},</span> <span class="p">(</span><span class="nx">reason</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                <span class="nx">reject</span><span class="p">(</span><span class="nx">reason</span><span class="p">);</span>
+            <span class="p">});</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">((</span><span class="k">typeof</span> <span class="nx">x</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">object</span><span class="dl">'</span> <span class="o">&amp;&amp;</span> <span class="nx">x</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">isFunc</span><span class="p">(</span><span class="nx">x</span><span class="p">))</span> <span class="p">{</span>
+            <span class="kd">let</span> <span class="nx">then</span><span class="p">;</span>
+            <span class="k">try</span> <span class="p">{</span>
+                <span class="nx">then</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">then</span><span class="p">;</span>
+                <span class="kd">let</span> <span class="nx">called</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">isFunc</span><span class="p">(</span><span class="nx">then</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="kd">const</span> <span class="nx">resolvePromise</span> <span class="o">=</span> <span class="p">(</span><span class="nx">y</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="nx">called</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+                        <span class="nx">called</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+                        <span class="k">this</span><span class="p">.</span><span class="nx">_resolvePromise</span><span class="p">(</span><span class="nx">newPromise</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">);</span>
+                    <span class="p">};</span>
+                    <span class="kd">const</span> <span class="nx">rejectPromise</span> <span class="o">=</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="nx">called</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+                        <span class="nx">called</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+                        <span class="nx">reject</span><span class="p">(</span><span class="nx">r</span><span class="p">);</span>
+                    <span class="p">};</span>
+                    <span class="k">try</span> <span class="p">{</span>
+                        <span class="nx">then</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">resolvePromise</span><span class="p">,</span> <span class="nx">rejectPromise</span><span class="p">);</span>
+                    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="nx">called</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+                        <span class="nx">reject</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+                    <span class="p">}</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="nx">resolve</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">reject</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="nx">resolve</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">catch</span> <span class="p">(</span><span class="nx">onRejected</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">onRejected</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">static</span> <span class="nx">resolve</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="k">instanceof</span> <span class="nx">MPromise</span><span class="p">)</span> <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">MPromise</span><span class="p">((</span><span class="nx">res</span><span class="p">,</span> <span class="nx">rej</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="nx">res</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Promise A+ 测试 All Pass，截图纪念。</p>
+
+<p><img src="/assets/posts/34.png" alt="allpass" /></p>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Promise"><span>Promise</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/09/20/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E8%BF%9B%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/" title="浏览器的进程、线程与页面渲染流程">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/09/21/JavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="JavaScript设计模式">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/09/20/PromiseA+%E8%A7%84%E8%8C%83%E4%B8%8E%E5%AE%9E%E7%8E%B0/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

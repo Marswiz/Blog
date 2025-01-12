@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Cookie、Session和Web Storage | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Cookie、Session和Web Storage" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="浏览器端、服务器端储存数据的几种方式：cookie，session，localStorage,sessionStorage，indexedDB 全面整理，包含以前的笔记。" />
+<meta property="og:description" content="浏览器端、服务器端储存数据的几种方式：cookie，session，localStorage,sessionStorage，indexedDB 全面整理，包含以前的笔记。" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/05/02/%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9C%AC%E5%9C%B0%E5%A6%82%E4%BD%95%E5%82%A8%E5%AD%98%E6%95%B0%E6%8D%AE/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/05/02/%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9C%AC%E5%9C%B0%E5%A6%82%E4%BD%95%E5%82%A8%E5%AD%98%E6%95%B0%E6%8D%AE/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-05-02T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"浏览器端、服务器端储存数据的几种方式：cookie，session，localStorage,sessionStorage，indexedDB 全面整理，包含以前的笔记。","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/05/02/%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9C%AC%E5%9C%B0%E5%A6%82%E4%BD%95%E5%82%A8%E5%AD%98%E6%95%B0%E6%8D%AE/","headline":"Cookie、Session和Web Storage","dateModified":"2021-05-02T00:00:00+08:00","datePublished":"2021-05-02T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/05/02/%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9C%AC%E5%9C%B0%E5%A6%82%E4%BD%95%E5%82%A8%E5%AD%98%E6%95%B0%E6%8D%AE/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">Cookie、Session和Web Storage</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">May 2, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>浏览器端、服务器端储存数据的几种方式：cookie，session，localStorage,sessionStorage，indexedDB</p>
+
+  <p>全面整理，包含以前的笔记。</p>
+</blockquote>
+
+<h1 id="一cookie">一、Cookie</h1>
+
+<h2 id="1-cookie的作用">1. Cookie的作用</h2>
+
+<p>HTTP是无状态协议。Cookie的存在，是为了让服务器能识别连接过它的用户，从而在响应上针对性地采取一些友好措施。</p>
+
+<p>比如一个购物网站，如果服务器无法识别客户是谁，是否曾经连接过服务器并进行某些操作。那么每次重新访问网站服务器，都需要重新登录，购物车里的东西也会被清零，因为服务器无法识别每次连接的客户。</p>
+
+<p>Cookie是直接保存在浏览器中的一小段数据，在每次请求相同的域的时候（根据cookie的domain/path/samesite设置），会自动携带cookie首部，供服务器进行识别。</p>
+
+<p>cookie与域直接关联。所在页面与cookie绑定的域相同，则称为<strong>第一方cookie</strong>。否则称为<strong>第三方cookie</strong>。</p>
+
+<h2 id="2-cookie的典型应用场景">2. Cookie的典型应用场景</h2>
+
+<blockquote>
+  <p>Refer: <a href="https://www.cnblogs.com/cencenyue/p/7604651.html">浅谈session,cookie,sessionStorage,localStorage的区别及应用场景</a></p>
+</blockquote>
+
+<ol>
+  <li>判断用户是否登陆过网站，以便下次登录时能够实现自动登录（或者记住密码）;</li>
+  <li>保存上次登录的时间等信息;</li>
+  <li>保存上次查看的页面;</li>
+  <li>浏览计数。</li>
+</ol>
+
+<h2 id="3-cookie的工作方式">3. Cookie的工作方式</h2>
+
+<p>当用户浏览某一个使用了Cookie的网站，则：</p>
+
+<p>① 网站的服务器就生成一个该用户的识别码（唯一）；</p>
+
+<p>② 网站以此识别码为索引在服务器后端建立一个数据库项目；</p>
+
+<p>③ 然后在给用户回复的HTTP响应报文中添加一个首部行：</p>
+
+<blockquote>
+  <p>Set-cookie：<唯一Cookie识别号></唯一Cookie识别号></p>
+</blockquote>
+
+<p>④ 当客户收到响应报文，浏览器就在管理Cookie的文件中添加一行，其中包括这个服务器的主机名和它响应的识别码。</p>
+
+<p>⑤ 当客户再次向这个服务器发送请求报文，浏览器就会自动地从管理Cookie的文件中抽出这个Cookie，并添加在请求报文的首部行中。</p>
+
+<blockquote>
+  <p>Cookie: <Cookie识别号></Cookie识别号></p>
+</blockquote>
+
+<h2 id="4-cookie的结构js设置和体积限制">4. Cookie的结构、JS设置和体积限制</h2>
+
+<p>在打开页面的控制台输入<code>document.cookie</code>，可以查看某一个网站的cookie。结构如下：</p>
+
+<blockquote>
+  <p>某网站的Cookie：</p>
+
+  <p>“_ga=GA1.2.1788237449.1610895464; _ym_d=1610895465; _ym_uid=1610895465705583085; _gid=GA1.2.529167652.1619787501; _ym_visorc=w; _ym_isad=2; pixelRatio=1.75”</p>
+</blockquote>
+
+<p><code>document.cookie</code> 的值由 <code>name=value</code> 对组成，以 <code>;</code> 分隔。每一个都是独立的 cookie。</p>
+
+<p>通过<code>document.cookie</code>也可以设置当前域的cookie，Cookie的修改具有独立性： document.cookie = ‘cookieProperty=cookieContent;’ 这一设置，只会在cookie中添加（或修改已存在的）一个cookieProperty的值，不会覆盖全部的cookie。（document.cookie接口是一对getter/setter，因此get和set的操作方式不同）</p>
+
+<blockquote>
+  <p>通过document.cookie设置的cookie，都只能作用于当前域。</p>
+</blockquote>
+
+<p>Cookie的体积大小不能超过4kB，条目数一般不能超过20条，具体与浏览器实现相关。</p>
+
+<h2 id="5-cookie中的特殊字段">5. Cookie中的特殊字段</h2>
+
+<h3 id="51-path">5.1 path</h3>
+
+<p>设置浏览器发送Cookie的url路径前缀。只有这个路径下的页面可以访问到这个Cookie。<strong>默认是’/’</strong>。</p>
+
+<blockquote>
+  <p>一般设置 path=/;</p>
+
+  <p>这样这个域名下所有网页都可以访问到这个Cookie。 如果设置 path=/main 则只有main子目录的页面可以拿到Cookie</p>
+</blockquote>
+
+<h3 id="52-domain">5.2 domain</h3>
+
+<p>设置可访问Cookie的域名。</p>
+
+<p><strong>默认情况下domain等于当前域名</strong>。也就是说，www.marswiz.com下设置的 cookie，只能在这个域访问，即使是它的父级域marswiz.com也不行。</p>
+
+<p>设置了 domain = site.com; 则 *.site.com 的所有域名都能拿到这个cookie（父域和子域）。</p>
+
+<h3 id="53-expires-max-age">5.3 expires, max-age</h3>
+
+<p>expires是Cookie的到期日期，到期后Cookie被浏览器自动删除。</p>
+
+<blockquote>
+  <p>expires 需采用 GMT 时区格式，可以用 date.toUTCString 来获取它。</p>
+</blockquote>
+
+<p>max-age是Cookie的存活时长，为一个数字，单位是秒。</p>
+
+<p>expires和max-age二者设置其一就可以。</p>
+
+<h3 id="54-secure">5.4 secure</h3>
+
+<p>规定这个Cookie只能被Https协议传输。</p>
+
+<p>默认情况下，Cookie不区分协议，只区分域。</p>
+
+<h3 id="55-samesite">5.5 samesite</h3>
+
+<p>samesite关键字有三种取值：</p>
+
+<ul>
+  <li><strong>strict:</strong> 只有<strong>同站</strong></li>
+  <li><strong>lax:</strong></li>
+  <li><strong>none:</strong></li>
+</ul>
+
+<blockquote>
+  <p><strong>cookie如何判断是同站？</strong></p>
+
+  <p>cookie判断同站，是根据<strong>eTLD+1</strong>方法。</p>
+
+  <p>也就是：有效的顶级域名+二级域名相同，则判断同站，否则是非同站。</p>
+
+  <p>www.taobao.com 和 www.baidu.com 是跨站，www.a.taobao.com 和 www.b.taobao.com 是同站，a.github.io 和 b.github.io 是跨站(注意是跨站，因为github.io是注册的顶级域名)。</p>
+</blockquote>
+
+<blockquote>
+  <p>samesite关键字防止了一种叫做CSRF（Cross-Site Request Forgery 跨网站请求伪造）的攻击：</p>
+
+  <p>当用户已经在某一网站(site.com)完成登录认证，服务器返回了用户的Cookie并保存在浏览器中。默认情况下，只要从浏览器向site.com域发送请求，都会携带这个Cookie，服务器就会识别为认证的用户。</p>
+
+  <p>这时，如果用户访问了一个带有恶意请求代码(比如<a href="site.com?evilcode">)的网站(evil.com)，请求会带着Cookie发送到服务器，从而代表用户执行了恶意操作。</a></p>
+</blockquote>
+
+<h3 id="56-httponly服务器端设置">5.6 httpOnly（服务器端设置）</h3>
+
+<p>这个关键字在浏览器本地无法设置，只能在服务器端set-cookie的时候设置。</p>
+
+<p>设置了httpOnly的Cookie，在浏览器中无法用JavaScript访问，也就是document.cookie看不到。（防止黑客获取到Cookie）</p>
+
+<h2 id="6-什么时候会携带cookie">6. 什么时候会携带cookie?</h2>
+
+<p>根据cookie的几个关键字设置，浏览器自动判断发出请求时是否携带cookie。</p>
+
+<ul>
+  <li><strong>domain:</strong> cookie的域名；</li>
+  <li><strong>path:</strong> cookie的路径；</li>
+  <li><strong>samesite:</strong> 是否同站；</li>
+</ul>
+
+<h1 id="二session">二、session</h1>
+
+<p>session也叫作”会话控制”，是<strong>用户第一次向服务器请求连接时，由服务器生成的一个唯一标识</strong>，用于<strong>区别用户，并对用户进行权限隔</strong>离。</p>
+
+<p>session 认证流程：</p>
+
+<ul>
+  <li>用户第一次请求服务器的时候，服务器根据用户提交的相关信息，创建对应的 Session</li>
+  <li>请求返回时将此 Session 的唯一标识信息 SessionID 返回给浏览器</li>
+  <li>浏览器接收到服务器返回的 SessionID 信息后，会将此信息存入到 Cookie 中，同时 Cookie 记录此 SessionID 属于哪个域名</li>
+  <li>当用户第二次访问服务器的时候，请求会自动判断此域名下是否存在 Cookie 信息，如果存在自动将 Cookie 信息也发送给服务端，服务端会从 Cookie 中获取 SessionID，再根据 SessionID 查找对应的 Session 信息，如果没有找到说明用户没有登录或者登录失效，如果找到Session 证明用户已经登录可执行后面操作。</li>
+</ul>
+
+<p>session在客户端的储存位置：</p>
+
+<ul>
+  <li>cookie中（最佳）；</li>
+  <li>url中（需重写URL）；</li>
+</ul>
+
+<p>session与cookie的主要区别：关闭浏览器后（或者长时间没有任何往来，超过了服务器设定的会话有效期），Session自动失效。</p>
+
+<p>session将重要信息保存在服务器，仅将session_id等简要信息保存在客户端，相对cookie更安全。</p>
+
+<p>移动端对 cookie 的支持不是很好，而 session 需要基于 cookie 实现，所以移动端常用的是 token。</p>
+
+<h1 id="三localstorage-与-sessionstorage">三、localStorage 与 sessionStorage</h1>
+
+<h2 id="1-概述">1. 概述</h2>
+
+<p>localStorage 与 sessionStorage 都用来在浏览器中保存键值对。（HTML5中提供）</p>
+
+<p><strong>localStorage 与 sessionStorage的键和值都必须是字符串，传入其他类型也会自动转换为字符串。</strong></p>
+
+<blockquote>
+  <p><strong>它们比Cookie的好处（区别）在哪？</strong></p>
+
+  <ol>
+    <li>不会像Cookie一样，随着每次请求一块发送到服务器；</li>
+    <li>保存的数据量更大，一般至少有2MB；</li>
+    <li>只能通过纯JavaScript操作，无法通过http等协议修改；</li>
+    <li>Cookie是绑定到<strong>域</strong>的（与协议和端口无关），而 localStorage 是绑定到<strong>源</strong>的，也就是必须同一“协议+域名+端口”，才能访问同一 localStorage；</li>
+    <li>sessionStorage只在当前标签页下有效，数据也只存在于当前浏览器标签页。</li>
+  </ol>
+</blockquote>
+
+<h2 id="2-应用场景">2. 应用场景</h2>
+
+<ul>
+  <li>保存用户在页面的输入内容，比如表单、文本等，防止刷新或重新访问后消失；</li>
+  <li>快速响应：静态文件第一次请求后储存在localStorage，后续从localStorage直接读取，加快响应速度；</li>
+  <li>sessionStorage 的使用情况非常少。</li>
+</ul>
+
+<h2 id="3-localstorage-与-sessionstorage的通用方法">3. localStorage 与 sessionStorage的通用方法</h2>
+
+<ul>
+  <li>setItem(key, value) —— 存储键/值对。</li>
+  <li>getItem(key) —— 按照键获取值。</li>
+  <li>removeItem(key) —— 删除键及其对应的值。</li>
+  <li>clear() —— 删除所有数据。</li>
+  <li>key(index) —— 获取该索引下的键名。</li>
+  <li>length —— 存储的内容的长度。</li>
+</ul>
+
+<h2 id="4-localstorage-和-sessionstorage-的区别">4. localStorage 和 sessionStorage 的区别</h2>
+
+<ul>
+  <li>localStorage用于本地长期储存，它的生命周期是永久的，除非用户手动删除或清空；</li>
+  <li>sessionStorage只在本次会话窗口（标签页）有效，窗口关闭就清空；</li>
+  <li>localStorage是绑定源的，“协议+域名+端口”相同的URI就可以访问，本地多个同源标签页共享同一localStorage；</li>
+  <li>sessionStorage是绑定标签页的，不同标签页即使同源也不共享sessionStorage，但是一个标签页内的iframe可以获取到该页面的sessionStorage。</li>
+</ul>
+
+<h2 id="5-有关localstorage和sessionstorage的事件">5. 有关localStorage和sessionStorage的事件</h2>
+
+<p>每次更新localStorage和sessionStorage中的数据，<code>storage</code>事件就会发生，它的触发对象是<strong>所有能获取到该localStorage和sessionStorage的全局对象<code>window</code></strong>。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">storage</span><span class="dl">'</span><span class="p">,(</span><span class="nx">e</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">storage changed.</span><span class="dl">'</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre></div></div>
+<p>这个事件对象e具有如下属性：</p>
+
+<ul>
+  <li>key —— 发生更改的数据的 key（如果调用的是 .clear() 方法，则为 null）。</li>
+  <li>oldValue —— 旧值（如果是新增数据，则为 null）。</li>
+  <li>newValue —— 新值（如果是删除数据，则为 null）。</li>
+  <li>url —— 发生数据更新的文档的 url。</li>
+  <li>storageArea —— 发生数据更新的 localStorage 或 sessionStorage 对象。</li>
+</ul>
+
+<blockquote>
+  <p>所有能获取到更新的localStorage的window，都会被触发storage事件，这提供了一种<strong>跨标签页传递数据</strong>的方式：</p>
+
+  <p>比如：同时打开了两个同源的标签页，页面上同时监听了storage事件，回调函数是打印一个数据。</p>
+
+  <p>那么在一个标签页修改localStorage数据之后，另一个标签页会响应这个storage事件，同时也会打印这个数据。</p>
+</blockquote>
+
+<h1 id="四indexeddb">四、indexedDB</h1>
+
+<h2 id="1-什么是indexeddb">1. 什么是indexedDB？</h2>
+
+<p>indexedDB是浏览器内置的一个数据库，它比localStorage更强大：</p>
+
+<ol>
+  <li>支持多种类型的键，储存多种JS类型的值；</li>
+  <li>更大的储存容量（一般至少250MB，甚至没有上限）；</li>
+  <li>支撑事务(事务是一组同时成功或失败的操作)，保证数据操作的可靠性;</li>
+  <li>支持键的范围查询(min,max等)、索引。</li>
+</ol>
+
+<h2 id="2-indexeddb-应用场景">2. indexedDB 应用场景</h2>
+
+<p>在传统的浏览器-服务器页面应用有限，indexedDB主要应用于web离线应用。</p>
+
+<h2 id="3-indexeddb的使用方式">3. indexedDB的使用方式</h2>
+
+<p>indexedDB也是绑定到源的，不同源的页面无法访问同一个indexedDB.</p>
+
+<ul>
+  <li>① 要使用一个indexedDB数据库，需要先打开它；</li>
+</ul>
+
+<blockquote>
+  <p>let openRequest = indexedDB.open(name, version);</p>
+</blockquote>
+
+<p>name —— 字符串，即数据库名称。</p>
+
+<p>version —— 一个正整数版本，默认为 1。</p>
+
+<ul>
+  <li>② indexedDB数据库中可创建对象库用来存储特定数据，通过事务进行数据操作；</li>
+  <li>③ 通过键、范围或索引可以查询数据；</li>
+</ul>
+
+<blockquote>
+  <p>indexedDB使用的较少，具体使用方式参考：</p>
+
+  <p><a href="https://zh.javascript.info/indexeddb">IndexedDB 现代JS教程</a></p>
+</blockquote>
+
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="cookie"><span>cookie</span></a>
+      
+      <a id="tags" href="localStorage"><span>localStorage</span></a>
+      
+      <a id="tags" href="sessionStorage"><span>sessionStorage</span></a>
+      
+      <a id="tags" href="indexedDB"><span>indexedDB</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/05/02/%E5%89%8D%E7%AB%AF%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" title="前端异步请求相关问题">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/05/03/Js-Object%E4%B8%8EArray%E5%8E%9F%E7%94%9F%E6%96%B9%E6%B3%95%E5%92%8CObject%E5%87%A0%E7%A7%8D%E5%B1%9E%E6%80%A7%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB/" title="Object与Array原生方法和Object几种属性遍历方式的区别">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/05/02/%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9C%AC%E5%9C%B0%E5%A6%82%E4%BD%95%E5%82%A8%E5%AD%98%E6%95%B0%E6%8D%AE/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

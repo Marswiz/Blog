@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>浏览器的进程、线程与页面渲染流程 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="浏览器的进程、线程与页面渲染流程" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="浏览器渲染基本流程" />
+<meta property="og:description" content="浏览器渲染基本流程" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/09/20/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E8%BF%9B%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/09/20/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E8%BF%9B%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-09-20T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"浏览器渲染基本流程","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/09/20/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E8%BF%9B%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/","headline":"浏览器的进程、线程与页面渲染流程","dateModified":"2021-09-20T00:00:00+08:00","datePublished":"2021-09-20T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/09/20/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E8%BF%9B%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">浏览器的进程、线程与页面渲染流程</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Sep 20, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>浏览器渲染基本流程</p>
+</blockquote>
+
+<h1 id="进程和线程的区别">进程和线程的区别</h1>
+
+<blockquote>
+  <p><a href="https://juejin.cn/post/6844903553795014663#heading-2">浏览器线程和进程</a></p>
+
+  <p><a href="https://www.imweb.io/topic/58e3bfa845e5c13468f567d5">浏览器进程？线程？傻傻分不清楚！</a></p>
+</blockquote>
+
+<h2 id="进程">进程</h2>
+<h3 id="什么是进程">什么是进程</h3>
+
+<blockquote>
+  <p>进程类似工厂，线程类似工人。</p>
+</blockquote>
+
+<ul>
+  <li>进程是cpu资源分配的最小单位（系统会给它分配内存）。操作系统会为每个进程分配<strong>私有、独立的一块内存资源</strong>，进程之间互不影响；</li>
+  <li>当进程被杀掉，分配的内存空间也被释放；</li>
+  <li>一个进程中可能有一个或多个线程在工作；</li>
+  <li>同一进程下的各个线程之间，共享系统为该进程分配的<strong>同一块内存空间</strong>（包括代码段、数据集、堆等）；</li>
+  <li>进程间也可以互相通信，叫做IPC（Inter Process Communication），但是代价较大。</li>
+</ul>
+
+<h3 id="chrome浏览器主要有哪些进程">Chrome浏览器主要有哪些进程</h3>
+
+<p><img src="/assets/posts/40.png" alt="浏览器进程" /></p>
+
+<ul>
+  <li><strong>主进程（Browser进程）</strong>
+    <ul>
+      <li>与其他进程一起协作，实现浏览器的功能；</li>
+      <li>负责浏览器界面显示，与用户交互。如前进，后退等；</li>
+      <li>负责各个页面的管理，创建和销毁其他进程；</li>
+      <li>将Renderer进程得到的内存中的Bitmap，绘制到用户界面上；</li>
+      <li>网络资源的管理，下载等。</li>
+    </ul>
+  </li>
+  <li><strong>GPU进程</strong>：最多一个，用于合成图层、3D图形绘制等。</li>
+  <li><strong>渲染进程（Renderer进程，也叫浏览器内核）</strong>：
+    <ul>
+      <li>每个tab页会单独占用一个渲染进程；</li>
+      <li>tab页内的<code>&lt;iframe&gt;</code>也会占用独立的渲染进程；</li>
+      <li>用于<strong>页面渲染、Js执行、事件循环</strong>；</li>
+      <li><strong>渲染进程是多线程的，主要有：</strong>
+        <ul>
+          <li><strong>GUI渲染线程</strong></li>
+          <li><strong>JS引擎线程；</strong></li>
+          <li><strong>事件触发线程：</strong> 管理任务队列；</li>
+          <li><strong>定时触发器线程；</strong></li>
+          <li><strong>异步http请求线程；</strong></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>第三方插件进程</strong> 每个第三方插件可能对应一个进程；</li>
+  <li><strong>实用程序进程：</strong> 储存进程、网络进程、音频进程等；</li>
+</ul>
+
+<h3 id="为什么浏览器被设置为多进程">为什么浏览器被设置为多进程</h3>
+
+<h4 id="多进程架构的优势">多进程架构的优势</h4>
+
+<ul>
+  <li>避免单个page crash影响整个浏览器；</li>
+  <li>避免第三方插件crash影响整个浏览器；</li>
+  <li>多进程充分利用多核优势；</li>
+  <li>方便使用沙盒模型隔离插件等进程，为不同进程提供不同的系统访问能力，提高浏览安全和稳定性。</li>
+</ul>
+
+<h4 id="多进程架构的缺陷">多进程架构的缺陷</h4>
+
+<p>浏览器不同进程之间，不能共享同一个内存空间，因此某些基础模块会在不同进程中重复存在，占用额外内存空间。</p>
+
+<p>比如： JS V8引擎在不同的标签页渲染进程的内存空间中都存在。</p>
+
+<p>因此Chrome限制了最大进程数，当进程数达限，Chrome会将访问同一个网站的tab页都放在同一个进程里运行。</p>
+
+<h2 id="线程">线程</h2>
+
+<p>线程是程序执行中一个单一的顺序控制流程，是程序执行流的最小单元。</p>
+
+<p>一个进程可以有多个线程。（进程是工厂，线程是工人）</p>
+
+<blockquote>
+  <p>chromium 官方文档：</p>
+</blockquote>
+
+<p><img src="/assets/posts/33.png" alt="chromium线程" /></p>
+
+<p>每个Chrome进程中含有：</p>
+
+<ol>
+  <li>1个主线程：
+    <ul>
+      <li>在浏览器主进程里：用于更新UI界面；</li>
+      <li>在渲染进程里：运行大部分Blink代码；</li>
+    </ul>
+  </li>
+  <li>1个IO线程：
+    <ul>
+      <li>在所有的进程里：所有的IPC message到达此线程；</li>
+      <li>大部分异步io发生在此线程；</li>
+    </ul>
+  </li>
+  <li>一些特殊用途线程；</li>
+  <li>一个通用线程池。</li>
+</ol>
+
+<h3 id="chrome浏览器主进程中包含的线程">Chrome浏览器主进程中包含的线程</h3>
+
+<ul>
+  <li><strong>UI线程</strong> : 绘制浏览器顶部按钮和导航栏输入框等组件;</li>
+  <li><strong>网络线程</strong>：管理网络请求；</li>
+  <li><strong>存储线程</strong>：控制文件读写；</li>
+</ul>
+
+<h3 id="chrome渲染进程中包含的线程">Chrome渲染进程中包含的线程</h3>
+<h4 id="gui渲染线程主线程">GUI渲染线程(主线程)</h4>
+
+<p>数目： 1个。</p>
+
+<p>主要职能：</p>
+
+<ol>
+  <li>初始渲染：解析HTML，解析CSS，构建DOM树，CSSOM树，整合Render树，进行布局和绘制；</li>
+  <li>页面发生变化时，执行重绘和重排；</li>
+  <li><strong>GUI渲染线程</strong>与<strong>JS引擎线程</strong>是<strong>互斥</strong>的（不可同时运行）。当 JS 引擎执行时 GUI 线程就会被挂起（相当于被冻结了）,GUI 更新会被<strong>保存在一个队列中</strong>，等到 JS 引擎线程空闲时，再立即取出执行。</li>
+</ol>
+
+<h4 id="js引擎线程">JS引擎线程</h4>
+
+<p>数目： 1个。</p>
+
+<p>主要职能：</p>
+
+<ol>
+  <li>运行JS引擎（V8）：解析JS脚本，运行JS代码；</li>
+  <li>JS引擎中有一个任务队列，它一直等待任务队列中任务的到来，一旦任务到来立即按序加以处理；</li>
+  <li>与GUI渲染线程互斥。（因此Js执行时间如果过长，会导致页面渲染卡顿）</li>
+</ol>
+
+<h4 id="事件触发线程">事件触发线程</h4>
+
+<p>数目：1个。</p>
+
+<p>主要职能是<strong>控制事件循环</strong>。</p>
+
+<ol>
+  <li>当JS执行遇到<strong>宏任务、微任务</strong>时，将其加入到事件触发线程的对应队列中；</li>
+  <li>事件触发线程会根据任务的执行时机（比如<code>setTimeout</code>宏任务约定的定时时间已到），将任务各自队列中取出，放入JS引擎任务队列中等待执行；</li>
+  <li>JS引擎会在自己空闲的时候，从队列中依次取出任务执行；</li>
+</ol>
+
+<h4 id="定时触发器线程">定时触发器线程</h4>
+
+<p>主要职能：</p>
+
+<ol>
+  <li>用于<code>setTimeout / setInterval</code>等的计时；</li>
+  <li>时间到，则通知<strong>事件触发线程</strong>，将定时器对应的任务放入Js引擎的任务队列；</li>
+  <li>HTML标准中要求，低于4ms的定时，时间间隔都算作4ms（也就是定时器最低时间间隔为4ms）。</li>
+</ol>
+
+<h4 id="异步http请求线程">异步http请求线程</h4>
+
+<p>主要职能：</p>
+
+<ol>
+  <li>处理异步http请求；</li>
+  <li>请求结果返回，通知<strong>事件触发线程</strong>，将回调任务放入JS引擎任务队列；</li>
+</ol>
+
+<h1 id="浏览器渲染基本流程">浏览器渲染基本流程</h1>
+
+<p><img src="/assets/posts/41.png" alt="Chrome渲染流程" /></p>
+
+<h2 id="关键渲染路径crp">关键渲染路径：CRP</h2>
+
+<p><img src="/assets/posts/32.png" alt="Browser" /></p>
+
+<ol>
+  <li>浏览器通过请求得到一个HTML文本；</li>
+  <li>渲染进程解析HTML文本，构建DOM树；</li>
+  <li>解析HTML的同时，如果遇到内联样式或者样式脚本，则下载并构建样式规则（stytle rules），若遇到JavaScript脚本，则会下载执行脚本；</li>
+  <li>DOM树和样式规则构建完成之后，渲染进程将两者合并成渲染树（render tree）；</li>
+  <li>渲染进程开始对渲染树进行布局，生成布局树（layout tree）；</li>
+  <li>渲染进程对布局树进行绘制，生成绘制记录；</li>
+  <li>渲染进程的对布局树进行分层，分别栅格化每一层，并得到合成图层信息；</li>
+  <li>渲染进程将合成图层信息<strong>发送给GPU进程</strong>，GPU进程对各图层进行合成，然后显示页面。</li>
+</ol>
+
+<p>关键渲染路径CRP（Critical Rendering Path），是浏览器将 HTML、CSS、JavaScript 转换为在屏幕上呈现的像素内容所经历的一系列步骤。也就是我们上面说的浏览器渲染流程。</p>
+
+<p>其中有三个关键因素：</p>
+
+<ul>
+  <li><strong>关键资源的数量</strong>: 可能阻止网页首次渲染的资源；</li>
+  <li><strong>关键路径长度</strong>: 获取所有关键资源所需的往返次数或总时间；</li>
+  <li><strong>关键字节</strong>: 实现网页首次渲染所需的总字节数,等同于所有关键资源传送文件大小的总和。</li>
+</ul>
+
+<h2 id="什么是渲染合成composite-">什么是渲染合成(Composite) ?</h2>
+
+<p>合成是一种将页面分成若干层，然后分别对每一层进行光栅化，最后在一个单独的线程 - 合成线程（compositor thread）里面合并成一个页面的技术。</p>
+
+<p>当用户滚动页面时，由于页面各个层都已经被光栅化了，浏览器需要做的只是合成一个新的帧来展示滚动后的效果罢了。</p>
+
+<p>页面的动画效果实现也是类似，将页面上的层进行移动并构建出一个新的帧，交由GPU进行显示即可。</p>
+
+<h1 id="参考资料">参考资料</h1>
+
+<p><a href="https://superseany.com/2019/12/25/%E7%AA%A5%E6%8E%A2%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9E%B6%E6%9E%84-%E4%B8%80/">窥探现代浏览器架构:1</a></p>
+
+<p><a href="https://superseany.com/2019/12/27/%E7%AA%A5%E6%8E%A2%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9E%B6%E6%9E%84-%E4%BA%8C/">窥探现代浏览器架构:2</a></p>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Browser"><span>Browser</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/09/20/Web-%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3-API/" title="Web物理设备接口API">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/09/20/PromiseA+%E8%A7%84%E8%8C%83%E4%B8%8E%E5%AE%9E%E7%8E%B0/" title="Promise A+ 规范与实现">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/09/20/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E8%BF%9B%E7%A8%8B-%E7%BA%BF%E7%A8%8B%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>前端路由 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="前端路由" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="前端路由相关" />
+<meta property="og:description" content="前端路由相关" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/08/31/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/08/31/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-08-31T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"前端路由相关","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/08/31/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/","headline":"前端路由","dateModified":"2021-08-31T00:00:00+08:00","datePublished":"2021-08-31T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/08/31/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">前端路由</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Aug 31, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>前端路由相关</p>
+
+</blockquote>
+
+<h1 id="一页面路由的历史">一、页面路由的历史</h1>
+<h2 id="1-早期路由由服务端控制">1. 早期：路由由服务端控制</h2>
+
+<p><strong>流程：</strong> 客户端发起http请求 -&gt; 服务端根据请求url匹配不同的资源（不同html） -&gt; 返回请求数据 -&gt; 客户端渲染显示</p>
+
+<p><strong>好处：</strong></p>
+
+<ul>
+  <li>直接生成html，seo友好；</li>
+  <li>首屏渲染快；</li>
+</ul>
+
+<blockquote>
+  <p>首屏时间（白屏时间）： 从<strong>输入url按下回车</strong>到<strong>页面任意元素加载出来</strong>的时间。</p>
+</blockquote>
+
+<p><strong>缺点：</strong></p>
+
+<ul>
+  <li>服务器压力大。每次请求都需要处理+响应；、</li>
+  <li>前后端深度耦合，开发协同流程混乱；</li>
+</ul>
+
+<h2 id="2-现代spa单页面应用前端路由">2. 现代：SPA单页面应用+前端路由</h2>
+
+<p><strong>单页：</strong> 单个html文件。</p>
+
+<p>一个html文件，通过前端路由+ajax等技术，实现无刷新路由(更新页面)。</p>
+
+<p><strong>好处：</strong></p>
+
+<ul>
+  <li>无需刷新；</li>
+  <li>加载过的资源无需重复加载，因为都在一个页面内；</li>
+  <li>只需向服务器请求必要资源，服务器压力小；</li>
+  <li>前后端分离开发；</li>
+</ul>
+
+<p><strong>缺点：</strong></p>
+
+<ul>
+  <li>SEO不友好，搜索引擎爬虫无法获取页面信息；</li>
+  <li>没有提前生成html，需要现场发请求，初次加载首屏渲染时间长；</li>
+  <li>前端逻辑复杂度增加；</li>
+</ul>
+
+<h1 id="二前端路由的实现原理">二、前端路由的实现原理</h1>
+<h2 id="1-locationhash">1. location.hash</h2>
+<h3 id="11-hash是什么">1.1 hash是什么</h3>
+
+<p>hash就是页面url中<code>#</code>后面的部分。</p>
+
+<h3 id="12-hash路由的特点">1.2 hash路由的特点</h3>
+
+<ol>
+  <li>如果发生http请求，hash部分不会发送给服务器；</li>
+  <li><strong>hash部分改变，不会导致页面刷新；</strong></li>
+  <li>hash的改变，会导致浏览器访问历史中添加一条记录，可以通过浏览器的返回、前进按钮来访问前一、后一页面；</li>
+  <li>hash改变，会触发window上的hashChange事件。</li>
+</ol>
+
+<h3 id="13-更改页面hash方式">1.3 更改页面hash方式</h3>
+
+<ol>
+  <li>location.hash</li>
+  <li>a标签的<code>href = '#xxx'</code>;</li>
+</ol>
+
+<h3 id="14-监听hash变化的方式">1.4 监听hash变化的方式</h3>
+
+<p>通过window对象的<code>hashChange</code>事件监听。每次hash变化都会触发hashChange事件。</p>
+
+<h2 id="2-history">2. history</h2>
+<h3 id="21-history对象的方法和事件">2.1 history对象的方法和事件</h3>
+
+<ol>
+  <li>history.forward(); 前进一步；</li>
+  <li>history.back()；后退一步；</li>
+  <li>history.go(num)； 正数前进num步，负数后退num步；</li>
+  <li>history.pushState(state, title, path)；在浏览记录最后添加一个历史记录；</li>
+  <li>history.replaceState(state, title, path)；替换当前历史记录；</li>
+</ol>
+
+<p><strong>pushState/replaceState 的参数：</strong></p>
+
+<ol>
+  <li>state, 是一个对象，是一个与指定网址相关的对象，<strong>当 popstate 事件触发的时候，该对象会传入回调函数</strong>;</li>
+  <li>title, 新页面的标题，浏览器支持不一，一般传入null;</li>
+  <li>url, 页面的新地址。</li>
+</ol>
+
+<p><strong>pushState和replaceState的特点：</strong></p>
+
+<ul>
+  <li>不会触发popState事件，也不会刷新页面；</li>
+  <li>会将当前的页面href替换为最新加入的url<strong>（域名+path）</strong>；</li>
+  <li>需要手动触发popState事件，才能更新页面；</li>
+</ul>
+
+<h3 id="22-history监听的事件">2.2 history监听的事件</h3>
+
+<p>history监听<code>popState</code>事件，以在页面url变化的时候监听变化，做出响应。</p>
+
+<p><strong>触发popState事件的五个操作：</strong></p>
+
+<ol>
+  <li>点击浏览器后退按钮；</li>
+  <li>点击浏览器前进按钮；</li>
+  <li>JS执行history.forward();</li>
+  <li>JS执行history.back();</li>
+  <li>JS执行history.go()；</li>
+</ol>
+
+<h2 id="3-hash路由和history路由之间的区别">3. hash路由和history路由之间的区别</h2>
+
+<ol>
+  <li>hash 有#符号，不美观。而history没有；</li>
+  <li>hash 的url中#部分内容不会给服务端， history的所有url内容都会给服务端；</li>
+  <li>hash 通过 hashchange 监听变化，history 通过 popstate 监听变化（监听事件不同）。</li>
+</ol>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="JavaScript"><span>JavaScript</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/08/31/RFC3986-%E7%BB%9F%E4%B8%80%E8%B5%84%E6%BA%90%E6%A0%87%E8%AF%86%E7%AC%A6URI-%E9%80%9A%E7%94%A8%E8%AF%AD%E6%B3%95-%E7%BF%BB%E8%AF%91/" title="《RFC3986：统一资源标识符URI：通用语法》翻译">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2021/09/01/Vue%E4%B8%AD%E7%9A%84%E8%99%9A%E6%8B%9FDOM%E5%92%8CDiff%E7%AE%97%E6%B3%95/" title="Vue3中的虚拟DOM和Diff算法">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/08/31/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

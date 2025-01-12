@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>经典算法集 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="经典算法集" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="经典的算法。" />
+<meta property="og:description" content="经典的算法。" />
+<link rel="canonical" href="http://localhost:4000/blog/2021/12/19/%E4%B8%80%E4%BA%9B%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AE%97%E6%B3%95/" />
+<meta property="og:url" content="http://localhost:4000/blog/2021/12/19/%E4%B8%80%E4%BA%9B%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AE%97%E6%B3%95/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-12-19T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"经典的算法。","@type":"BlogPosting","url":"http://localhost:4000/blog/2021/12/19/%E4%B8%80%E4%BA%9B%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AE%97%E6%B3%95/","headline":"经典算法集","dateModified":"2021-12-19T00:00:00+08:00","datePublished":"2021-12-19T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2021/12/19/%E4%B8%80%E4%BA%9B%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AE%97%E6%B3%95/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">经典算法集</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Dec 19, 2021
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>经典的算法。</p>
+</blockquote>
+
+<h1 id="1-kadane-算法">1. Kadane 算法</h1>
+
+<p>Kadane算法，用于计算数组中<strong>连续子数组的最大或最小和</strong>。</p>
+
+<h2 id="11-计算连续子数组最大和最小和">1.1 计算连续子数组最大和、最小和</h2>
+
+<blockquote>
+  <p><strong>【1.求子数组最大和】</strong></p>
+
+  <p>求一个非空数组A中的一个子数组SubA，使得SubA中元素的加和最大。</p>
+
+  <p>（子数组：在原数组中必须是连续的，长度最小为1。单个元素构成的数组和数组A本身也是A的子数组。）</p>
+</blockquote>
+
+<p>Kadane算法，基于以下事实：</p>
+
+<ul>
+  <li>最终求得的子数组SubA一定以数组A中某一个元素A<sub>i</sub>作为结尾；</li>
+  <li>SubA在原数组A中是连续的。</li>
+</ul>
+
+<p>假设在位置i的元素为A<sub>i</sub>，则位置i+1的元素为A<sub>i+1</sub>。</p>
+
+<p>以A<sub>i</sub>结尾的最大加和子数组SubA<sub>i</sub>，要么只是它本身自己构成，要么是和它相连的前面若干元素一同构成。设它前面的若干元素加和为K，那么此时加和Sum（A<sub>i</sub>）=K+A<sub>i</sub>。</p>
+
+<p>如果SubA<sub>i</sub>只由自己本身构成，那么K=0。</p>
+
+<p>这时考察以<strong>A<sub>i+1</sub></strong>结尾的子数组<strong>SubA<sub>i+1</sub></strong>。它有两个选择：</p>
+
+<blockquote>
+  <p>① 继续使用<strong>A<sub>i</sub></strong>结尾的最大子数组，<strong>SubA<sub>i+1</sub></strong>的加和可以表示为<strong>K+A<sub>i</sub>+A<sub>i+1</sub></strong>，也就是 <strong>Sum（A<sub>i+1</sub>）= Sum（A<sub>i</sub>）+A<sub>i+1</sub></strong>。</p>
+
+  <p>② 不继续沿用之前<strong>A<sub>i</sub></strong>的最大子数组，而是自己单独成为一个子数组，如果之前的子数组<strong>SubA<sub>i</sub></strong>的加和<strong>Sum（A<sub>i</sub>）</strong>对它而言是个累赘（为负）。这时<strong>Sum（A<sub>i+1</sub>） = A<sub>i+1</sub></strong>;</p>
+</blockquote>
+
+<p>这两种情况的取舍，取决于二者所得子数组加和哪个更大。也就是<strong>Sum（A<sub>i+1</sub>）=Math.max(Sum（A<sub>i</sub>）+A<sub>i+1</sub>, A<sub>i+1</sub>)</strong>。</p>
+
+<p>因此得出Kadane算法如下：</p>
+
+<blockquote>
+  <ol>
+    <li>初始化 <strong>maxSumHere = A[0]</strong> 和 <strong>max = A[0]</strong>;</li>
+    <li>对原数组A从左到右进行遍历，计算以每个数组元素位置i为结尾的子数组加和值maxSumHere，计算方法为：Sum（A<sub>i+1</sub>）=Math.max(Sum（A<sub>i</sub>）+A<sub>i+1</sub>, A<sub>i+1</sub>)；</li>
+    <li>当前元素i计算完成后，更新max值。（最终结果为各个元素为结尾位置，而得到的子数组加和集的最大值。）</li>
+    <li>返回max值即为结果。</li>
+  </ol>
+</blockquote>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Kadane's Algorithm</span>
+<span class="kd">function</span> <span class="nx">kadanesAlgorithm</span><span class="p">(</span><span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">let</span> <span class="nx">lastSubArrayMax</span> <span class="o">=</span> <span class="nx">array</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+	<span class="kd">let</span> <span class="nx">totalMax</span> <span class="o">=</span> <span class="nx">array</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+	<span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">array</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="c1">// Sum（Ai_+_1）=Math.max(Sum（A_i）+A_i_+_1, A_i_+_1)；</span>
+		<span class="k">if</span><span class="p">(</span><span class="nx">lastSubArrayMax</span> <span class="o">+</span> <span class="nx">array</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">array</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="nx">lastSubArrayMax</span> <span class="o">=</span> <span class="nx">array</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+		<span class="k">else</span> <span class="nx">lastSubArrayMax</span> <span class="o">=</span> <span class="nx">lastSubArrayMax</span> <span class="o">+</span> <span class="nx">array</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+
+        <span class="c1">// Refresh the total Max Value.</span>
+		<span class="nx">totalMax</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">lastSubArrayMax</span><span class="p">,</span> <span class="nx">totalMax</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">totalMax</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>计算连续子数组的最大和或最小和问题。</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Kadane's Algorithm</span>
+<span class="c1">// Max / Min</span>
+<span class="kd">function</span> <span class="nx">kadane</span><span class="p">(</span><span class="nx">arr</span><span class="p">){</span>
+    <span class="kd">let</span> <span class="nx">curMax</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="c1">// let curMin = arr[0]</span>
+    <span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>  <span class="c1">// let min = arr[0];</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="nx">curMax</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">curMax</span><span class="o">+</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>  <span class="c1">//  curMin = Math.min(curMin+arr[i], arr[i]);</span>
+        <span class="nx">max</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">max</span><span class="p">,</span> <span class="nx">curMax</span><span class="p">);</span> <span class="c1">// min = Math.min(min, curMin);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">max</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h2 id="12-计算环形数组的连续子数组最大和最小和">1.2 计算环形数组的连续子数组最大和、最小和</h2>
+
+<blockquote>
+  <p><a href="https://leetcode-cn.com/problems/maximum-sum-circular-subarray/">环形子数组的最大和</a></p>
+</blockquote>
+
+<p>如果原数组首尾连接，那么有两种情况：</p>
+
+<ol>
+  <li>最大子数组包含首尾两个元素（覆盖了首尾连接成环的间隙）；</li>
+  <li>最大子数组出现在原数组内部（不覆盖首尾连接成环的间隙）。</li>
+</ol>
+
+<p>对于2情况，等同于一般的Kadane算法计算连续子数组最大和。</p>
+
+<p>对于1情况，最大子数组包含了数组首尾连接点，则最小和一定出现在数组之中。此时<strong>最大和 = 数组全部元素和 - 最小和</strong>。</p>
+
+<p><img src="/assets/posts/19.png" alt="环形数组" /></p>
+
+<p>因此，可以使用Kadane算法，分别计算数组内（首尾不连接成环）的全部元素总和sum、最大和max和最小和min，然后返回sum-min和max中的最大值。</p>
+
+<p>这里有一种特殊情况：当全部元素为负，min=sum，此时sum-max=0。此时max为元素中的最大值，应该返回max而非0。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">maxSubarraySumCircular</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">sum</span> <span class="o">=</span> <span class="nx">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="kd">let</span> <span class="nx">curMin</span> <span class="o">=</span> <span class="nx">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">curMax</span> <span class="o">=</span> <span class="nx">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="kd">let</span> <span class="nx">min</span> <span class="o">=</span> <span class="nx">curMin</span><span class="p">,</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">curMax</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">nums</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="nx">curMax</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">curMax</span><span class="o">+</span><span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+        <span class="nx">curMin</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">curMin</span><span class="o">+</span><span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+        <span class="nx">max</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">max</span><span class="p">,</span> <span class="nx">curMax</span><span class="p">);</span>
+        <span class="nx">min</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">min</span><span class="p">,</span> <span class="nx">curMin</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="c1">// 全部元素为负，返回max而非0.</span>
+    <span class="k">return</span> <span class="nx">max</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="p">?</span> <span class="nx">max</span> <span class="p">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">max</span><span class="p">,</span> <span class="nx">sum</span><span class="o">-</span><span class="nx">min</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="13-计算连续子数组乘积的最大值最小值">1.3 计算连续子数组乘积的最大值、最小值</h2>
+
+<blockquote>
+  <p><a href="https://leetcode-cn.com/problems/maximum-product-subarray/">乘积最大子数组</a></p>
+</blockquote>
+
+<p>乘积不同于加和，它的特点是：</p>
+
+<ol>
+  <li>如果下一个元素为正，则包含下一个元素数组的最大乘积<code>max[i] = max[i-1] * num[i]</code>，最小乘积<code>min[i] = min[i-1] * num[i]</code>;</li>
+  <li>如果下一个元素为负，则包含下一个元素数组的最大乘积<code>max[i] = min[i-1] * num[i]</code>，最小乘积<code>min[i] = max[i-1] * num[i]</code>。</li>
+</ol>
+
+<p>因此，必须同时记录当前状态i的最大乘积max和最小乘积min，才能用于下一个状态i+1的计算。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">maxProduct</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">curMax</span> <span class="o">=</span> <span class="nx">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="kd">let</span> <span class="nx">curMin</span> <span class="o">=</span> <span class="nx">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">curMax</span><span class="p">,</span> <span class="nx">min</span> <span class="o">=</span> <span class="nx">curMin</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">nums</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="c1">// 无论情况如何，乘积最大值应该是这三者中的最大者，乘积最小值应该是最小者。 </span>
+        <span class="kd">let</span> <span class="nx">a1</span> <span class="o">=</span> <span class="nx">curMax</span><span class="o">*</span><span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">a2</span> <span class="o">=</span> <span class="nx">curMin</span><span class="o">*</span><span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">a3</span> <span class="o">=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="nx">curMax</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">a1</span><span class="p">,</span> <span class="nx">a2</span><span class="p">,</span> <span class="nx">a3</span><span class="p">);</span>
+        <span class="nx">curMin</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">a1</span><span class="p">,</span> <span class="nx">a2</span><span class="p">,</span> <span class="nx">a3</span><span class="p">);</span>
+        <span class="nx">max</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">max</span><span class="p">,</span> <span class="nx">curMax</span><span class="p">);</span>
+        <span class="nx">min</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">min</span><span class="p">,</span> <span class="nx">curMin</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">max</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h1 id="2-kmp算法">2. KMP算法</h1>
+
+<p>KMP算法，用于解决查询字符串str1中是否存在子字符串str2的问题。</p>
+
+<h2 id="21-算法内容">2.1 算法内容</h2>
+
+<p><img src="/assets/posts/KMP.png" alt="KMP" /></p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">knuthMorrisPrattAlgorithm</span><span class="p">(</span><span class="nx">string</span><span class="p">,</span> <span class="nx">substring</span><span class="p">)</span> <span class="p">{</span>
+  
+	<span class="kd">function</span> <span class="nx">getSuffixPosition</span><span class="p">(</span><span class="nx">str</span><span class="p">){</span>
+		<span class="kd">let</span> <span class="nx">suffixPosition</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+		<span class="nx">suffixPosition</span><span class="p">.</span><span class="nx">fill</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+		<span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+		<span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+			<span class="k">if</span><span class="p">(</span><span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">===</span> <span class="nx">str</span><span class="p">[</span><span class="nx">j</span><span class="p">])</span>	<span class="nx">suffixPosition</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">j</span><span class="o">++</span><span class="p">;</span>
+			<span class="k">else</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">return</span> <span class="nx">suffixPosition</span><span class="p">;</span>
+	<span class="p">}</span>
+	
+	<span class="kd">let</span> <span class="nx">suffixPosition</span> <span class="o">=</span> <span class="nx">getSuffixPosition</span><span class="p">(</span><span class="nx">substring</span><span class="p">);</span>
+	
+	<span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">string</span><span class="p">.</span><span class="nx">length</span><span class="p">){</span>
+		<span class="k">if</span><span class="p">(</span><span class="nx">string</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">===</span> <span class="nx">substring</span><span class="p">[</span><span class="nx">j</span><span class="p">]){</span>
+			<span class="k">if</span><span class="p">(</span><span class="nx">j</span> <span class="o">===</span> <span class="nx">substring</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+			<span class="nx">j</span><span class="o">++</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">else</span> <span class="p">{</span>
+			<span class="k">if</span><span class="p">(</span><span class="nx">j</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="nx">i</span><span class="o">++</span><span class="p">;</span>
+			<span class="k">else</span> <span class="nx">j</span> <span class="o">=</span> <span class="nx">suffixPosition</span><span class="p">[</span><span class="nx">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	
+	<span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="22-复杂度分析">2,2 复杂度分析</h2>
+
+<p>时间： <code>O(m+n)</code></p>
+
+<p>空间： <code>O(m)</code></p>
+
+<p>m为查询子串长度，n为被查询原字符串长度。</p>
+
+<p>原字符串被遍历一次，查询子字符串也被遍历一次（用来建立相同前后缀的位置数组suffixPosition）。</p>
+
+<p>原字符串的每次遍历，最多与子字符串执行两次比较。因此，总时间复杂度为<code>O(2n+m) = O(m+n)</code>。</p>
+
+<h1 id="3-随机抽样算法">3. 随机抽样算法</h1>
+<h2 id="31-打乱数组fisheryates-shuffle-洗牌算法">3.1 打乱数组：Fisher–Yates shuffle 洗牌算法</h2>
+<h3 id="311-算法内容">3.1.1 算法内容</h3>
+
+<p>对于一个待打乱数组<code>arr</code>：</p>
+
+<ol>
+  <li>指针<code>i</code>从末尾位置开始，选取从起始位置到i的闭区间<code>[0,i]</code>；</li>
+  <li>在该区间内随机抽取一个数<code>pick</code>，将pick与i位置的元素进行交换，此时i位置元素确定，将i向前移动1个位置；</li>
+  <li>重复1-2步骤，直到i到达起始位置0，结束打乱数组；</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">function</span> <span class="nx">rand</span><span class="p">(</span><span class="nx">arr</span><span class="p">){</span>
+      <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span><span class="p">){</span>
+        <span class="kd">let</span> <span class="nx">pick</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span>
+        <span class="p">[</span><span class="nx">arr</span><span class="p">[</span><span class="nx">pick</span><span class="p">],</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">pick</span><span class="p">]];</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nx">arr</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>该算法可以保证打乱的随机性。</p>
+
+<h3 id="312-复杂度分析">3.1.2 复杂度分析</h3>
+
+<p>时间复杂度： O(n);
+空间复杂度： O(1);</p>
+
+<h2 id="32-大数据流中的均匀随机抽样蓄水池抽样算法">3.2 大数据流中的均匀随机抽样：蓄水池抽样算法</h2>
+
+<blockquote>
+  <p>假设有一个很大的数据流(长度为n)，无法一次性加载完成(即不能知道n的具体数值)，任务是在数据动态加载的过程中，对它进行随机抽样，且需要保证抽样的均匀性(1/n)。</p>
+</blockquote>
+
+<h3 id="321-算法内容">3.2.1 算法内容</h3>
+
+<ol>
+  <li>用一个变量<code>n</code>记录当前读取的数据长度，变量<code>cur</code>记录当前选择的元素；</li>
+  <li>对于下一个读取到的元素<code>n = i</code>，作为第<code>i</code>个读取到的元素，我们进行如下选择：
+    <ol>
+      <li>选择它的概率为<code>1/i</code>；</li>
+      <li>否则，继续保留上一次选择的元素，概率为<code>1 - 1/i</code>；</li>
+    </ol>
+  </li>
+</ol>
+
+<p><img src="/assets/posts/xxc.png" alt="蓄水池抽样" /></p>
+
+<h1 id="4-寻找下一个更大排列">4. 寻找下一个更大排列</h1>
+
+<blockquote>
+  <p><a href="https://leetcode-cn.com/problems/next-permutation/">下一个排列</a></p>
+</blockquote>
+
+<ol>
+  <li>从右到左找到<code>[i,i+1]</code>，使得<code>arr[i] &lt; arr[i+1]</code>;</li>
+  <li>从末尾向前搜索，找到第一个p，使得<code>arr[p] &gt; arr[i]</code>;</li>
+  <li>调换<code>arr[i]</code>和<code>arr[p]</code>；</li>
+  <li>将i+1到数组末尾的部分反转（降序变升序），即找到下一个更大排列。</li>
+</ol>
+
+<h1 id="5-颜色分类荷兰国旗">5. 颜色分类（荷兰国旗）</h1>
+
+<blockquote>
+  <p><a href="https://leetcode-cn.com/problems/sort-colors/">颜色分类</a></p>
+</blockquote>
+
+<p>将三个数0,1,2组成的随机数组，通过一次遍历，完成从小到大排列。</p>
+
+<ol>
+  <li>设定左右指针l,r，分别代表下一个0和下一个2的位置（初始：l=0, r=length-1）；</li>
+  <li>设置游标cur，时刻保证两个条件：
+    <ul>
+      <li>l &lt;= cur &lt;= r；</li>
+      <li>l的左边都是0，r的右边都是2；</li>
+    </ul>
+  </li>
+  <li>每次cur到达一个位置，都保证它要么触及左边界l，要么触及右边界r，要么为1才向后移动。</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">const</span> <span class="nx">sortColors</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">nums</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="kd">let</span> <span class="nx">cur</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+        <span class="kd">function</span> <span class="nx">swap</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span><span class="nx">j</span><span class="p">){</span>
+            <span class="p">[</span><span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span><span class="nx">nums</span><span class="p">[</span><span class="nx">j</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="nx">nums</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span><span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]];</span>
+        <span class="p">}</span>
+    
+        <span class="k">while</span><span class="p">(</span><span class="nx">cur</span> <span class="o">&lt;=</span> <span class="nx">r</span><span class="p">){</span>
+            <span class="k">while</span><span class="p">(</span><span class="nx">cur</span> <span class="o">&gt;=</span> <span class="nx">l</span> <span class="o">&amp;&amp;</span> <span class="nx">cur</span> <span class="o">&lt;=</span> <span class="nx">r</span> <span class="o">&amp;&amp;</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">cur</span><span class="p">]</span> <span class="o">!==</span> <span class="mi">1</span><span class="p">){</span>
+                <span class="k">if</span><span class="p">(</span><span class="nx">nums</span><span class="p">[</span><span class="nx">cur</span><span class="p">]</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="nx">swap</span><span class="p">(</span><span class="nx">cur</span><span class="p">,</span><span class="nx">l</span><span class="o">++</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">nums</span><span class="p">[</span><span class="nx">cur</span><span class="p">]</span> <span class="o">===</span> <span class="mi">2</span><span class="p">)</span> <span class="nx">swap</span><span class="p">(</span><span class="nx">cur</span><span class="p">,</span> <span class="nx">r</span><span class="o">--</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="nx">cur</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+    
+        <span class="k">return</span> <span class="nx">nums</span><span class="p">;</span>
+    <span class="p">};</span>
+</code></pre></div></div>
+
+<h1 id="6-寻找多于lenghtn的元素--boyer-moore-投票算法">6. 寻找多于lenght/n的元素() —— Boyer-Moore 投票算法</h1>
+
+<blockquote>
+  <p><a href="https://leetcode-cn.com/problems/majority-element/">169. 多数元素</a></p>
+
+  <p><a href="https://leetcode-cn.com/problems/majority-element-ii/">229. 求众数 II</a></p>
+</blockquote>
+
+<p>投票算法用来<strong>寻找一个数组中，数目严格大于数组长度<code>length/n</code>的元素</strong>。</p>
+
+<h2 id="61-投票算法基本流程">6.1 投票算法基本流程</h2>
+
+<p>对于找到数组中个数大于<code>length/2</code>的元素:</p>
+
+<p><strong>Boyer-Moore 投票算法基本过程如下：</strong></p>
+
+<ol>
+  <li>设置一个候选人变量<code>candidate</code>，设置一个投票数变量<code>count=0</code>;</li>
+  <li>对原始数组<code>nums</code>进行遍历，对每个<code>nums[i]</code>：
+    <ol>
+      <li>如果<code>count=0</code>，赋值<code>candidate = nums[i]</code>；</li>
+      <li>然后，判断：
+        <ul>
+          <li>如果<code>candidtate === nums[i]</code>: count增加1；</li>
+          <li>否则，count减小1；</li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+  <li>最终，<code>candidate</code>就是寻找的众数。</li>
+</ol>
+
+<blockquote>
+  <p><strong>Moore 投票算法也可以用于找数目大于 length/n 的元素：</strong></p>
+
+  <p>数目大于length/n的元素，最多只能有n-1个。Moore算法步骤如下：</p>
+
+  <ol>
+    <li>设置n个候选人位置candidate，初始化为任意值；</li>
+    <li>设置n个计票器count，初始化票数为0；</li>
+    <li>遍历原数组<code>nums</code>的每个值i，对任意一个候选人t:
+      <ol>
+        <li>如果: <code>nums[i] === candidate[t]</code>，且 <code>count[t] &gt; 0</code>， 则<code>count[t]</code>增加1；</li>
+        <li>如果：<code>count[t] === 0</code>，更换候选人<code>candidate[t] = nums[i]</code>;</li>
+        <li>否则： 让各候选人的投票数<code>count[t]</code>都 <code>-1</code>。</li>
+      </ol>
+    </li>
+    <li>最后留下来的，其中一定有要寻找的数目大于 length/n 的元素（但并非全部都是）；</li>
+    <li>再对原数组进行一次遍历，查看每个找到的元素，出现次数是否大于 length/n。</li>
+  </ol>
+</blockquote>
+
+<h2 id="62-投票算法的证明">6.2 投票算法的证明</h2>
+
+<p><strong>Boyer-Moore 投票算法的证明：</strong></p>
+
+<p>假设nums中，众数x一定存在，那么x的数目一定大于nums.length/2。</p>
+
+<p>假设我们从左到右遍历数组<code>nums</code>：</p>
+
+<ol>
+  <li>如果<strong>全程count都没有变为0</strong>：</li>
+</ol>
+
+<p>那么，可知此时candidate一定为众数。</p>
+
+<p>因为如果candidate不是众数，因为众数数目占优，遍历过程中count一定会被众数变成负值，从而经过变0的过程。</p>
+
+<ol>
+  <li>对于任意位置<code>i</code>遍历之后，<strong>如果<code>count=0</code></strong>:</li>
+</ol>
+
+<ul>
+  <li>如果<code>candidate</code>本身就是要寻找的众数x，那么可以知道包含i的左侧区间，非众数的数目n1等于众数x的数目n2，因为众数数目大于数组长度的一半，因此i右侧剩余数组众数依然为x；</li>
+  <li>如果<code>candidate</code>本身不是要寻找的众数x，那么可以知道包含i的左侧区间，众数x和其他非当前candidate的数之和，等于当前candidtate的数目，因此左侧区间众数x的数目小于当前candidate的数目，右侧区间众数依然为x；</li>
+  <li>因为右侧区间众数始终为x，所以对于最后一段区间，count一定不会再变为0，并且count最后一定不会是0(一定大于0)，这等同于第一种情况。</li>
+</ul>
+
+<p>因此，最终candidate一定是众数。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">majorityElement</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">candidate</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="k">of</span> <span class="nx">nums</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">count</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="nx">candidate</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">candidate</span> <span class="o">===</span> <span class="nx">i</span><span class="p">)</span> <span class="nx">count</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">else</span> <span class="nx">count</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">candidate</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h1 id="7-约瑟夫环问题">7. 约瑟夫环问题</h1>
+
+<blockquote>
+  <p><a href="https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/">剑指 Offer 62. 圆圈中最后剩下的数字</a></p>
+</blockquote>
+
+<blockquote>
+  <p><strong>约瑟夫环问题：</strong></p>
+
+  <p>假设有<code>n</code>个人围成一圈，编号为<code>0 ~ n-1</code>。给定一个数值m，从编号0开始起（作为第1个），每一轮向后数m个，将当前位置的人驱逐出去，然后下一轮从他的下一位开始数，以此类推，直到圈中只剩一个人，求最终剩下这个人的编号。</p>
+</blockquote>
+
+<p>基本思路：</p>
+
+<ol>
+  <li>每次从驱逐出去一个人，然后下一轮从他的下一位开始数，所以每轮圈中的人编号会发生变化；</li>
+  <li>假设当前轮剩余<code>n</code>人，<code>f(n,m)</code>表示计算圈中还剩n人的时候，按这种每轮淘汰第m位的规则，最终会留下的人员编号；</li>
+  <li>那么在当前轮之后，因为要淘汰掉一个，所以下一轮剩余<code>n-1</code>人，下一轮淘汰掉的人员编号为<code>f(n-1, m)</code>；</li>
+  <li>但是，因为一轮之后，大家的编号要发生变化，必须找出前后两轮编号之间的对应关系：</li>
+</ol>
+
+<p><img src="/assets/posts/37.png" alt="yuesefu" /></p>
+
+<ol>
+  <li>因此，<code>f(n,m) = (f(n-1,m) + m) % n</code> ，当<code>n = 1</code>的时候，说明圈内只有一人，此时应返回他的编号<code>0</code>。</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">lastRemaining</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">m</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">n</span> <span class="o">===</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nx">lastRemaining</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nx">m</span><span class="p">)</span> <span class="o">+</span> <span class="nx">m</span><span class="p">)</span> <span class="o">%</span> <span class="nx">n</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h1 id="8-brian-kernighan-算法">8. Brian Kernighan 算法</h1>
+
+<blockquote>
+  <p><a href="https://leetcode-cn.com/problems/bitwise-and-of-numbers-range/">201. 数字范围按位与</a></p>
+</blockquote>
+
+<p>Brian Kernighan 算法用来<strong>消除一个数字二进制表示中，最右边的1（将其变为0）。</strong></p>
+
+<p>算法实现：</p>
+
+<p>对于一个数<code>n</code>：<strong>将其进行<code>n = n &amp; (n-1)</code>操作</strong>。</p>
+
+<blockquote>
+  <p>例如：</p>
+
+  <p>n = 5时， n = (110)<sub>2</sub>。进行<code>n = n &amp; (n-1)</code>操作后，n = 4 = (100)<sub>2</sub></p>
+
+  <p>消除了最右边的一个1.</p>
+</blockquote>
+
+<h1 id="9-lru-缓存算法">9. LRU 缓存算法</h1>
+
+<blockquote>
+  <p><a href="https://leetcode-cn.com/problems/lru-cache/">LRU 缓存算法</a></p>
+
+  <p>描述：</p>
+
+  <p>设计一套缓存机制，容量最大为n。其中有put（key, value）和get（key）两个方法，put添加一条记录，get获取记录。</p>
+
+  <p>put和get都算作一次操作，当记录数目超过容量n时，删除最久未使用的记录。</p>
+</blockquote>
+
+<p>算法实现：</p>
+
+<ol>
+  <li>通过JS的<code>Map</code>数据结构可实现，它是有序的（遍历时是按照加入的顺序）；</li>
+  <li><code>get(key)</code>操作时，如果查询到key，则将key从map中删除，然后将其重新添加到map，来更新key的记录顺序到最新；</li>
+  <li><code>put(key,val)</code>操作时：
+    <ol>
+      <li>如果map中存在对应key，则同上面一样，先删除key，再添加key记录到最新的值val；</li>
+      <li>如果map中不存在对应key，则直接添加key，然后判断是否容量超限，如果超限则删除掉Map中遍历出来的第一个key记录（因为遍历是按照插入顺序，第一个是最早插入的）。</li>
+    </ol>
+  </li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">LRUCache</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">capacity</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Map</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">capacity</span> <span class="o">=</span> <span class="nx">capacity</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="nx">LRUCache</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="kd">get</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">val</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">val</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">val</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="nx">LRUCache</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">put</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="nx">size</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">capacity</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">oldest</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="nx">keys</span><span class="p">().</span><span class="nx">next</span><span class="p">().</span><span class="nx">value</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">map</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">oldest</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h1 id="10-素数筛">10. 素数筛</h1>
+
+<p>用于筛选从<code>2~n</code>范围内的质数。</p>
+
+<h2 id="101-埃氏筛选法">10.1 埃氏筛选法</h2>
+
+<p><strong>基本思路：</strong></p>
+
+<ol>
+  <li>假设要找的素数范围<code>range</code>是<code>[2,n]</code>；</li>
+  <li>维护一个数组<code>deleted</code>，长度为<code>n+1</code>，初始时任何数都没有被筛除，数组值全部为<code>false</code>(表示未筛除)；</li>
+  <li>从<code>i = 2</code>开始，每次取<code>deleted</code>中第一个未被筛除的数（索引为<code>i</code>），将它在<code>range</code>内的全部倍数都筛除掉（deleted对应位置<code>n*i</code>设为<code>true</code>）；</li>
+  <li>因为：如果一个数<code>n</code>能被分解为因数之积<code>a*b</code>，那么只有两种情况：
+    <ol>
+      <li><code>a = b = sqrt(n)</code>；</li>
+      <li><code>a</code>和<code>b</code>一个大于sqrt(n)，另一个小于sqrt(n)。</li>
+    </ol>
+  </li>
+  <li>所以只要选取<code>i &lt;= sqrt(n)</code>范围内的数，进行上述筛选，就可以完成全部范围内的筛选工作；</li>
+  <li>返回全部<code>deleted[i] = false</code>的<code>i</code>的集合，即是要求的素数集。</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 素数筛：埃氏筛</span>
+<span class="c1">// O(n * ln(ln n))</span>
+<span class="c1">// Mars 2021.11</span>
+
+<span class="kd">function</span> <span class="nx">getPrime</span><span class="p">(</span><span class="nx">n</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">deleted</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+    <span class="kd">let</span> <span class="nx">primes</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="c1">// 筛选到sqrt(n)即可</span>
+    <span class="kd">let</span> <span class="nx">e</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">sqrt</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">e</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">deleted</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="p">{</span>
+            <span class="c1">// -- 为何是 j=i 开始？</span>
+            <span class="c1">// 只需要从当前找到的质数i之后进行筛除即可，之前的数已经被筛除过了。</span>
+            <span class="c1">// 例如： 当前找到的数是5，那么不需要再对2*5, 3*5, 4*5进行筛除了，因为之前已经筛选过了，只需要从5*5开始。</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span> <span class="nx">i</span> <span class="o">*</span> <span class="nx">j</span> <span class="o">&lt;=</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">deleted</span><span class="p">[</span><span class="nx">i</span> <span class="o">*</span> <span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">deleted</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">i</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">i</span> <span class="o">&amp;&amp;</span> <span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span> <span class="nx">primes</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">index</span><span class="p">);</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">primes</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="102-线性筛选法欧拉筛">10.2 线性筛选法(欧拉筛)</h2>
+
+<p>埃氏筛选法中，一个合数可能会被多个素数筛除：</p>
+
+<p>例如<code>12</code>会被<code>2</code>和<code>3</code>筛除，从而多次执行<code>delete[12] = true</code>操作。</p>
+
+<p>线性筛选法降低时间复杂度到<code>O(n)</code>，其中主要是避免了这种情况。它的基本思想：</p>
+
+<p><strong>对于一个合数，只被它最小的质因数筛除。</strong></p>
+
+<p>在线性筛中，<code>12</code>这个数只被<code>2</code>筛除一次，不会被<code>3</code>筛除。</p>
+
+<p><strong>基本思路：</strong></p>
+
+<ol>
+  <li>与埃氏筛相同，假设要找的素数范围<code>range</code>是<code>[2,n]</code>；</li>
+  <li>维护一个数组<code>deleted</code>，长度为<code>n+1</code>，初始时任何数都没有被筛除，数组值全部为<code>false</code>(表示未筛除)；</li>
+  <li>同时维护一个被筛选出的质数数组<code>primes</code>，初始为空数组；</li>
+  <li>从<code>i = 2</code>开始遍历<code>deleted</code>（不论其是否已被筛除掉），如果<code>deleted[i] = false</code>（没被筛除），则将<code>i</code>加入到<code>primes</code>数组中；</li>
+  <li>然后遍历数组<code>primes</code>，对每一个已查找到的质数<code>s = primes[j]</code>：
+    <ol>
+      <li>如果<code>i % s === 0</code>，说明当前的数<code>i</code>不是最小的质因数，应该停下当前的筛选过程（停止遍历primes）；</li>
+      <li>否则，如果<code>s*i &lt;= n</code>，筛除掉<code>s * i</code>这个数：<code>deleted[s*i] = true</code>;</li>
+    </ol>
+  </li>
+  <li>当全部筛选完毕，<code>primes</code>中即是结果素数集。</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 素数筛：线性筛</span>
+<span class="c1">// O(n)</span>
+<span class="kd">function</span> <span class="nx">getPrime2</span><span class="p">(</span><span class="nx">n</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">deleted</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+    <span class="kd">let</span> <span class="nx">primes</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">deleted</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="nx">primes</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="k">of</span> <span class="nx">primes</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">*</span> <span class="nx">i</span> <span class="o">&gt;</span> <span class="nx">n</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>    <span class="c1">// 只筛选范围内的数</span>
+            <span class="nx">deleted</span><span class="p">[</span><span class="nx">j</span> <span class="o">*</span> <span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>   <span class="c1">// 利用当前已找到素数j，对i*j进行筛除</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="nx">i</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>  <span class="c1">// 如果当前素数j是i的因数，那么直接结束j后续的循环，因为i=n*j，后续的数应该用j进行删除而不是j之后的</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">primes</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="11-模拟退火算法">11. 模拟退火算法</h1>
+
+<blockquote>
+  <p><a href="https://oi-wiki.org/misc/simulated-annealing/#_3">模拟退火</a></p>
+</blockquote>
+
+<p>模拟退火是一种随机化算法。当一个问题的方案数量极大（甚至是无穷的）而且不是一个单峰函数时，我们常使用模拟退火求解。</p>
+
+<p>模拟退火时我们有三个参数：**初始温度 ，降温系数 ，终止温度 **。</p>
+
+<h1 id="12-快速幂快速乘法">12. 快速幂、快速乘法</h1>
+<h2 id="121-快速幂">12.1 快速幂</h2>
+
+<p>快速幂可以以<code>O(log_n)</code>复杂度求出一个幂。</p>
+
+<p><strong>基本思路：</strong></p>
+
+<ol>
+  <li>将a<sup>b</sup>中的<code>b</code>转化为二进制；</li>
+  <li>
+    <p>例如<code>13 = (1101)_2</code>表示<code>8+4+1</code>，则：</p>
+
+    <p><img src="/assets/posts/42.png" alt="mi" />;</p>
+  </li>
+  <li>从右到左遍历<code>b</code>的二进制表示，判断其位上是否为1，是则执行对应乘法，将当前<code>a</code>乘入结果。</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">fastPow</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">n</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">n</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">res</span> <span class="o">*=</span> <span class="nx">a</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nx">a</span> <span class="o">*=</span> <span class="nx">a</span><span class="p">;</span>
+        <span class="nx">n</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="122-快速乘法">12.2 快速乘法</h2>
+
+<p>同快速幂一样，快速乘法用于快速计算<code>m * n</code>。</p>
+
+<p><strong>基本思路：</strong></p>
+
+<ol>
+  <li>将<code>m * n</code>中的<code>n</code>转化为二进制；</li>
+  <li>例如<code>13 = (1101)_2</code>表示<code>8+4+1</code>，<code>a * (8+4+1) = a*8 + a*4 + 0*2 + a*1</code>;</li>
+  <li>从右到左遍历<code>b</code>的二进制表示，判断其位上是否为1，用一个c表示当前位对应的二进制数值，如果是1则在结果中加上c。</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">fastMultiply</span><span class="p">(</span><span class="nx">m</span><span class="p">,</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">m</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">31</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">((</span><span class="nx">n</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="nx">r</span> <span class="o">+=</span> <span class="nx">c</span><span class="p">;</span>
+        <span class="nx">c</span> <span class="o">+=</span> <span class="nx">c</span><span class="p">;</span>
+        <span class="nx">n</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">r</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="13-最长递增子序列-lis">13. 最长递增子序列 (LIS)</h1>
+
+<blockquote>
+  <p>求一个序列的<strong>最长递增子序列(LIS)</strong>，这样的子序列是允许中间越过一些字符的，即留“空”。</p>
+
+  <p>例如：<code>[4, 2, 3, 1, 5]</code> 的最长递增子序列为 <code>[2, 3, 5]</code>，长度为 <code>3</code> 。</p>
+</blockquote>
+
+<h2 id="131-求最长递增子序列lis的长度">13.1 求最长递增子序列(LIS)的长度</h2>
+
+<p>算法基于以下几个事实：</p>
+
+<ol>
+  <li>需要<strong>保留元素的相对顺序</strong>，也就是<strong>只有后面的元素可以和前面的形成递增子序列</strong>；（想到动态规划）</li>
+  <li>如果要形成最长的递增子序列，需要<strong>让子序列增长得尽可能慢</strong>，这样后面的元素才更有可能形成更长的递增子序列。（想到贪心）</li>
+</ol>
+
+<p><strong>基本思路：</strong></p>
+
+<ol>
+  <li>结合动态规划和贪心的思想；</li>
+  <li>用一个<code>dp</code>数组表示找到的最长递增子序列：
+    <ol>
+      <li><code>dp[i]</code>表示：<strong>已找到长度为i+1的递增子序列，且序列末尾的最小值为<code>dp[i]</code></strong>；</li>
+      <li>可知，此时的<code>dp</code>也是一个<strong>严格递增序列</strong>。（因为长度更长的递增子序列，末尾元素一定更大）</li>
+    </ol>
+  </li>
+  <li>从左到右按序遍历原数组，对每一个元素<code>e</code>：
+    <ol>
+      <li>如果<code>e</code>大于<code>dp</code>的最后一个元素： 直接将<code>e</code>push到<code>dp</code>末尾；</li>
+      <li>否则，二分查找<code>dp</code>数组，找到<strong>第一个【大于等于e】的元素<code>dp[i]</code></strong>，并把它替换为<code>e</code>。 （因为保持严格递增，即使相同的值也用后面的替换掉前面的）</li>
+    </ol>
+  </li>
+  <li>最后，<code>dp</code>的长度，就是找到的最长递增子序列长度。</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">findLIS</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">dp</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">e</span> <span class="k">of</span> <span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">dp</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">e</span> <span class="o">&gt;</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">dp</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="nx">dp</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// binary search: find first &gt; e</span>
+            <span class="kd">let</span> <span class="nx">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">dp</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="k">while</span> <span class="p">(</span><span class="nx">l</span> <span class="o">&lt;</span> <span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">let</span> <span class="nx">m</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">l</span><span class="o">+</span><span class="nx">r</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">dp</span><span class="p">[</span><span class="nx">m</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nx">e</span><span class="p">)</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">m</span><span class="p">;</span>
+                <span class="k">else</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="nx">dp</span><span class="p">[</span><span class="nx">l</span><span class="p">]</span> <span class="o">=</span> <span class="nx">e</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">dp</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="132-求最长递增子序列lis">13.2 求最长递增子序列(LIS)</h2>
+
+<h3 id="1321-基本思路">13.2.1 基本思路</h3>
+
+<p>上述方法只能求出最长递增子序列的长度，无法得到序列本身，因为在遍历的过程中，<code>dp</code>数组的元素可能被替换，导致最后的<code>dp</code>数组不是要求的最长递增子序列。</p>
+
+<p>那么如何得到序列本身呢？</p>
+
+<p><strong>观察其他事实：</strong></p>
+
+<ol>
+  <li><code>dp</code>数组的最后一个元素，一定是要找的最长递增子序列的末尾元素，因为它没有机会被替换；</li>
+  <li>在更新<code>dp</code>数组的过程中，如果<code>dp[i]</code>被更新为<code>e</code>，则<code>e</code>一定与当时的<code>dp[i-1]</code>形成递增关系，并一同构成以<code>dp[i]</code>为结尾的递增子序列；</li>
+</ol>
+
+<p><strong>基本思路：</strong></p>
+
+<ol>
+  <li>用一个数组<code>p</code>，<code>p[t]</code>记录每次用<code>e = arr[t]</code>更新<code>dp[i]</code>时，当前的前一个元素<code>dp[i-1]</code>（如果没有则记录为一个特殊标志，如null）；</li>
+  <li>从<code>dp</code>末尾元素开始，找到其在原数组<code>arr</code>的位置<code>arr[t]</code>，然后找到对应的<code>p[t]</code>，则<code>p[t]</code>是最长递增子序列的上一个元素；</li>
+  <li>迭代查询，直到<code>p[t]</code>为空，则找到了最长递增子序列。</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">findLIS</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">dp</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">let</span> <span class="nx">p</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">e</span> <span class="k">of</span> <span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">dp</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">e</span> <span class="o">&gt;</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">dp</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+            <span class="kd">let</span> <span class="nx">pre</span> <span class="o">=</span> <span class="nx">dp</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span> <span class="p">?</span> <span class="kc">null</span> <span class="p">:</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">dp</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+            <span class="nx">p</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">pre</span><span class="p">);</span>
+            <span class="nx">dp</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// binary search: find first &gt; e</span>
+            <span class="kd">let</span> <span class="nx">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">dp</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="k">while</span> <span class="p">(</span><span class="nx">l</span> <span class="o">&lt;</span> <span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">let</span> <span class="nx">m</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">l</span><span class="o">+</span><span class="nx">r</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">dp</span><span class="p">[</span><span class="nx">m</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nx">e</span><span class="p">)</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">m</span><span class="p">;</span>
+                <span class="k">else</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="kd">let</span> <span class="nx">pre</span> <span class="o">=</span> <span class="nx">l</span> <span class="o">===</span> <span class="mi">0</span> <span class="p">?</span> <span class="kc">null</span> <span class="p">:</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">l</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+            <span class="nx">p</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">pre</span><span class="p">);</span>
+            <span class="nx">dp</span><span class="p">[</span><span class="nx">l</span><span class="p">]</span> <span class="o">=</span> <span class="nx">e</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="kd">let</span> <span class="nx">lis</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">let</span> <span class="nx">cur</span> <span class="o">=</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">dp</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">cur</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">lis</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">cur</span><span class="p">);</span>
+        <span class="nx">cur</span> <span class="o">=</span> <span class="nx">p</span><span class="p">[</span><span class="nx">arr</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">cur</span><span class="p">)];</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">lis</span><span class="p">.</span><span class="nx">reverse</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="1322-存在的问题">13.2.2 存在的问题</h2>
+
+<p>上述方法存在两个问题：</p>
+
+<ol>
+  <li>原数组<code>arr</code>中可能存在重复元素，在回溯查找的时候无法确认对应哪个<code>p[i]</code>；</li>
+  <li>回溯查找需要遍历原数组，时间复杂度高。</li>
+</ol>
+
+<p><strong>基本解决思路：</strong></p>
+
+<ol>
+  <li>用索引代替具体值，无论是在<code>dp</code>还是在<code>p</code>中，这样可保证唯一性，而且无需遍历查找。</li>
+</ol>
+
+<p>完美解决方案：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 查找最长递增子序列 LIS</span>
+<span class="kd">function</span> <span class="nx">findLIS</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">dp</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">let</span> <span class="nx">p</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">e</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">dp</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">e</span> <span class="o">&gt;</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">dp</span><span class="p">[</span><span class="nx">dp</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span> <span class="p">{</span>
+            <span class="kd">let</span> <span class="nx">pre</span> <span class="o">=</span> <span class="nx">dp</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span> <span class="p">?</span> <span class="kc">null</span> <span class="p">:</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">dp</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+            <span class="nx">p</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">pre</span><span class="p">);</span>
+            <span class="nx">dp</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// binary search: find first &gt; e</span>
+            <span class="kd">let</span> <span class="nx">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">dp</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="k">while</span> <span class="p">(</span><span class="nx">l</span> <span class="o">&lt;</span> <span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">let</span> <span class="nx">m</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">l</span><span class="o">+</span><span class="nx">r</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">dp</span><span class="p">[</span><span class="nx">m</span><span class="p">]]</span> <span class="o">&gt;=</span> <span class="nx">e</span><span class="p">)</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">m</span><span class="p">;</span>
+                <span class="k">else</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="kd">let</span> <span class="nx">pre</span> <span class="o">=</span> <span class="nx">l</span> <span class="o">===</span> <span class="mi">0</span> <span class="p">?</span> <span class="kc">null</span> <span class="p">:</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">l</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+            <span class="nx">p</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">pre</span><span class="p">);</span>
+            <span class="nx">dp</span><span class="p">[</span><span class="nx">l</span><span class="p">]</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="kd">let</span> <span class="nx">lis</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">let</span> <span class="nx">cur</span> <span class="o">=</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">dp</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">cur</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">lis</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">cur</span><span class="p">]);</span>
+        <span class="nx">cur</span> <span class="o">=</span> <span class="nx">p</span><span class="p">[</span><span class="nx">cur</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">lis</span><span class="p">.</span><span class="nx">reverse</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="14-最长公共子序列lcs">14. 最长公共子序列（LCS）</h1>
+
+<blockquote>
+  <p>给定两个序列<code>A</code>和<code>B</code>，求它们共同含有的最长的子序列。</p>
+</blockquote>
+
+<h2 id="141-最长公共子序列长度">14.1 最长公共子序列长度</h2>
+
+<p><strong>基本思路：</strong></p>
+
+<ol>
+  <li>对于序列<code>A</code>和序列<code>B</code>，使用动态规划方法，用一个二维数组dp记录找到的最长公共子序列长度，<code>dp[i][j]</code>含义是：<strong>第一个序列的<code>[0, i-1]</code>部分，和第二个序列的<code>[0, j-1]部分，能找到的最长公共子序列长度</code></strong></li>
+  <li><code>dp[0][x]</code>和<code>dp[y][0]</code>都是0，因为0位置之前没有元素可以形成子序列；</li>
+  <li>对于任一<code>dp[i][j]</code>:
+    <ol>
+      <li>如果<code>a[i-1] 与 b[j-1] 相同</code>，那么长度等同于第一个序列的<code>[0, i-2]</code>部分和第二个序列的<code>[0, j-2]部分构成的LCS长度加1： </code>dp[i][j] = dp[i-1][j-1] + 1`;</li>
+      <li>如果不同，那么长度等同于以下二者的较大值：<code>dp[i][j] = max (dp[i-1][j-2], dp[i-2][j-1])</code>;
+        <ol>
+          <li>第一个序列的<code>[0, i-1]</code>部分和第二个序列的`[0, j-2]部分构成的LCS长度 ；</li>
+          <li>第一个序列的<code>[0, i-2]</code>部分和第二个序列的`[0, j-1]部分构成的LCS长度 ；</li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li>dp[a.length][b.length]，即为最长公共子序列长度。</li>
+</ol>
+
+<h2 id="142-求最长公共子序列">14.2 求最长公共子序列</h2>
+
+<p>要求出最长公共子序列的值，需要在<code>dp</code>中进行回溯搜索。方法如下：</p>
+
+<ol>
+  <li>因为只有在<code>a[i-1] 与 b[j-1] 相同</code>条件下，才会更新<code>dp[i][j]</code>长度<code>+1</code>，此处一定是最长递增子序列的字符；</li>
+  <li>从右下角开始，每行向左寻找，找到<code>dp[i][j] === dp[i-1][j-1] + 1</code>则记录下当前的<code>a2[j-1]</code>；</li>
+  <li>向上搜索（r-1），直到dp为0。</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">findLCS</span><span class="p">(</span><span class="nx">a1</span><span class="p">,</span> <span class="nx">a2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">dp</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">a1</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nx">i</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">a2</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">r</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">r</span> <span class="o">&lt;=</span> <span class="nx">a1</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">r</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">c</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">c</span> <span class="o">&lt;=</span> <span class="nx">a2</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">c</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">a1</span><span class="p">[</span><span class="nx">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">===</span> <span class="nx">a2</span><span class="p">[</span><span class="nx">c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">r</span><span class="p">][</span><span class="nx">c</span><span class="p">]</span> <span class="o">=</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="nx">c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="k">else</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">r</span><span class="p">][</span><span class="nx">c</span><span class="p">]</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">dp</span><span class="p">[</span><span class="nx">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="nx">c</span><span class="p">],</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">r</span><span class="p">][</span><span class="nx">c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">let</span> <span class="nx">cur</span> <span class="o">=</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">dp</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="nx">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+    <span class="kd">let</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">dp</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">cur</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">while</span> <span class="p">(</span><span class="nx">dp</span><span class="p">[</span><span class="nx">r</span><span class="p">][</span><span class="nx">c</span><span class="p">]</span> <span class="o">!==</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">r</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="nx">c</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="nx">c</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">a2</span><span class="p">[</span><span class="nx">c</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
+        <span class="nx">cur</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="nx">c</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="nx">r</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">r</span>
+</code></pre></div></div>
+
+<h1 id="15-rabin-karp-字符串编码">15. Rabin-Karp 字符串编码</h1>
+
+<blockquote>
+  <p><a href="https://leetcode-cn.com/problems/longest-duplicate-substring/">1044. 最长重复子串</a></p>
+</blockquote>
+
+<h2 id="rabin-karp-字符串编码">Rabin-Karp 字符串编码</h2>
+
+<blockquote>
+  <p>Rabin-Karp 字符串编码可以将一个字符串哈希化为一个数值。</p>
+
+  <p>常用来对一个长字符串的子串进行哈希化处理，方便子串的比较，降低时间复杂度。</p>
+</blockquote>
+
+<p>假设字符串<code>str</code>的长度为<code>length</code>，Rabin-Karp 字符串编码的过程如下：</p>
+
+<ol>
+  <li>选取一个进制数<code>base</code>，和一个模数<code>mod</code>；(一般<code>base</code>取大于字符空间大小的质数(如31)，mod取<code>1e9+7</code>)</li>
+  <li>预处理，从前到后将<code>str</code>的每一位转化为一个数值（例如<code>a-z</code>对应<code>0-25</code>）；</li>
+  <li>相当于把字符串看做一个<code>base</code>进制数，同<code>base</code>进制计算方式相同，字符串最右侧（最低位）的基为<code>base^0</code>，最左侧（最高位）的基为<code>base^(length-1)</code>，依次将字符串各位对应的值乘上各自的基，然后加和在一起得到值<code>res</code>；</li>
+  <li>将<code>res</code>对<code>mod</code>取模，得到Rabin-Karp编码值。</li>
+</ol>
+
+<p>Rabin-Karp 字符串编码的过程很好理解，但是计算时因为涉及到较大结果数的取模，有一些细节：</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">RabinKarp</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="nx">R</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span> <span class="nx">mod</span> <span class="o">=</span> <span class="mi">1</span><span class="nx">e9</span><span class="o">+</span><span class="mi">7</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 分步计算、取模</span>
+        <span class="c1">// 1. 从最高位开始，从左向右算；</span>
+        <span class="c1">// 2. res * base 相当于将当前计算结果左移一位，然后加入当前位的结果 str[i].charCodeAt(0) - 97;</span>
+        <span class="c1">// 3. 多个结果的加和取模，相当于在每一步取模，因此每步之后都进行取模操作，防止超出范围。</span>
+        <span class="nx">res</span> <span class="o">=</span> <span class="p">((</span><span class="nx">res</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nx">R</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">))</span> <span class="o">%</span> <span class="nx">mod</span> <span class="o">+</span> <span class="nx">i</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>使用 Rabin-Karp 对子字符串进行编码，可以很方便地在原始字符串中左右移动，并计算出相邻字符串的编码。</p>
+
+<p>假设<code>[abc]d</code>向右移动到<code>a[bcd]</code>，只需要：</p>
+
+<ol>
+  <li>在原编码<code>res</code>的基础上，减去<code>a</code>占有的部分<code>res -= num(a) * base^(length-1)</code>；</li>
+</ol>
+
+<blockquote>
+  <p>这里注意：因为进行过取模操作，所以<code>res</code>可能会比<code>num(a) * base^(length-1)</code>小，因此结果可能为负。我们需要保证编码为正值，因此需要在为负的时候，再加上一个mod。</p>
+
+  <p>实际操作为： <code>res = ((res + mod) - (num(a) * base^(length-1) % mod)) % mod</code></p>
+</blockquote>
+
+<ol>
+  <li>将原编码左移一位: <code>res *= base</code>；</li>
+  <li>加上新字符<code>d</code>的编码： <code>res += num(d)</code>;</li>
+  <li>取模： <code>res %= mod</code>。</li>
+</ol>
+
+<blockquote>
+  <p>Robin-Karp编码映射的哈希表大小为<code>mod</code>，理论上存在哈希冲突的可能。</p>
+
+  <p>但是，Robin-Karp证明：因为哈希冲突而导致错误匹配的概率，与<code>mod</code>的大小成反比，因此选取一个较大的<code>mod</code>值可以避免这个问题。（这称为蒙特卡洛算法，利用较小的概率避免冲突）</p>
+</blockquote>
+
+<h2 id="robin-karp-字符串匹配指纹匹配">Robin-Karp 字符串匹配（指纹匹配）</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">RobinKarpSearch</span><span class="p">(</span><span class="nx">str</span> <span class="o">=</span> <span class="dl">''</span><span class="p">,</span> <span class="nx">ptn</span> <span class="o">=</span> <span class="dl">''</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Mars 2022.03</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">ptn</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">ptn</span> <span class="o">===</span> <span class="dl">''</span><span class="p">)</span> <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">code</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">ptnCode</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">ptn</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">R</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">mod</span> <span class="o">=</span> <span class="mi">1</span><span class="nx">e9</span><span class="o">+</span><span class="mi">7</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">code</span> <span class="o">=</span> <span class="p">((</span><span class="nx">code</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nx">R</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">))</span> <span class="o">%</span> <span class="nx">mod</span> <span class="o">+</span> <span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">;</span>
+        <span class="nx">ptnCode</span> <span class="o">=</span> <span class="p">((</span><span class="nx">ptnCode</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nx">R</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">))</span> <span class="o">%</span> <span class="nx">mod</span> <span class="o">+</span> <span class="nx">ptn</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// [a,b,c],d,e -&gt; a,[b,c,d],e</span>
+    <span class="c1">// ( code - code[i] * R^(len-1) ) * R + code[i+len]</span>
+    <span class="kd">let</span> <span class="nx">RPow</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">len</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="nx">RPow</span> <span class="o">=</span> <span class="p">((</span><span class="nx">RPow</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nx">R</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">))</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">+</span><span class="nx">len</span><span class="o">-</span><span class="mi">1</span><span class="o">&lt;</span><span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">code</span> <span class="o">===</span> <span class="nx">ptnCode</span><span class="p">)</span> <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="nx">len</span> <span class="o">&lt;</span> <span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">(</span><span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span> <span class="nx">RPow</span><span class="p">)</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">;</span>
+            <span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="p">(</span><span class="nx">code</span> <span class="o">+</span> <span class="nx">mod</span> <span class="o">-</span> <span class="nx">a</span><span class="p">)</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">;</span>
+            <span class="nx">code</span> <span class="o">=</span> <span class="p">((</span><span class="nx">b</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nx">R</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">))</span> <span class="o">%</span> <span class="nx">mod</span> <span class="o">+</span> <span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="o">+</span><span class="nx">len</span><span class="p">].</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">%</span> <span class="nx">mod</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// code = (code + R - str[i].charCodeAt(0) * RPow) * R + str[i+len].charCodeAt(0);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="16-floyd-判圈算法">16. Floyd 判圈算法</h1>
+
+<p>Floyd判圈算法，用于寻找一个链表中的环的入口。它的时间复杂度是<code>O(n)</code>，空间复杂度是<code>O(1)</code>。</p>
+
+<h2 id="算法过程">算法过程</h2>
+
+<p>算法如下：</p>
+
+<ol>
+  <li>使用快慢指针法。慢指针<code>s</code>初始在链表首节点，每次向后移动一步，快指针<code>f</code>初始在链表首节点，每次向后移动两步；</li>
+  <li>向后移动快慢指针，直到二者相遇（重合）；</li>
+  <li>初始化慢指针<code>s</code>为链表首节点，然后快慢指针同时向后移动，每次均只移动一步；</li>
+  <li>直到二者再次相遇，相遇位置就是链表环的入口节点。</li>
+</ol>
+
+<h2 id="原理分析">原理分析</h2>
+
+<p><img src="/assets/posts/44.png" alt="链表寻环" /></p>
+
+<p>如图，假设快慢指针第一次在图中紫色节点相遇，那么根据算法描述（其中<code>n</code>为环的总长）：</p>
+
+<ul>
+  <li>慢指针走过的路径长度为：<code>s1 = m + An + x</code>;</li>
+  <li>快指针走过的路径长度为：<code>s2 = m + Bn + x</code>;</li>
+</ul>
+
+<p>快指针走过的路径长度<code>s2</code>，应为慢指针走过长度的2倍，因此<code>s2 = 2 * s1</code>，那么：</p>
+
+<p><code>s1 = s2 - s1 = (B - A)n</code></p>
+
+<p>也就是说<code>s1</code>和<code>s2</code>都是环路径总长<code>n</code>的倍数。初始化<code>s = head</code>后，当<code>s</code>再次走过<code>m</code>到达环的入口：</p>
+
+<ul>
+  <li><code>s</code>从起点走过的长度: <code>m</code>;</li>
+  <li><code>f</code>从起点走过的总长度：<code>s2 + m</code>；</li>
+</ul>
+
+<p><strong>也就是说，<code>f</code>相当于从起点走过<code>m</code>，到达环的入口，又在环中走过了若干整圈，此时仍然在环的入口位置。</strong></p>
+
+<p>那么二者必定在环的入口相遇。</p>
+
+<h1 id="17-manacher-算法">17. Manacher 算法</h1>
+
+<p><a href="https://oiwiki.org/string/manacher/">OI-WIKI: Manacher算法</a></p>
+
+<p>Manacher算法，俗称“马拉车算法”。用于<strong>在线性时间复杂度<code>O(n)</code>内，寻找一个字符串的最长回文子字符串</strong>。</p>
+
+<h2 id="manacher算法中的一些基本概念定义">Manacher算法中的一些基本概念定义</h2>
+
+<ul>
+  <li><strong>回文中心</strong>：回文字符串的中间位置。注意这里的中间位置<strong>既可以是一个元素（奇数长度回文串），也可以是两个元素间的空位（偶数长度回文串）</strong>。对于一个位置<code>i</code>，它可以标记两种回文中心，它标记的奇数长度回文字符串中心是<code>i</code>所在的元素<code>arr[i]</code>，它所标记的偶数长度回文字符串中心是<code>arr[i]</code>前方的间隙；</li>
+  <li><strong>i位置的最长回文子字符串</strong>：从<code>i</code>标记的回文中心向两侧扩展的，具有最长回文半径的子字符串；</li>
+  <li><strong>i位置的最长回文半径</strong><code>p[i]</code>：从<code>i</code>所标记的回文中心，到最长回文字符串最右侧字符<code>r</code>为止，这个<code>[i, r]</code>闭区间内的字符总数；</li>
+  <li><strong>最长回文区间</strong>：<code>i</code>位置标记的回文中心扩展而成的最长回文子序列所在的区间范围；</li>
+  <li><strong>中心扩展法</strong>：从某一回文中心向两侧扩展，对比两侧的字符是否相同，直到两侧不同则找出了最长回文子字符串。这个方法找到全部回文子字符串的总时间复杂度是<code>O(n^2)</code>；</li>
+</ul>
+
+<h2 id="manacher-算法">Manacher 算法</h2>
+
+<h3 id="基本算法过程">基本算法过程</h3>
+
+<p><strong>核心思路是：</strong></p>
+
+<ul>
+  <li>充分利用前面已经计算过的回文字符串信息，在一般情况下做到<code>O(n)</code>复杂度寻找当前位置的最长回文子字符串；</li>
+  <li>在无法利用前面的信息处理的部分，使用中心扩展法处理。</li>
+  <li>需要对奇数和偶数回文子字符串进行分别处理。使用后面的<strong>加井号</strong>统一处理方法，可以合并两种情况。</li>
+</ul>
+
+<p><strong>算法过程：</strong></p>
+
+<ol>
+  <li>从左到右遍历原字符串，我们的目的是对于每个位置<code>i</code>，找到其标记的回文中心，所对应的最长回文半径<code>p[i]</code>；</li>
+  <li>遍历过程中，维护已经找到的<strong>最靠右</strong>（<code>r</code>最大）的最长回文子字符串边界值<code>l</code>和<code>r</code>，区间<code>[l,r]</code>为当前已找到的最靠右最长回文子字符串所在区间，假设其回文中心为<code>id</code>；</li>
+  <li>假设当前遍历到的回文中心位置为<code>i</code>，且<code>id &lt; i &lt;= r</code>，我们可以利用已找到的<code>id</code>最长回文区间信息，快速获取<code>i</code>的最长回文区间，方法是：
+    <ol>
+      <li>找到<code>i</code>关于回文中心<code>id</code>的对称位置<code>j = 2 * id - i</code>；</li>
+      <li>可知<code>j</code>一定小于<code>id</code>，<code>j</code>位置的最长回文半径<code>p[j]</code>已经计算过，我们找到<code>j</code>的最长回文子字符串左边界<code>l[j] = j - p[j] + 1</code>;</li>
+      <li>如果：
+        <ol>
+          <li>其位于<code>id</code>的最长回文区间内，即<code>l[j] &gt;= l</code>，那么根据回文特性，此时<code>p[i] = p[j]</code>；</li>
+          <li>如果其超出了<code>id</code>的最长回文区间，即<code>l[j] &lt; l</code>，那么我们只能确定在区间内的部分是回文的，也就是<code>p[i]至少为</code>j-l+1<code>（等同于</code>r-i+1`）。区间外的部分无法确定，需要继续<strong>用中心扩展法探索</strong>；</li>
+          <li>综上，我们可以将<code>i</code>位置的回文半径初始化为二者中的较小值：<code>Math.min(p[j], r-i+1)</code>
+<img src="/assets/posts/3.svg" alt="Manacher1" /></li>
+        </ol>
+      </li>
+      <li>每次找到新的最右侧回文字符串，更新对应的<code>id、l和r</code>。</li>
+    </ol>
+  </li>
+</ol>
+
+<h3 id="让奇偶回文子串统一处理的方法">让奇偶回文子串统一处理的方法</h3>
+
+<p>可以看到，偶数长度回文字符串的回文中心是两个字符中间的间隙。</p>
+
+<p>如果用一个占位字符填充每一个字符间隙，那么<strong>偶数回文串长度将变为奇数，同时奇数回文串仍保持为奇数回文串</strong>。</p>
+
+<p>这样，可以将奇偶回文子串的情况统一起来，进行一次遍历即可。</p>
+
+<blockquote>
+  <p><code>abcdcba</code> –&gt;  <code>#a#b#c#d#c#b#a#</code></p>
+</blockquote>
+
+<p>这样变更后，回文半径<code>p[i]</code>将变得更长。它与原回文半径的对应关系为：</p>
+
+<ul>
+  <li>实际半径 = <code>Math.floor( p[i] / 2 )</code></li>
+  <li>实际回文子串总长度 = <code>p[i] - 1</code></li>
+</ul>
+
+<h3 id="manacher算法代码">Manacher算法代码</h3>
+
+<h4 id="奇偶统一处理">奇偶统一处理</h4>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">manacherUnified</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// 初始化字符串:</span>
+    <span class="c1">// 'abc' --&gt;  '#a#b#c#'</span>
+    <span class="c1">// 空位用#占位，变偶数回文子串为奇数。</span>
+    <span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">#</span><span class="dl">'</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="k">of</span> <span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">arr</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="dl">'</span><span class="s1">#</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// manacher 算法</span>
+    <span class="kd">let</span> <span class="nx">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>  <span class="c1">// 已找到的最右侧回文字符串的左右区间。</span>
+        <span class="nx">r</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="c1">// 初始化 r = -1是因为要让第一次的匹配i = 0达成i &gt; r的条件，从而使用中心扩展法更新l和r。</span>
+    
+    <span class="c1">// i位置对应的奇数最长回文子串的回文半径，因为插入了#，与实际的半径长度对应关系为: </span>
+    <span class="c1">// 实际半径        =   Math.floor( p[i] / 2 )</span>
+    <span class="c1">// 实际回文子串长度 =   p[i] - 1</span>
+    <span class="kd">let</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> 
+    
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 充分利用已找到的回文区间，对新位置的回文半径进行初始化。</span>
+        <span class="kd">let</span> <span class="nx">cur</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">&gt;</span> <span class="nx">r</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">p</span><span class="p">[</span><span class="nx">l</span> <span class="o">+</span> <span class="nx">r</span> <span class="o">-</span> <span class="nx">i</span><span class="p">],</span> <span class="nx">r</span> <span class="o">-</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="c1">// 中心扩展法，探索未知部分，扩大回文半径</span>
+        <span class="k">while</span> <span class="p">(</span><span class="nx">i</span> <span class="o">-</span> <span class="nx">cur</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">+</span> <span class="nx">cur</span> <span class="o">&lt;</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span> <span class="o">-</span> <span class="nx">cur</span><span class="p">]</span> <span class="o">===</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span> <span class="o">+</span> <span class="nx">cur</span><span class="p">])</span> <span class="nx">cur</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="c1">// 记录当前位置的回文半径</span>
+        <span class="nx">p</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">cur</span><span class="p">;</span>
+        <span class="c1">// 如果找到了更靠右的回文子串，更新l和r为最新值</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="nx">cur</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">r</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">+</span> <span class="nx">cur</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="nx">l</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">-</span> <span class="nx">cur</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(...</span><span class="nx">p</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 根据需要进行修改，此处是返回了最长的回文</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="奇偶子字符串分开处理">奇偶子字符串分开处理</h4>
+
+<p>下面是奇偶子字符串分开处理的<code>Manacher</code>算法代码。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">manacher</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// find longest palindrome substring.</span>
+    <span class="c1">// abcabcabca</span>
+    <span class="c1">// p[i] === cur --&gt; [i-cur+1, i+cur-1]</span>
+
+    <span class="c1">// odd substring.</span>
+    <span class="kd">let</span> <span class="nx">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nx">r</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 利用已有的信息初始化回文半径 cur</span>
+        <span class="kd">let</span> <span class="nx">cur</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">&gt;</span> <span class="nx">r</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">p</span><span class="p">[</span><span class="nx">l</span> <span class="o">+</span> <span class="nx">r</span> <span class="o">-</span> <span class="nx">i</span><span class="p">],</span> <span class="nx">r</span> <span class="o">-</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="k">while</span> <span class="p">(</span><span class="nx">i</span> <span class="o">-</span> <span class="nx">cur</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">+</span> <span class="nx">cur</span> <span class="o">&lt;</span> <span class="nx">str</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="nx">str</span><span class="p">[</span><span class="nx">i</span> <span class="o">-</span> <span class="nx">cur</span><span class="p">]</span> <span class="o">===</span> <span class="nx">str</span><span class="p">[</span><span class="nx">i</span> <span class="o">+</span> <span class="nx">cur</span><span class="p">])</span> <span class="p">{</span>
+            <span class="nx">cur</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nx">p</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">cur</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="nx">cur</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 找到了新的最右侧回文串</span>
+            <span class="nx">l</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">-</span> <span class="nx">cur</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="nx">r</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">+</span> <span class="nx">cur</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// even substring.</span>
+    <span class="nx">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">r</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">pp</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">cur</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">&gt;</span> <span class="nx">r</span> <span class="p">?</span> <span class="mi">0</span> <span class="p">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">pp</span><span class="p">[</span><span class="nx">l</span> <span class="o">+</span> <span class="nx">r</span> <span class="o">-</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="nx">r</span> <span class="o">-</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="k">while</span> <span class="p">(</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="nx">cur</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span><span class="o">+</span><span class="nx">cur</span> <span class="o">&lt;</span> <span class="nx">str</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="nx">cur</span><span class="p">]</span> <span class="o">===</span> <span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="o">+</span><span class="nx">cur</span><span class="p">])</span> <span class="p">{</span>
+            <span class="nx">cur</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nx">pp</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">cur</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="nx">cur</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 找到了新的最右侧回文串</span>
+            <span class="nx">l</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">-</span> <span class="nx">cur</span><span class="p">;</span>
+            <span class="nx">r</span> <span class="o">=</span> <span class="nx">i</span> <span class="o">+</span> <span class="nx">cur</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">pp</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">i</span><span class="p">,</span><span class="nx">idx</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">&gt;</span> <span class="nx">p</span><span class="p">[</span><span class="nx">idx</span><span class="p">])</span> <span class="nx">p</span><span class="p">[</span><span class="nx">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">p</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="18-字符串压缩算法">18. 字符串压缩算法</h1>
+
+<h2 id="lzw-压缩算法">LZW 压缩算法</h2>
+
+<p>LZW压缩算法是利用字符串自身重复出现的子串，进行编码压缩的方法。它不需要额外储存字典，解码只需要编码本身。</p>
+
+<p>具体实现见《数据结构》对应章节。</p>
+
+<h2 id="霍夫曼编码算法">霍夫曼编码算法</h2>
+
+<p>霍夫曼编码的基本原理如下：</p>
+
+<ol>
+  <li>将字符(8bit)用<strong>更短的二进制串</strong>来表示；</li>
+  <li>统计字符出现的<strong>频率</strong>，出现<strong>频率越高，则分配更短的二进制串</strong>给它，目的是尽量提高压缩率；</li>
+  <li>为了能从左到右依次恢复原字符，而不造成歧义，<strong>所有用于替代表示字符的二进制串，互相都不是彼此的前缀</strong>；</li>
+  <li>将字符的字典和编码后的二进制串放在一起即可。</li>
+</ol>
+
+<h3 id="霍夫曼树">霍夫曼树</h3>
+
+<p>为了实现霍夫曼编码，找到每个字符应该对应的二进制串，需要建立<strong>霍夫曼树</strong>。</p>
+
+<p><img src="/assets/posts/52.png" alt="霍夫曼树" /></p>
+
+<p>对于一个给定的字符串<code>str</code>，霍夫曼树的建立方式如下：</p>
+
+<ol>
+  <li>统计每个字符的出现频次，以频次值建立节点，组成集合<code>set</code>；</li>
+  <li>从当前<code>set</code>找到出现<strong>频次最小的两个字符节点</strong>，将它们移出。同时<strong>以它们作为左右子节点，创建一个父节点，值为它们二者之和</strong>。将这个父节点加入<code>set</code>；</li>
+  <li>循环进行，直到<code>set</code>中只有一个元素，此时为建立的霍夫曼二叉树的根节点；</li>
+  <li>确定每个字符的二进制串，方法如下：
+    <ol>
+      <li>从根节点开始向下寻找字符所在叶子节点的路径，<strong>向左</strong>前进一步则记录一个<code>0</code>，<strong>向右</strong>前进一步则记录一个<code>1</code>；</li>
+      <li>到达字符所在的叶子节点，路径记录的二进制串就是这个字符的表示串。</li>
+    </ol>
+  </li>
+</ol>
+
+<p>在实现时，因为每次需要找到集合中的最小频次值和次小频次值，可以<strong>建立小根堆</strong>实现。</p>
+
+<h3 id="代码实现">代码实现</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">huffmanEncode</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 1. count the number of each ltr.</span>
+    <span class="kd">let</span> <span class="nx">cnt</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Map</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="k">of</span> <span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">cnt</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span> <span class="nx">cnt</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="k">else</span> <span class="nx">cnt</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">cnt</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// 2. build min heap.</span>
+    <span class="kd">let</span> <span class="nx">heap</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MinHeap</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="p">[</span><span class="nx">k</span><span class="p">,</span> <span class="nx">v</span><span class="p">]</span> <span class="k">of</span> <span class="nx">cnt</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">heap</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">Node</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span> <span class="nx">k</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="c1">// 3. pick &amp; build.</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">heap</span><span class="p">.</span><span class="nx">getSize</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">heap</span><span class="p">.</span><span class="nx">pick</span><span class="p">(),</span>
+            <span class="nx">b</span> <span class="o">=</span> <span class="nx">heap</span><span class="p">.</span><span class="nx">pick</span><span class="p">();</span>
+        <span class="kd">let</span> <span class="nx">root</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Node</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">val</span> <span class="o">+</span> <span class="nx">b</span><span class="p">.</span><span class="nx">val</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">);</span>
+        <span class="nx">heap</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">root</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// 4. get code of each ltr.</span>
+    <span class="kd">let</span> <span class="nx">dict</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Map</span><span class="p">();</span>
+    <span class="kd">let</span> <span class="nx">root</span> <span class="o">=</span> <span class="nx">heap</span><span class="p">.</span><span class="nx">pick</span><span class="p">();</span>
+    <span class="kd">function</span> <span class="nx">dfs</span><span class="p">(</span><span class="nx">node</span> <span class="o">=</span> <span class="nx">root</span><span class="p">,</span> <span class="nx">path</span> <span class="o">=</span> <span class="p">[])</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">node</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">ltr</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">dict</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">ltr</span><span class="p">,</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="dl">''</span><span class="p">));</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nx">path</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="nx">dfs</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">left</span><span class="p">,</span> <span class="nx">path</span><span class="p">);</span>
+        <span class="nx">path</span><span class="p">[</span><span class="nx">path</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="nx">dfs</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">right</span><span class="p">,</span> <span class="nx">path</span><span class="p">);</span>
+        <span class="nx">path</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="nx">dfs</span><span class="p">();</span>
+    <span class="c1">// 5. merge result.</span>
+    <span class="c1">// [ltr_number, {ltr,code...}, `_`, stringEncoded]</span>
+    <span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="p">[</span><span class="nx">dict</span><span class="p">.</span><span class="nx">size</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="p">[</span><span class="nx">k</span><span class="p">,</span><span class="nx">v</span><span class="p">]</span> <span class="k">of</span> <span class="nx">dict</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">k</span><span class="p">,</span><span class="nx">v</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">_</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="k">of</span> <span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">dict</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">i</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nx">Node</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">val</span><span class="p">,</span> <span class="nx">ltr</span> <span class="o">=</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">left</span> <span class="o">=</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">right</span> <span class="o">=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">val</span> <span class="o">=</span> <span class="nx">val</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">ltr</span> <span class="o">=</span> <span class="nx">ltr</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="nx">left</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">right</span> <span class="o">=</span> <span class="nx">right</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nx">MinHeap</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">arr</span> <span class="o">=</span> <span class="p">[],</span> <span class="nx">size</span> <span class="o">=</span> <span class="kc">Infinity</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">heap</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">size</span> <span class="o">=</span> <span class="nx">size</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">.</span><span class="nx">length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">down</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">while</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">size</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="nx">left</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">right</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">parent</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">((</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">swap</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">j</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">[</span><span class="nx">j</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">[</span><span class="nx">i</span><span class="p">]];</span>
+    <span class="p">}</span>
+    <span class="nx">down</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">l</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">left</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+        <span class="kd">let</span> <span class="nx">r</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">right</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+        <span class="kd">let</span> <span class="nx">smaller</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">l</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">[</span><span class="nx">l</span><span class="p">].</span><span class="nx">val</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">[</span><span class="nx">smaller</span><span class="p">].</span><span class="nx">val</span><span class="p">)</span> <span class="nx">smaller</span> <span class="o">=</span> <span class="nx">l</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">r</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">.</span><span class="nx">length</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">[</span><span class="nx">r</span><span class="p">].</span><span class="nx">val</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">[</span><span class="nx">smaller</span><span class="p">].</span><span class="nx">val</span><span class="p">)</span> <span class="nx">smaller</span> <span class="o">=</span> <span class="nx">r</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">smaller</span> <span class="o">!==</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">swap</span><span class="p">(</span><span class="nx">smaller</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">down</span><span class="p">(</span><span class="nx">smaller</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">up</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">parent</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">p</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">[</span><span class="nx">p</span><span class="p">].</span><span class="nx">val</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">val</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">swap</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">add</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">up</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="k">while</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">size</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="nx">top</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">?</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:</span> <span class="kc">undefined</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">getSize</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">pick</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">getSize</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="kd">let</span> <span class="nx">r</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">heap</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">down</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">r</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// test</span>
+<span class="kd">let</span> <span class="nx">dict</span> <span class="o">=</span> <span class="nx">huffmanEncode</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">dict</span><span class="p">);</span> 
+<span class="c1">// 28,000000D00000100h00000101b0000011p00001l0001i001r0100q010100E01010100L010101010U010101011x0101011g0101100.0101101v0101110f0101111n0110u0111a1000o1001t1010c10110m10111 110s11100d11101e1111_0101010101001010011111011111000100001111000111101111101110110010001100101001101110000110101101000101111111101000000011010110100101101110011111011010101111101001110100110100011101001000010011110000110110001011001011001101111000100110100000001101110011111110111011101100111011110010111111001011110011110111010101111101110000110010100110001011010110001111010011110101110110101011001111010110000110000000011100101001111110111110101101110110010001100101001111110101111000010110001101000110100000010010101000111100001011011100101010111010110111101100011011111010001110111010111001011000110111110010111011110110001100010111000000110010100011100111100110011010011110010100100011111101110111101010111111010010110001101010001010001100101101100111000100011000101111011010011100001100000000111001010000111100110011000111100001110011110101101000000100101010001110010000111011110101011110111110001101011010011011110111100111101100111010110100101101110011110101000111100010100101101110000001000111001111001101000011110101111110001010001110100111111011101100100011001010011000101101100100111100001010011110000010111110110111011111010000110101100010110110010111010010001011100001101010001010111111001011101111000100110101101111111001110011111101011000100010001011110111110111011001000110010100111111011110111110010111101110101100001100010101100110011100010001100011000001100001000011000101001110100010110111001010100010101110110111100001101011110111010011011100001011010101101001101101011010001111101101000101011010110011100001001111011000101010001010110011010010110110000010100100100111101111101101010000000110111000111011010101100010110110101100111000100001100011001010001110011101001010111101011110011011000110001101110111111110011110100011101101010110101111001000100010011010110100001100011011111000111101110111111100101011000011000000001110010100011110111</span>
+</code></pre></div></div>
+
+<h1 id="19-格雷编码">19. 格雷编码</h1>
+
+<p>格雷编码是这样一串二进制序列：<code>b1,b2,...,bn</code>，它的特点是：</p>
+
+<ul>
+  <li>相邻两个二进制串，<strong>仅有一位不同</strong>；</li>
+  <li>首尾两个二进制串，也<strong>仅有一位不同</strong>。</li>
+</ul>
+
+<p>计算单个元素二进制长度为<code>n</code>的格雷码（元素值在<code>0 ~ 2^n - 1</code>范围），方法如下：</p>
+
+<ol>
+  <li>长度为<code>0</code>的格雷码序列为<code>[0]</code>，长度为<code>1</code>的格雷码序列为<code>[0,1]</code>;</li>
+  <li>现在尝试用长度为<code>1</code>的格雷码，构造长度为<code>2</code>的格雷码：
+    <ol>
+      <li>先将长度为<code>1</code>的格雷码序列反转，接在它自身后面；</li>
+      <li>然后从末尾开始，对反转的后半部分，进行<strong>布尔或<code>1 &lt;&lt; (2-1)</code></strong>操作。</li>
+    </ol>
+  </li>
+  <li>按同样的方式可以获取单个元素二进制长度为<code>n</code>的格雷码序列<code>G(n)</code>:
+    <ol>
+      <li>先将长度为<code>G(n-1)</code>的格雷码序列反转，接在它自身后面；</li>
+      <li>然后从末尾开始，对反转的后半部分，进行<strong>布尔或<code>1 &lt;&lt; (n-1)</code></strong>操作。</li>
+    </ol>
+  </li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">grayCode</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">c</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">c</span><span class="o">&lt;=</span><span class="nx">n</span><span class="p">;</span> <span class="nx">c</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="nx">l</span><span class="p">;</span> <span class="nx">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">res</span><span class="p">.</span><span class="nx">push</span><span class="p">((</span><span class="nx">res</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">|</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="nx">c</span><span class="o">-</span><span class="mi">1</span><span class="p">))));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h1 id="20-最短路径算法">20. 最短路径算法</h1>
+
+<p>在有向图中寻找两点间最短路径的算法，一般有BFS、Floyd算法、Dijkstra算法、A*搜索等。</p>
+
+<blockquote>
+  <p><a href="https://zhuanlan.zhihu.com/p/96621396">最短路径</a></p>
+</blockquote>
+
+<h2 id="floyd算法">Floyd算法</h2>
+
+<p>Floyd算法可以解决<strong>多源</strong>最短路问题(一次性解决所有节点间的最短路)。</p>
+
+<p>它的特点是容易理解，写法简单（<code>for-for-for</code>算法），缺点是复杂度较高(O_N^3)。</p>
+
+<h3 id="算法流程">算法流程</h3>
+
+<ol>
+  <li>Floyd算法采用动态规划方法，通过逐一选取中间节点，判断任意两点经由中间节点的最短路径，来动态更新各点间的最短路径值，从而最后得出任意两点间的最短路径；</li>
+  <li>Floyd算法用一个二维<code>dp[i][j]</code>数组来表示<code>节点i</code>和<code>节点j</code>之间的最短路径长度；</li>
+  <li>从第一个节点开始，每次选取一个中间节点<code>k</code>，更新任意两点间的最小路径：遍历起点<code>i</code>和终点<code>j</code>，计算<code>i</code>经由<code>k</code>到达<code>j</code>的最短路径，那么<code>dp[i][j] = min(dp[i][j], dp[i][k]+dp[k][j])</code>；</li>
+  <li><code>k</code>遍历完成后，<code>dp</code>中保存的就是任意两点间的最短路径长度。</li>
+</ol>
+
+<h3 id="算法实现">算法实现</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">floyd</span><span class="p">(</span><span class="nx">n</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="nx">edges</span> <span class="o">=</span> <span class="p">[],</span> <span class="nx">query</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">dp</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">n</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nx">i</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">n</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="kc">Infinity</span><span class="p">));</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="p">[</span><span class="nx">f</span><span class="p">,</span> <span class="nx">t</span><span class="p">,</span> <span class="nx">cost</span><span class="p">]</span> <span class="k">of</span> <span class="nx">edges</span><span class="p">)</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">f</span><span class="p">][</span><span class="nx">t</span><span class="p">]</span> <span class="o">=</span> <span class="nx">cost</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">k</span><span class="o">&lt;</span><span class="nx">n</span><span class="p">;</span> <span class="nx">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">j</span><span class="o">&lt;</span><span class="nx">n</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">],</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">k</span><span class="p">]</span><span class="o">+</span><span class="nx">dp</span><span class="p">[</span><span class="nx">k</span><span class="p">][</span><span class="nx">j</span><span class="p">]);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">query</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">i</span> <span class="o">=&gt;</span> <span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="nx">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]]);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="dijkstra-算法">Dijkstra 算法</h2>
+
+<p>Dijkstra算法用于解决权值非负的有向图中，给定起点s的单源最短路径问题（s到其他点的最短路径）。</p>
+
+<h3 id="算法流程-1">算法流程</h3>
+
+<ol>
+  <li>将节点分为已经确定最短路径的集合<code>S</code>和未确定最短路径的集合<code>U</code>，初始时<code>S</code>集合中只有起点<code>s</code>一个（路径长度为0）；</li>
+  <li>用一个数组<code>dist[i]</code>记录<code>s</code>到<code>i</code>的最短路径长度。初始时，<code>dist[s] = 0</code>，与<code>s</code>直接邻接的结点<code>dist[n]</code>值为<code>s -&gt; n</code>的边权值，其他节点的<code>dist</code>设为正无穷；</li>
+  <li>每次从集合<code>U</code>中选择出一个路径长度最短的节点<code>t</code>，将其转移到<code>S</code>中，同时更新<code>t</code>的所有邻接节点<code>n</code>路径长度:<code>dist[n] = min(dist[n], dist[t] + val(t -&gt; n))</code>；</li>
+  <li>循环直到<code>U</code>中无节点，则<code>dist</code>中保存了到达各节点的路径最小值。</li>
+</ol>
+
+<h3 id="实现细节">实现细节</h3>
+
+<ol>
+  <li>可以用一个小顶堆来保存所有已找到路径，每次从堆顶取出一个不在集合<code>S</code>中的元素，因为小顶堆的性质，它一定是我们要找的不在<code>S</code>中的最短路径元素；</li>
+  <li>每次从小顶堆取出不在<code>S</code>中的最短路径元素，更新的路径信息直接加入堆中，无需对堆中的元素进行修改，因为我们只选择不在<code>S</code>的元素，已确定的<code>S</code>中的元素我们会跳过而不会选取；</li>
+</ol>
+
+<h3 id="代码实现-1">代码实现</h3>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Mars 2022</span>
+<span class="kd">function</span> <span class="nx">dijkstra</span><span class="p">(</span><span class="nx">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">edges</span> <span class="o">=</span> <span class="p">[],</span> <span class="nx">s</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">e</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Map</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="nx">e</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="p">[]);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="p">[</span><span class="nx">f</span><span class="p">,</span> <span class="nx">t</span><span class="p">,</span> <span class="nx">c</span><span class="p">]</span> <span class="k">of</span> <span class="nx">edges</span><span class="p">)</span> <span class="nx">e</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">f</span><span class="p">).</span><span class="nx">push</span><span class="p">([</span><span class="nx">t</span><span class="p">,</span> <span class="nx">c</span><span class="p">]);</span>
+    <span class="kd">let</span> <span class="nx">dist</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">n</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="kc">Infinity</span><span class="p">);</span>
+    <span class="nx">dist</span><span class="p">[</span><span class="nx">s</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">seen</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Set</span><span class="p">();</span> <span class="c1">// 集合S，已确定最短路的节点</span>
+    <span class="kd">let</span> <span class="nx">heap</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MinHeap</span><span class="p">([</span>
+        <span class="p">[</span><span class="nx">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="p">]);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">heap</span><span class="p">.</span><span class="nx">getSize</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">cur</span> <span class="o">=</span> <span class="nx">heap</span><span class="p">.</span><span class="nx">pick</span><span class="p">()[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">seen</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">cur</span><span class="p">))</span> <span class="k">continue</span><span class="p">;</span> <span class="c1">// 只选择没有被确定最短路径的节点</span>
+        <span class="nx">seen</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">cur</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="p">[</span><span class="nx">t</span><span class="p">,</span> <span class="nx">c</span><span class="p">]</span> <span class="k">of</span> <span class="nx">e</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">cur</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">seen</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">dist</span><span class="p">[</span><span class="nx">t</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nx">dist</span><span class="p">[</span><span class="nx">cur</span><span class="p">]</span> <span class="o">+</span> <span class="nx">c</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">dist</span><span class="p">[</span><span class="nx">t</span><span class="p">]</span> <span class="o">=</span> <span class="nx">dist</span><span class="p">[</span><span class="nx">cur</span><span class="p">]</span> <span class="o">+</span> <span class="nx">c</span><span class="p">;</span> <span class="c1">// 更新，并直接加入堆中</span>
+                <span class="nx">heap</span><span class="p">.</span><span class="nx">add</span><span class="p">([</span><span class="nx">t</span><span class="p">,</span> <span class="nx">dist</span><span class="p">[</span><span class="nx">t</span><span class="p">]]);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">dist</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Algorithm"><span>Algorithm</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2021/11/08/JS%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E4%B8%8E%E4%BD%9C%E7%94%A8%E5%9F%9F-this%E6%8C%87%E5%90%91/" title="JS执行环境、作用域链和this指向">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2022/01/01/%E6%95%B0%E5%AD%A6%E9%97%AE%E9%A2%98/" title="数学、博弈问题">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2021/12/19/%E4%B8%80%E4%BA%9B%E7%BB%8F%E5%85%B8%E7%9A%84%E7%AE%97%E6%B3%95/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

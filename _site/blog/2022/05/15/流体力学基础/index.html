@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>流体力学基础 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="流体力学基础" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="流体力学基础" />
+<meta property="og:description" content="流体力学基础" />
+<link rel="canonical" href="http://localhost:4000/blog/2022/05/15/%E6%B5%81%E4%BD%93%E5%8A%9B%E5%AD%A6%E5%9F%BA%E7%A1%80/" />
+<meta property="og:url" content="http://localhost:4000/blog/2022/05/15/%E6%B5%81%E4%BD%93%E5%8A%9B%E5%AD%A6%E5%9F%BA%E7%A1%80/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-05-15T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"流体力学基础","@type":"BlogPosting","url":"http://localhost:4000/blog/2022/05/15/%E6%B5%81%E4%BD%93%E5%8A%9B%E5%AD%A6%E5%9F%BA%E7%A1%80/","headline":"流体力学基础","dateModified":"2022-05-15T00:00:00+08:00","datePublished":"2022-05-15T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2022/05/15/%E6%B5%81%E4%BD%93%E5%8A%9B%E5%AD%A6%E5%9F%BA%E7%A1%80/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">流体力学基础</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">May 15, 2022
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>流体力学基础</p>
+</blockquote>
+
+<h1 id="流体基础">流体基础</h1>
+<h2 id="流体与固体的区别">流体与固体的区别</h2>
+
+<p>固体可以通过静态形变来抵抗剪切应力，而流体不能。</p>
+
+<p>流体在连续的剪切应力作用下，会发生连续变形。</p>
+
+<h2 id="连续性假设">连续性假设</h2>
+
+<p>流体充满着一个容积时不留任何自由空隙，既没有真空的地方，也没有分子的微观运动。即把流体看做是连绵不断的不留任何自由空隙的连续介质。</p>
+
+<blockquote>
+  <p>连续性假设合理的条件？</p>
+
+  <p>气体分子的平均自由行程<code>l</code>与所研究物体的特征尺度<code>L</code>之比及其微小。（努森数Kn = l/L &gt;= 0.1，连续性假设不再适用）</p>
+</blockquote>
+
+<h2 id="流体特性">流体特性</h2>
+
+<p>一般流体的运动特性包括：<code>温度</code>、<code>压力</code>、<code>密度</code>、<code>粘性</code>和<code>声速</code>。</p>
+
+<h3 id="温度">温度</h3>
+
+<p>描述流体分子<code>热运动的剧烈程度</code>。</p>
+
+<p>温度很难定量地下定义。当两个物体在热接触时没有任何可观测的特性发生改变，则它们的温度相同。</p>
+
+<p>与第三个物体温度相等的两个物体，温度相同。</p>
+
+<h3 id="压力">压力</h3>
+
+<p>因为热能引起的流体分子随机运动，单个流体分子会撞击置于流体中的物体表面，从而对物体表面产生作用力。压力为<code>单位表面积上这种作用力的度量值</code>。</p>
+
+<h3 id="密度">密度</h3>
+
+<p>某点流体的密度，等于包围该点的单位体积流体的质量。</p>
+
+<p>密度是<code>气体成分</code>、<code>温度</code>和<code>压力</code>的函数。</p>
+
+<p><code>ρ = f(气体成分, T, P)</code></p>
+
+<h4 id="理想气体状态方程">理想气体状态方程</h4>
+
+<p><code>P = ρ * R_g * T</code></p>
+
+<p>其中<code>R_g</code>为气体常数，与气体种类有关。</p>
+
+<h3 id="粘性">粘性</h3>
+
+<p>粘性是对真实流体在剪切变形过程中，产生的剪切应力大小的度量。</p>
+
+<p>剪切应力与横向速度梯度成正比的流体，称为<code>牛顿流体</code>。</p>
+
+<p>粘性大小用粘性系数<code>μ</code>表示，它是<code>气体成分</code>、<code>温度</code>、<code>压力</code>的函数。</p>
+
+<blockquote>
+  <p>对于空气，在温度低于3000K的情况下，粘性几乎只与温度有关，而不受压力影响。</p>
+
+  <p>空气密度可以用Sutherland公式估计。</p>
+</blockquote>
+
+<h3 id="声速">声速</h3>
+
+<p>无限小扰动在流体中的传播速度，称为声速。</p>
+
+<h2 id="流动形态">流动形态</h2>
+
+<p>流体流动的形态主要有<code>层流</code>和<code>湍流</code>两种。</p>
+
+<p>层流与湍流一般通过雷诺数的大小来区分：</p>
+
+<ul>
+  <li><strong>Re &lt; 2300</strong>: 层流；</li>
+  <li><strong>Re ≥ 2300 &amp;&amp; Re ≤ 10000</strong>: 过渡区；</li>
+  <li><strong>Re &gt; 10000</strong>: 旺盛湍流；</li>
+</ul>
+
+<h2 id="流动类型">流动类型</h2>
+
+<p>流动类型主要包括<code>外流</code>和<code>内流</code>。</p>
+
+<p>外流为流体围绕固体的流动，内流为流体在固体包围形成的空间内流动。</p>
+
+<h1 id="流动阻力流动损失">流动阻力、流动损失</h1>
+
+<h2 id="流动阻力">流动阻力</h2>
+
+<p>流动阻力是流体流经物体时，<strong>沿流线方向施加给物体的合力。</strong></p>
+
+<p>流动阻力与下列变量有关：</p>
+
+<ol>
+  <li>流道几何形状；</li>
+  <li>流场；</li>
+  <li>流体性质。</li>
+</ol>
+
+<p><strong>对特定形状流道的特定流体，不可压范围内（密度不变），流经流道施加的流动阻力大小只与流场有关。</strong>具体地，与流速的分布情况有关。</p>
+
+<p>从微观上，这个流动阻力是流体与流道接触的界面上压力<code>P</code>，在整个流体与流道接触面上的积分值（压力合力）在流动方向上的分量。</p>
+
+<p>根据牛顿第三定律，流动阻力也存在相互作用力。流体给予物体一个阻力<code>F</code>，则物体也给予流体一个逆流向的反作用力<code>-F</code>。在稳态时，如需继续保持稳定流动，围绕物体的流体需受力平衡，取其为控制体，因流体流动只能依靠不均匀的压力驱动，则这个物体施加的反作用力<code>-F</code>需要控制体边界的压力合力来平衡。</p>
+
+<p>也就是说，在一个封闭的流道中（任意构型），如需让流体以特定速度<code>V</code>流过流道，则<strong>必须在流道的进出口设置一定的压力差<code>△P</code></strong>，以克服流道壁施加给流体的反作用力<code>-F</code>。</p>
+
+<p><img src="/assets/posts/72.png" alt="ldzl" /></p>
+
+<p>流动阻力由<strong>压差阻力</strong>和<strong>摩擦阻力</strong>两部分构成。</p>
+
+<p><strong>压差阻力</strong>：由包围物体的压力积分决定；
+<strong>摩擦阻力</strong>：由物体表面流体的速度梯度决定。</p>
+
+<h2 id="流动损失">流动损失</h2>
+
+<p>因流体具有粘性，<strong>凡是具有速度梯度的地方，就不可避免地存在流动损失。</strong></p>
+
+<p>流动损失的本质是<strong>流体的机械能向内能不可逆地转换（也称熵增），体现为流体总压的降低。</strong></p>
+
+<h1 id="流体机械">流体机械</h1>
+<h2 id="风机水泵">风机、水泵</h2>
+
+<p>风机和水泵可以被看作<strong>总压增大器</strong>。</p>
+
+<p>风机（水泵）这类流体机械，通过叶片的旋转对通过的流体非定常做功，增加其总压。对于气体，通过风扇后静压和动压都可能增大。对于液体，通过泵的总压增大主要体现在动压（流速）增加。</p>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="Fluid"><span>Fluid</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2022/05/15/CFD%E5%9F%BA%E7%A1%80/" title="CFD基础">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2022/07/01/CATIA%E7%9B%B8%E5%85%B3/" title="CATIA相关">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2022/05/15/%E6%B5%81%E4%BD%93%E5%8A%9B%E5%AD%A6%E5%9F%BA%E7%A1%80/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

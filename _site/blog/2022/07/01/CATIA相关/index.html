@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="路旁有花，心中有歌，天上有星。">
+  <meta name="keywords" content="Marswiz,blog,Mars,技术博客,前端,Frontend,个人博客">
+  <meta name="author" content="Marswiz"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>CATIA相关 | 个人杂记:MarsWiz</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="CATIA相关" />
+<meta name="author" content="Mars" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="CATIA使用相关事项汇总" />
+<meta property="og:description" content="CATIA使用相关事项汇总" />
+<link rel="canonical" href="http://localhost:4000/blog/2022/07/01/CATIA%E7%9B%B8%E5%85%B3/" />
+<meta property="og:url" content="http://localhost:4000/blog/2022/07/01/CATIA%E7%9B%B8%E5%85%B3/" />
+<meta property="og:site_name" content="个人杂记:MarsWiz" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-01T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"CATIA使用相关事项汇总","@type":"BlogPosting","url":"http://localhost:4000/blog/2022/07/01/CATIA%E7%9B%B8%E5%85%B3/","headline":"CATIA相关","dateModified":"2022-07-01T00:00:00+08:00","datePublished":"2022-07-01T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2022/07/01/CATIA%E7%9B%B8%E5%85%B3/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/TodaySB-CapExtLig.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/PoiretOne-Regular.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Memphis.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="preload" href="/assets/fonts/Folio-Light.woff2" as="font" type="font/woff2" crossorigin> 
+  <link rel="stylesheet" href="/assets/main1.css?v=1.1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="个人杂记:MarsWiz" /><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Icons -->
+	<link rel="shortcut icon" href = "/assets/pics/logo_cat.jpg">
+	<link rel="bookmark" href = "/assets/pics/logo_cat.jpg">
+	<link rel="apple-touch-icon" href = "/assets/pics/logo_cat.jpg">
+
+  <!--  jquery  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" defer></script>
+
+
+    <!-- Valine 评论
+    <script src='//unpkg.zhimg.com/valine/dist/Valine.min.js'></script> -->
+  <!-- Vconsole -->
+<!--   <script src="http://localhost:4000/assets/js/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+    console.log('Hello world');
+  </script>
+   -->
+  <!-- Hammer.js 移动手势操作库 -->
+  <script src="http://localhost:4000/assets/js/hammer.js" defer></script>
+
+
+</head>
+<body><!-- 日志页导航栏结构 -->
+
+<nav id="navBlog">
+
+
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id="blogLogo" src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+		<!-- 导航按钮 -->
+<!--		<div id="navItems">-->
+<!--			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>-->
+<!--			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>-->
+<!--			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>-->
+<!--			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>-->
+<!--			<a href="" id="projectsBtn">Projects</a>-->
+<!--		</div>-->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><div id="blogBtnSprite"></div></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><div id="tagsBtnSprite"></div></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><div id="aboutMeBtnSprite"></div></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><div id="searchBtnSprite"></div></a>
+			<a href="http://localhost:4000/projects" id="projectsBtn"><div id="projectsBtnSprite"></div></a>
+		</div>
+
+		<!-- 移动端按钮 -->
+		<div id="navItemsBtnMobile">
+			<span class="fa fa-bars"></span>
+		</div>
+	</div>
+
+
+
+</nav>
+<!-- 日志页移动端导航栏结构 -->
+
+<nav id="navMobile">
+	<div id="navBlur"></div>
+	<div id="navTrans">
+		<!-- logo -->
+		<a id="logo" href="/">
+			<img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+		</a>
+
+		<!-- 导航按钮 -->
+		<div id="navItems">
+			<a id="blogBtn" href="http://localhost:4000/blog"><img src="http://localhost:4000/assets/nav/blogBlack.svg" alt="blog"></a>
+			<a id="tagBtn" href="http://localhost:4000/tags"><img src="http://localhost:4000/assets/nav/tagsBlack.svg" alt="tags"></a>
+			<a id="aboutMeBtn" href="http://localhost:4000/aboutMe"><img src="http://localhost:4000/assets/nav/aboutMeBlack.svg" alt="aboutMe"></a>
+			<a id="searchBtn" href="http://localhost:4000/search"><img src="http://localhost:4000/assets/nav/searchBlack.svg" alt="search"></a>
+			<a id="projectsBtn" href="http://localhost:4000/projects"><img src="http://localhost:4000/assets/nav/projectBlack.svg" alt="project"></a>
+		</div>
+		<div id="changeDayNight" class="fa fa-lightbulb-o"></div>
+	</div>
+</nav>
+<main id="mainBox" aria-label="Content">
+
+        <!-- 移动端页面标题 -->
+        <!--   <a id="logoBoxBlog" href="/">
+      <img id='logo' src="http://localhost:4000/assets/logo/logoBlack.svg" alt="MarsWiz">
+    </a> -->
+        <!--  -->
+        <span id="pIdentifier" style="display: none;">中文缩进</span>
+<span id="baseURLIdentifier" style="display: none;">http://localhost:4000</span>
+<article id="postBox">
+
+    <!-- 标题和日期 -->
+    <header id="postHeader">
+        <h1 id="postTitle">CATIA相关</h1>
+        <p id="postInfo">
+            Posted by<span id="postAuthor"> Mars </span>. Modified at
+            <time id="postTime">Jul 1, 2022
+            </time>
+        </p>
+    </header>
+
+    <div id="postContentBox">
+        <!-- 标题headerIndex导航 -->
+        <div id="headerIndex"></div>
+
+        <!-- 内容主体 -->
+        <div id="postContent">
+            <blockquote>
+  <p>CATIA使用相关事项汇总</p>
+</blockquote>
+
+<h1 id="catia快捷键设置">CATIA快捷键设置</h1>
+<ul>
+  <li><strong>草图</strong>： <code>Ctrl</code>+<code>D</code></li>
+  <li><strong>几何元素过滤器</strong>： <code>F8</code></li>
+  <li><strong>插入点</strong>	<code>Ctrl</code>+<code>Shift</code>+<code>P</code></li>
+  <li><strong>插入平面</strong>	<code>Ctrl</code>+<code>Shift</code>+<code>S</code></li>
+  <li><strong>插入直线</strong>	<code>Ctrl</code>+<code>Shift</code>+<code>L</code></li>
+  <li><strong>全部适应</strong>	<code>Ctrl</code>+<code>Shift</code>+<code>F</code></li>
+  <li><strong>凸台</strong>	<code>Ctrl</code>+<code>T</code></li>
+  <li><strong>凹槽</strong>	<code>Ctrl</code>+<code>Shift</code>+<code>A</code></li>
+  <li><strong>交换可视空间</strong>：<code>Ctrl</code>+<code>Shift</code>+<code>H</code></li>
+  <li><strong>隐藏</strong>	<code>Ctrl</code>+<code>H</code></li>
+  <li><strong>约束</strong>	<code>Ctrl</code>+<code>Shift</code>+<code>C</code></li>
+  <li><strong>法线视图</strong>	<code>Ctrl</code>+<code>Shift</code>+<code>Space</code></li>
+  <li><strong>倒圆角</strong>	<code>Ctrl</code>+<code>Shift</code>+<code>R</code></li>
+  <li><strong>平移</strong>	<code>Ctrl</code>+<code>Shift</code>+<code>T</code></li>
+  <li><strong>构造标准元素</strong>	<code>Ctrl</code>+<code>Shift</code>+<code>G</code></li>
+  <li><strong>快速修剪</strong>	<code>Ctrl</code>+<code>Shift</code>+<code>Q</code></li>
+  <li><strong>退出草图</strong>	<code>Backspace</code></li>
+  <li><strong>测量间距…</strong> <code>Ctrl+Shift+M</code></li>
+  <li><strong>测量项…</strong> <code>Ctrl+Shift+D</code></li>
+</ul>
+
+<h1 id="catia必备设置">CATIA必备设置</h1>
+<ul>
+  <li><code>选项</code>-<code>常规</code>-<code>兼容性</code>-<code>STEP</code>中，设置导入模式为<code>无优化</code>，导出应用协议为<code>214 iso</code>;</li>
+  <li><code>参数和测量</code>-<code>参数树型视图</code>，全部勾选；</li>
+  <li><code>基础结构</code>-<code>零件基础结构</code>-<code>显示</code>，在结构树中显示一栏全部勾选；</li>
+  <li><code>基础结构</code>-<code>产品结构</code>-<code>高速缓存管理</code>，勾选使用高速缓存系统，并设置高速缓存大小为内存的一半；</li>
+  <li><code>基础结构</code>-<code>产品结构</code>-<code>自定义树</code>，将材料、参数、关系、约束和应用程序激活；</li>
+  <li><code>基础结构</code>-<code>零件基础结构</code>-<code>零件文档</code>-<code>混合设计</code>，将所有勾选都去除，用来关闭混合设计模式；</li>
+  <li>进入<code>装配设计</code>模块，右击工具栏空白处，点<code>自定义</code>，进入<code>工具栏</code>点<code>新建</code>，添加<code>Mold Tooling Design</code>中的<code>Fixing Components</code>工具，用来实现标准件的快速装配；</li>
+</ul>
+
+<h1 id="catia零件库">CATIA零件库</h1>
+<p><a href="/assets/Files/Catia超级副本.zip">CATIA零件库</a></p>
+
+<h1 id="用catia对机翼建模">用CATIA对机翼建模</h1>
+<h2 id="建模思路">建模思路</h2>
+
+<ul>
+  <li>如果整体使用同一个翼型：在根部导入翼型，确定前后缘引导线，指定机翼伸展方向为脊线，使用扫略；</li>
+  <li>如果不同截面使用不同翼型：导入多个翼型，确定前后缘引导线，指定机翼伸展方向为脊线，使用多截面曲面；</li>
+</ul>
+
+<h2 id="注意事项">注意事项</h2>
+
+<ul>
+  <li>最好每个导入的翼型，都单独分配一个<code>几何图形集</code>；</li>
+  <li>前后引导线，也分配一个独立的<code>几何图形集</code>；</li>
+</ul>
+
+<h2 id="建模过程">建模过程</h2>
+
+<h2 id="获取导出翼型原始点并导入catia">获取导出翼型原始点并导入CATIA</h2>
+
+<p>可以使用<code>Profili</code>翼型库导出翼型。具体方法是：</p>
+
+<ol>
+  <li>打开软件，选择合适的翼型，输出为<code>.dat</code>文件；</li>
+  <li>输出的原始文件格式是有问题的，需要删掉头部行，然后复制到Excel里进行操作：在前面添加一列，作为<code>x</code>坐标。如果是原点插入，直接插入一列<code>0</code>即可。（如果是不同机翼截面的翼型，需要根据机翼设计，确定翼型所在的<code>x</code>轴向位置，在这里进行修改）；</li>
+  <li>将Excel中的三列数据，复制到<code>dat</code>文件中（注意最后不要有空行），然后保存；</li>
+  <li>CATIA中进入<code>形状 -&gt; Digitized Shape Editor</code>，点击工具中的<code>Import</code>；</li>
+  <li>选择准备好的<code>.dat</code>文件，注意选择合适的单位:<code>米m</code>，然后导入即可（导入结果为点云）；</li>
+  <li>导入的数据需要转化成点集：点击<code>插入 -&gt; Operations -&gt; Cloud/Points</code>，选择导入的点云，点<code>应用</code>，转化完成。</li>
+</ol>
+
+<h2 id="用样条线拟合翼型">用样条线拟合翼型</h2>
+
+<ol>
+  <li>转换到<code>创成式曲面设计</code>界面；</li>
+  <li>点<code>样条线</code>，选择全部的翼型点，就生成了一个翼型表面的样条曲线；</li>
+  <li>注意，这时有的翼型不是闭合的，因为有的翼型尾部是一个小开口，这时候需要用直线手动闭合一下，然后进行<code>接合</code>操作；</li>
+  <li>拟合后的翼型样条线，需要根据设计，缩放到合适的大小：
+    <ol>
+      <li>先利用原点平面与样条线求交，获取翼型的前缘点；</li>
+      <li>利用缩放功能，参考点选前缘点，输入缩放比例，点确定；</li>
+    </ol>
+  </li>
+</ol>
+
+<h2 id="绘制机翼主体">绘制机翼主体</h2>
+
+<ol>
+  <li>将导入并用曲线拟合好的翼型，根据设计图，进行<code>平移、旋转、缩放</code>等操作，使他们位于正确位置：
+    <ol>
+      <li><strong>上下反角</strong>：通过翼型<code>上下平移</code>实现；</li>
+      <li><strong>前后掠角</strong>：通过翼型<code>前后平移</code>实现；</li>
+      <li><strong>扭转角</strong>：通过翼型<code>旋转</code>实现；</li>
+      <li><strong>调整机翼前后缘线</strong>：通过翼型<code>缩放+前后移动</code>实现；</li>
+    </ol>
+  </li>
+  <li>用<code>样条线</code>连接各翼型的前、后缘点，作为机翼前后缘引导线；</li>
+  <li>应用<code>多截面曲线</code>。</li>
+</ol>
+
+<h2 id="绘制翼稍">绘制翼稍</h2>
+
+<ol>
+  <li>绘制翼稍的总体方法如下图所示；</li>
+  <li>使用<code>分割</code>工具，将翼稍的翼型分割成前后两个部分，作为起止截面曲线；</li>
+  <li>绘制前，需要确定如图所示的翼稍的引导线，以及除翼型分割形成的扫略起点与终点外，中间是否有别的控制截面曲线（如图中截面曲线②）；</li>
+  <li>应用<code>多截面曲线</code>。</li>
+</ol>
+
+<p><img src="/assets/posts/61.png" alt="翼稍" /></p>
+
+        </div>
+    </div>
+
+    <!-- 关键词 -->
+    <div id="tagsBox">
+      Keywords:
+      <a id="tags" href="CATIA"><span>CATIA</span></a>
+      
+      <a id="tags" href="UAV"><span>UAV</span></a>
+      </div>
+
+</article>
+
+<!-- 上一篇与下一篇按钮 -->
+<div id="postPager">
+    
+    <span id="previousPost">
+        <a href="/blog/2022/05/15/%E6%B5%81%E4%BD%93%E5%8A%9B%E5%AD%A6%E5%9F%BA%E7%A1%80/" title="流体力学基础">
+            <img src="http://localhost:4000/assets/posts/beforeBlack.svg" alt="previousPost">
+        </a>
+    </span>
+    
+
+    <!-- 文章位置功能 （未实现）-->
+    <!-- 
+      <p id="postNumBox">Blog &nbsp; 
+        <span id="postNum"></span> &nbsp; Of &nbsp; 
+        <span id="postNum"></span>
+      </p> -->
+
+    
+    <span id="nextPost">
+        <a href="/blog/2022/07/30/%E7%9B%B4%E5%8D%87%E6%9C%BA%E5%8A%A8%E5%8A%9B%E5%AD%A6%E5%B7%A5%E7%A8%8B%E8%AE%BE%E8%AE%A1/" title="直升机动力学工程设计">
+            <img src="http://localhost:4000/assets/posts/nextBlack.svg" alt="nextPost">
+        </a>
+    </span>
+    
+</div>
+<!-- Valine 浏览量统计 -->
+<span id="/blog/2022/07/01/CATIA%E7%9B%B8%E5%85%B3/" class="leancloud-visitors" data-flag-title="Your Article Title">
+    <span>已经有 </span><i class="leancloud-visitors-count" style="color: #edebdc;">1000000</i> <span> 个小伙伴看完了这篇推文。</span>
+</span>
+
+<!-- Valine 评论框 -->
+<div id="vcomments"></div>
+
+    </main><footer>
+    <div id="footerBox">
+        <div id="socialBox">
+            
+            
+            
+            <a href="mailto:mars_yao@yeah.net" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-envelope"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://marswiz.com/aboutMe" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-weixin"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://github.com/marswiz" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent1" class="fa fa-github"></p>
+                    
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://juejin.cn/user/131597123717319" target="_blank">
+                <div id="socialBall">
+                    
+                    <p id="socialContent2">掘</p>
+                    
+                </div>
+            </a></div>
+        <div id="webInfo">
+            <p>
+                <span id="beian">京ICP备 17067352 号</span>
+                <span id="powered">&nbsp;Powered by <span style="font-style: italic;">Jekyll</span>. &nbsp;</span>
+                <span id="copyright">Copyright © 2019 Mars. All rights reserved.</span>
+            </p>
+        </div>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/dist/main.js" defer></script>
+    <script>
+        // window.addEventListener('load', postsFunc, false);
+        // if (window.innerWidth <= 768) {
+        //     window.addEventListener('load', loadDayNight, false);
+        //     $(document).one('touchstart', loadDayNight);
+        // }
+    </script>
+
+    <!-- Valine 评论 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: '5mfc7sb6aVJyKPMGY6K423B6-MdYXbMMI',
+            appKey: 'Tv40sJl6jo9ac84eFi8H3ejb',
+            placeholder: '- 无需注册，理性讨论.&#10;- 可使用Gravatar注册邮箱修改个人头像~&#10;- 我爱刘小宝~~',
+            notify: true,
+            verify: true,
+            visitor: true,
+            avatar: 'retro',
+            serverURLs: 'https://5mfc7sb6.api.lncldglobal.com'
+        })
+    </script>
+</footer><!-- 回到页首按钮 -->
+    <a href="#mainBox" class="fa fa-rocket" id="toTop"></a>
+
+</body>
+<!-- <script>
+    blogYearFunc();
+    if (window.innerWidth >= 769) {
+        document.querySelector('#navBlog').style.display = 'block';
+    }
+
+    window.addEventListener('resize', debounce(resize, 0.5));
+</script> --></html>

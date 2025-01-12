@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        螺钉拧紧力矩计算器
+    </title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: stretch;
+        }
+        #inputs,#calculated {
+            border: 1px solid gray;
+            flex-grow: 1;
+            margin: 1em 0;
+        }
+        input {
+            border: none;
+            background-color: lightblue;
+            width: 5em;
+        }
+        .title {
+            color: #ff8c00;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        .result {
+            display: inline-block;
+            font-weight: bold;
+            font-size: 2em;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div id="inputs">
+        <div class="title">输入变量：</div>
+        <div class="items">
+            <span>内螺纹小径d<sub>1</sub></span> = <input id="d1" value="5.82" type="number"> mm
+        </div>
+        <div class="items">
+            <span>内螺纹中径d<sub>2</sub></span> = <input id="d2" value="6" type="number"> mm
+        </div>
+        <div class="items">
+            <span>螺距p</span> = <input id="p" value="1" type="number"> mm
+        </div>
+        <div class="items">
+            <span>材料类型</span> = 
+            <select id="mtlType">
+                <option value="carbon">碳素钢</option>
+                <option value="alloy">合金钢</option>
+            </select>
+        </div>
+        <div class="items">
+            <span>材料屈服强度σ<sub>s</sub></span> = <input id="sigma" value="500" type="number"> MPa
+        </div>
+    </div>
+    <div id="calculated">
+        <div class="title">输出：</div>
+        <div class="items">
+            <span>预紧力矩T</span> = <span class="result" id="T"></span> N·m
+        </div>
+    </div>
+</body>
+<script>
+    function cal() {
+        // 获取变量
+        let inputs = document.querySelectorAll('#inputs input');
+        let inputMap = new Map();
+        for (let i of inputs) {
+            inputMap.set(i.id, +i.value);
+        }
+        let mtlType = document.querySelector('select');
+        inputMap.set(mtlType.id, mtlType.value);
+        let d3 = inputMap.get('d1') - Math.sqrt(3) * inputMap.get('p') / 12; // 计算直径d3
+        let A_s = Math.PI / 4 * (( inputMap.get('d2') + d3 ) / 2) ** 2;
+        let F_ = inputMap.get('mtlType') == 'carbon' ? 0.7 * inputMap.get('sigma') * A_s : 0.6 * inputMap.get('sigma') * A_s;
+        let T = 1.2 * 0.13 * F_ * inputMap.get('d2') / 1000;
+        document.querySelector('#T').innerHTML = T.toFixed(2);
+    }
+    cal();
+    for (let i of document.querySelectorAll('select,input')) {
+        i.addEventListener('change', cal);
+    }
+</script>
+</html>

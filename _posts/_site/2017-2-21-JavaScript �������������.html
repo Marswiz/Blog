@@ -1,0 +1,55 @@
+<blockquote>
+  <p>《JavaScript 高级程序设计第九章》：能力检测、怪癖检测</p>
+  <blockquote>
+    <p>———— 2017.2.21 Mars 北航三馆314教研室</p>
+  </blockquote>
+</blockquote>
+
+<h2 id="1浏览器能力检测">1.浏览器能力检测</h2>
+<p><strong>能力检测</strong>是检测浏览器是否有执行某一特定方法的能力。检测时要先检测最常用的特性，这样可以避免测试多个条件增加执行速度。</p>
+
+<p>模式：</p>
+
+<pre><code>if(object.property){
+    //能力可行的代码
+} else {
+    //能力不可行的代码
+}
+</code></pre>
+
+<p>例如：</p>
+
+<pre><code>function getElement(id){
+    if (document.getElementById){
+    return document.getElementById(id);
+} else if (document.all){
+    return document.all(id);
+} else {
+    throw new Error("No way to get element by ID.");
+}
+}
+</code></pre>
+
+<p>另外，尽量使用<code>typeof</code>操作符检测能力。</p>
+
+<pre><code>function hascreateElement(){
+    return typeof document.createElement == "function";
+}
+</code></pre>
+
+<p>但是ie浏览器早期版本返回的很可能不是function。</p>
+<h2 id="2怪癖quirks检测">2.怪癖（quirks）检测</h2>
+<p>测试某个浏览器是否有某种潜在的BUG。</p>
+
+<pre><code>var hasDontEnumQuirk = function(){        
+    var o = { toString : function(){} };
+    for (var prop in o){
+        if (prop == "toString"){
+            return false;
+        }
+    }    
+    return true;
+}();
+</code></pre>
+
+<p>检测是否有与原型不可枚举属性同名的实例属性不可枚举的BUG。</p>
