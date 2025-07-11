@@ -129,6 +129,31 @@
 	            <!-- 设定时间格式 --><!-- 日志标题 -->
 	            <h3>
 	              <div>
+	                资料备份
+	              </div>
+	            </h3>
+
+	            <!-- 日志时间和标签 -->
+	            <div >
+	              <span>2025.05.01</span><p>Files</p></div>
+	            
+	            <!-- 日志概览 -->
+	            <div>
+	              <p>
+  重要文件上传备份
+
+
+米家中枢代码备份
+
+米家中枢代码备份
+</p>
+	            </div>
+	          </a>
+	        </div><div id="totalBlogBox">
+	          <a>
+	            <!-- 设定时间格式 --><!-- 日志标题 -->
+	            <h3>
+	              <div>
 	                菜谱大全
 	              </div>
 	            </h3>
@@ -1613,19 +1638,34 @@ FAQ
 
 
 CATIA快捷键设置
+开始菜单
+
+  装配设计： Ctrl+1
+  零件设计： Ctrl+2
+  创成式外形设计： Ctrl+3
+  钣金设计： Ctrl+4
+  工程制图： Ctrl+5
+
+
+视图操作
+
+  交换可视空间：Ctrl+Shift+H
+  隐藏	Ctrl+H
+  法线视图	Ctrl+Shift+Space
+  公式…： Alt+F
+  全部适应	Ctrl+Shift+F
+
+
+零件设计
 
   草图： Ctrl+D
   几何元素过滤器： F8
   插入点	Ctrl+Shift+P
   插入平面	Ctrl+Shift+S
   插入直线	Ctrl+Shift+L
-  全部适应	Ctrl+Shift+F
   凸台	Ctrl+T
   凹槽	Ctrl+Shift+A
-  交换可视空间：Ctrl+Shift+H
-  隐藏	Ctrl+H
-  约束	Ctrl+Shift+C
-  法线视图	Ctrl+Shift+Space
+  约束	Ctrl+Shift+
   倒圆角	Ctrl+Shift+R
   平移	Ctrl+Shift+T
   构造标准元素	Ctrl+Shift+G
@@ -1633,6 +1673,26 @@ CATIA快捷键设置
   退出草图	Backspace
   测量间距… Ctrl+Shift+M
   测量项… Ctrl+Shift+D
+
+
+装配设计
+
+  切割	Ctrl+Shift+S
+  测量间距… Ctrl+Shift+M
+  测量项… Ctrl+Shift+D
+  捕捉 Ctrl+Shift+B
+  相合 Alt+D
+  接触约束 Alt+T
+  偏移… Ctrl+Shift+C
+  操作 Alt+M
+
+
+工程制图
+
+  等轴测视图： Ctrl+Shift+Z
+  剖视图： Ctrl+Shift+P
+  投影视图： Ctrl+Shift+T
+  正视图： Alt+Z
 
 
 CATIA必备设置
@@ -1644,10 +1704,21 @@ CATIA必备设置
   基础结构-产品结构-自定义树，将材料、参数、关系、约束和应用程序激活；
   基础结构-零件基础结构-零件文档-混合设计，将所有勾选都去除，用来关闭混合设计模式；
   进入装配设计模块，右击工具栏空白处，点自定义，进入工具栏点新建，添加Mold Tooling Design中的Fixing Components工具，用来实现标准件的快速装配；
+  工具-选项-常规-许可证发放中，不能选择DIC、ED2和I3D；
+  工具-选项-常规中，用户界面样式选择P2；
 
 
 CATIA零件库
 CATIA零件库
+
+CATIA常见问题
+打开时弹窗”找不到文件”，或工具栏每次起动总是莫名其妙自动归位
+
+已安装或曾经安装的多个CATIA版本默认用户环境冲突导致！
+
+解决办法：在开始菜单找到对应CATIA版本的Environment Editor，用管理员身份打开后，找到下方CATUserSettingPath，右击编辑变量，更改末尾的文件名为新文件名，保存关闭。
+
+再次打开CATIA，会变成初始化设置。再重新执行一次必备设置即可。尤其注意许可证的选择情况，不能选择DIC、ED2和I3D。
 
 用CATIA对机翼建模
 建模思路
@@ -23979,6 +24050,37 @@ $("#tooltip")
 	        </div></div><!-- 结果显示区 -->
 <div id="searchResultContentBox"><div id="searchResultList">
 	    <div id="noResultContent"><p>木有找到Der~~</p></div><div id="searchBlogBox">
+	          <a id="link" href="/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">
+	            <!-- 设定时间格式 --><!-- 日志标题 -->
+	            <h3>
+	              <div class="searchPostLink">
+	                资料备份
+	              </div>
+	            </h3>
+
+	            <!-- 日志时间和标签-PC端 -->
+	            <div id="searchPostInfo">
+	              <span class="searchPostDate">2025.05.01</span><p class="searchPostTags">Files</p></div>
+
+                <!-- 日志时间和标签--移动端 -->
+	            <div id="searchPostInfoMobile">
+	              <p class="searchPostDateMobile">2025.05.01</p>
+	              <div id="searchTagBox"><p id="searchPostTagsMobile">Files</p></div>
+	            </div>
+	            
+	            <!-- 日志概览 -->
+	            <div id="searchBlogPreview">
+	              <p>
+  重要文件上传备份
+
+
+米家中枢代码备份
+
+米家中枢代码备份
+</p>
+	            </div>
+	          </a>
+	        </div><div id="searchBlogBox">
 	          <a id="link" href="/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8/">
 	            <!-- 设定时间格式 --><!-- 日志标题 -->
 	            <h3>
@@ -24626,17 +24728,22 @@ Vocabulary
 
 
 CATIA快捷键设置
+开始菜单
 
-  草图： Ctrl+D
-  几何元素过滤器： F8
-  插入点	Ctrl+Shift+P
-  插入平面	Ctrl+Shift+S
-  插入直线	Ctrl+Shift+L
-  全部适应	Ctrl+Shift+F
-  凸台	Ctrl+T
-  凹槽	Ctrl+Shift+A
+  装配设计： Ctrl+1
+  零件设计： Ctrl+2
+  创成式外形设计： Ctrl+3
+  钣金设计： Ctrl+4
+  工程制图： Ctrl+5
+
+
+视图操作
+
   交换可视空间：Ctrl+Shift+H
-  隐藏	Ctr...</p>
+  隐藏	Ctrl+H
+  法线视图	Ctrl+Shift+Space
+  公式…： Alt+F
+  全部...</p>
 	            </div>
 	          </a>
 	        </div><div id="searchBlogBox">

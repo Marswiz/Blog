@@ -1,4 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-01-12T01:19:10+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">菜谱大全</title><link href="http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8/" rel="alternate" type="text/html" title="菜谱大全" /><published>2024-12-02T00:00:00+08:00</published><updated>2024-12-02T00:00:00+08:00</updated><id>http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8</id><content type="html" xml:base="http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-07-12T02:07:18+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">资料备份</title><link href="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/" rel="alternate" type="text/html" title="资料备份" /><published>2025-05-01T00:00:00+08:00</published><updated>2025-05-01T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD</id><content type="html" xml:base="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">&lt;blockquote&gt;
+  &lt;p&gt;重要文件上传备份&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;米家中枢代码备份&quot;&gt;米家中枢代码备份&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/Files/米家备份2025_5_1%2020_28_31.bak&quot;&gt;米家中枢代码备份&lt;/a&gt;&lt;/p&gt;</content><author><name>Mars</name></author><category term="Files" /><summary type="html">重要文件上传备份 米家中枢代码备份</summary></entry><entry><title type="html">菜谱大全</title><link href="http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8/" rel="alternate" type="text/html" title="菜谱大全" /><published>2024-12-02T00:00:00+08:00</published><updated>2024-12-02T00:00:00+08:00</updated><id>http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8</id><content type="html" xml:base="http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8/">&lt;blockquote&gt;
   &lt;p&gt;私人菜谱大全&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -610,38 +616,4 @@
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;提高精度&quot;&gt;提高精度&lt;/h2&gt;
-&lt;h3 id=&quot;自适应网格&quot;&gt;自适应网格&lt;/h3&gt;</content><author><name>Mars</name></author><category term="Fluid" /><category term="CFD" /><summary type="html">CFX计算CFD的一些经验与关键点</summary></entry><entry><title type="html">Design of Espresso Machine</title><link href="http://localhost:4000/blog/2022/11/13/%E5%92%96%E5%95%A1%E6%9C%BA%E5%8E%9F%E7%90%86/" rel="alternate" type="text/html" title="Design of Espresso Machine" /><published>2022-11-13T00:00:00+08:00</published><updated>2022-11-13T00:00:00+08:00</updated><id>http://localhost:4000/blog/2022/11/13/%E5%92%96%E5%95%A1%E6%9C%BA%E5%8E%9F%E7%90%86</id><content type="html" xml:base="http://localhost:4000/blog/2022/11/13/%E5%92%96%E5%95%A1%E6%9C%BA%E5%8E%9F%E7%90%86/">&lt;blockquote&gt;
-  &lt;p&gt;咖啡机原理&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;basics&quot;&gt;Basics&lt;/h1&gt;
-&lt;h2 id=&quot;function-of-an-espresso-machine&quot;&gt;Function of an espresso machine&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Brew coffee with hot water which is 90℃ and  9bar&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h1 id=&quot;subsystems&quot;&gt;Subsystems&lt;/h1&gt;
-
-&lt;h2 id=&quot;boiler&quot;&gt;Boiler&lt;/h2&gt;
-
-&lt;p&gt;14L
-3 bar pressure to test leak point.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;inlet&lt;/li&gt;
-  &lt;li&gt;water outlet&lt;/li&gt;
-  &lt;li&gt;steam outlet&lt;/li&gt;
-  &lt;li&gt;emergency pressure valve&lt;/li&gt;
-  &lt;li&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;pump&quot;&gt;Pump&lt;/h2&gt;
-
-&lt;h2 id=&quot;brew-system&quot;&gt;Brew system&lt;/h2&gt;
-
-&lt;h2 id=&quot;control-system&quot;&gt;Control system&lt;/h2&gt;
-
-&lt;h2 id=&quot;power-system&quot;&gt;Power system&lt;/h2&gt;
-
-&lt;h2 id=&quot;display-instruments&quot;&gt;Display instruments&lt;/h2&gt;</content><author><name>Mars</name></author><category term="Engine" /><summary type="html">咖啡机原理</summary></entry></feed>
+&lt;h3 id=&quot;自适应网格&quot;&gt;自适应网格&lt;/h3&gt;</content><author><name>Mars</name></author><category term="Fluid" /><category term="CFD" /><summary type="html">CFX计算CFD的一些经验与关键点</summary></entry></feed>
