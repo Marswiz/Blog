@@ -1,0 +1,27 @@
+<input style="font-size: 5em;" id="jingdu">
+<input style="font-size: 5em;" id="weidu">
+<div></div>
+<button id='btn'  style="font-size: 2em;" >转换为度分秒</button>
+<div id='res' style="font-size: 2em;" ></div>
+<div>By Mars @ 20250526 广西北海</div>
+
+<script>
+	document.querySelector('#btn').addEventListener('click', (e) => {
+			let a = document.querySelector('#jingdu').value;
+			let b = document.querySelector('#weidu').value;
+			function trans(e) {
+				let res = '';
+				let aa  = Math.floor(e);
+				res += aa;
+				res += '° ';
+				e = (e-aa) * 60;
+				res += Math.floor(e);
+				res += '\' ';
+				e = (e-Math.floor(e)) * 60;
+				res += Math.round(e * 100) / 100;
+				res += '\'\'';
+				return res;
+			} 
+			document.querySelector('#res').innerText = trans(a) + '\n' + trans(b);
+	});
+</script>
