@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>预紧力计算器</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .item {
+            height: 3em;
+        }
+        .item span {
+            font-weight: bold;
+        }
+        button {
+            font-size: 3em;
+        }
+        .res{
+            font-weight: bolder;
+            color: tomato;
+            font-size: 2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="item"><span>螺母公称直径(mm): </span><input id="d" type="number" value="5"></div>
+    <div class="item"><span>预紧量*(μm): </span><input id="preloadLength" type="number"></div>
+    <div class="item"><span>预紧力距: </span><span class="res"><span id="result">?</span> N·m</span></div>
+    <div class="item"><span>预紧力(N): </span><span class="res"><span id="Fa">?</span> N</span></div>
+    <div class="item">*预紧量以轴承压紧后，两轴承内侧内圈间距大于外圈间距为正，内圈间距小于外圈间距为负。</div>
+    <div class="item">*LS35舵机用706CTYNDBLP5轴承对，预紧量需在+6μm至-3μm之间。</div>
+    <button>计算</button>
+</body>
+<script>
+    // T = k * F * d;
+    // d: 公称直径mm；
+    // k: 拧紧系数； 取0.15
+    // F: 预紧力N。
+    document.querySelector('button').onclick = function (e){
+        let c = 1.505895882;  // 轴承预紧变形常数；
+        let freeLength = 12; // 轴承预紧前自由游隙；
+        let d = document.querySelector('#d').value;
+        let preloadLength = document.querySelector('#preloadLength').value;
+        let Fa = ((freeLength-preloadLength) / c) ** 1.5; // Fa = (δa/c)^1.5
+        let T = 0.15 * Fa * d;
+        document.querySelector('#result').innerHTML = T.toFixed(2); 
+        document.querySelector('#Fa').innerHTML = Fa.toFixed(2); 
+    };
+</script>
+</html>
