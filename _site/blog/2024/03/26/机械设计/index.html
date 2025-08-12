@@ -11,15 +11,15 @@
 <meta property="og:title" content="机械设计" />
 <meta name="author" content="Mars" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="机械设计相关 一些设计禁忌" />
-<meta property="og:description" content="机械设计相关 一些设计禁忌" />
+<meta name="description" content="机械设计相关" />
+<meta property="og:description" content="机械设计相关" />
 <link rel="canonical" href="http://localhost:4000/blog/2024/03/26/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1/" />
 <meta property="og:url" content="http://localhost:4000/blog/2024/03/26/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1/" />
 <meta property="og:site_name" content="个人杂记:MarsWiz" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2024-03-26T00:00:00+08:00" />
 <script type="application/ld+json">
-{"description":"机械设计相关 一些设计禁忌","@type":"BlogPosting","url":"http://localhost:4000/blog/2024/03/26/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1/","headline":"机械设计","dateModified":"2024-03-26T00:00:00+08:00","datePublished":"2024-03-26T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2024/03/26/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
+{"description":"机械设计相关","@type":"BlogPosting","url":"http://localhost:4000/blog/2024/03/26/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1/","headline":"机械设计","dateModified":"2024-03-26T00:00:00+08:00","datePublished":"2024-03-26T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/blog/2024/03/26/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1/"},"author":{"@type":"Person","name":"Mars"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="preload" href="/assets/fonts/Didot.woff2" as="font" type="font/woff2" crossorigin> 
   <link rel="preload" href="/assets/fonts/Clarendon_BT.woff2" as="font" type="font/woff2" crossorigin> 
@@ -141,18 +141,141 @@
   <p>机械设计相关</p>
 </blockquote>
 
+<h1 id="图纸相关">图纸相关</h1>
+
+<h2 id="尺寸公差标注">尺寸、公差标注</h2>
+
+<h3 id="尺寸的分类">尺寸的分类</h3>
+
+<p>尺寸分为<code>基本尺寸</code>、<code>最大（小）极限尺寸</code>、<code>实际尺寸</code>、<code>作用尺寸</code>、<code>最大（小）实体尺寸</code>、<code>最大（小）实体实效尺寸</code>。</p>
+
+<h4 id="基本尺寸">基本尺寸</h4>
+
+<p>图纸上标注的尺寸（不含公差部分）均为基本尺寸。</p>
+
+<h4 id="极限尺寸">极限尺寸</h4>
+
+<p>由基本尺寸进一步考虑公差条件下的最大（小）设计尺寸。</p>
+
+<ul>
+  <li><strong>最大极限尺寸</strong>（也叫<strong>上极限尺寸</strong>）：<code>基本尺寸 + 上公差值</code>；</li>
+  <li><strong>最小极限尺寸</strong>（也叫<strong>下极限尺寸</strong>）：<code>基本尺寸 + 下公差值</code>；</li>
+</ul>
+
+<h4 id="实际尺寸">实际尺寸</h4>
+
+<p>零件通过测量得到的，某一局部截面上的测量尺寸（考虑测量误差）。</p>
+
+<p>注意：实际尺寸是<strong>局部测量</strong>得到的，区别于其他尺寸。</p>
+
+<h4 id="作用尺寸">作用尺寸</h4>
+
+<p>分为<code>体外作用尺寸</code>和<code>体内作用尺寸</code>。一般默认指体外作用尺寸。</p>
+
+<blockquote>
+  <p>体外作用尺寸：在被测要素的给定长度上，与实际内表面体外相接的最大理想面或与实际外表面体外相接的最小理想面的直径或宽度。</p>
+</blockquote>
+
+<p><strong>翻译</strong>：</p>
+<ul>
+  <li>孔：与孔内接的最大理想轴的直径。</li>
+  <li>轴：与轴外接的最小理想孔的直径。</li>
+</ul>
+
+<h4 id="最大小实体尺寸">最大（小）实体尺寸</h4>
+
+<p><code>所用材料最多时</code>的极限尺寸。</p>
+
+<p>对于轴，最大实体尺寸等于最大极限尺寸（上极限尺寸），最小实体尺寸等于最小极限尺寸（下极限尺寸）。</p>
+
+<p>对于孔，最大实体尺寸等于最小极限尺寸（下极限尺寸），最小实体尺寸等于最大极限尺寸（上极限尺寸）。</p>
+
+<h4 id="最大小实体实效尺寸">最大（小）实体实效尺寸</h4>
+
+<p>在最大实体尺寸的基础上，<code>计入几何公差</code>后所形成的新的综合极限状态的尺寸。</p>
+
+<h3 id="基本尺寸的分类">基本尺寸的分类</h3>
+
+<h4 id="实体尺寸">实体尺寸</h4>
+
+<p>约束几何体外形大小的尺寸（能被卡尺直接测量的尺寸）。</p>
+
+<p>表现形式一般为：<code>孔、轴、板、槽、球</code>的外形尺寸。</p>
+
+<h4 id="位置尺寸">位置尺寸</h4>
+
+<p>约束两个要素<code>相对位置关系</code>的尺寸。如：</p>
+
+<ol>
+  <li>两个理论平行平面的距离；</li>
+  <li>孔中心轴线相对于板端平面的距离。</li>
+</ol>
+
+<p><strong>位置尺寸理论上必须标明基准，以明确测量方式</strong>。</p>
+
+<h4 id="方向尺寸">方向尺寸</h4>
+
+<p>约束两个要素<code>相对方向</code>的尺寸。如：</p>
+
+<ol>
+  <li>某一平面相对于另一平面的夹角角度。</li>
+</ol>
+
+<p><strong>方向尺寸理论上必须标明基准，以明确测量方式</strong>。</p>
+
+<h4 id="形状尺寸">形状尺寸</h4>
+
+<p>约束形状的尺寸，一般仅包括<code>倒角值C</code>和<code>倒圆角半径R</code>。</p>
+
+<h3 id="尺寸">尺寸</h3>
+
+<h3 id="标注原则">标注原则</h3>
+
+<p>先明确设计意图（确定零件功能、配合关系和关键要素），再选择表达方式。</p>
+
+<h3 id="好的公差标注应做到">好的公差标注应做到</h3>
+
+<ol>
+  <li>充分且准确地表达了设计意图（零件功能、配合关系和关键要素）；</li>
+  <li>检测容易，方法明确；</li>
+  <li>生产制造具有经济性。</li>
+</ol>
+
+<h3 id="如何审查别人的图纸">如何审查别人的图纸</h3>
+
+<ol>
+  <li>检查图纸标准信息是否齐备、正确：
+    <ul>
+      <li>零件名；</li>
+      <li>图号、装配号、所属装配号、项目号；</li>
+      <li>材料及其标准；</li>
+      <li>图纸比例；</li>
+      <li>所属阶段；</li>
+      <li>技术要求；</li>
+      <li>图册序号、页码号（如有）。</li>
+    </ul>
+  </li>
+  <li>检查图纸视图表达是否完整，是否冗余；</li>
+  <li>确定零件功能、装配关系；</li>
+  <li>找到配合面，确定各配合面上对手件的极限尺寸、最大实体实效尺寸；</li>
+  <li>检查线性尺寸是否有误或有遗漏；</li>
+  <li>检查已注形位公差的标准性，基准是否合理（基准一般应为配合面）；</li>
+  <li>检查默认项是否齐备、正确：
+    <ul>
+      <li>未注尺寸、几何公差等级；</li>
+      <li>未注倒角、圆角值；</li>
+      <li>默认粗糙度;</li>
+      <li>激光标识格式与位置。</li>
+    </ul>
+  </li>
+</ol>
+
 <h1 id="一些设计禁忌">一些设计禁忌</h1>
 
 <ol>
   <li>薄壁件上一般不用粗牙螺纹，要用细牙螺纹。一般机械连接的结构件上，不能用细牙螺纹；</li>
   <li>矩形、梯形、锯齿形螺纹不能用于连接，因为自锁性不好；</li>
   <li>只有极特殊的情况下，才选用左旋螺纹；</li>
-</ol>
-
-<h1 id="图纸相关">图纸相关</h1>
-
-<ol>
-  <li>一些不涉及尺寸的装配图，可以选用轴侧图视角表示，更直观且容易标注；</li>
 </ol>
 
         </div>

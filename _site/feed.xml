@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-07-29T00:23:33+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">资料备份</title><link href="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/" rel="alternate" type="text/html" title="资料备份" /><published>2025-05-01T00:00:00+08:00</published><updated>2025-05-01T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD</id><content type="html" xml:base="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-08-13T02:56:14+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">资料备份</title><link href="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/" rel="alternate" type="text/html" title="资料备份" /><published>2025-05-01T00:00:00+08:00</published><updated>2025-05-01T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD</id><content type="html" xml:base="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">&lt;blockquote&gt;
   &lt;p&gt;重要文件上传备份&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -121,19 +121,142 @@
   &lt;p&gt;机械设计相关&lt;/p&gt;
 &lt;/blockquote&gt;
 
+&lt;h1 id=&quot;图纸相关&quot;&gt;图纸相关&lt;/h1&gt;
+
+&lt;h2 id=&quot;尺寸公差标注&quot;&gt;尺寸、公差标注&lt;/h2&gt;
+
+&lt;h3 id=&quot;尺寸的分类&quot;&gt;尺寸的分类&lt;/h3&gt;
+
+&lt;p&gt;尺寸分为&lt;code&gt;基本尺寸&lt;/code&gt;、&lt;code&gt;最大（小）极限尺寸&lt;/code&gt;、&lt;code&gt;实际尺寸&lt;/code&gt;、&lt;code&gt;作用尺寸&lt;/code&gt;、&lt;code&gt;最大（小）实体尺寸&lt;/code&gt;、&lt;code&gt;最大（小）实体实效尺寸&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h4 id=&quot;基本尺寸&quot;&gt;基本尺寸&lt;/h4&gt;
+
+&lt;p&gt;图纸上标注的尺寸（不含公差部分）均为基本尺寸。&lt;/p&gt;
+
+&lt;h4 id=&quot;极限尺寸&quot;&gt;极限尺寸&lt;/h4&gt;
+
+&lt;p&gt;由基本尺寸进一步考虑公差条件下的最大（小）设计尺寸。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;最大极限尺寸&lt;/strong&gt;（也叫&lt;strong&gt;上极限尺寸&lt;/strong&gt;）：&lt;code&gt;基本尺寸 + 上公差值&lt;/code&gt;；&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;最小极限尺寸&lt;/strong&gt;（也叫&lt;strong&gt;下极限尺寸&lt;/strong&gt;）：&lt;code&gt;基本尺寸 + 下公差值&lt;/code&gt;；&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;实际尺寸&quot;&gt;实际尺寸&lt;/h4&gt;
+
+&lt;p&gt;零件通过测量得到的，某一局部截面上的测量尺寸（考虑测量误差）。&lt;/p&gt;
+
+&lt;p&gt;注意：实际尺寸是&lt;strong&gt;局部测量&lt;/strong&gt;得到的，区别于其他尺寸。&lt;/p&gt;
+
+&lt;h4 id=&quot;作用尺寸&quot;&gt;作用尺寸&lt;/h4&gt;
+
+&lt;p&gt;分为&lt;code&gt;体外作用尺寸&lt;/code&gt;和&lt;code&gt;体内作用尺寸&lt;/code&gt;。一般默认指体外作用尺寸。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;体外作用尺寸：在被测要素的给定长度上，与实际内表面体外相接的最大理想面或与实际外表面体外相接的最小理想面的直径或宽度。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;翻译&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;孔：与孔内接的最大理想轴的直径。&lt;/li&gt;
+  &lt;li&gt;轴：与轴外接的最小理想孔的直径。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;最大小实体尺寸&quot;&gt;最大（小）实体尺寸&lt;/h4&gt;
+
+&lt;p&gt;&lt;code&gt;所用材料最多时&lt;/code&gt;的极限尺寸。&lt;/p&gt;
+
+&lt;p&gt;对于轴，最大实体尺寸等于最大极限尺寸（上极限尺寸），最小实体尺寸等于最小极限尺寸（下极限尺寸）。&lt;/p&gt;
+
+&lt;p&gt;对于孔，最大实体尺寸等于最小极限尺寸（下极限尺寸），最小实体尺寸等于最大极限尺寸（上极限尺寸）。&lt;/p&gt;
+
+&lt;h4 id=&quot;最大小实体实效尺寸&quot;&gt;最大（小）实体实效尺寸&lt;/h4&gt;
+
+&lt;p&gt;在最大实体尺寸的基础上，&lt;code&gt;计入几何公差&lt;/code&gt;后所形成的新的综合极限状态的尺寸。&lt;/p&gt;
+
+&lt;h3 id=&quot;基本尺寸的分类&quot;&gt;基本尺寸的分类&lt;/h3&gt;
+
+&lt;h4 id=&quot;实体尺寸&quot;&gt;实体尺寸&lt;/h4&gt;
+
+&lt;p&gt;约束几何体外形大小的尺寸（能被卡尺直接测量的尺寸）。&lt;/p&gt;
+
+&lt;p&gt;表现形式一般为：&lt;code&gt;孔、轴、板、槽、球&lt;/code&gt;的外形尺寸。&lt;/p&gt;
+
+&lt;h4 id=&quot;位置尺寸&quot;&gt;位置尺寸&lt;/h4&gt;
+
+&lt;p&gt;约束两个要素&lt;code&gt;相对位置关系&lt;/code&gt;的尺寸。如：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;两个理论平行平面的距离；&lt;/li&gt;
+  &lt;li&gt;孔中心轴线相对于板端平面的距离。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;位置尺寸理论上必须标明基准，以明确测量方式&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;h4 id=&quot;方向尺寸&quot;&gt;方向尺寸&lt;/h4&gt;
+
+&lt;p&gt;约束两个要素&lt;code&gt;相对方向&lt;/code&gt;的尺寸。如：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;某一平面相对于另一平面的夹角角度。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;方向尺寸理论上必须标明基准，以明确测量方式&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;h4 id=&quot;形状尺寸&quot;&gt;形状尺寸&lt;/h4&gt;
+
+&lt;p&gt;约束形状的尺寸，一般仅包括&lt;code&gt;倒角值C&lt;/code&gt;和&lt;code&gt;倒圆角半径R&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h3 id=&quot;尺寸&quot;&gt;尺寸&lt;/h3&gt;
+
+&lt;h3 id=&quot;标注原则&quot;&gt;标注原则&lt;/h3&gt;
+
+&lt;p&gt;先明确设计意图（确定零件功能、配合关系和关键要素），再选择表达方式。&lt;/p&gt;
+
+&lt;h3 id=&quot;好的公差标注应做到&quot;&gt;好的公差标注应做到&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;充分且准确地表达了设计意图（零件功能、配合关系和关键要素）；&lt;/li&gt;
+  &lt;li&gt;检测容易，方法明确；&lt;/li&gt;
+  &lt;li&gt;生产制造具有经济性。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;如何审查别人的图纸&quot;&gt;如何审查别人的图纸&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;检查图纸标准信息是否齐备、正确：
+    &lt;ul&gt;
+      &lt;li&gt;零件名；&lt;/li&gt;
+      &lt;li&gt;图号、装配号、所属装配号、项目号；&lt;/li&gt;
+      &lt;li&gt;材料及其标准；&lt;/li&gt;
+      &lt;li&gt;图纸比例；&lt;/li&gt;
+      &lt;li&gt;所属阶段；&lt;/li&gt;
+      &lt;li&gt;技术要求；&lt;/li&gt;
+      &lt;li&gt;图册序号、页码号（如有）。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;检查图纸视图表达是否完整，是否冗余；&lt;/li&gt;
+  &lt;li&gt;确定零件功能、装配关系；&lt;/li&gt;
+  &lt;li&gt;找到配合面，确定各配合面上对手件的极限尺寸、最大实体实效尺寸；&lt;/li&gt;
+  &lt;li&gt;检查线性尺寸是否有误或有遗漏；&lt;/li&gt;
+  &lt;li&gt;检查已注形位公差的标准性，基准是否合理（基准一般应为配合面）；&lt;/li&gt;
+  &lt;li&gt;检查默认项是否齐备、正确：
+    &lt;ul&gt;
+      &lt;li&gt;未注尺寸、几何公差等级；&lt;/li&gt;
+      &lt;li&gt;未注倒角、圆角值；&lt;/li&gt;
+      &lt;li&gt;默认粗糙度;&lt;/li&gt;
+      &lt;li&gt;激光标识格式与位置。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
 &lt;h1 id=&quot;一些设计禁忌&quot;&gt;一些设计禁忌&lt;/h1&gt;
 
 &lt;ol&gt;
   &lt;li&gt;薄壁件上一般不用粗牙螺纹，要用细牙螺纹。一般机械连接的结构件上，不能用细牙螺纹；&lt;/li&gt;
   &lt;li&gt;矩形、梯形、锯齿形螺纹不能用于连接，因为自锁性不好；&lt;/li&gt;
   &lt;li&gt;只有极特殊的情况下，才选用左旋螺纹；&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h1 id=&quot;图纸相关&quot;&gt;图纸相关&lt;/h1&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;一些不涉及尺寸的装配图，可以选用轴侧图视角表示，更直观且容易标注；&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>Mars</name></author><category term="Machine" /><summary type="html">机械设计相关 一些设计禁忌</summary></entry><entry><title type="html">绿松石鉴别</title><link href="http://localhost:4000/blog/2023/12/31/%E7%BB%BF%E6%9D%BE%E7%9F%B3%E9%89%B4%E5%88%AB/" rel="alternate" type="text/html" title="绿松石鉴别" /><published>2023-12-31T00:00:00+08:00</published><updated>2023-12-31T00:00:00+08:00</updated><id>http://localhost:4000/blog/2023/12/31/%E7%BB%BF%E6%9D%BE%E7%9F%B3%E9%89%B4%E5%88%AB</id><content type="html" xml:base="http://localhost:4000/blog/2023/12/31/%E7%BB%BF%E6%9D%BE%E7%9F%B3%E9%89%B4%E5%88%AB/">&lt;blockquote&gt;
+&lt;/ol&gt;</content><author><name>Mars</name></author><category term="Machine" /><summary type="html">机械设计相关</summary></entry><entry><title type="html">绿松石鉴别</title><link href="http://localhost:4000/blog/2023/12/31/%E7%BB%BF%E6%9D%BE%E7%9F%B3%E9%89%B4%E5%88%AB/" rel="alternate" type="text/html" title="绿松石鉴别" /><published>2023-12-31T00:00:00+08:00</published><updated>2023-12-31T00:00:00+08:00</updated><id>http://localhost:4000/blog/2023/12/31/%E7%BB%BF%E6%9D%BE%E7%9F%B3%E9%89%B4%E5%88%AB</id><content type="html" xml:base="http://localhost:4000/blog/2023/12/31/%E7%BB%BF%E6%9D%BE%E7%9F%B3%E9%89%B4%E5%88%AB/">&lt;blockquote&gt;
   &lt;p&gt;绿松石鉴别方法&lt;/p&gt;
 &lt;/blockquote&gt;
 
