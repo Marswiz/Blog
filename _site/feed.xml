@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-08-13T02:56:14+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">资料备份</title><link href="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/" rel="alternate" type="text/html" title="资料备份" /><published>2025-05-01T00:00:00+08:00</published><updated>2025-05-01T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD</id><content type="html" xml:base="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-08-15T01:53:26+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">资料备份</title><link href="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/" rel="alternate" type="text/html" title="资料备份" /><published>2025-05-01T00:00:00+08:00</published><updated>2025-05-01T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD</id><content type="html" xml:base="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">&lt;blockquote&gt;
   &lt;p&gt;重要文件上传备份&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -128,6 +128,8 @@
 &lt;h3 id=&quot;尺寸的分类&quot;&gt;尺寸的分类&lt;/h3&gt;
 
 &lt;p&gt;尺寸分为&lt;code&gt;基本尺寸&lt;/code&gt;、&lt;code&gt;最大（小）极限尺寸&lt;/code&gt;、&lt;code&gt;实际尺寸&lt;/code&gt;、&lt;code&gt;作用尺寸&lt;/code&gt;、&lt;code&gt;最大（小）实体尺寸&lt;/code&gt;、&lt;code&gt;最大（小）实体实效尺寸&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/尺寸分类.webp&quot; alt=&quot;尺寸分类&quot; /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;基本尺寸&quot;&gt;基本尺寸&lt;/h4&gt;
 
@@ -410,7 +412,11 @@
 
 &lt;h1 id=&quot;经纬度转度分秒&quot;&gt;经纬度转度分秒&lt;/h1&gt;
 
-&lt;p&gt;&lt;a href=&quot;/assets/sites/jinWeiDuTrans.html&quot;&gt;经纬度转度分秒&lt;/a&gt;&lt;/p&gt;</content><author><name>Mars</name></author><category term="UAV" /><category term="Engineer" /><summary type="html">机械设计杂记 螺钉长度选取器</summary></entry><entry><title type="html">风扇</title><link href="http://localhost:4000/blog/2023/07/15/%E9%A3%8E%E6%89%87/" rel="alternate" type="text/html" title="风扇" /><published>2023-07-15T00:00:00+08:00</published><updated>2023-07-15T00:00:00+08:00</updated><id>http://localhost:4000/blog/2023/07/15/%E9%A3%8E%E6%89%87</id><content type="html" xml:base="http://localhost:4000/blog/2023/07/15/%E9%A3%8E%E6%89%87/">&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;/assets/sites/jinWeiDuTrans.html&quot;&gt;经纬度转度分秒&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;ls35舵机角接触球轴承预紧力矩计算&quot;&gt;LS35舵机角接触球轴承预紧力矩计算&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/sites/preloadCal.html&quot;&gt;LS35舵机角接触球轴承预紧力矩计算&lt;/a&gt;&lt;/p&gt;</content><author><name>Mars</name></author><category term="UAV" /><category term="Engineer" /><summary type="html">机械设计杂记 螺钉长度选取器</summary></entry><entry><title type="html">风扇</title><link href="http://localhost:4000/blog/2023/07/15/%E9%A3%8E%E6%89%87/" rel="alternate" type="text/html" title="风扇" /><published>2023-07-15T00:00:00+08:00</published><updated>2023-07-15T00:00:00+08:00</updated><id>http://localhost:4000/blog/2023/07/15/%E9%A3%8E%E6%89%87</id><content type="html" xml:base="http://localhost:4000/blog/2023/07/15/%E9%A3%8E%E6%89%87/">&lt;blockquote&gt;
   &lt;p&gt;风扇&lt;/p&gt;
 &lt;/blockquote&gt;
 
