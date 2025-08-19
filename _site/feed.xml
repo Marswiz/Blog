@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-08-15T01:53:26+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">资料备份</title><link href="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/" rel="alternate" type="text/html" title="资料备份" /><published>2025-05-01T00:00:00+08:00</published><updated>2025-05-01T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD</id><content type="html" xml:base="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-08-20T02:11:29+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">资料备份</title><link href="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/" rel="alternate" type="text/html" title="资料备份" /><published>2025-05-01T00:00:00+08:00</published><updated>2025-05-01T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD</id><content type="html" xml:base="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">&lt;blockquote&gt;
   &lt;p&gt;重要文件上传备份&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -123,7 +123,7 @@
 
 &lt;h1 id=&quot;图纸相关&quot;&gt;图纸相关&lt;/h1&gt;
 
-&lt;h2 id=&quot;尺寸公差标注&quot;&gt;尺寸、公差标注&lt;/h2&gt;
+&lt;h2 id=&quot;尺寸&quot;&gt;尺寸&lt;/h2&gt;
 
 &lt;h3 id=&quot;尺寸的分类&quot;&gt;尺寸的分类&lt;/h3&gt;
 
@@ -178,7 +178,7 @@
 
 &lt;h3 id=&quot;基本尺寸的分类&quot;&gt;基本尺寸的分类&lt;/h3&gt;
 
-&lt;h4 id=&quot;实体尺寸&quot;&gt;实体尺寸&lt;/h4&gt;
+&lt;h4 id=&quot;实体尺寸尺寸要素fos&quot;&gt;实体尺寸（尺寸要素FOS）&lt;/h4&gt;
 
 &lt;p&gt;约束几何体外形大小的尺寸（能被卡尺直接测量的尺寸）。&lt;/p&gt;
 
@@ -209,13 +209,115 @@
 
 &lt;p&gt;约束形状的尺寸，一般仅包括&lt;code&gt;倒角值C&lt;/code&gt;和&lt;code&gt;倒圆角半径R&lt;/code&gt;。&lt;/p&gt;
 
-&lt;h3 id=&quot;尺寸&quot;&gt;尺寸&lt;/h3&gt;
+&lt;h2 id=&quot;gdt-几何公差&quot;&gt;GD&amp;amp;T 几何公差&lt;/h2&gt;
 
-&lt;h3 id=&quot;标注原则&quot;&gt;标注原则&lt;/h3&gt;
+&lt;h3 id=&quot;几何公差总览表&quot;&gt;几何公差总览表&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/75.png&quot; alt=&quot;几何公差总览表&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;几何公差修饰符号总览&quot;&gt;几何公差修饰符号总览&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/76.png&quot; alt=&quot;几何公差修饰符号总览&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;几何要素分类&quot;&gt;几何要素分类&lt;/h3&gt;
+
+&lt;h4 id=&quot;1按结构特征分组成要素导出要素&quot;&gt;1、按结构特征分：组成要素、导出要素&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;组成要素&lt;/strong&gt;：是构成零件外形，零件上实际存在的&lt;code&gt;点、线、面&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;导出要素&lt;/strong&gt;：由零件上实际存在的&lt;code&gt;点、线、面&lt;/code&gt;（组成要素）通过计算、平均、拟合等操作得到的&lt;code&gt;虚拟元素&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;导出要素通常指通过组成要素得到的：&lt;code&gt;中心点、中心线&lt;/code&gt;和&lt;code&gt;中心面&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h4 id=&quot;2按存在状态分实际要素公称要素&quot;&gt;2、按存在状态分：实际要素、公称要素&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;实际要素&lt;/strong&gt;：&lt;code&gt;加工后&lt;/code&gt;零件上&lt;code&gt;实际存在&lt;/code&gt;的要素。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;公称要素&lt;/strong&gt;：用于表达设计要求的&lt;code&gt;理论正确要素&lt;/code&gt;，是用于在理想状态下对零件进行几何约束的要素，没有任何误差。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/77.jpg&quot; alt=&quot;实际要素、公称要素&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;3按检验过程的先后顺序分提取要素拟合要素&quot;&gt;3、按检验过程的先后顺序分：提取要素、拟合要素&lt;/h4&gt;
+
+&lt;p&gt;由于无法获取加工后零件的完整实际要素（如实际的线、面等数据），检验时只能对实际要素进行采样提取采集若干点。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;提取要素&lt;/strong&gt;：对&lt;code&gt;加工后&lt;/code&gt;零件上实际要素进行采样，提取有限数目的点所形成的点集，作为实际要素的近似替代要素用于检测分析。细分为提取组成要素和提取导出要素。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;拟合要素&lt;/strong&gt;：按规定算法，由&lt;code&gt;提取要素&lt;/code&gt;计算得到的具有理想形状的要素，用于与基准要素进行比对进行检验的依据。细分为&lt;code&gt;拟合组成要素&lt;/code&gt;和&lt;code&gt;拟合导出要素&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/要素分类.webp&quot; alt=&quot;要素分类&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;4按检测关系分被测要素基准要素&quot;&gt;4、按检测关系分：被测要素、基准要素&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;被测要素&lt;/strong&gt;：零件图上进行标注，等待被检验的要素。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;基准要素&lt;/strong&gt;：用于确定检测被测要素的&lt;code&gt;位置&lt;/code&gt;和&lt;code&gt;方向&lt;/code&gt;的要素。&lt;/p&gt;
+
+&lt;h3 id=&quot;几何公差公差带的含义&quot;&gt;几何公差、公差带的含义&lt;/h3&gt;
+
+&lt;p&gt;（1）几何公差是指实际被测要素相对图纸上给定的理想形状、 理想位置（基准要素）的允许变动量。&lt;/p&gt;
+
+&lt;p&gt;（2）几何公差带是用来&lt;code&gt;限定实际被测要素变动的区域&lt;/code&gt; ，定义&lt;code&gt;几何误差的最大允许值&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;（3）只要被测要素全部落在给定的公差带内，就表示该被测要素&lt;code&gt;合格&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;（4）几何公差带具有&lt;code&gt;形状、大小、方向&lt;/code&gt;和&lt;code&gt;位置&lt;/code&gt;四个特征要素。&lt;/p&gt;
+
+&lt;p&gt;（5）几何公差带的形状由&lt;code&gt;被测要素的理想形状&lt;/code&gt;和&lt;code&gt;给定的公差特征&lt;/code&gt;所决定。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/78.jpg&quot; alt=&quot;几何公差带的形状&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;基本公差原则包容原则独立原则&quot;&gt;基本公差原则：包容原则、独立原则&lt;/h3&gt;
+
+&lt;p&gt;基本公差原则规定了&lt;code&gt;默认&lt;/code&gt;条件下，尺寸公差和几何公差的关联关系。&lt;/p&gt;
+
+&lt;p&gt;基本公差原则包括：&lt;strong&gt;&lt;code&gt;包容原则&lt;/code&gt;&lt;/strong&gt;与&lt;strong&gt;&lt;code&gt;独立原则&lt;/code&gt;&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;h4 id=&quot;包容原则&quot;&gt;包容原则&lt;/h4&gt;
+
+&lt;p&gt;包容原则为美国ASME标准所采用的默认基本公差原则（我国国标和欧洲ISO标准，包容原则不是默认）。&lt;/p&gt;
+
+&lt;p&gt;其基本含义是：在&lt;code&gt;默认&lt;/code&gt;情况下，&lt;code&gt;零件的实际要素，不能超出尺寸要素（FOS）公差所约定的最大实体边界&lt;/code&gt;。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;包容原则的理解：&lt;/strong&gt;&lt;/p&gt;
+
+  &lt;p&gt;1、包容原则只对尺寸要素FOS有效，也就是约定孔、轴、板、槽、球外形大小的尺寸，对位置、方向和形状尺寸不适用；&lt;/p&gt;
+
+  &lt;p&gt;2、包容原则下，尺寸公差对几何体的形状也产生约束，也就是&lt;strong&gt;将尺寸公差与几何公差联系起来&lt;/strong&gt;；&lt;/p&gt;
+
+  &lt;p&gt;3、包容原则的&lt;strong&gt;目的&lt;/strong&gt;是使零件实际要素不超过最大实体边界，也就是&lt;strong&gt;保证零件的装配性&lt;/strong&gt;；&lt;/p&gt;
+
+  &lt;p&gt;4、包容原则的尺寸公差，在约束每一个截面的尺寸外，还约束了要素的整体形状，因此&lt;strong&gt;相对于独立原则要求更高，加工更不经济&lt;/strong&gt;；&lt;/p&gt;
+
+  &lt;p&gt;5、包容原则为默认原则时，如需使用独立原则，需在尺寸后加修饰符&lt;strong&gt;&lt;code&gt;Ⓘ&lt;/code&gt;&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/包容原则.webp&quot; alt=&quot;包容原则&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;独立原则&quot;&gt;独立原则&lt;/h4&gt;
+
+&lt;p&gt;独立原则为我国国标和欧洲ISO标准所采用的默认基本公差原则（我国国标和欧洲ISO标准，包容原则不是默认）。&lt;/p&gt;
+
+&lt;p&gt;独立原则：图纸上给定的尺寸公差和几何公差是独立的，应&lt;code&gt;分别满足要求&lt;/code&gt;。独立原则下，尺寸公差和几何公差&lt;code&gt;互相独立，互不影响&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;在独立原则下，图纸标注的尺寸公差只控制局部实际尺寸，即任意一个横截面局部测量的尺寸，不控制要素本身的形状误差。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;独立原则为默认原则时，如需使用包容原则，需在尺寸后加修饰符&lt;strong&gt;&lt;code&gt;Ⓔ&lt;/code&gt;&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;相关要求&quot;&gt;相关要求&lt;/h3&gt;
+
+&lt;h3 id=&quot;几何公差的理解&quot;&gt;几何公差的理解&lt;/h3&gt;
+
+&lt;h3 id=&quot;基准datum&quot;&gt;基准(Datum)&lt;/h3&gt;
+
+&lt;h2 id=&quot;标注原则&quot;&gt;标注原则&lt;/h2&gt;
 
 &lt;p&gt;先明确设计意图（确定零件功能、配合关系和关键要素），再选择表达方式。&lt;/p&gt;
 
-&lt;h3 id=&quot;好的公差标注应做到&quot;&gt;好的公差标注应做到&lt;/h3&gt;
+&lt;h2 id=&quot;好的尺寸几何公差标注应做到&quot;&gt;好的尺寸、几何公差标注应做到&lt;/h2&gt;
 
 &lt;ol&gt;
   &lt;li&gt;充分且准确地表达了设计意图（零件功能、配合关系和关键要素）；&lt;/li&gt;
@@ -223,7 +325,7 @@
   &lt;li&gt;生产制造具有经济性。&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h3 id=&quot;如何审查别人的图纸&quot;&gt;如何审查别人的图纸&lt;/h3&gt;
+&lt;h2 id=&quot;如何审查别人的图纸&quot;&gt;如何审查别人的图纸&lt;/h2&gt;
 
 &lt;ol&gt;
   &lt;li&gt;检查图纸标准信息是否齐备、正确：
