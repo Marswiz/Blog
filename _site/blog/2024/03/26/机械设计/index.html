@@ -143,19 +143,264 @@
 
 <h1 id="图纸相关">图纸相关</h1>
 
-<h2 id="尺寸">尺寸</h2>
+<h2 id="图纸所遵循的标准">图纸所遵循的标准</h2>
+
+<p>目前世界上主要有两种尺寸公差标准体系，一种是欧洲主导的<code>ISO-GPS</code>标准体系，一种是美国<code>ASME-GD&amp;T</code>体系。</p>
+
+<p>我国的相关国家标准<code>GB/T</code>基本完全引用ISO-GPS体系。</p>
+
+<p>二者在80%方面均一致，仅在部分方面因侧重方向不同有所差异。<code>ISO-GPS</code>标准体系相对更严谨复杂，可对<code>ASME-GD&amp;T</code>体系进行完全覆盖。</p>
+
+<p><img src="/assets/posts/GPS与GDT.webp" alt="GPS与GDT" /></p>
+
+<h3 id="iso-gps标准">ISO-GPS标准</h3>
+
+<ul>
+  <li><strong>全称：</strong>Geometrical Product Specifications；</li>
+  <li><strong>中文：</strong>产品几何技术规范；</li>
+  <li><strong>特点：</strong>1、<code>默认独立原则</code>；2、注重严谨，有完善的数学定义可完全消除歧义，符号系统复杂；3、偏向理论，强调产品一致性。</li>
+  <li><strong>应用地区：</strong>欧洲、日本、国际项目，<code>我国也在逐步跟进</code>；</li>
+  <li><strong>核心标准：I</strong>SO 1101、ISO 5459、ISO 8015等共计数百项标准；</li>
+  <li><strong>场景：</strong>国际协作、标准化程度高的工程系统。</li>
+</ul>
+
+<h3 id="asme-gdt标准">ASME-GD&amp;T标准</h3>
+
+<ul>
+  <li><strong>全称：</strong>Geometric Dimensioning and Tolerancing；</li>
+  <li><strong>中文：</strong>几何尺寸和公差；</li>
+  <li><strong>特点：</strong>1、<code>默认包容原则</code>；2、公差表达服务于功能和装配，公差定义贴近生产制造现场，符号化程度高；3、偏向应用。</li>
+  <li><strong>应用地区：</strong>美国及美系企业；</li>
+  <li><strong>核心标准：</strong>ASME Y14.5；</li>
+  <li><strong>场景：</strong>功能性制造导向项目，如航空航天、汽车等领域。</li>
+</ul>
+
+<h3 id="如何确定图纸所遵循的标准">如何确定图纸所遵循的标准</h3>
+
+<p>从以下几个方面确定：</p>
+
+<ol>
+  <li><strong>最佳方式</strong>：在图纸右下角标题栏上方或技术要求中，注明尺寸公差所遵循的标准：
+    <ul>
+      <li>国标（ISO-GPS）：<code>公差标注按GB/T 4249-2018</code></li>
+      <li>ISO-GPS：<code>Tolerancing ISO 8015</code></li>
+      <li>ASME-GD&amp;T：<code>Interpreting Drawing Per ASME Y14.5-2018</code></li>
+    </ul>
+  </li>
+  <li>间接引入：<code>GPS规定，只要引用了GPS标准矩阵中的任一标准，就默认接入了整个GPS标准体系。</code>常见的被引GPS体系标准有：
+    <ul>
+      <li>GB/T 1182-2018： GPS 几何公差 形状、方向、位置和跳动公差标注</li>
+      <li>GB/T 1184-1996：形状和位置公差 未注公差值</li>
+      <li>GB/T 1804-2000：一般公差 未注公差的线性和角度尺寸的公差</li>
+    </ul>
+  </li>
+  <li>查看图纸特征：
+    <ul>
+      <li>中文图纸，带有圆圈型基准符号一般为GB/T(ISO-GPS)图纸；</li>
+      <li>具有复杂的符号修饰符标注：GB/T(ISO-GPS)图纸；</li>
+      <li>具有复合位置度、复合轮廓度：ASME GD&amp;T标准。</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="常用gps标准与gbt标准对应表">常用GPS标准与GB/T标准对应表</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"><strong>GB/T</strong></th>
+      <th style="text-align: left"><strong>ISO</strong></th>
+      <th style="text-align: left"><strong>标准名称</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">GB/T 20308-2020</td>
+      <td style="text-align: left">ISO 14638:2020</td>
+      <td style="text-align: left">GPS 矩阵模型</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 4249-2018</td>
+      <td style="text-align: left">ISO 8015:2011</td>
+      <td style="text-align: left">GPS 基础概念、原则和规则</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 38760-2020</td>
+      <td style="text-align: left">ISO 22432:2011</td>
+      <td style="text-align: left">GPS 规范和检验中使用的要素</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 24637.1-2020</td>
+      <td style="text-align: left">ISO 17450-1:2011</td>
+      <td style="text-align: left">GPS 通用概念 第 1 部分：几何规范和检验的模型</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 24637.2-2020</td>
+      <td style="text-align: left">ISO 17450-2:2012</td>
+      <td style="text-align: left">GPS 通用概念 第 2 部分：基本原则、规范、操作级和不确定度</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 24637.3-2020</td>
+      <td style="text-align: left">ISO 17450-3:2016</td>
+      <td style="text-align: left">GPS 通用概念 第 3 部分：被测要素</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 24637.4-2020</td>
+      <td style="text-align: left">ISO 17450-4:2017</td>
+      <td style="text-align: left">GPS 通用概念 第 4 部分：几何特征的GPS偏差量化</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 38762.1-2020</td>
+      <td style="text-align: left">ISO 14405-1:2016</td>
+      <td style="text-align: left">GPS 尺寸公差 线性尺寸</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 38762.2-2020</td>
+      <td style="text-align: left">ISO 14405-2:2018</td>
+      <td style="text-align: left">GPS 尺寸公差 除线性、角度以外的其他尺寸</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 38762.3-2020</td>
+      <td style="text-align: left">ISO 14405-3:2016</td>
+      <td style="text-align: left">GPS 尺寸公差 角度尺寸</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 1800.1-2020</td>
+      <td style="text-align: left">ISO 286-1:2010</td>
+      <td style="text-align: left">GPS 线性尺寸公差 ISO 代号体系 第 1 部分：公差、偏差和配合的基础</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 1800.2-2020</td>
+      <td style="text-align: left">ISO 286-1:2010</td>
+      <td style="text-align: left">GPS 线性尺寸公差 ISO 代号体系 第 2 部分：标准公差带代号和孔、轴的极限偏差表</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 1182-2018</td>
+      <td style="text-align: left">ISO 1101:2017</td>
+      <td style="text-align: left">GPS 几何公差 形状、方向、位置和跳动公差标注</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 17851-2022</td>
+      <td style="text-align: left">ISO 5459:2024</td>
+      <td style="text-align: left">GPS 几何公差 基准和基准体系</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 17852-2018</td>
+      <td style="text-align: left">ISO 1660:2017</td>
+      <td style="text-align: left">GPS 几何公差 轮廓度公差标注</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 16671-2018</td>
+      <td style="text-align: left">ISO 2692:2014</td>
+      <td style="text-align: left">GPS 几何公差 最大实体要求、最小实体要求和可逆要求</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 13319-2020</td>
+      <td style="text-align: left">ISO 5458:2018</td>
+      <td style="text-align: left">GPS 几何公差 成组（要素）与组合几何规范</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 16892-2022</td>
+      <td style="text-align: left">ISO 10579:2010</td>
+      <td style="text-align: left">GPS 尺寸和公差标注 非刚性零件</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 17773-1999</td>
+      <td style="text-align: left">ISO 10578:1992</td>
+      <td style="text-align: left">形状和位置公差 延伸公差带及其表示法</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 1958-2017</td>
+      <td style="text-align: left">无</td>
+      <td style="text-align: left">GPS 几何公差检测与验证</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 131-2006</td>
+      <td style="text-align: left">ISO 21920-1:2021</td>
+      <td style="text-align: left">GPS 技术产品文件中表面结构的表示法</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 3505-2009</td>
+      <td style="text-align: left">ISO 21920-2:2021</td>
+      <td style="text-align: left">GPS 表面结构 轮廓法：术语、定义及表面结构参数</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 10610-2009</td>
+      <td style="text-align: left">ISO 21920-3:2021</td>
+      <td style="text-align: left">GPS 表面结构 轮廓法：评定表面结构的规则和方法</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 7220-2004</td>
+      <td style="text-align: left">ISO 21920：2021</td>
+      <td style="text-align: left">GPS 表面结构 轮廓法：表面粗糙度 术语 参数测量</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 1031-2009</td>
+      <td style="text-align: left">ISO 21920：2021</td>
+      <td style="text-align: left">GPS 表面结构 轮廓法：表面粗糙度参数及其数值</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 16747-2009</td>
+      <td style="text-align: left">ISO 21920：2021</td>
+      <td style="text-align: left">GPS 表面结构 轮廓法：表面波纹度词汇</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 15757-2002</td>
+      <td style="text-align: left">ISO 8785:1998</td>
+      <td style="text-align: left">GPS 表面缺陷术语、定义及参数</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 1184-1996</td>
+      <td style="text-align: left">ISO 2768-2:1989</td>
+      <td style="text-align: left">形状和位置公差 未注公差值</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">GB/T 1804-2000</td>
+      <td style="text-align: left">ISO 2768-1:1989</td>
+      <td style="text-align: left">一般公差 未注公差的线性和角度尺寸的公差</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="尺寸要素fos与尺寸">尺寸要素FOS与尺寸</h2>
+
+<p>尺寸要素是指<code>由一定大小的线性尺寸或角度尺寸可以完全确定的几何形状</code>。</p>
+
+<p>尺寸要素包括<code>线性尺寸要素</code>和<code>角度尺寸要素</code>。</p>
+
+<p>线性尺寸要素一般包括：</p>
+
+<ul>
+  <li>圆柱面；</li>
+  <li>球面；</li>
+  <li>两相对平行平面；</li>
+  <li>圆；</li>
+  <li>两相对平行直线；</li>
+  <li>两不同半径的同心圆；</li>
+  <li>圆环；</li>
+</ul>
+
+<p>角度尺寸要素一般为<code>两相交互成角度的直线</code>或<code>两相交互成角度的平面</code>，如圆锥顶角。</p>
+
+<p>尺寸是<code>定义尺寸要素的可变参数</code>。</p>
 
 <h3 id="尺寸的分类">尺寸的分类</h3>
 
-<p>尺寸分为<code>基本尺寸</code>、<code>最大（小）极限尺寸</code>、<code>实际尺寸</code>、<code>作用尺寸</code>、<code>最大（小）实体尺寸</code>、<code>最大（小）实体实效尺寸</code>。</p>
+<p>尺寸依不同维度，可进行如下分类。</p>
 
-<p><img src="/assets/posts/尺寸分类.webp" alt="尺寸分类" /></p>
+<ul>
+  <li>按公称状态的不同定义：基本尺寸、上下极限尺寸、最大最小实体尺寸、公称尺寸；</li>
+  <li>按实际工件尺寸评估时的局部或整体性：局部尺寸、全局尺寸；</li>
+</ul>
 
-<h4 id="基本尺寸">基本尺寸</h4>
+<h4 id="按公称状态的不同定义">按公称状态的不同定义</h4>
+<h5 id="基本尺寸">基本尺寸</h5>
 
 <p>图纸上标注的尺寸（不含公差部分）均为基本尺寸。</p>
 
-<h4 id="极限尺寸">极限尺寸</h4>
+<p><img src="/assets/posts/尺寸分类.webp" alt="尺寸分类" /></p>
+
+<h5 id="极限尺寸">极限尺寸</h5>
 
 <p>由基本尺寸进一步考虑公差条件下的最大（小）设计尺寸。</p>
 
@@ -164,27 +409,7 @@
   <li><strong>最小极限尺寸</strong>（也叫<strong>下极限尺寸</strong>）：<code>基本尺寸 + 下公差值</code>；</li>
 </ul>
 
-<h4 id="实际尺寸">实际尺寸</h4>
-
-<p>零件通过测量得到的，某一局部截面上的测量尺寸（考虑测量误差）。</p>
-
-<p>注意：实际尺寸是<strong>局部测量</strong>得到的，区别于其他尺寸。</p>
-
-<h4 id="作用尺寸">作用尺寸</h4>
-
-<p>分为<code>体外作用尺寸</code>和<code>体内作用尺寸</code>。一般默认指体外作用尺寸。</p>
-
-<blockquote>
-  <p>体外作用尺寸：在被测要素的给定长度上，与实际内表面体外相接的最大理想面或与实际外表面体外相接的最小理想面的直径或宽度。</p>
-</blockquote>
-
-<p><strong>翻译</strong>：</p>
-<ul>
-  <li>孔：与孔内接的最大理想轴的直径。</li>
-  <li>轴：与轴外接的最小理想孔的直径。</li>
-</ul>
-
-<h4 id="最大小实体尺寸">最大（小）实体尺寸</h4>
+<h5 id="最大小实体尺寸">最大（小）实体尺寸</h5>
 
 <p><code>所用材料最多时</code>的极限尺寸。</p>
 
@@ -192,15 +417,66 @@
 
 <p>对于孔，最大实体尺寸等于最小极限尺寸（下极限尺寸），最小实体尺寸等于最大极限尺寸（上极限尺寸）。</p>
 
-<h4 id="最大小实体实效尺寸">最大（小）实体实效尺寸</h4>
+<h5 id="最大小实体实效尺寸">最大（小）实体实效尺寸</h5>
 
 <p>在最大实体尺寸的基础上，<code>计入几何公差</code>后所形成的新的综合极限状态的尺寸。</p>
 
+<h5 id="公称尺寸">公称尺寸</h5>
+
+<p>图纸上标注的尺寸，包含上下公差，合称为<code>公称尺寸</code>。</p>
+
+<h4 id="按实际工件尺寸评估时的局部或整体性">按实际工件尺寸评估时的局部或整体性</h4>
+
+<blockquote>
+  <p>本部分参照《GB/T 38762.1-2020》第3小节。</p>
+</blockquote>
+
+<h4 id="局部尺寸">局部尺寸</h4>
+<h5 id="两点尺寸">两点尺寸</h5>
+
+<p>实际工件上的线性尺寸要素，进行提取后两相对点间的距离。</p>
+
+<p><img src="/assets/posts/两点尺寸.webp" alt="两点尺寸" /></p>
+
+<h5 id="截面尺寸">截面尺寸</h5>
+
+<p>实际工件上的线性尺寸要素，进行提取后某一横截面的全局尺寸。</p>
+
+<h5 id="其他局部尺寸">其他局部尺寸</h5>
+
+<p>部分尺寸、球面尺寸等，不常用。</p>
+
+<h4 id="全局尺寸">全局尺寸</h4>
+
+<p>全局尺寸就是拟合组成要素的尺寸。</p>
+
+<h5 id="最小外接尺寸最大内切尺寸">最小外接尺寸、最大内切尺寸</h5>
+
+<p>最小外接尺寸、最大内切尺寸是对提取的组成要素进行拟合（<code>最小外接准则、最大内切准则</code>）后得到拟合要素的直接全局尺寸。</p>
+
+<p>最小外接尺寸、最大内切尺寸与<code>作用尺寸</code>（<code>体外作用尺寸</code>和<code>体内作用尺寸</code>）相对应，一般说作用尺寸默认指体外作用尺寸。</p>
+
+<blockquote>
+  <p>体外作用尺寸：在被测要素的给定长度上，与实际内表面体外相接的最大理想面或与实际外表面体外相接的最小理想面的直径或宽度。</p>
+</blockquote>
+
+<p><strong>作用尺寸的翻译</strong>：</p>
+<ul>
+  <li>孔：与孔内接的最大理想轴的直径。</li>
+  <li>轴：与轴外接的最小理想孔的直径。</li>
+</ul>
+
+<h5 id="其他全局尺寸">其他全局尺寸</h5>
+
+<p>其他全局尺寸的获得方式是一样的，只是尺寸要素提取后应用的拟合准则不同。常见有：<code>最小二乘尺寸</code>、<code>切比雪夫尺寸</code>等。</p>
+
 <h3 id="基本尺寸的分类">基本尺寸的分类</h3>
 
-<h4 id="实体尺寸尺寸要素fos">实体尺寸（尺寸要素FOS）</h4>
+<h4 id="实体尺寸">实体尺寸</h4>
 
-<p>约束几何体外形大小的尺寸（能被卡尺直接测量的尺寸）。</p>
+<p>实体尺寸，就是尺寸要素FOS的尺寸。</p>
+
+<p>表现为约束几何体外形大小的尺寸（能被卡尺直接测量的尺寸）。</p>
 
 <p>表现形式一般为：<code>孔、轴、板、槽、球</code>的外形尺寸。</p>
 
@@ -229,19 +505,9 @@
 
 <p>约束形状的尺寸，一般仅包括<code>倒角值C</code>和<code>倒圆角半径R</code>。</p>
 
-<h2 id="gdt-几何公差">GD&amp;T 几何公差</h2>
+<h2 id="几何要素分类">几何要素分类</h2>
 
-<h3 id="几何公差总览表">几何公差总览表</h3>
-
-<p><img src="/assets/posts/75.png" alt="几何公差总览表" /></p>
-
-<h3 id="几何公差修饰符号总览">几何公差修饰符号总览</h3>
-
-<p><img src="/assets/posts/76.png" alt="几何公差修饰符号总览" /></p>
-
-<h3 id="几何要素分类">几何要素分类</h3>
-
-<h4 id="1按结构特征分组成要素导出要素">1、按结构特征分：组成要素、导出要素</h4>
+<h3 id="1按结构特征分组成要素导出要素">1、按结构特征分：组成要素、导出要素</h3>
 
 <p><strong>组成要素</strong>：是构成零件外形，零件上实际存在的<code>点、线、面</code>。</p>
 
@@ -249,7 +515,7 @@
 
 <p>导出要素通常指通过组成要素得到的：<code>中心点、中心线</code>和<code>中心面</code>。</p>
 
-<h4 id="2按存在状态分实际要素公称要素">2、按存在状态分：实际要素、公称要素</h4>
+<h3 id="2按存在状态分实际要素公称要素">2、按存在状态分：实际要素、公称要素</h3>
 
 <p><strong>实际要素</strong>：<code>加工后</code>零件上<code>实际存在</code>的要素。</p>
 
@@ -257,7 +523,7 @@
 
 <p><img src="/assets/posts/77.jpg" alt="实际要素、公称要素" /></p>
 
-<h4 id="3按检验过程的先后顺序分提取要素拟合要素">3、按检验过程的先后顺序分：提取要素、拟合要素</h4>
+<h3 id="3按检验过程的先后顺序分提取要素拟合要素">3、按检验过程的先后顺序分：提取要素、拟合要素</h3>
 
 <p>由于无法获取加工后零件的完整实际要素（如实际的线、面等数据），检验时只能对实际要素进行采样提取采集若干点。</p>
 
@@ -267,25 +533,13 @@
 
 <p><img src="/assets/posts/要素分类.webp" alt="要素分类" /></p>
 
-<h4 id="4按检测关系分被测要素基准要素">4、按检测关系分：被测要素、基准要素</h4>
+<h3 id="4按检测关系分被测要素基准要素">4、按检测关系分：被测要素、基准要素</h3>
 
 <p><strong>被测要素</strong>：零件图上进行标注，等待被检验的要素。</p>
 
 <p><strong>基准要素</strong>：用于确定检测被测要素的<code>位置</code>和<code>方向</code>的要素。</p>
 
-<h3 id="几何公差公差带的含义">几何公差、公差带的含义</h3>
-
-<p>（1）几何公差是指实际被测要素相对图纸上给定的理想形状、 理想位置（基准要素）的允许变动量。</p>
-
-<p>（2）几何公差带是用来<code>限定实际被测要素变动的区域</code> ，定义<code>几何误差的最大允许值</code>。</p>
-
-<p>（3）只要被测要素全部落在给定的公差带内，就表示该被测要素<code>合格</code>。</p>
-
-<p>（4）几何公差带具有<code>形状、大小、方向</code>和<code>位置</code>四个特征要素。</p>
-
-<p>（5）几何公差带的形状由<code>被测要素的理想形状</code>和<code>给定的公差特征</code>所决定。</p>
-
-<p><img src="/assets/posts/78.jpg" alt="几何公差带的形状" /></p>
+<h2 id="公差-tolerancing">公差 Tolerancing</h2>
 
 <h3 id="基本公差原则包容原则独立原则">基本公差原则：包容原则、独立原则</h3>
 
@@ -321,36 +575,89 @@
 
 <p>独立原则：图纸上给定的尺寸公差和几何公差是独立的，应<code>分别满足要求</code>。独立原则下，尺寸公差和几何公差<code>互相独立，互不影响</code>。</p>
 
-<p>在独立原则下，图纸标注的尺寸公差只控制局部实际尺寸，即任意一个横截面局部测量的尺寸，不控制要素本身的形状误差。</p>
+<p>在独立原则下，图纸标注的尺寸公差只控制<code>局部实际尺寸（两点尺寸）</code>，即任意一个横截面局部测量的尺寸，不控制要素本身的形状误差。</p>
 
 <blockquote>
   <p>独立原则为默认原则时，如需使用包容原则，需在尺寸后加修饰符<strong><code>Ⓔ</code></strong>。</p>
 </blockquote>
 
-<h3 id="相关要求">相关要求</h3>
+<h2 id="几何公差">几何公差</h2>
+
+<h3 id="几何公差总览表">几何公差总览表</h3>
+
+<p><img src="/assets/posts/75.png" alt="几何公差总览表" /></p>
+
+<h3 id="几何公差修饰符号总览">几何公差修饰符号总览</h3>
+
+<p><img src="/assets/posts/76.png" alt="几何公差修饰符号总览" /></p>
+
+<h3 id="几何公差公差带的含义">几何公差、公差带的含义</h3>
+
+<p>（1）几何公差是指实际被测要素相对图纸上给定的理想形状、 理想位置（基准要素）的允许变动量。</p>
+
+<p>（2）几何公差带是用来<code>限定实际被测要素变动的区域</code> ，定义<code>几何误差的最大允许值</code>。</p>
+
+<p>（3）只要被测要素全部落在给定的公差带内，就表示该被测要素<code>合格</code>。</p>
+
+<p>（4）几何公差带具有<code>形状、大小、方向</code>和<code>位置</code>四个特征要素。</p>
+
+<p>（5）几何公差带的形状由<code>被测要素的理想形状</code>和<code>给定的公差特征</code>所决定。</p>
+
+<p><img src="/assets/posts/78.jpg" alt="几何公差带的形状" /></p>
 
 <h3 id="几何公差的理解">几何公差的理解</h3>
 
+<h3 id="相关要求">相关要求</h3>
+
+<h4 id="最大实体状态要求ⓜ">最大实体状态要求Ⓜ</h4>
+
+<h4 id="最小实体状态要求ⓛ">最小实体状态要求Ⓛ</h4>
+
 <h3 id="基准datum">基准(Datum)</h3>
 
-<h2 id="标注原则">标注原则</h2>
+<blockquote>
+  <p>以下内容参考《GB/T 17851-2022 GPS 几何公差 基准和基准体系》</p>
+</blockquote>
+
+<p>基准由一系列<code>理想要素</code>的<code>方位要素</code>组成。</p>
+
+<p>其中，理想要素由实际工件上被标注基准的组成要素，经<code>提取拟合</code>建立。</p>
+
+<p>基准一定是拟合要素（理想要素）。</p>
+
+<h4 id="公共基准">公共基准</h4>
+
+<h4 id="基准体系">基准体系</h4>
+
+<h2 id="检验测量">检验测量</h2>
+<h3 id="线性尺寸">线性尺寸</h3>
+<h4 id="默认规则">默认规则</h4>
+
+<ul>
+  <li><strong>无特殊标注要求情况下，尺寸的默认检验操作规则是局部<code>两点尺寸</code>；(GB/T 38762.1-2020 5.2)；</strong></li>
+  <li><strong>无特殊标注说明情况下，几何要素的默认拟合方式采用无约束的<code>最小二乘（高斯）目标函数</code>(GB/T 24637.3-2020 5.1)；</strong></li>
+  <li>默认情况下，基准的拟合以基准相关标准确定，不同于被测几何要素（基准的拟合一般用<code>最大内接（最小外切）准则</code>，基准的默认拟合方法见《GB/T 17851-2022 表A.1、A.2》）；</li>
+</ul>
+
+<h2 id="图纸标注方法">图纸标注方法</h2>
 
 <p>先明确设计意图（确定零件功能、配合关系和关键要素），再选择表达方式。</p>
 
 <h2 id="好的尺寸几何公差标注应做到">好的尺寸、几何公差标注应做到</h2>
 
 <ol>
-  <li>充分且准确地表达了设计意图（零件功能、配合关系和关键要素）；</li>
-  <li>检测容易，方法明确；</li>
-  <li>生产制造具有经济性。</li>
+  <li><strong>功能性：</strong>充分且准确地表达了设计意图（零件功能、配合关系和关键要素）；</li>
+  <li><strong>检测性：</strong>检测容易，方法明确；</li>
+  <li><strong>经济性：</strong>生产制造具有经济性。</li>
 </ol>
 
-<h2 id="如何审查别人的图纸">如何审查别人的图纸</h2>
+<h2 id="如何审查图纸">如何审查图纸</h2>
 
 <ol>
   <li>检查图纸标准信息是否齐备、正确：
     <ul>
       <li>零件名；</li>
+      <li>公差标准体系；</li>
       <li>图号、装配号、所属装配号、项目号；</li>
       <li>材料及其标准；</li>
       <li>图纸比例；</li>
@@ -360,7 +667,7 @@
     </ul>
   </li>
   <li>检查图纸视图表达是否完整，是否冗余；</li>
-  <li>确定零件功能、装配关系；</li>
+  <li>确定零件<strong>功能、装配关系</strong>；</li>
   <li>找到配合面，确定各配合面上对手件的极限尺寸、最大实体实效尺寸；</li>
   <li>检查线性尺寸是否有误或有遗漏；</li>
   <li>检查已注形位公差的标准性，基准是否合理（基准一般应为配合面）；</li>
