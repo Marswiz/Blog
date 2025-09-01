@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-08-25T23:45:13+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">资料备份</title><link href="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/" rel="alternate" type="text/html" title="资料备份" /><published>2025-05-01T00:00:00+08:00</published><updated>2025-05-01T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD</id><content type="html" xml:base="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-09-02T02:02:56+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">资料备份</title><link href="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/" rel="alternate" type="text/html" title="资料备份" /><published>2025-05-01T00:00:00+08:00</published><updated>2025-05-01T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD</id><content type="html" xml:base="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">&lt;blockquote&gt;
   &lt;p&gt;重要文件上传备份&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -620,11 +620,97 @@
 
 &lt;p&gt;其中，理想要素由实际工件上被标注基准的组成要素，经&lt;code&gt;提取拟合&lt;/code&gt;建立。&lt;/p&gt;
 
-&lt;p&gt;基准一定是拟合要素（理想要素）。&lt;/p&gt;
+&lt;p&gt;基准一定是&lt;code&gt;拟合要素（理想要素）&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h3 id=&quot;基准的功能&quot;&gt;基准的功能&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;最主要：&lt;strong&gt;限制公差带的自由度（定位和定向）；&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;用于几何公差辅助要素，对相交平面、定向平面、方向要素或组合平面进行定向；&lt;/li&gt;
+  &lt;li&gt;确定实效状态的方向和位置。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;默认情况下，基准限制它所能限制的所有自由度。&lt;/p&gt;
+
+  &lt;p&gt;当基准后面标有&lt;code&gt;&amp;gt;&amp;lt;&lt;/code&gt;符号时，它只限制方向自由度。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;基准的默认拟合方式&quot;&gt;基准的默认拟合方式&lt;/h3&gt;
+
+&lt;p&gt;基准的默认拟合方式分两种情况：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;基准是带公差（含默认公差）的尺寸要素建立时：默认用&lt;code&gt;最大内切/最小外接&lt;/code&gt;方式拟合；&lt;/li&gt;
+  &lt;li&gt;基准是由理论尺寸要素建立、或者由零件表面轮廓建立，基准的默认拟合方式是：&lt;code&gt;切比雪夫拟合&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/基准默认拟合规则.png&quot; alt=&quot;基准默认拟合规则&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;基准的标注方式&quot;&gt;基准的标注方式&lt;/h3&gt;
+&lt;h4 id=&quot;基准符号&quot;&gt;基准符号&lt;/h4&gt;
+
+&lt;p&gt;单一要素建立的基准，用一个方框标注，通过指引线用一个填充的或空白的三角形连接到对应用于建立基准的要素。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/基准标识符.png&quot; alt=&quot;基准标识符&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;基准代号&quot;&gt;基准代号&lt;/h4&gt;
+
+&lt;p&gt;基准代号用大写字母表示，从&lt;code&gt;A&lt;/code&gt;到&lt;code&gt;Z&lt;/code&gt;。如果有更多基准需要建立，用两个字母表示，从&lt;code&gt;AA&lt;/code&gt;到&lt;code&gt;ZZ&lt;/code&gt;，以此类推。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code&gt;I、O、Q&lt;/code&gt;和&lt;code&gt;X&lt;/code&gt;不推荐用于建立基准，因为容易产生误解。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;直接由零件表面轮廓建立的基准标注&quot;&gt;直接由零件表面轮廓建立的基准标注&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;基准符号&lt;code&gt;直接放在表面轮廓上&lt;/code&gt;；&lt;/li&gt;
+  &lt;li&gt;基准符号放在&lt;code&gt;表面轮廓的延长线&lt;/code&gt;上；&lt;/li&gt;
+  &lt;li&gt;基准符号放在指向表面轮廓、表面轮廓延长线或参照线的&lt;code&gt;几何公差框格上&lt;/code&gt;；&lt;/li&gt;
+  &lt;li&gt;基准符号放在&lt;code&gt;指引线末端&lt;/code&gt;，指引线起始端用圆点与表面轮廓关联（当表面轮廓可见时用实线和实心圆点，不可见时用虚线和空心圆点）。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/表面轮廓基准.png&quot; alt=&quot;表面轮廓基准&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;尺寸要素建立的基准标注中心线中心面作基准&quot;&gt;尺寸要素建立的基准标注（中心线、中心面作基准）&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;基准符号放在&lt;code&gt;尺寸线延长的位置&lt;/code&gt;；&lt;/li&gt;
+  &lt;li&gt;放在&lt;code&gt;指向尺寸线延长线的公差框格&lt;/code&gt;上；&lt;/li&gt;
+  &lt;li&gt;放在&lt;code&gt;尺寸的参照线&lt;/code&gt;上；&lt;/li&gt;
+  &lt;li&gt;放在&lt;code&gt;与参照线相连的公差框格&lt;/code&gt;上；&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/尺寸基准.png&quot; alt=&quot;尺寸基准&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;尺寸要素建立的基准，需要用理论正确尺寸或公差（包含未注默认公差）约束。&lt;/p&gt;
+
+  &lt;p&gt;&lt;strong&gt;由图形关系隐含的理论正确尺寸不用标注：0mm、0°、90°、180°和270°。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;h4 id=&quot;公共基准&quot;&gt;公共基准&lt;/h4&gt;
 
 &lt;h4 id=&quot;基准体系&quot;&gt;基准体系&lt;/h4&gt;
+
+&lt;p&gt;多个约束方向不同的基准可以形成&lt;code&gt;基准体系&lt;/code&gt;。一个基准体系最多可以由&lt;code&gt;三个&lt;/code&gt;基准构成。&lt;/p&gt;
+
+&lt;p&gt;几何公差标注时，构成基准体系的基准代号&lt;code&gt;依次分别&lt;/code&gt;写在公差后面的&lt;code&gt;独立框格&lt;/code&gt;中。依标注先后次序，依次称为&lt;code&gt;第一基准、第二基准与第三基准&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;基准体系&lt;code&gt;标注的先后次序&lt;/code&gt;，就是最终实际确定基准的&lt;code&gt;拟合先后顺序&lt;/code&gt;，对最终基准体系的建立&lt;strong&gt;有重要作用&lt;/strong&gt;。不同的标注次序，体现的是基准的依赖重要程度的不同，造成建立的最终基准体系也不同。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/基准体系.webp&quot; alt=&quot;基准体系&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;一般&lt;code&gt;第一基准&lt;/code&gt;得到最好的拟合，&lt;code&gt;第二基准&lt;/code&gt;次之，&lt;code&gt;第三基准&lt;/code&gt;更次之。因此应&lt;code&gt;依照基准的重要程度&lt;/code&gt;进行基准体系标注排序。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;第一基准的建立&lt;strong&gt;不受任何位置和方向约束&lt;/strong&gt;，因此可以得到最好的拟合；&lt;/li&gt;
+  &lt;li&gt;第二基准的建立受第一基准的位置和方向约束；&lt;/li&gt;
+  &lt;li&gt;第三基准的建立同时受第一、第二基准的位置和方向约束。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/基准体系.png&quot; alt=&quot;基准体系&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;检验测量&quot;&gt;检验测量&lt;/h2&gt;
 &lt;h3 id=&quot;线性尺寸&quot;&gt;线性尺寸&lt;/h3&gt;
