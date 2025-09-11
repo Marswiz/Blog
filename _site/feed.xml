@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-09-02T02:02:56+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">资料备份</title><link href="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/" rel="alternate" type="text/html" title="资料备份" /><published>2025-05-01T00:00:00+08:00</published><updated>2025-05-01T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD</id><content type="html" xml:base="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-09-12T01:35:59+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">资料备份</title><link href="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/" rel="alternate" type="text/html" title="资料备份" /><published>2025-05-01T00:00:00+08:00</published><updated>2025-05-01T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD</id><content type="html" xml:base="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">&lt;blockquote&gt;
   &lt;p&gt;重要文件上传备份&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -339,6 +339,11 @@
       &lt;td style=&quot;text-align: left&quot;&gt;ISO 2768-1:1989&lt;/td&gt;
       &lt;td style=&quot;text-align: left&quot;&gt;一般公差 未注公差的线性和角度尺寸的公差&lt;/td&gt;
     &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;GB/T 13319-2020&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;ISO 5458:2018&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;产品几何技术规范（GPS） 几何公差 成组（要素）与组合几何规范&lt;/td&gt;
+    &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
@@ -578,32 +583,6 @@
   &lt;p&gt;独立原则为默认原则时，如需使用包容原则，需在尺寸后加修饰符&lt;strong&gt;&lt;code&gt;Ⓔ&lt;/code&gt;&lt;/strong&gt;。&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;几何公差&quot;&gt;几何公差&lt;/h2&gt;
-
-&lt;h3 id=&quot;几何公差总览表&quot;&gt;几何公差总览表&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/posts/75.png&quot; alt=&quot;几何公差总览表&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;几何公差修饰符号总览&quot;&gt;几何公差修饰符号总览&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/posts/76.png&quot; alt=&quot;几何公差修饰符号总览&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;几何公差公差带的含义&quot;&gt;几何公差、公差带的含义&lt;/h3&gt;
-
-&lt;p&gt;（1）几何公差是指实际被测要素相对图纸上给定的理想形状、 理想位置（基准要素）的允许变动量。&lt;/p&gt;
-
-&lt;p&gt;（2）几何公差带是用来&lt;code&gt;限定实际被测要素变动的区域&lt;/code&gt; ，定义&lt;code&gt;几何误差的最大允许值&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;（3）只要被测要素全部落在给定的公差带内，就表示该被测要素&lt;code&gt;合格&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;（4）几何公差带具有&lt;code&gt;形状、大小、方向&lt;/code&gt;和&lt;code&gt;位置&lt;/code&gt;四个特征要素。&lt;/p&gt;
-
-&lt;p&gt;（5）几何公差带的形状由&lt;code&gt;被测要素的理想形状&lt;/code&gt;和&lt;code&gt;给定的公差特征&lt;/code&gt;所决定。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/posts/78.jpg&quot; alt=&quot;几何公差带的形状&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;几何公差的理解&quot;&gt;几何公差的理解&lt;/h3&gt;
-
 &lt;h3 id=&quot;相关要求&quot;&gt;相关要求&lt;/h3&gt;
 
 &lt;h4 id=&quot;最大实体状态要求ⓜ&quot;&gt;最大实体状态要求Ⓜ&lt;/h4&gt;
@@ -711,6 +690,92 @@
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/posts/基准体系.png&quot; alt=&quot;基准体系&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;几何公差&quot;&gt;几何公差&lt;/h2&gt;
+
+&lt;h3 id=&quot;几何公差总览表&quot;&gt;几何公差总览表&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/75.png&quot; alt=&quot;几何公差总览表&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;几何公差修饰符号总览&quot;&gt;几何公差修饰符号总览&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/76.png&quot; alt=&quot;几何公差修饰符号总览&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;几何公差公差带的含义&quot;&gt;几何公差、公差带的含义&lt;/h3&gt;
+
+&lt;p&gt;（1）几何公差是指实际被测要素相对图纸上给定的理想形状、 理想位置（基准要素）的允许变动量。&lt;/p&gt;
+
+&lt;p&gt;（2）几何公差带是用来&lt;code&gt;限定实际被测要素变动的区域&lt;/code&gt; ，定义&lt;code&gt;几何误差的最大允许值&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;（3）只要被测要素全部落在给定的公差带内，就表示该被测要素&lt;code&gt;合格&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;（4）几何公差带具有&lt;code&gt;形状、大小、方向&lt;/code&gt;和&lt;code&gt;位置&lt;/code&gt;四个特征要素。&lt;/p&gt;
+
+&lt;p&gt;（5）几何公差带的形状由&lt;code&gt;被测要素的理想形状&lt;/code&gt;和&lt;code&gt;给定的公差特征&lt;/code&gt;所决定。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/78.jpg&quot; alt=&quot;几何公差带的形状&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;几何公差的理解&quot;&gt;几何公差的理解&lt;/h3&gt;
+
+&lt;h4 id=&quot;位置度&quot;&gt;位置度&lt;/h4&gt;
+&lt;h5 id=&quot;位置度的功能&quot;&gt;位置度的功能&lt;/h5&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;管控尺寸要素&lt;strong&gt;中心导出要素间的相对位置关系&lt;/strong&gt;；&lt;/li&gt;
+  &lt;li&gt;管控单一尺寸要素，或多个成组尺寸要素&lt;strong&gt;相对基准的位置关系&lt;/strong&gt;；&lt;/li&gt;
+  &lt;li&gt;管控尺寸要素间的&lt;strong&gt;同轴、对称关系&lt;/strong&gt;&lt;em&gt;（实为功能1的特殊情况）;&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;管控&lt;strong&gt;单一平表面相对于基准的位置关系&lt;/strong&gt;。&lt;em&gt;（此时相当于轮廓度）&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h5 id=&quot;位置度的特点&quot;&gt;位置度的特点&lt;/h5&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;可以带基准，也可以不带基准&lt;sup&gt;[a]&lt;/sup&gt;；&lt;/li&gt;
+  &lt;li&gt;只能用在&lt;code&gt;单一尺寸要素&lt;/code&gt;、&lt;code&gt;多个（独立或成组）尺寸要素&lt;/code&gt;或&lt;code&gt;单一平表面&lt;/code&gt;上；&lt;/li&gt;
+  &lt;li&gt;同时管控要素的&lt;code&gt;方向&lt;/code&gt;和&lt;code&gt;位置&lt;/code&gt;；&lt;/li&gt;
+  &lt;li&gt;公差带是&lt;code&gt;圆柱&lt;/code&gt;、&lt;code&gt;一对平行平面的内部区域&lt;/code&gt;或&lt;code&gt;球&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;a.&lt;/strong&gt;&lt;/p&gt;
+
+  &lt;p&gt;①、位置度不带基准时，一定是标注在多个尺寸要素上，含义是约束&lt;code&gt;要素之间的相对位置&lt;/code&gt;；&lt;/p&gt;
+
+  &lt;p&gt;②、位置度带基准时，含义是约束&lt;code&gt;相对于基准的位置&lt;/code&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;位置度相关常用的修饰符&quot;&gt;位置度相关常用的修饰符&lt;/h5&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;UF&lt;/code&gt;: 联合要素，添加在成组尺寸公差的后面，用于将多个几何要素联合成一个要素来进行评估；&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;Ⓜ&lt;/code&gt;: 最大实体要求，用于实现尺寸公差对位置度公差的补偿奖励；&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;CZ&lt;/code&gt;: 成组要素（组合公差带），区别于默认的独立原则下的独立公差带，公差带同时要考虑多个要素间内部的方向和位置约束；&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;SZ&lt;/code&gt;: 独立要素，仅在位置度标注时有意义（标注是为了明确，在GB/T1182中等同于默认的不标状态）；&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;SIMn&lt;/code&gt;:同时要求。用于实现多个位置度公差之间的同时联动，表示多个不同要素公差带之间的方向和位置约束也需要保证，而非相互独立；&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;℗&lt;/code&gt;：延伸公差带。后面需附上延伸的数值，用于将公差带进行延伸，在评估时使用延伸后的公差带。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code&gt;CZ&lt;/code&gt;、&lt;code&gt;SZ&lt;/code&gt;仅在下述情况全部存在时使用：&lt;/p&gt;
+
+  &lt;ol&gt;
+    &lt;li&gt;位置度同时控制了&lt;strong&gt;多个要素，而非单一要素&lt;/strong&gt;；&lt;/li&gt;
+    &lt;li&gt;多个要素&lt;strong&gt;各自公差带之间，存在尚未明确是否应该予以考虑的内部约束&lt;/strong&gt;。&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/77.png&quot; alt=&quot;同时要求&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;上图中标注解释：&lt;/strong&gt;&lt;/p&gt;
+
+  &lt;p&gt;1、&lt;code&gt;CZ&lt;/code&gt;表示位置度所管控的四个孔，不仅各自本身需要相对于垂直于基准B的基准轴A，满足&lt;code&gt;理论半径+φ0.3&lt;/code&gt;的位置度要求，同时各个孔的公差带轴线还需要满足&lt;code&gt;相互之间呈90°均匀分布的方向要求&lt;/code&gt;；&lt;/p&gt;
+
+  &lt;p&gt;2、&lt;code&gt;SIM&lt;/code&gt;表示各自约束了四个孔位置的两个位置度公差，形成的两组公差带之间并非独立（不是各自绕A轴可以自由旋转），还需要保证图示这样的角度一起同时旋转。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/czsz.webp&quot; alt=&quot;czsz&quot; /&gt;
+&lt;img src=&quot;/assets/posts/sim.webp&quot; alt=&quot;sim&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;检验测量&quot;&gt;检验测量&lt;/h2&gt;
 &lt;h3 id=&quot;线性尺寸&quot;&gt;线性尺寸&lt;/h3&gt;
