@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-09-12T01:35:59+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">资料备份</title><link href="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/" rel="alternate" type="text/html" title="资料备份" /><published>2025-05-01T00:00:00+08:00</published><updated>2025-05-01T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD</id><content type="html" xml:base="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-09-24T01:23:48+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">资料备份</title><link href="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/" rel="alternate" type="text/html" title="资料备份" /><published>2025-05-01T00:00:00+08:00</published><updated>2025-05-01T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD</id><content type="html" xml:base="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">&lt;blockquote&gt;
   &lt;p&gt;重要文件上传备份&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -722,7 +722,7 @@
 
 &lt;ol&gt;
   &lt;li&gt;管控尺寸要素&lt;strong&gt;中心导出要素间的相对位置关系&lt;/strong&gt;；&lt;/li&gt;
-  &lt;li&gt;管控单一尺寸要素，或多个成组尺寸要素&lt;strong&gt;相对基准的位置关系&lt;/strong&gt;；&lt;/li&gt;
+  &lt;li&gt;管控单一尺寸要素，或多个成组尺寸要素&lt;strong&gt;中心导出要素相对基准的位置关系&lt;/strong&gt;；&lt;/li&gt;
   &lt;li&gt;管控尺寸要素间的&lt;strong&gt;同轴、对称关系&lt;/strong&gt;&lt;em&gt;（实为功能1的特殊情况）;&lt;/em&gt;&lt;/li&gt;
   &lt;li&gt;管控&lt;strong&gt;单一平表面相对于基准的位置关系&lt;/strong&gt;。&lt;em&gt;（此时相当于轮廓度）&lt;/em&gt;&lt;/li&gt;
 &lt;/ol&gt;
@@ -777,6 +777,62 @@
 &lt;p&gt;&lt;img src=&quot;/assets/posts/czsz.webp&quot; alt=&quot;czsz&quot; /&gt;
 &lt;img src=&quot;/assets/posts/sim.webp&quot; alt=&quot;sim&quot; /&gt;&lt;/p&gt;
 
+&lt;h4 id=&quot;轮廓度&quot;&gt;轮廓度&lt;/h4&gt;
+
+&lt;p&gt;轮廓度分为&lt;code&gt;线轮廓度&lt;/code&gt;和&lt;code&gt;面轮廓度&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;线轮廓度&lt;code&gt;⌒0.2&lt;/code&gt;的公差带是：直径为0.2的圆沿着理论轮廓移动，形成的上下两条&lt;code&gt;外包络线之间的区域&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;面轮廓度&lt;code&gt;⌓0.2&lt;/code&gt;的公差带是：直径为0.2的球沿着理论轮廓移动，形成的上下两个&lt;code&gt;外包络面之间的区域&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/轮廓度.webp&quot; alt=&quot;轮廓度&quot; /&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;轮廓度的功能&quot;&gt;轮廓度的功能&lt;/h5&gt;
+
+&lt;p&gt;控制要素相对于理论轮廓的&lt;strong&gt;尺寸、形状、方向和位置&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;h5 id=&quot;轮廓度的特点&quot;&gt;轮廓度的特点&lt;/h5&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;可以带基准，也可以不带基准&lt;sup&gt;[a]&lt;/sup&gt;；&lt;/li&gt;
+  &lt;li&gt;可以管控&lt;strong&gt;表面要素&lt;/strong&gt;或&lt;strong&gt;中心要素&lt;/strong&gt;；&lt;sup&gt;[b]&lt;/sup&gt;；&lt;/li&gt;
+  &lt;li&gt;控制的表面必须具准确定义的&lt;strong&gt;理论轮廓&lt;/strong&gt;（由&lt;code&gt;理论尺寸&lt;/code&gt;或&lt;code&gt;CAD模型&lt;/code&gt;完全定义，不能包含非理论尺寸）;&lt;/li&gt;
+  &lt;li&gt;轮廓度的公差带默认&lt;strong&gt;关于理论轮廓对称分布&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;a.&lt;/strong&gt;&lt;/p&gt;
+
+  &lt;p&gt;①、轮廓度不带基准时，相当于公差带是自由的，不约束对于某一基准的位置。当不带基准时，轮廓度用在平面上等同于平面度；&lt;/p&gt;
+
+  &lt;p&gt;②、轮廓度带基准时，公差带的形状由理论轮廓与公差值确定，公差带还需满足相对基准的理论位置、方向要求。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;b.&lt;/strong&gt; 在ASME GD&amp;amp;T标准中，轮廓度只能管控表面要素，不能用于中心要素等导出要素。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h5 id=&quot;轮廓度常用修饰符&quot;&gt;轮廓度常用修饰符&lt;/h5&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;UZ&lt;/code&gt;：偏置公差带（非对称轮廓公差带）。当要求轮廓度公差带不是默认的对称分布时（如全部为凸出理论轮廓表面），在轮廓度公差值后用&lt;code&gt;UZ±n&lt;/code&gt;提供公差带偏移量。其中&lt;code&gt;+&lt;/code&gt;表示向&lt;code&gt;实体外部&lt;/code&gt;偏移，&lt;code&gt;-&lt;/code&gt;表示向&lt;code&gt;实体内部&lt;/code&gt;偏移；&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;J←→K&lt;/code&gt;：管控区间。表示轮廓度仅管控J到K之间的区域；&lt;/li&gt;
+  &lt;li&gt;公差框格引导线上的&lt;code&gt;○&lt;/code&gt;：全周。轮廓度管控所指点相连的整个周向表面；&lt;/li&gt;
+  &lt;li&gt;公差框格引导线上的&lt;code&gt;◎&lt;/code&gt;：全表面。轮廓度管控所指点相连的零件全部表面；&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;CZ&lt;/code&gt;、&lt;code&gt;UF&lt;/code&gt;：含义同位置度，在轮廓度上二者含义基本是相同的，表示将控制要素联合成一个整体计算公差带；&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;&amp;gt;&amp;lt;&lt;/code&gt;：仅方向。表示&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;GPS标准下，即使标注了全周或全表面符号，轮廓度也&lt;strong&gt;默认是独立原则&lt;/strong&gt;，也就是说管控的各个表面公差带是相互独立的。&lt;/p&gt;
+
+  &lt;p&gt;这种情况下，我们几乎永远都想将控制要素联合成整体去进行公差带考量，因此：&lt;/p&gt;
+
+  &lt;p&gt;&lt;strong&gt;当标注了全周向轮廓度或全表面轮廓度时，几乎永远要加上&lt;code&gt;UF&lt;/code&gt;或&lt;code&gt;CZ&lt;/code&gt;&lt;/strong&gt;。&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;/assets/posts/轮廓度CZ.webp&quot; alt=&quot;轮廓度CZ&quot; /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
 &lt;h2 id=&quot;检验测量&quot;&gt;检验测量&lt;/h2&gt;
 &lt;h3 id=&quot;线性尺寸&quot;&gt;线性尺寸&lt;/h3&gt;
 &lt;h4 id=&quot;默认规则&quot;&gt;默认规则&lt;/h4&gt;
@@ -784,8 +840,18 @@
 &lt;ul&gt;
   &lt;li&gt;&lt;strong&gt;无特殊标注要求情况下，尺寸的默认检验操作规则是局部&lt;code&gt;两点尺寸&lt;/code&gt;；(GB/T 38762.1-2020 5.2)；&lt;/strong&gt;&lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;无特殊标注说明情况下，几何要素的默认拟合方式采用无约束的&lt;code&gt;最小二乘（高斯）目标函数&lt;/code&gt;(GB/T 24637.3-2020 5.1)；&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;默认情况下，基准的拟合以基准相关标准确定，不同于被测几何要素（基准的拟合一般用&lt;code&gt;最大内接（最小外切）准则&lt;/code&gt;，基准的默认拟合方法见《GB/T 17851-2022 表A.1、A.2》）；&lt;/li&gt;
+  &lt;li&gt;默认情况下，基准的拟合以基准相关标准确定，不同于被测几何要素，基准的默认拟合方法见《GB/T 17851-2022 表A.1、A.2》），具体地：&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;①. 基准由&lt;strong&gt;非理论尺寸要素&lt;/strong&gt;构成，拟合准则默认为&lt;code&gt;最大内接（最小外切）准则&lt;/code&gt;；&lt;/p&gt;
+
+  &lt;p&gt;②. 基准由&lt;strong&gt;理论尺寸要素&lt;/strong&gt;构成，拟合准则默认为&lt;code&gt;切比雪夫拟合&lt;/code&gt;；&lt;/p&gt;
+
+  &lt;p&gt;③. 基准由&lt;strong&gt;平表面、理论尺寸约束的锥面或楔形面&lt;/strong&gt;建立时，拟合准则默认为&lt;code&gt;最大内接（最小外切）准则&lt;/code&gt;；&lt;/p&gt;
+
+  &lt;p&gt;④. 基准由&lt;strong&gt;非理论尺寸要素约束的锥面或楔形面&lt;/strong&gt;建立时，拟合准则默认为&lt;code&gt;实体外约束条件下的切比雪夫拟合&lt;/code&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;h2 id=&quot;图纸标注方法&quot;&gt;图纸标注方法&lt;/h2&gt;
 
