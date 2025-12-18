@@ -1,10 +1,108 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-09-24T01:23:48+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">资料备份</title><link href="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/" rel="alternate" type="text/html" title="资料备份" /><published>2025-05-01T00:00:00+08:00</published><updated>2025-05-01T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD</id><content type="html" xml:base="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-12-19T02:07:11+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">个人杂记:MarsWiz</title><subtitle>Solid.</subtitle><entry><title type="html">机械设计:传动结构</title><link href="http://localhost:4000/blog/2025/12/18/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1_%E4%BC%A0%E5%8A%A8%E7%BB%93%E6%9E%84/" rel="alternate" type="text/html" title="机械设计:传动结构" /><published>2025-12-18T00:00:00+08:00</published><updated>2025-12-18T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/12/18/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1_%E4%BC%A0%E5%8A%A8%E7%BB%93%E6%9E%84</id><content type="html" xml:base="http://localhost:4000/blog/2025/12/18/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1_%E4%BC%A0%E5%8A%A8%E7%BB%93%E6%9E%84/">&lt;blockquote&gt;
+  &lt;p&gt;机械设计:传动结构&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;齿轮&quot;&gt;齿轮&lt;/h1&gt;
+
+&lt;h2 id=&quot;直齿圆柱齿轮&quot;&gt;直齿圆柱齿轮&lt;/h2&gt;
+
+&lt;h3 id=&quot;传动比啮合基本定律&quot;&gt;传动比、啮合基本定律&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;啮合基本定律&lt;/strong&gt;：&lt;code&gt;齿轮机构的传动比必须在整个啮合过程中维持不变&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;传动比（减速比）&lt;/strong&gt;：&lt;/p&gt;
+
+&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;msub&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;V&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mfrac&gt;&lt;msub&gt;&lt;mi&gt;ω&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;msub&gt;&lt;mi&gt;ω&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;/mfrac&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;±&lt;/mo&gt;&lt;mfrac&gt;&lt;msub&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;msub&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;/mfrac&gt;&lt;/math&gt;
+
+&lt;p&gt;其中，正号用于内啮合，负号用于外啮合。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;扭矩比&lt;/code&gt;为&lt;code&gt;传动比（减速比）的倒数&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h3 id=&quot;分度圆中心线和节点&quot;&gt;分度圆、中心线和节点&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;分度圆&lt;/strong&gt;：将齿轮传动，用圆柱体接触传动进行假想替代后的假想圆柱体。它的直径叫分度圆直径。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;中心线&lt;/strong&gt;：两齿轮圆心的连线。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;节点&lt;/strong&gt;：齿轮分度圆在中心线上的接触点。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;分度圆只有在一对齿轮进行啮合形成齿轮机构时才存在。单一齿轮不存在确定的分度圆。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/79.jpg&quot; alt=&quot;渐开线齿轮&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;渐开线齿廓&quot;&gt;渐开线齿廓&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;渐开线&lt;/strong&gt;：直线沿圆外缘做纯滚动时，直线上任一点的轨迹是该圆的渐开线。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;基圆&lt;/strong&gt;：齿轮上生成渐开线齿廓的圆。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;渐开线的特点：&lt;/p&gt;
+
+  &lt;ol&gt;
+    &lt;li&gt;任意一点处的法线必与基圆相切；&lt;/li&gt;
+    &lt;li&gt;任一点的法线与基圆切点是渐开线该点的曲率中心；&lt;/li&gt;
+    &lt;li&gt;任一点的法线与基圆切点连线的长度，是渐开线在该点的曲率半径。&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;基圆的性质：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;基圆比分度圆要&lt;code&gt;小&lt;/code&gt;；&lt;/li&gt;
+  &lt;li&gt;基圆是齿轮的基本属性，齿轮形状一旦确定就有唯一的基圆，不随啮合情况改变；&lt;/li&gt;
+  &lt;li&gt;只有基圆外面才有渐开线齿廓，啮合点必须在基圆外。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;啮合参数&quot;&gt;啮合参数&lt;/h3&gt;
+
+&lt;p&gt;齿轮啮合时，两齿轮渐开线齿廓存在唯一啮合点，在该点存在唯一公切线。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;啮合线&lt;/strong&gt;：两齿轮&lt;code&gt;基圆的内切线&lt;/code&gt;，也是啮合点渐开线齿廓公切线的法线。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;压力角α&lt;/strong&gt;：啮合线与节点处速度方向的夹角。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;为什么存在唯一一条啮合线？&lt;/strong&gt;&lt;/p&gt;
+
+  &lt;p&gt;因为齿廓为渐开线。根据渐开线的特性1，啮合点两侧齿廓的法线必与各自的基圆相切。&lt;/p&gt;
+
+  &lt;p&gt;而两基圆的公切线唯一，所以啮合点两侧的法线共线，且公法线唯一，即啮合线唯一。&lt;/p&gt;
+
+  &lt;p&gt;&lt;strong&gt;啮合线的特点：&lt;/strong&gt;&lt;/p&gt;
+
+  &lt;ol&gt;
+    &lt;li&gt;啮合线总是通过节点；&lt;/li&gt;
+    &lt;li&gt;齿轮啮合过程中的所有啮合点，都在啮合线上。&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/80.jpg&quot; alt=&quot;啮合&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;啮合线长度Z&lt;/strong&gt;：一对相啮合齿轮的齿顶圆，分别与啮合线相交的两个点的距离。&lt;/p&gt;
+
+&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;mi&gt;Z&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msqrt&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;msup&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;ϕ&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;msup&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;/msqrt&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;msqrt&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;msup&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;ϕ&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;msup&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;/msqrt&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mi&gt;C&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;ϕ&lt;/mi&gt;&lt;/math&gt;
+
+&lt;p&gt;其中：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;r&lt;sub&gt;p&lt;/sub&gt;、r&lt;sub&gt;g&lt;/sub&gt;为主、从齿轮的分度圆半径；&lt;/li&gt;
+  &lt;li&gt;a&lt;sub&gt;p&lt;/sub&gt;、a&lt;sub&gt;g&lt;/sub&gt;为主、从齿轮的齿顶高；&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;C&lt;/code&gt;是中心距；&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;φ&lt;/code&gt;是压力角。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;齿廓参数&quot;&gt;齿廓参数&lt;/h3&gt;
+
+&lt;p&gt;齿顶、齿根、&lt;/p&gt;</content><author><name>Mars</name></author><category term="Machine" /><summary type="html">机械设计:传动结构</summary></entry><entry><title type="html">资料备份</title><link href="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/" rel="alternate" type="text/html" title="资料备份" /><published>2025-05-01T00:00:00+08:00</published><updated>2025-05-01T00:00:00+08:00</updated><id>http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD</id><content type="html" xml:base="http://localhost:4000/blog/2025/05/01/%E8%B5%84%E6%96%99%E5%A4%87%E4%BB%BD/">&lt;blockquote&gt;
   &lt;p&gt;重要文件上传备份&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;h1 id=&quot;米家中枢代码备份&quot;&gt;米家中枢代码备份&lt;/h1&gt;
 
-&lt;p&gt;&lt;a href=&quot;/assets/Files/备份2025_8_23 19_32_28.bak&quot;&gt;米家中枢代码备份&lt;/a&gt;&lt;/p&gt;</content><author><name>Mars</name></author><category term="Files" /><summary type="html">重要文件上传备份 米家中枢代码备份</summary></entry><entry><title type="html">菜谱大全</title><link href="http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8/" rel="alternate" type="text/html" title="菜谱大全" /><published>2024-12-02T00:00:00+08:00</published><updated>2024-12-02T00:00:00+08:00</updated><id>http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8</id><content type="html" xml:base="http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8/">&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;/assets/Files/最新米家备份.bak&quot;&gt;米家中枢代码备份&lt;/a&gt;&lt;/p&gt;</content><author><name>Mars</name></author><category term="Files" /><summary type="html">重要文件上传备份 米家中枢代码备份</summary></entry><entry><title type="html">菜谱大全</title><link href="http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8/" rel="alternate" type="text/html" title="菜谱大全" /><published>2024-12-02T00:00:00+08:00</published><updated>2024-12-02T00:00:00+08:00</updated><id>http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8</id><content type="html" xml:base="http://localhost:4000/blog/2024/12/02/%E8%8F%9C%E8%B0%B1%E5%A4%A7%E5%85%A8/">&lt;blockquote&gt;
   &lt;p&gt;私人菜谱大全&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -117,8 +215,8 @@
 
 &lt;h1 id=&quot;饮品&quot;&gt;饮品&lt;/h1&gt;
 
-&lt;p&gt;&lt;a href=&quot;/assets/PDFs/recipes/饮品/20191102_港式冻柠茶.pdf&quot;&gt;港式冻柠茶&lt;/a&gt;&lt;/p&gt;</content><author><name>Mars</name></author><category term="Cuisine" /><summary type="html">私人菜谱大全 基础 高汤</summary></entry><entry><title type="html">机械设计</title><link href="http://localhost:4000/blog/2024/03/26/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1/" rel="alternate" type="text/html" title="机械设计" /><published>2024-03-26T00:00:00+08:00</published><updated>2024-03-26T00:00:00+08:00</updated><id>http://localhost:4000/blog/2024/03/26/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1</id><content type="html" xml:base="http://localhost:4000/blog/2024/03/26/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1/">&lt;blockquote&gt;
-  &lt;p&gt;机械设计相关&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/assets/PDFs/recipes/饮品/20191102_港式冻柠茶.pdf&quot;&gt;港式冻柠茶&lt;/a&gt;&lt;/p&gt;</content><author><name>Mars</name></author><category term="Cuisine" /><summary type="html">私人菜谱大全 基础 高汤</summary></entry><entry><title type="html">机械设计:图纸与公差</title><link href="http://localhost:4000/blog/2024/03/26/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1_%E5%9B%BE%E7%BA%B8%E4%B8%8E%E5%85%AC%E5%B7%AE/" rel="alternate" type="text/html" title="机械设计:图纸与公差" /><published>2024-03-26T00:00:00+08:00</published><updated>2024-03-26T00:00:00+08:00</updated><id>http://localhost:4000/blog/2024/03/26/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1_%E5%9B%BE%E7%BA%B8%E4%B8%8E%E5%85%AC%E5%B7%AE</id><content type="html" xml:base="http://localhost:4000/blog/2024/03/26/%E6%9C%BA%E6%A2%B0%E8%AE%BE%E8%AE%A1_%E5%9B%BE%E7%BA%B8%E4%B8%8E%E5%85%AC%E5%B7%AE/">&lt;blockquote&gt;
+  &lt;p&gt;机械设计:图纸与公差&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;h1 id=&quot;图纸相关&quot;&gt;图纸相关&lt;/h1&gt;
@@ -585,7 +683,30 @@
 
 &lt;h3 id=&quot;相关要求&quot;&gt;相关要求&lt;/h3&gt;
 
+&lt;p&gt;在ISO-GPS标准体系下，遵循独立原则，&lt;code&gt;尺寸公差&lt;/code&gt;与&lt;code&gt;几何公差&lt;/code&gt;默认是&lt;code&gt;相互独立&lt;/code&gt;的。&lt;/p&gt;
+
+&lt;p&gt;相关要求用于将&lt;code&gt;尺寸公差&lt;/code&gt;与&lt;code&gt;几何公差&lt;/code&gt;建立相互联系，用尺寸公差来补偿几何公差，放大公差带提高产品合格率。&lt;/p&gt;
+
+&lt;p&gt;相关要求包括&lt;code&gt;最大实体状态要求&lt;/code&gt;和&lt;code&gt;最小实体状态要求&lt;/code&gt;。&lt;/p&gt;
+
 &lt;h4 id=&quot;最大实体状态要求ⓜ&quot;&gt;最大实体状态要求Ⓜ&lt;/h4&gt;
+
+&lt;h5 id=&quot;标注方法与含义&quot;&gt;标注方法与含义&lt;/h5&gt;
+
+&lt;p&gt;最大实体状态要求用&lt;code&gt;Ⓜ&lt;/code&gt;表示，可以标注在&lt;code&gt;几何公差值后面&lt;/code&gt;，也可以标注在&lt;code&gt;几何公差的基准后面&lt;/code&gt;。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;当标注在几何公差值后时，表示标注的几何公差值约束状态为被测要素的&lt;code&gt;最大实体状态&lt;/code&gt;。当被测要素实际尺寸偏离最大实体状态时，几何公差值得到补偿，补偿值为&lt;code&gt;实际尺寸&lt;/code&gt;与&lt;code&gt;最大实体状态尺寸&lt;/code&gt;的&lt;code&gt;差的绝对值&lt;/code&gt;；&lt;/li&gt;
+  &lt;li&gt;当标注在几何公差的基准后时，表示&lt;code&gt;基准偏移&lt;/code&gt;。表示被标注的基准实际几何要素在最大实体状态时满足所标注的几何公差要求，当基准实际要素偏离最大实体状态时，基准可以在不超过最大实体状态范围内自由移动，同时带动所标注的被测要素的几何公差带移动。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h5 id=&quot;特点&quot;&gt;特点&lt;/h5&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;只能用于&lt;code&gt;尺寸要素&lt;/code&gt;的&lt;code&gt;中心导出要素&lt;/code&gt;上，无论是用于几何公差的被测要素，还是基准要素；&lt;/li&gt;
+  &lt;li&gt;在几何公差中，只能用于&lt;code&gt;直线度、平面度、垂直度、平行度、倾斜度和位置度&lt;/code&gt;，&lt;code&gt;圆度、圆柱度、轮廓度和跳动&lt;/code&gt;不适用；&lt;/li&gt;
+  &lt;li&gt;主要功能为&lt;code&gt;约束零件要素的最大实体实效边界，保证零件的可装配性&lt;/code&gt;，是&lt;code&gt;保证装配的同时，放大产品公差带，提升零件合格率&lt;/code&gt;的手段。&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;h4 id=&quot;最小实体状态要求ⓛ&quot;&gt;最小实体状态要求Ⓛ&lt;/h4&gt;
 
@@ -614,6 +735,23 @@
 
   &lt;p&gt;当基准后面标有&lt;code&gt;&amp;gt;&amp;lt;&lt;/code&gt;符号时，它只限制方向自由度。&lt;/p&gt;
 &lt;/blockquote&gt;
+
+&lt;h3 id=&quot;基准的几种形式&quot;&gt;基准的几种形式&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;平面（几何要素）；&lt;/li&gt;
+  &lt;li&gt;中心平面（导出要素）；&lt;/li&gt;
+  &lt;li&gt;中心轴（导出要素）；&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;基准的选取&quot;&gt;基准的选取&lt;/h3&gt;
+
+&lt;p&gt;一般情况下选取&lt;code&gt;配合面&lt;/code&gt;作为基准。建立基准的顺序综合考虑以下因素：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;定位的优先级；&lt;/li&gt;
+  &lt;li&gt;装配时与对手件接触的先后顺序。&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;h3 id=&quot;基准的默认拟合方式&quot;&gt;基准的默认拟合方式&lt;/h3&gt;
 
@@ -700,6 +838,14 @@
 &lt;h3 id=&quot;几何公差修饰符号总览&quot;&gt;几何公差修饰符号总览&lt;/h3&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/posts/76.png&quot; alt=&quot;几何公差修饰符号总览&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;自由状态ⓕ&quot;&gt;自由状态Ⓕ&lt;/h4&gt;
+
+&lt;p&gt;&lt;code&gt;自由状态&lt;/code&gt;是指零件&lt;code&gt;只受重力&lt;/code&gt;作用时的状态。它适用于非刚性零件（包括钣金、橡胶、塑料、复合材料和其他柔性零件等），即在装配约束后会产生显著变形的零件。&lt;/p&gt;
+
+&lt;p&gt;自由状态&lt;code&gt;Ⓕ&lt;/code&gt;可标注在几何公差值的后面，表示这个几何公差的检测条件是在&lt;code&gt;自由状态&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;一般仅在&lt;strong&gt;同时标注约束状态和自由状态两种公差&lt;/strong&gt;时才明确标注&lt;code&gt;Ⓕ&lt;/code&gt;，当不存在约束状态的公差时无需标注&lt;code&gt;Ⓕ&lt;/code&gt;；&lt;/p&gt;
 
 &lt;h3 id=&quot;几何公差公差带的含义&quot;&gt;几何公差、公差带的含义&lt;/h3&gt;
 
@@ -797,7 +943,8 @@
   &lt;li&gt;可以带基准，也可以不带基准&lt;sup&gt;[a]&lt;/sup&gt;；&lt;/li&gt;
   &lt;li&gt;可以管控&lt;strong&gt;表面要素&lt;/strong&gt;或&lt;strong&gt;中心要素&lt;/strong&gt;；&lt;sup&gt;[b]&lt;/sup&gt;；&lt;/li&gt;
   &lt;li&gt;控制的表面必须具准确定义的&lt;strong&gt;理论轮廓&lt;/strong&gt;（由&lt;code&gt;理论尺寸&lt;/code&gt;或&lt;code&gt;CAD模型&lt;/code&gt;完全定义，不能包含非理论尺寸）;&lt;/li&gt;
-  &lt;li&gt;轮廓度的公差带默认&lt;strong&gt;关于理论轮廓对称分布&lt;/strong&gt;。&lt;/li&gt;
+  &lt;li&gt;轮廓度的公差带默认&lt;strong&gt;关于理论轮廓对称分布&lt;/strong&gt;；&lt;/li&gt;
+  &lt;li&gt;不能使用符号&lt;code&gt;φ&lt;/code&gt;、&lt;code&gt;Ⓜ&lt;/code&gt;、&lt;code&gt;Ⓛ&lt;/code&gt;。&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;blockquote&gt;
@@ -832,6 +979,21 @@
 
   &lt;p&gt;&lt;img src=&quot;/assets/posts/轮廓度CZ.webp&quot; alt=&quot;轮廓度CZ&quot; /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
+
+&lt;h2 id=&quot;公差值的确定&quot;&gt;公差值的确定&lt;/h2&gt;
+
+&lt;p&gt;公差值确定需参考以下因素：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;加工方法所能达到的精度；&lt;/li&gt;
+  &lt;li&gt;典型应用场景；&lt;/li&gt;
+  &lt;li&gt;产品、特定类型零件专属标准；&lt;/li&gt;
+  &lt;li&gt;供应商推荐值；&lt;/li&gt;
+  &lt;li&gt;公差分析；&lt;/li&gt;
+  &lt;li&gt;试装配后调整。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/posts/未注公差标准.png&quot; alt=&quot;未注公差标准&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;检验测量&quot;&gt;检验测量&lt;/h2&gt;
 &lt;h3 id=&quot;线性尺寸&quot;&gt;线性尺寸&lt;/h3&gt;
@@ -881,10 +1043,17 @@
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;检查图纸视图表达是否完整，是否冗余；&lt;/li&gt;
+  &lt;li&gt;检查是否有参考尺寸，如有应删除；&lt;/li&gt;
+  &lt;li&gt;图纸中的&lt;code&gt;0°、90°、180°、270°&lt;/code&gt;和&lt;code&gt;0尺寸&lt;/code&gt;不需明确标注；&lt;/li&gt;
+  &lt;li&gt;检查图纸技术要求：
+    &lt;ul&gt;
+      &lt;li&gt;不应包括加工制造方法；&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
   &lt;li&gt;确定零件&lt;strong&gt;功能、装配关系&lt;/strong&gt;；&lt;/li&gt;
   &lt;li&gt;找到配合面，确定各配合面上对手件的极限尺寸、最大实体实效尺寸；&lt;/li&gt;
   &lt;li&gt;检查线性尺寸是否有误或有遗漏；&lt;/li&gt;
-  &lt;li&gt;检查已注形位公差的标准性，基准是否合理（基准一般应为配合面）；&lt;/li&gt;
+  &lt;li&gt;检查已注几何公差的标准性，基准是否合理（基准一般应为配合面）；&lt;/li&gt;
   &lt;li&gt;检查默认项是否齐备、正确：
     &lt;ul&gt;
       &lt;li&gt;未注尺寸、几何公差等级；&lt;/li&gt;
@@ -901,7 +1070,7 @@
   &lt;li&gt;薄壁件上一般不用粗牙螺纹，要用细牙螺纹。一般机械连接的结构件上，不能用细牙螺纹；&lt;/li&gt;
   &lt;li&gt;矩形、梯形、锯齿形螺纹不能用于连接，因为自锁性不好；&lt;/li&gt;
   &lt;li&gt;只有极特殊的情况下，才选用左旋螺纹；&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>Mars</name></author><category term="Machine" /><summary type="html">机械设计相关</summary></entry><entry><title type="html">绿松石鉴别</title><link href="http://localhost:4000/blog/2023/12/31/%E7%BB%BF%E6%9D%BE%E7%9F%B3%E9%89%B4%E5%88%AB/" rel="alternate" type="text/html" title="绿松石鉴别" /><published>2023-12-31T00:00:00+08:00</published><updated>2023-12-31T00:00:00+08:00</updated><id>http://localhost:4000/blog/2023/12/31/%E7%BB%BF%E6%9D%BE%E7%9F%B3%E9%89%B4%E5%88%AB</id><content type="html" xml:base="http://localhost:4000/blog/2023/12/31/%E7%BB%BF%E6%9D%BE%E7%9F%B3%E9%89%B4%E5%88%AB/">&lt;blockquote&gt;
+&lt;/ol&gt;</content><author><name>Mars</name></author><category term="Machine" /><summary type="html">机械设计:图纸与公差</summary></entry><entry><title type="html">绿松石鉴别</title><link href="http://localhost:4000/blog/2023/12/31/%E7%BB%BF%E6%9D%BE%E7%9F%B3%E9%89%B4%E5%88%AB/" rel="alternate" type="text/html" title="绿松石鉴别" /><published>2023-12-31T00:00:00+08:00</published><updated>2023-12-31T00:00:00+08:00</updated><id>http://localhost:4000/blog/2023/12/31/%E7%BB%BF%E6%9D%BE%E7%9F%B3%E9%89%B4%E5%88%AB</id><content type="html" xml:base="http://localhost:4000/blog/2023/12/31/%E7%BB%BF%E6%9D%BE%E7%9F%B3%E9%89%B4%E5%88%AB/">&lt;blockquote&gt;
   &lt;p&gt;绿松石鉴别方法&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -1158,240 +1327,4 @@
   &lt;li&gt;收敛判据是什么？&lt;code&gt;RMS&lt;/code&gt;曲线收敛到了&lt;code&gt;10e-4&lt;/code&gt;以下了吗？&lt;/li&gt;
   &lt;li&gt;计算精度足够吗？结果应是二阶以上高分辨率格式。&lt;/li&gt;
   &lt;li&gt;是否存在非定常性，需要用瞬态计算？&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>Mars</name></author><category term="Fluid" /><category term="CFD" /><summary type="html">检查别人的CFD结果</summary></entry><entry><title type="html">开展CFXの正确姿势</title><link href="http://localhost:4000/blog/2023/01/17/%E5%BC%80%E5%B1%95CFX%E3%81%AE%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/" rel="alternate" type="text/html" title="开展CFXの正确姿势" /><published>2023-01-17T00:00:00+08:00</published><updated>2023-01-17T00:00:00+08:00</updated><id>http://localhost:4000/blog/2023/01/17/%E5%BC%80%E5%B1%95CFX%E3%81%AE%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF</id><content type="html" xml:base="http://localhost:4000/blog/2023/01/17/%E5%BC%80%E5%B1%95CFX%E3%81%AE%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/">&lt;blockquote&gt;
-  &lt;p&gt;CFX计算CFD的一些经验与关键点&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;网格生成&quot;&gt;网格生成&lt;/h1&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;注意先设定&lt;code&gt;ICEM&lt;/code&gt;软件的并行计算核心数；&lt;/li&gt;
-  &lt;li&gt;导入模型后，&lt;strong&gt;必须先进行模型修复&lt;/strong&gt;；&lt;/li&gt;
-  &lt;li&gt;定义必要的part后，&lt;strong&gt;将多余的几何元素删除干净&lt;/strong&gt;；&lt;/li&gt;
-  &lt;li&gt;结构化网格划分：
-    &lt;ul&gt;
-      &lt;li&gt;block采用从外向内的方式进行：1）应该先充分分析几何形状的特点，设计合理的块划分方式；2）然后在整体上用切割工具，对原始块进行合理地切分；3）然后对需要进行O型切分或Y型切分的块进行切分；4）删除多余的块，然后进行关联和移动操作；&lt;/li&gt;
-      &lt;li&gt;移动Block的顶点时，尽量避免单独移动一个顶点，尽量选取对齐的多个顶点同时移动，并善于使用移动顶点下方的Fix锁定轴功能；&lt;/li&gt;
-      &lt;li&gt;移动/关联需采取从内向内外的方式，外部顶点或边线关联后，块内部的顶点或线应当及时移动到内部合理位置，以免以后看不清造成混乱；&lt;/li&gt;
-      &lt;li&gt;尽量减少采用与三个视图轴均不平行的视角操作，尽量采用正对三个坐标轴的视图操作，并对应对齐的顶点时刻保持对齐状态。&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;湍流模型选取&quot;&gt;湍流模型选取&lt;/h1&gt;
-&lt;h2 id=&quot;稳态计算&quot;&gt;稳态计算&lt;/h2&gt;
-&lt;h3 id=&quot;0方程模型&quot;&gt;0方程模型&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;快速求解其他湍流模型所需要的初始场；&lt;/li&gt;
-  &lt;li&gt;不能用于最终结果求解；&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;层流模型none&quot;&gt;层流模型(None)&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;低雷诺数层流（Re ≤ 2000)；&lt;/li&gt;
-  &lt;li&gt;边界层无分离；&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;k-epsilon&quot;&gt;k-epsilon&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;大多数工程问题；&lt;/li&gt;
-  &lt;li&gt;不适用于以下情况：边界层分离、平均应变率突变、旋转流动、流过弯曲表面；&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;sst-k-omega&quot;&gt;SST k-omega&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;被设计用于准确模拟逆压梯度造成的边界层分离；&lt;/li&gt;
-  &lt;li&gt;低雷诺数流动；&lt;/li&gt;
-  &lt;li&gt;模拟转捩流动（应用 Transition Turbulance Model）；&lt;/li&gt;
-  &lt;li&gt;如果存在边界层分离再附着，可使用Reattachment Modification Model；&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;注意，适用&lt;code&gt;SST&lt;/code&gt;模型需保证：&lt;/p&gt;
-
-  &lt;ul&gt;
-    &lt;li&gt;y+ ≈ 1;&lt;/li&gt;
-    &lt;li&gt;至少在边界层内设置10个点；&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;explicit-algebraic-雷诺应力模型earsm&quot;&gt;Explicit Algebraic 雷诺应力模型（EARSM）&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;k-e 和 BSL 模型的扩展；&lt;/li&gt;
-  &lt;li&gt;可捕捉二次流、流线弯曲、系统旋转；&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;bsl雷诺应力&quot;&gt;BSL雷诺应力&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;适用于&lt;code&gt;k-epsiolon&lt;/code&gt;无法准确模拟的&lt;code&gt;边界层分离流动&lt;/code&gt;；&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;ssg雷诺应力&quot;&gt;SSG雷诺应力&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;强烈各向异性，比如旋转流动；&lt;/li&gt;
-  &lt;li&gt;平均应变率存在突变的流动；&lt;/li&gt;
-  &lt;li&gt;强烈的流线弯曲；&lt;/li&gt;
-  &lt;li&gt;应变场复杂的流动；&lt;/li&gt;
-  &lt;li&gt;二次流；&lt;/li&gt;
-  &lt;li&gt;浮力流动；&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;SSG模型具有以下特性：&lt;/p&gt;
-
-  &lt;ul&gt;
-    &lt;li&gt;鲁棒性较弱，计算量大，对复杂流动难以应用；&lt;/li&gt;
-    &lt;li&gt;收敛慢；&lt;/li&gt;
-    &lt;li&gt;时间步长应相应缩短。&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;瞬态计算&quot;&gt;瞬态计算&lt;/h2&gt;
-&lt;h3 id=&quot;les-大涡模拟-模型&quot;&gt;LES （大涡模拟） 模型&lt;/h3&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;LES不适用以下情况：&lt;/p&gt;
-
-  &lt;ul&gt;
-    &lt;li&gt;雷诺数 Re&amp;lt;5000;&lt;/li&gt;
-    &lt;li&gt;需要给出全部尺度湍流细节的情况(此时需用直接数值模拟DNS)；&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;流动可能不稳定，存在大尺度剪切层摆动或涡脱落；&lt;/li&gt;
-  &lt;li&gt;流动可能非定常，存在拟序结构（如：旋风）；&lt;/li&gt;
-  &lt;li&gt;浮力流动，存在大的由底层加热（或由较轻的流体在较重的流体下面）所造成的不稳定区域；&lt;/li&gt;
-  &lt;li&gt;已知使用传统RANS方法求解失败的流动（如：高度各向异性湍流）；&lt;/li&gt;
-  &lt;li&gt;因存在小尺度过程，需对湍流结构进行良好展现的情况（如微观混合流动、化学反应流）；&lt;/li&gt;
-  &lt;li&gt;需计算流动产生噪音的情况，尤其是重点考察宽频贡献；&lt;/li&gt;
-  &lt;li&gt;其他需要流体波动信息的情况（波动应力、阵风等）；&lt;/li&gt;
-  &lt;li&gt;任何你可以承受等待一周的时间来获取结果的情况。。（8-16核CPU）；&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;注意，LES有以下特点：&lt;/p&gt;
-
-  &lt;ul&gt;
-    &lt;li&gt;可以给出湍流结构的细节，如压力波动等&lt;/li&gt;
-    &lt;li&gt;使用网格尺度来过滤湍流&lt;/li&gt;
-    &lt;li&gt;需使用各向同性网格，最好使用四面体网格而不是六面体网格&lt;/li&gt;
-    &lt;li&gt;求解精度和网格分辨率息息相关，其网格通常应划分到泰勒尺度以内&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;detached-eddy-simulation分离涡模拟模型&quot;&gt;Detached Eddy Simulation（分离涡模拟）模型&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;非空气动力学构件绕流（建筑，桥梁等）；&lt;/li&gt;
-  &lt;li&gt;交通工具绕流，存在大量的分离区（汽车，火车，卡车）；&lt;/li&gt;
-  &lt;li&gt;产生噪音的物体外绕流（如汽车后视镜）；&lt;/li&gt;
-  &lt;li&gt;存在大量分离的机翼失速绕流；&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;注意，分离涡模型有以下特点：&lt;/p&gt;
-
-  &lt;ul&gt;
-    &lt;li&gt;在边界层外采用RANS，在边界层分离区采用LES；&lt;/li&gt;
-    &lt;li&gt;最大网格间距很重要：用于DES 限制器开关，网格需具有足够精度；&lt;/li&gt;
-    &lt;li&gt;相较于RANS，计算密集程度超出一个数量级；&lt;/li&gt;
-    &lt;li&gt;不可使用对称边界；&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;计算&quot;&gt;计算&lt;/h1&gt;
-&lt;h2 id=&quot;模型&quot;&gt;模型&lt;/h2&gt;
-
-&lt;p&gt;检查模型尺寸，如模型尺寸不符&lt;code&gt;transform mesh&lt;/code&gt;到合适尺寸；&lt;/p&gt;
-
-&lt;h2 id=&quot;增加收敛可能性&quot;&gt;增加收敛可能性&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;打开双精度；&lt;/li&gt;
-  &lt;li&gt;正确的边界条件设置：
-    &lt;blockquote&gt;
-      &lt;ul&gt;
-        &lt;li&gt;
-          &lt;p&gt;&lt;strong&gt;鲁棒性最佳&lt;/strong&gt;：
-进口边界条件：速度/质量流量
-出口边界条件：静压
-入口总压是待预测的隐含变量。&lt;/p&gt;
-        &lt;/li&gt;
-        &lt;li&gt;
-          &lt;p&gt;&lt;strong&gt;鲁棒性好&lt;/strong&gt;：
-进口边界条件：总压
-出口边界条件：速度/质量流量
-入口速度是计算结果的一部分。&lt;/p&gt;
-        &lt;/li&gt;
-        &lt;li&gt;
-          &lt;p&gt;&lt;strong&gt;对初始猜测敏感&lt;/strong&gt;：
-进口边界条件：总压
-出口边界条件：静压
-质量流量是计算结果的一部分。&lt;/p&gt;
-        &lt;/li&gt;
-        &lt;li&gt;
-          &lt;p&gt;&lt;strong&gt;非常不可靠&lt;/strong&gt;：
-进口边界条件：静压
-出口边界条件：静压
-非常不推荐的组合。入口总压级别和质量流量都是待预测的隐含变量（对系统是非常弱的约束）。&lt;/p&gt;
-        &lt;/li&gt;
-        &lt;li&gt;
-          &lt;p&gt;&lt;strong&gt;绝对不可使用&lt;/strong&gt;：
-出口边界条件：总压
-流体流出总压指定的出口边界，是无条件不稳定的。&lt;/p&gt;
-        &lt;/li&gt;
-      &lt;/ul&gt;
-
-      &lt;p&gt;&lt;strong&gt;对于有超过两个入口或出口的流场，其他开口应该设定为Opening边界。&lt;/strong&gt;这是因为这些其他边界流体既有可能&amp;gt; 流入，也有可能流出，流动方向应该是计算结果的一部分。&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-  &lt;li&gt;渐进式求解：
-    &lt;blockquote&gt;
-      &lt;ul&gt;
-        &lt;li&gt;先计算一阶迎风格式，然后将结果作为初始值计算高精度格式；&lt;/li&gt;
-        &lt;li&gt;湍流数值精度可以先进行一阶精度，再计算高精度；&lt;/li&gt;
-        &lt;li&gt;入口速度渐进法： 如求解10m/s的入口速度结果，可以先设置1m/s入口速度，后逐步迭代计算；&lt;/li&gt;
-        &lt;li&gt;模型渐进：在&lt;code&gt;Solver Control -&amp;gt; Advanced Option -&amp;gt; Turbulence Control&lt;/code&gt;中设置&lt;code&gt;转换迭代数目&lt;/code&gt;为&lt;code&gt;5&lt;/code&gt;（含义是在初始的几个计算步内使用 Zero-Equation Model，防止发散）；&lt;/li&gt;
-        &lt;li&gt;混合求解格式(Specified Blend Factor)下，从&lt;code&gt;0&lt;/code&gt;逐步提高混合比到&lt;code&gt;1&lt;/code&gt;。（blendFactor为1时比High Resolution更精确，但鲁棒性更差）；&lt;/li&gt;
-        &lt;li&gt;跨声速问题：最难求解的区域是 Ma=1 附近区域。先降低入口流速设置为稍低值（全局亚声速），再把收敛解作为初始场，提高入口流速，求解最终结果；&lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;求解器设置&quot;&gt;求解器设置&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;计算步数设置为&lt;code&gt;100000&lt;/code&gt;，RMS设置为&lt;code&gt;1e-5&lt;/code&gt;；&lt;/li&gt;
-  &lt;li&gt;如自动时间步长发散，可选用物理时间步长；
-    &lt;blockquote&gt;
-      &lt;p&gt;&lt;strong&gt;物理时间步长 = 1/3 * (特征长度 / 特征速度)&lt;/strong&gt;&lt;/p&gt;
-
-      &lt;p&gt;如出现“残差跳动”，则将时间步长÷4。如果多次仍跳动，考虑是否有非定常现象。&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-  &lt;li&gt;对于速度跨度比较大的流场模拟，可以设置局部时间尺度；
-    &lt;blockquote&gt;
-      &lt;p&gt;局部时间尺度模拟可以用于前期计算增加收敛可能性，但不能用于最终结果的计算。&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-  &lt;li&gt;固体域的时间步长，应该比流体域时间步长大得多，至少为流体域步长的&lt;code&gt;100~1000&lt;/code&gt;倍；&lt;/li&gt;
-  &lt;li&gt;输出控制中，设置合理的&lt;code&gt;backup interval&lt;/code&gt;，防止中途断电或发散导致工作丢失；&lt;/li&gt;
-  &lt;li&gt;cfx-solver起动前，设置合理的并行核心数（最大核心数 - 1）；&lt;/li&gt;
-  &lt;li&gt;cfx-solver起动前，选取合理的初始化流场；&lt;/li&gt;
-  &lt;li&gt;如果计算爆出孤立域错误(&lt;code&gt;isolated regions&lt;/code&gt;)，手动开启忽略孤立域检测项；
-    &lt;blockquote&gt;
-      &lt;p&gt;具体操作：insert -&amp;gt; solver -&amp;gt; expert parameter -&amp;gt; convergence control -&amp;gt; check isolated regions -&amp;gt; t改为f。&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;提高精度&quot;&gt;提高精度&lt;/h2&gt;
-&lt;h3 id=&quot;自适应网格&quot;&gt;自适应网格&lt;/h3&gt;</content><author><name>Mars</name></author><category term="Fluid" /><category term="CFD" /><summary type="html">CFX计算CFD的一些经验与关键点</summary></entry></feed>
+&lt;/ol&gt;</content><author><name>Mars</name></author><category term="Fluid" /><category term="CFD" /><summary type="html">检查别人的CFD结果</summary></entry></feed>
