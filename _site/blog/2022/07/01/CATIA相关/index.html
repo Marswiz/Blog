@@ -149,6 +149,12 @@
   <li><strong>创成式外形设计</strong>： <code>Ctrl</code>+<code>3</code></li>
   <li><strong>钣金设计</strong>： <code>Ctrl</code>+<code>4</code></li>
   <li><strong>工程制图</strong>： <code>Ctrl</code>+<code>5</code></li>
+  <li><strong>三维标注</strong>： <code>Ctrl</code>+<code>6</code></li>
+</ul>
+
+<h2 id="基本操作">基本操作</h2>
+<ul>
+  <li><strong>全部保存</strong>： <code>Alt</code>+<code>S</code></li>
 </ul>
 
 <h2 id="视图操作">视图操作</h2>
@@ -177,6 +183,7 @@
   <li><strong>退出草图</strong>	<code>Backspace</code></li>
   <li><strong>测量间距…</strong> <code>Ctrl+Shift+M</code></li>
   <li><strong>测量项…</strong> <code>Ctrl+Shift+D</code></li>
+  <li><strong>几何体</strong> <code>Ctrl+Shift+N</code></li>
 </ul>
 
 <h2 id="装配设计">装配设计</h2>
@@ -210,7 +217,8 @@
   <li>进入<code>装配设计</code>模块，右击工具栏空白处，点<code>自定义</code>，进入<code>工具栏</code>点<code>新建</code>，添加<code>Mold Tooling Design</code>中的<code>Fixing Components</code>工具，用来实现标准件的快速装配；</li>
   <li><code>工具-选项-常规-许可证发放</code>中，不能选择<code>DIC</code>、<code>ED2</code>和<code>I3D</code>；</li>
   <li><code>工具-选项-常规</code>中，用户界面样式选择<code>P2</code>；</li>
-  <li><code>基础结构</code>-<code>零件基础结构</code>-<code>显示</code>-<code>重命名时检查操作</code>，选中<code>在同一树节点下</code>。</li>
+  <li><code>基础结构</code>-<code>零件基础结构</code>-<code>显示</code>-<code>重命名时检查操作</code>，选中<code>在同一树节点下</code>；</li>
+  <li><code>工具-选项-显示-树操作</code>中，取消选择<code>单击任何分支后可以缩放树</code>。</li>
 </ul>
 
 <h1 id="catia-建模规范">CATIA 建模规范</h1>
@@ -225,6 +233,27 @@
 <h2 id="gb工程图模板">GB工程图模板</h2>
 
 <p><a href="/assets/Files/Catia国标工程图模板.rar">CATIA_GB工程图模板(含使用说明和操作视频)</a></p>
+
+<h1 id="catia装配">CATIA装配</h1>
+
+<h2 id="增强型场景">增强型场景</h2>
+
+<p>目的：为装配体<code>保存多种不同的展示形式（快照</code>），方便后续<code>快速读取恢复</code>。</p>
+
+<p>增强型场景可保存的内容包括但不限于：</p>
+
+<p>1、零件的颜色；
+2、零件的位置；
+3、观察视角。</p>
+
+<p>增强型场景不影响装配体的约束关系，手动更新后装配体内零件位置仍会依照约束还原，但零件颜色不会变化。</p>
+
+<p><code>增强型场景</code>的使用方式：</p>
+
+<p>1、在<code>装配设计</code>页面，点击<code>场景</code>中的<code>增强型场景</code>按钮；
+2、定义场景的<code>名称</code>，选择加载模式为<code>全部</code>;
+3、双击新建的场景，进入编辑界面，此时背景会变成其他颜色；
+4、编辑后退出保存，需读取时可：①直接双击该场景查看；②右击该场景，选择<code>在装配上应用该场景→应用整个场景</code>，则该场景会被加载到装配体上。</p>
 
 <h1 id="良好的建模习惯指南">良好的建模习惯指南</h1>
 
